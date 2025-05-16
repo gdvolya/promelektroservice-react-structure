@@ -1,7 +1,6 @@
-.vercel
+# .gitignore
 node_modules/
 .cache/
-dist/
 build/
+dist/
 .env
-
