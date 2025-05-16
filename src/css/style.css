@@ -1,0 +1,185 @@
+/* Базовые стили */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  color: #333;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #003366;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+
+.logo-left {
+  height: 50px;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-menu.centered {
+  justify-content: center;
+  display: flex;
+  flex-grow: 1;
+}
+
+.nav-menu li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Герой-блок */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: #e0f7fa;
+}
+
+.fancy-title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  color: #003366;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.description p {
+  font-size: 16px;
+  margin: 6px 0;
+}
+
+/* Портфолио */
+.portfolio-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.portfolio-img {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  max-width: 100%;
+}
+
+/* Отзывы */
+.review-textarea {
+  width: 100%;
+  max-width: 600px;
+  height: 100px;
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+/* Контакты */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Кнопка */
+.btn {
+  background: #003366;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  align-self: center;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #005599;
+}
+
+/* Футер */
+.footer {
+  text-align: center;
+  background: #003366;
+  color: white;
+  padding: 20px;
+  position: relative;
+}
+
+.bottom-footer {
+  margin-top: 60px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: #222;
+  color: black;
+  text-align: center;
+  padding: 1em;
+}
+
+/* 📱 Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .fancy-title {
+    font-size: 36px;
+  }
+
+  .hero-subtitle,
+  .description p,
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

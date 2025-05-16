@@ -1,0 +1,19 @@
+{
+  "companyName": "PromElektroService",
+  "companyDescription": "Professional electrical installation work of any complexity",
+  "services": [
+    "Installation of solar power plants (SPP)",
+    "Laying cable lines",
+    "Assembly and installation of automation panels",
+    "Commissioning of facilities",
+    "Repair of electrical equipment",
+    "Maintenance of electrical installations",
+    "Electrical measurements and reports"
+  ],
+  "home": "Home",
+  "portfolio": "Portfolio",
+  "reviews": "Reviews",
+  "pricing": "Prices",
+  "contacts": "Contacts",
+  "views": "Views"
+}

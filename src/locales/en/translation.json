@@ -1,0 +1,19 @@
+{
+  "home": "Home",
+  "portfolio": "Portfolio",
+  "reviews": "Reviews",
+  "pricing": "Pricing",
+  "contacts": "Contacts",
+  "companyName": "PromElectroService",
+  "companyDescription": "Professional electrical installation services of any complexity",
+  "services": [
+    "— Installation of solar power stations (SES)",
+    "— Cable line laying",
+    "— Assembly and installation of automation boards",
+    "— Commissioning of facilities",
+    "— Electrical equipment repair",
+    "— Maintenance of electrical installations",
+    "— Electrical measurements and reports"
+  ],
+  "views": "Views"
+}
