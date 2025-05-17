@@ -3,6 +3,10 @@ module.exports = {
     collect: {
       url: ["https://promelektroservice.vercel.app"],
       numberOfRuns: 3,
+      output: "html",
+      settings: {
+        preset: "desktop",
+      },
     },
     upload: {
       target: "temporary-public-storage",
