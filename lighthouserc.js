@@ -4,6 +4,7 @@ module.exports = {
       url: ["https://promelektroservice.vercel.app"],
       numberOfRuns: 3,
       output: "html",
+      outputDir: "./.lighthouseci"
     },
     upload: {
       target: "temporary-public-storage",
