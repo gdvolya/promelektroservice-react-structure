@@ -13,10 +13,10 @@ jobs:
         working-directory: ./
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -30,8 +30,8 @@ jobs:
       - name: Run Lighthouse CI
         run: lhci autorun || echo "Lighthouse finished with some errors"
 
-      - name: Upload Lighthouse Report
+      - name: Upload Lighthouse HTML report
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report
-          path: .lighthouseci/*.html
+          path: .lighthouseci/report.html

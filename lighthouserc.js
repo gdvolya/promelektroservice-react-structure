@@ -2,9 +2,11 @@ module.exports = {
   ci: {
     collect: {
       url: ["https://promelektroservice.vercel.app"],
-      numberOfRuns: 3,
+      numberOfRuns: 1,
       output: "html",
-      outputDir: "./.lighthouseci"
+      settings: {
+        preset: "desktop",
+      },
     },
     upload: {
       target: "temporary-public-storage",
