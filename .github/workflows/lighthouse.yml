@@ -2,13 +2,15 @@ name: Lighthouse CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
 
     steps:
       - name: Checkout code
@@ -20,18 +22,16 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm ci --legacy-peer-deps
 
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli
 
       - name: Run Lighthouse CI
-        run: |
-          lhci autorun || echo "Lighthouse finished with some errors"
+        run: lhci autorun || echo "Lighthouse finished with some errors"
 
-      - name: Upload report
-  uses: actions/upload-artifact@v4
-  with:
-    name: lighthouse-report
-    path: .lighthouseci/*.html
-
+      - name: Upload Lighthouse Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: .lighthouseci/*.html
