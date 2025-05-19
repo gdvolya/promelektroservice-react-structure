@@ -8,6 +8,9 @@ on:
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
 
     steps:
       - name: Checkout repository
@@ -27,11 +30,8 @@ jobs:
       - name: Run Lighthouse CI
         run: lhci autorun || echo "Lighthouse finished with some errors"
 
-      - name: List contents of .lighthouseci
-        run: ls -la .lighthouseci
-
-      - name: Upload Lighthouse HTML report
+      - name: Upload Lighthouse HTML reports
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report
-          path: .lighthouseci/report.html
+          path: .lighthouseci/*.html
