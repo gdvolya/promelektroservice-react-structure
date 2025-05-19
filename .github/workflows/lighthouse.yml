@@ -41,3 +41,15 @@ jobs:
         with:
           name: lighthouse-report
           path: .lighthouseci/lhr-*.html
+
+      - name: Upload Lighthouse JSON reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-json
+          path: .lighthouseci/lhr-*.json
+
+      - name: Upload Lighthouse assertion results
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-assertions
+          path: .lighthouseci/assertion-results.json
