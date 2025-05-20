@@ -36,17 +36,17 @@ jobs:
       - name: List files for debug
         run: ls -la .lighthouseci
 
-      - name: Upload Lighthouse HTML reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-report
-          path: .lighthouseci/lhr-*.html
+      - name: Upload Lighthouse HTML report
+  uses: actions/upload-artifact@v4
+  with:
+    name: lighthouse-report-html
+    path: .lighthouseci/lhr-*.html
 
-      - name: Upload Lighthouse JSON reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-json
-          path: .lighthouseci/lhr-*.json
+      - name: Upload Lighthouse JSON report
+  uses: actions/upload-artifact@v4
+  with:
+    name: lighthouse-report-json
+    path: .lighthouseci/lhr-*.json
 
       - name: Upload Lighthouse assertion results
         uses: actions/upload-artifact@v4
