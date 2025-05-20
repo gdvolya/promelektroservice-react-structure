@@ -1,5 +1,5 @@
 name: Lighthouse CI
-run: npm install -g @lhci/cli
+
 
 on:
   push:
