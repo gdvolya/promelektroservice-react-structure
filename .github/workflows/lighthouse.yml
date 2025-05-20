@@ -1,4 +1,5 @@
 name: Lighthouse CI
+run: npm install -g @lhci/cli
 
 on:
   push:
@@ -36,11 +37,11 @@ jobs:
       - name: Upload Lighthouse HTML reports
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-html
-          path: .lighthouseci/*.html
+          name: lighthouse-report-html
+    path: .lighthouseci/lhr-*.html
 
       - name: Upload Lighthouse JSON reports
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-json
-          path: .lighthouseci/*.json
+          name: lighthouse-report-json
+    path: .lighthouseci/lhr-*.json
