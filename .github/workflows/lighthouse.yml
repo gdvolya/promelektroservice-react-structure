@@ -27,29 +27,17 @@ jobs:
       - name: Install Lighthouse CI
         run: npm install -g @lhci/cli
 
-      - name: Ensure .lighthouseci directory exists
-        run: mkdir -p .lighthouseci
-
       - name: Run Lighthouse CI
         run: lhci autorun || echo "Lighthouse finished with some errors"
 
-      - name: List files for debug
-        run: ls -la .lighthouseci
-
       - name: Upload Lighthouse HTML report
-  uses: actions/upload-artifact@v4
-  with:
-    name: lighthouse-report-html
-    path: .lighthouseci/lhr-*.html
-
-      - name: Upload Lighthouse JSON report
-  uses: actions/upload-artifact@v4
-  with:
-    name: lighthouse-report-json
-    path: .lighthouseci/lhr-*.json
-
-      - name: Upload Lighthouse assertion results
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-assertions
-          path: .lighthouseci/assertion-results.json
+          name: lighthouse-report-html
+          path: .lighthouseci/lhr-*.html
+
+      - name: Upload Lighthouse JSON report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report-json
+          path: .lighthouseci/lhr-*.json
