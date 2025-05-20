@@ -36,21 +36,12 @@ jobs:
       - name: List files for debug
         run: ls -la .lighthouseci
 
-      # The following steps are commented out to skip uploading artifacts due to previous issues
-      # - name: Upload Lighthouse HTML report
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: lighthouse-report-html
-      #     path: .lighthouseci/lhr-*.html
-
-      # - name: Upload Lighthouse JSON report
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: lighthouse-report-json
-      #     path: .lighthouseci/lhr-*.json
-
-      # - name: Upload Lighthouse assertion results
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: lighthouse-assertions
-      #     path: .lighthouseci/assertion-results.json
+      - name: Upload Lighthouse report to artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: |
+            .lighthouseci/*.html
+            .lighthouseci/*.json
+            .lighthouseci/assertion-results.json
