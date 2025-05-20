@@ -12,7 +12,7 @@ module.exports = {
       }
     },
     upload: {
-      target: 'filesystem' // Без этого отчёты не будут сохраняться в .lighthouseci
+      target: 'filesystem'
     }
   }
 };
