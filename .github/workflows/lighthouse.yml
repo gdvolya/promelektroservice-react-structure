@@ -38,10 +38,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report-html
-    path: .lighthouseci/lhr-*.html
+          path: .lighthouseci/lhr-*.html
 
       - name: Upload Lighthouse JSON reports
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report-json
-    path: .lighthouseci/lhr-*.json
+          path: .lighthouseci/lhr-*.json
