@@ -30,14 +30,17 @@ jobs:
       - name: Run Lighthouse CI
         run: lhci autorun || echo "Lighthouse finished with some errors"
 
-      - name: Upload Lighthouse HTML report
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-report-html
-          path: .lighthouseci/lhr-*.html
+      - name: List .lighthouseci contents (debug)
+        run: ls -la .lighthouseci
 
-      - name: Upload Lighthouse JSON report
+      - name: Upload Lighthouse HTML reports
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-report-json
-          path: .lighthouseci/lhr-*.json
+          name: lighthouse-html
+          path: .lighthouseci/*.html
+
+      - name: Upload Lighthouse JSON reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-json
+          path: .lighthouseci/*.json
