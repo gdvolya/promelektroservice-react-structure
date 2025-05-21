@@ -12,7 +12,13 @@ module.exports = {
       }
     },
     upload: {
-      target: 'filesystem'
+      target: 'filesystem',
+      outputDir: '.lighthouseci',
+    },
+    assert: {
+      assertions: {
+        'categories:performance': ['error', { minScore: 0.9 }],
+      },
     }
   }
 };
