@@ -1,7 +1,7 @@
 module.exports = {
   ci: {
     collect: {
-      url: ['https://promelektroservice.vercel.app'],
+      url: ['https://promelektroservice-react-structure-8ki480yn5-gdvolyas-projects.vercel.app/'],
       numberOfRuns: 3
     },
     assert: {
