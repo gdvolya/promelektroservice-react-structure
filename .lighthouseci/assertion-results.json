@@ -1,18 +1,1 @@
-[
-  {
-    "name": "minScore",
-    "expected": 0.9,
-    "actual": 0.4,
-    "values": [
-      0.39,
-      0.4,
-      0.4
-    ],
-    "operator": ">=",
-    "passed": false,
-    "auditProperty": "performance",
-    "auditId": "categories",
-    "level": "error",
-    "url": "https://promelektroservice-react-structure-8ki480yn5-gdvolyas-projects.vercel.app/"
-  }
-]
+[]
