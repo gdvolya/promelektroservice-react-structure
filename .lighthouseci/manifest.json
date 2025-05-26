@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://promelektroservice-react-structure-8ki480yn5-gdvolyas-projects.vercel.app/",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_8ki480yn5_gdvolyas_projects_vercel_app-_-2025_05_26_06_38_38.report.html",
+    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_8ki480yn5_gdvolyas_projects_vercel_app-_-2025_05_26_06_38_38.report.json",
+    "summary": {
+      "performance": 0.39,
+      "accessibility": 0.93,
+      "best-practices": 0.96,
+      "seo": 0.66
+    }
+  },
+  {
+    "url": "https://promelektroservice-react-structure-8ki480yn5-gdvolyas-projects.vercel.app/",
+    "isRepresentativeRun": false,
+    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_8ki480yn5_gdvolyas_projects_vercel_app-_-2025_05_26_06_39_49.report.html",
+    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_8ki480yn5_gdvolyas_projects_vercel_app-_-2025_05_26_06_39_49.report.json",
+    "summary": {
+      "performance": 0.4,
+      "accessibility": 0.93,
+      "best-practices": 0.96,
+      "seo": 0.66
+    }
+  },
+  {
+    "url": "https://promelektroservice-react-structure-8ki480yn5-gdvolyas-projects.vercel.app/",
+    "isRepresentativeRun": true,
+    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_8ki480yn5_gdvolyas_projects_vercel_app-_-2025_05_26_06_40_56.report.html",
+    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_8ki480yn5_gdvolyas_projects_vercel_app-_-2025_05_26_06_40_56.report.json",
+    "summary": {
+      "performance": 0.4,
+      "accessibility": 0.93,
+      "best-practices": 0.96,
+      "seo": 0.66
+    }
+  }
+]
