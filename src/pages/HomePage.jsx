@@ -37,9 +37,7 @@ function HomePage() {
   return (
     <main
       style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        position: "relative",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -48,7 +46,8 @@ function HomePage() {
         color: "white",
         textAlign: "center",
         padding: "0",
-        margin: "0"
+        margin: "0",
+        overflow: "hidden"
       }}
       itemScope
       itemType="https://schema.org/LocalBusiness"
@@ -62,6 +61,25 @@ function HomePage() {
         <meta property="og:url" content="https://promelektroservice.vercel.app" />
         <link rel="icon" href="/favicon.ico" />
       </Helmet>
+
+      {/* ✅ Background image as real image for better LCP */}
+      <img
+        src={backgroundImage}
+        alt="Фоновое изображение"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: -1
+        }}
+        loading="eager"
+        fetchpriority="high"
+        width="1920"
+        height="1080"
+      />
 
       <div
         style={{
