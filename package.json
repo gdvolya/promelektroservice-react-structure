@@ -2,7 +2,6 @@
   "name": "promelektroservice-react",
   "version": "1.0.0",
   "private": true,
-  "homepage": ".",
   "dependencies": {
     "aos": "^2.3.4",
     "firebase": "^11.6.1",
