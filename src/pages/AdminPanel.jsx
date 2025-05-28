@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { db } from "../firebase";
 import * as XLSX from "xlsx";
+
+let db = null;
 
 const AdminPanel = ({ enableExport }) => {
   const [submissions, setSubmissions] = useState([]);
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
 
+  // Загрузка Firebase только после входа
   useEffect(() => {
-    if (authenticated) {
-      fetchSubmissions();
+    if (authenticated && !db) {
+      import("../firebaseLazy").then(({ db: loadedDb, messaging }) => {
+        db = loadedDb;
+
+        // ✅ Можем оставить или убрать alert — для теста работает
+        console.log("Firebase і FCM завантажено для AdminPanel");
+      });
     }
   }, [authenticated]);
 
   const fetchSubmissions = async () => {
+    if (!db) return;
     const querySnapshot = await getDocs(collection(db, "submissions"));
     setSubmissions(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
   };
+
+  useEffect(() => {
+    if (authenticated && db) {
+      fetchSubmissions();
+    }
+  }, [authenticated]);
 
   const exportToExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(submissions.map(({ id, ...rest }) => rest));
@@ -27,6 +41,7 @@ const AdminPanel = ({ enableExport }) => {
   };
 
   const handleDelete = async (id) => {
+    if (!db) return;
     if (window.confirm("Ви впевнені, що хочете видалити цю заявку?")) {
       await deleteDoc(doc(db, "submissions", id));
       fetchSubmissions();
@@ -68,7 +83,7 @@ const AdminPanel = ({ enableExport }) => {
           </tr>
         </thead>
         <tbody>
-          {submissions.map((s, idx) => (
+          {submissions.map((s) => (
             <tr key={s.id}>
               <td>{s.name}</td>
               <td>{s.email}</td>

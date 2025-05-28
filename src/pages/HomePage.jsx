@@ -1,10 +1,8 @@
 // src/pages/HomePage.jsx
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import { useTranslation } from "react-i18next";
-import backgroundImage from "../img/background.jpg";
+import backgroundImage from "../img/background.webp"; // заменено на .webp
 import { db } from "../firebase";
 import { doc, getDoc, setDoc, increment } from "firebase/firestore";
 
@@ -13,25 +11,28 @@ function HomePage() {
   const [views, setViews] = useState(0);
 
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
-
-    const updateViews = async () => {
-      const ref = doc(db, "views", "home");
-      try {
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          await setDoc(ref, { count: increment(1) }, { merge: true });
-        } else {
-          await setDoc(ref, { count: 1 });
+    // 🔄 Отложенное обновление просмотров
+    const timer = setTimeout(() => {
+      const updateViews = async () => {
+        try {
+          const ref = doc(db, "views", "home");
+          const snap = await getDoc(ref);
+          if (snap.exists()) {
+            await setDoc(ref, { count: increment(1) }, { merge: true });
+          } else {
+            await setDoc(ref, { count: 1 });
+          }
+          const updatedSnap = await getDoc(ref);
+          setViews(updatedSnap.data().count);
+        } catch (err) {
+          console.error("Counter error:", err.message);
         }
-        const updatedSnap = await getDoc(ref);
-        setViews(updatedSnap.data().count);
-      } catch (err) {
-        console.error("Counter error:", err.message);
-      }
-    };
+      };
 
-    updateViews();
+      updateViews();
+    }, 4000); // отложено на 4 секунды
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -41,11 +42,9 @@ function HomePage() {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-start",
         alignItems: "center",
         color: "white",
         textAlign: "center",
-        padding: "0",
         margin: "0",
         overflow: "hidden"
       }}
@@ -57,15 +56,15 @@ function HomePage() {
         <meta name="description" content={t("meta.description")} />
         <meta property="og:title" content={t("meta.ogTitle")} />
         <meta property="og:description" content={t("meta.ogDescription")} />
-        <meta property="og:image" content="/img/background.jpg" />
+        <meta property="og:image" content="/img/background.webp" />
         <meta property="og:url" content="https://promelektroservice.vercel.app" />
         <link rel="icon" href="/favicon.ico" />
       </Helmet>
 
-      {/* ✅ Background image as real image for better LCP */}
+      {/* ✅ Оптимизированное изображение */}
       <img
         src={backgroundImage}
-        alt="Фоновое изображение"
+        alt="Фонове зображення"
         style={{
           position: "absolute",
           top: 0,
@@ -81,17 +80,8 @@ function HomePage() {
         height="1080"
       />
 
-      <div
-        style={{
-          backgroundColor: "rgba(0, 0, 0, 0)",
-          padding: "20px",
-          borderRadius: "10px",
-          maxWidth: "800px",
-          marginTop: "0"
-        }}
-        data-aos="fade-down"
-      >
-        <h1 className="hero-title fancy-title" style={{ marginTop: "0" }} itemProp="name">
+      <div style={{ padding: "40px 20px", maxWidth: "800px" }}>
+        <h1 className="hero-title fancy-title" itemProp="name">
           {t("companyName")}
         </h1>
         <h2 className="hero-subtitle" itemProp="description">
