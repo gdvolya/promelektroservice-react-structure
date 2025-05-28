@@ -1,22 +1,37 @@
 .hero-section {
-  background-image: url("../img/background.webp");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   color: white;
   text-align: center;
-  padding: 2rem;
+  margin: 0;
   overflow: hidden;
+}
+
+/* 🔽 Новый стиль для изображения, заменяющего background-image */
+.lcp-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+}
+
+@media (max-height: 600px) {
+  .lcp-bg {
+    object-fit: contain;
+  }
 }
 
 .hero-content {
   max-width: 800px;
   padding: 40px 20px;
+  position: relative; /* чтобы быть над .lcp-bg */
+  z-index: 1;
 }
 
 .hero-title {
@@ -40,4 +55,5 @@
   left: 10px;
   font-size: 14px;
   color: #ccc;
+  z-index: 2;
 }

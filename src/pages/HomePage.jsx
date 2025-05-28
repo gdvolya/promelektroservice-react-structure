@@ -3,7 +3,8 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { db } from "../firebase";
 import { doc, getDoc, setDoc, increment } from "firebase/firestore";
-import "../css/HomePage.css"; // ← перенос стилей сюда (включая фон)
+import backgroundImage from "../img/background.webp"; // ✅ импорт из src
+import "../css/HomePage.css";
 
 function HomePage() {
   const { t } = useTranslation();
@@ -34,7 +35,12 @@ function HomePage() {
   }, []);
 
   return (
-    <main className="hero-section" itemScope itemType="https://schema.org/LocalBusiness">
+    <main
+      className="hero-section"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+      itemScope
+      itemType="https://schema.org/LocalBusiness"
+    >
       <Helmet>
         <title>{t("meta.title")}</title>
         <meta name="description" content={t("meta.description")} />
@@ -43,6 +49,7 @@ function HomePage() {
         <meta property="og:image" content="/img/background.webp" />
         <meta property="og:url" content="https://promelektroservice.vercel.app" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preload" as="image" href="/img/background.webp" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link rel="preconnect" href="https://firestore.googleapis.com" />
