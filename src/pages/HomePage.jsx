@@ -1,17 +1,17 @@
 // src/pages/HomePage.jsx
 import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async"; // 🔄 заменено
 import { useTranslation } from "react-i18next";
-import backgroundImage from "../img/background.webp"; // заменено на .webp
 import { db } from "../firebase";
 import { doc, getDoc, setDoc, increment } from "firebase/firestore";
+import backgroundImage from "../img/background.webp"; // всё ещё используем путь
 
 function HomePage() {
   const { t } = useTranslation();
   const [views, setViews] = useState(0);
 
   useEffect(() => {
-    // 🔄 Отложенное обновление просмотров
+    // ⏱ отложенный вызов
     const timer = setTimeout(() => {
       const updateViews = async () => {
         try {
@@ -30,7 +30,7 @@ function HomePage() {
       };
 
       updateViews();
-    }, 4000); // отложено на 4 секунды
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -45,8 +45,12 @@ function HomePage() {
         alignItems: "center",
         color: "white",
         textAlign: "center",
-        margin: "0",
-        overflow: "hidden"
+        margin: 0,
+        overflow: "hidden",
+        backgroundImage: `url(${backgroundImage})`, // ✅ CSS background
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"
       }}
       itemScope
       itemType="https://schema.org/LocalBusiness"
@@ -60,25 +64,6 @@ function HomePage() {
         <meta property="og:url" content="https://promelektroservice.vercel.app" />
         <link rel="icon" href="/favicon.ico" />
       </Helmet>
-
-      {/* ✅ Оптимизированное изображение */}
-      <img
-        src={backgroundImage}
-        alt="Фонове зображення"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: -1
-        }}
-        loading="eager"
-        fetchpriority="high"
-        width="1920"
-        height="1080"
-      />
 
       <div style={{ padding: "40px 20px", maxWidth: "800px" }}>
         <h1 className="hero-title fancy-title" itemProp="name">
@@ -94,13 +79,15 @@ function HomePage() {
         </div>
       </div>
 
-      <div style={{
-        position: "fixed",
-        bottom: "10px",
-        left: "10px",
-        fontSize: "14px",
-        color: "#ccc"
-      }}>
+      <div
+        style={{
+          position: "fixed",
+          bottom: "10px",
+          left: "10px",
+          fontSize: "14px",
+          color: "#ccc"
+        }}
+      >
         👁 {t("views")}: {views}
       </div>
     </main>
