@@ -1,60 +1,40 @@
-// src/pages/HomePage.jsx
 import React, { useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async"; // 🔄 заменено
+import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { db } from "../firebase";
 import { doc, getDoc, setDoc, increment } from "firebase/firestore";
-import backgroundImage from "../img/background.webp"; // всё ещё используем путь
+import "../css/HomePage.css"; // ← перенос стилей сюда (включая фон)
 
 function HomePage() {
   const { t } = useTranslation();
   const [views, setViews] = useState(0);
 
   useEffect(() => {
-    // ⏱ отложенный вызов
-    const timer = setTimeout(() => {
-      const updateViews = async () => {
-        try {
-          const ref = doc(db, "views", "home");
-          const snap = await getDoc(ref);
-          if (snap.exists()) {
-            await setDoc(ref, { count: increment(1) }, { merge: true });
-          } else {
-            await setDoc(ref, { count: 1 });
-          }
-          const updatedSnap = await getDoc(ref);
-          setViews(updatedSnap.data().count);
-        } catch (err) {
-          console.error("Counter error:", err.message);
+    const updateViews = async () => {
+      try {
+        const ref = doc(db, "views", "home");
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          await setDoc(ref, { count: increment(1) }, { merge: true });
+        } else {
+          await setDoc(ref, { count: 1 });
         }
-      };
+        const updatedSnap = await getDoc(ref);
+        setViews(updatedSnap.data().count);
+      } catch (err) {
+        console.error("Counter error:", err.message);
+      }
+    };
 
-      updateViews();
-    }, 4000);
-
-    return () => clearTimeout(timer);
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(updateViews, { timeout: 6000 });
+    } else {
+      setTimeout(updateViews, 6000);
+    }
   }, []);
 
   return (
-    <main
-      style={{
-        position: "relative",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        color: "white",
-        textAlign: "center",
-        margin: 0,
-        overflow: "hidden",
-        backgroundImage: `url(${backgroundImage})`, // ✅ CSS background
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat"
-      }}
-      itemScope
-      itemType="https://schema.org/LocalBusiness"
-    >
+    <main className="hero-section" itemScope itemType="https://schema.org/LocalBusiness">
       <Helmet>
         <title>{t("meta.title")}</title>
         <meta name="description" content={t("meta.description")} />
@@ -63,9 +43,12 @@ function HomePage() {
         <meta property="og:image" content="/img/background.webp" />
         <meta property="og:url" content="https://promelektroservice.vercel.app" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+        <link rel="preconnect" href="https://firestore.googleapis.com" />
       </Helmet>
 
-      <div style={{ padding: "40px 20px", maxWidth: "800px" }}>
+      <div className="hero-content">
         <h1 className="hero-title fancy-title" itemProp="name">
           {t("companyName")}
         </h1>
@@ -79,17 +62,7 @@ function HomePage() {
         </div>
       </div>
 
-      <div
-        style={{
-          position: "fixed",
-          bottom: "10px",
-          left: "10px",
-          fontSize: "14px",
-          color: "#ccc"
-        }}
-      >
-        👁 {t("views")}: {views}
-      </div>
+      <div className="views-counter">👁 {t("views")}: {views}</div>
     </main>
   );
 }

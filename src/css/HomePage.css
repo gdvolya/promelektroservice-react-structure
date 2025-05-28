@@ -1,0 +1,43 @@
+.hero-section {
+  background-image: url("../img/background.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 40px 20px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.description p {
+  margin-bottom: 0.5rem;
+}
+
+.views-counter {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  font-size: 14px;
+  color: #ccc;
+}

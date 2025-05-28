@@ -1,11 +1,11 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async"; // 🔄 Добавлено
+import { HelmetProvider } from "react-helmet-async";
 import logo from "./img/logo.png";
 import "./css/style.css";
 
-// Ленивая загрузка всех страниц
-const HomePage = lazy(() => import("./HomePage"));
+// 🔁 Ленивая загрузка всех страниц
+const HomePage = lazy(() => import("./pages/HomePage"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage"));
 const ReviewsPage = lazy(() => import("./pages/ReviewsPage"));
@@ -17,10 +17,12 @@ function App() {
     <HelmetProvider>
       <Router>
         <div className="app-wrapper">
-          <header>
+          <header className="site-header">
             <div className="header-container">
-              <img src={logo} alt="Логотип" className="logo-left" />
-              <nav>
+              <Link to="/" aria-label="Головна">
+                <img src={logo} alt="Логотип ПромЕлектроСервіс" className="logo-left" width="60" height="60" />
+              </Link>
+              <nav aria-label="Головне меню">
                 <ul className="nav-menu centered">
                   <li><Link to="/">Головна</Link></li>
                   <li><Link to="/portfolio">Портфоліо</Link></li>
@@ -32,16 +34,18 @@ function App() {
             </div>
           </header>
 
-          <Suspense fallback={<div>Завантаження сторінки...</div>}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/reviews" element={<ReviewsPage />} />
-              <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/contacts" element={<ContactsPage />} />
-              <Route path="/admin" element={<AdminPanel enableExport={true} />} />
-            </Routes>
-          </Suspense>
+          <main className="main-content">
+            <Suspense fallback={<div className="loading">Завантаження сторінки...</div>}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/portfolio" element={<PortfolioPage />} />
+                <Route path="/reviews" element={<ReviewsPage />} />
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/contacts" element={<ContactsPage />} />
+                <Route path="/admin" element={<AdminPanel enableExport={true} />} />
+              </Routes>
+            </Suspense>
+          </main>
 
           <footer className="footer minimized-footer sticky-footer">
             <div className="footer-top">
