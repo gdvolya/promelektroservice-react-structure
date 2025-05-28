@@ -3,8 +3,20 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { db } from "../firebase";
 import { doc, getDoc, setDoc, increment } from "firebase/firestore";
-import backgroundImage from "../img/background.webp"; // ✅ импорт из src
 import "../css/HomePage.css";
+
+function LanguageSwitcher() {
+  const { i18n } = useTranslation();
+  const changeLanguage = (lng) => i18n.changeLanguage(lng);
+
+  return (
+    <div className="language-switcher">
+      <button onClick={() => changeLanguage("en")}>EN</button>
+      <button onClick={() => changeLanguage("uk")}>UK</button>
+      <button onClick={() => changeLanguage("ru")}>RU</button>
+    </div>
+  );
+}
 
 function HomePage() {
   const { t } = useTranslation();
@@ -37,7 +49,6 @@ function HomePage() {
   return (
     <main
       className="hero-section"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
       itemScope
       itemType="https://schema.org/LocalBusiness"
     >
@@ -47,13 +58,26 @@ function HomePage() {
         <meta property="og:title" content={t("meta.ogTitle")} />
         <meta property="og:description" content={t("meta.ogDescription")} />
         <meta property="og:image" content="/img/background.webp" />
-        <meta property="og:url" content="https://promelektroservice.vercel.app" />
+        <meta
+          property="og:url"
+          content="https://promelektroservice.vercel.app"
+        />
         <link rel="icon" href="/favicon.ico" />
+
         <link rel="preload" as="image" href="/img/background.webp" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link rel="preconnect" href="https://firestore.googleapis.com" />
       </Helmet>
+
+      <img
+        src="/img/background.webp"
+        alt="Background"
+        className="lcp-bg"
+        fetchpriority="high"
+      />
+
+      <LanguageSwitcher />
 
       <div className="hero-content">
         <h1 className="hero-title fancy-title" itemProp="name">
@@ -69,7 +93,9 @@ function HomePage() {
         </div>
       </div>
 
-      <div className="views-counter">👁 {t("views")}: {views}</div>
+      <div className="views-counter">
+        👁 {t("views")}: {views}
+      </div>
     </main>
   );
 }
