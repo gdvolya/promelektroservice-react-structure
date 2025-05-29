@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, getDoc } from "firebase/firestore";
 import * as XLSX from "xlsx";
 
 let db = null;
 
 const AdminPanel = ({ enableExport }) => {
   const [submissions, setSubmissions] = useState([]);
+  const [views, setViews] = useState(null);
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
 
-  // Загрузка Firebase только после входа
   useEffect(() => {
     if (authenticated && !db) {
-      import("../firebaseLazy").then(({ db: loadedDb, messaging }) => {
+      import("../firebaseLazy").then(({ db: loadedDb }) => {
         db = loadedDb;
-
-        // ✅ Можем оставить или убрать alert — для теста работает
-        console.log("Firebase і FCM завантажено для AdminPanel");
+        fetchSubmissions();
+        fetchViews();
       });
+    } else if (authenticated && db) {
+      fetchSubmissions();
+      fetchViews();
     }
   }, [authenticated]);
 
@@ -27,11 +29,14 @@ const AdminPanel = ({ enableExport }) => {
     setSubmissions(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
   };
 
-  useEffect(() => {
-    if (authenticated && db) {
-      fetchSubmissions();
+  const fetchViews = async () => {
+    if (!db) return;
+    const docRef = doc(db, "views", "home");
+    const snap = await getDoc(docRef);
+    if (snap.exists()) {
+      setViews(snap.data().count);
     }
-  }, [authenticated]);
+  };
 
   const exportToExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(submissions.map(({ id, ...rest }) => rest));
@@ -72,6 +77,11 @@ const AdminPanel = ({ enableExport }) => {
   return (
     <main style={{ padding: "20px" }}>
       <h1>Адмін-панель</h1>
+
+      {views !== null && (
+        <p>👁 Переглядів на головній сторінці: <strong>{views}</strong></p>
+      )}
+
       <table border="1" cellPadding="8">
         <thead>
           <tr>

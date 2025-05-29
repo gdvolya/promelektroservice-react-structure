@@ -1,50 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { db } from "../firebase";
-import { doc, getDoc, setDoc, increment } from "firebase/firestore";
 import "../css/HomePage.css";
 
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
-  const changeLanguage = (lng) => i18n.changeLanguage(lng);
-
   return (
     <div className="language-switcher">
-      <button onClick={() => changeLanguage("en")}>EN</button>
-      <button onClick={() => changeLanguage("uk")}>UK</button>
-      <button onClick={() => changeLanguage("ru")}>RU</button>
+      <button onClick={() => i18n.changeLanguage("en")}>EN</button>
+      <button onClick={() => i18n.changeLanguage("uk")}>UK</button>
+      <button onClick={() => i18n.changeLanguage("ru")}>RU</button>
     </div>
   );
 }
 
 function HomePage() {
   const { t } = useTranslation();
-  const [views, setViews] = useState(0);
-
-  useEffect(() => {
-    const updateViews = async () => {
-      try {
-        const ref = doc(db, "views", "home");
-        const snap = await getDoc(ref);
-        if (snap.exists()) {
-          await setDoc(ref, { count: increment(1) }, { merge: true });
-        } else {
-          await setDoc(ref, { count: 1 });
-        }
-        const updatedSnap = await getDoc(ref);
-        setViews(updatedSnap.data().count);
-      } catch (err) {
-        console.error("Counter error:", err.message);
-      }
-    };
-
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(updateViews, { timeout: 6000 });
-    } else {
-      setTimeout(updateViews, 6000);
-    }
-  }, []);
 
   return (
     <main
@@ -58,16 +29,9 @@ function HomePage() {
         <meta property="og:title" content={t("meta.ogTitle")} />
         <meta property="og:description" content={t("meta.ogDescription")} />
         <meta property="og:image" content="/img/background.webp" />
-        <meta
-          property="og:url"
-          content="https://promelektroservice.vercel.app"
-        />
+        <meta property="og:url" content="https://promelektroservice.vercel.app" />
         <link rel="icon" href="/favicon.ico" />
-
         <link rel="preload" as="image" href="/img/background.webp" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-        <link rel="preconnect" href="https://firestore.googleapis.com" />
       </Helmet>
 
       <img
@@ -91,10 +55,6 @@ function HomePage() {
             <p key={i}>{t(`services.${i}`)}</p>
           ))}
         </div>
-      </div>
-
-      <div className="views-counter">
-        👁 {t("views")}: {views}
       </div>
     </main>
   );
