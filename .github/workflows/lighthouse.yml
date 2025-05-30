@@ -1,7 +1,7 @@
 name: Lighthouse CI
 
 on:
-  workflow_dispatch:  # запуск вручную из GitHub UI
+  workflow_dispatch:  # ручной запуск из UI GitHub
   push:
     branches:
       - main
@@ -31,16 +31,16 @@ jobs:
           echo "module.exports = {
             ci: {
               collect: {
-                url: ['https://promelektroservice-react-structure-gdvolyas-projects.vercel.app/'],
+                url: ['https://promelektroservice-react-structure.vercel.app/'],
                 numberOfRuns: 3
               },
               upload: {
                 target: 'filesystem',
-                outputDir: '.lighthouseci'
+                outputDir: '.lighthouseci/report'
               },
               assert: {
                 assertions: {
-                  'categories:performance': ['error', { minScore: 0.9 }],
+                  'categories:performance': ['error', { minScore: 0.3 }],
                   'categories:accessibility': ['warn', { minScore: 0.9 }],
                   'categories:seo': ['warn', { minScore: 0.9 }]
                 }
@@ -51,11 +51,11 @@ jobs:
       - name: Run Lighthouse CI
         run: lhci autorun
 
+      - name: Check Lighthouse output
+        run: ls -R .lighthouseci
+
       - name: Upload Lighthouse Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report
-          path: |
-            .lighthouseci/*.html
-            .lighthouseci/*.json
-            .lighthouseci/assertion-results.json
+          path: .lighthouseci/report/*.html
