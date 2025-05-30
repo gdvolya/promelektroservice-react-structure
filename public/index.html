@@ -20,6 +20,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link rel="preconnect" href="https://firestore.googleapis.com" />
 
+    <link rel="preload" href="/static/css/main.chunk.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="/static/css/main.chunk.css"></noscript>
+
+    <link rel="preload" href="/img/background.webp" as="image" type="image/webp" />
+
     <style>
       .hero-title {
         font-size: 3rem;
@@ -35,7 +40,6 @@
       }
     </style>
   </head>
-
   <body>
     <noscript>Увімкніть JavaScript для повної функціональності сайту.</noscript>
     <div id="root"></div>

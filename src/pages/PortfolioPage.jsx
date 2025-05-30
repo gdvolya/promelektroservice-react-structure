@@ -1,3 +1,4 @@
+// src/pages/PortfolioPage.jsx
 import React from "react";
 
 // Импорт изображений
