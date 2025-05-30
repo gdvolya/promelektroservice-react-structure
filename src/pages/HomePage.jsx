@@ -1,9 +1,10 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
+import background from "../img/background.webp";
+import background2x from "../img/background@2x.webp";
 import "../css/HomePage.css";
 
-// Добавим компонент для переключения языка
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
   return (
@@ -28,13 +29,17 @@ function HomePage() {
         <meta property="og:image" content="/img/background.webp" />
         <meta property="og:url" content="https://promelektroservice.vercel.app" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preload" as="image" href="/img/background.webp" />
       </Helmet>
 
-      {/* Оптимизация загрузки фонового изображения */}
-      <img src="/img/background.webp" alt="Background" className="lcp-bg" fetchpriority="high" loading="eager" />
+      <img
+        src={background}
+        srcSet={`${background} 1x, ${background2x} 2x`}
+        alt="Background"
+        className="lcp-bg"
+        loading="eager"
+        fetchpriority="high"
+      />
 
-      {/* Компонент для переключения языков */}
       <LanguageSwitcher />
 
       <div className="hero-content">
