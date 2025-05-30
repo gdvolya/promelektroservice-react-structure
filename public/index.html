@@ -3,60 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>ПромЕлектроСервіс — електромонтажні послуги</title>
-
-  <!-- SEO -->
-  <meta name="description" content="ПромЕлектроСервіс — професійні електромонтажні роботи будь-якої складності. Монтаж СЕС, електропроводка, освітлення." />
-  <meta name="keywords" content="електромонтаж, СЕС, електрика, сонячні панелі, Київ, монтаж електрики" />
-  <meta name="author" content="ПромЕлектроСервіс" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://promelektroservice.vercel.app/" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
-  <meta property="og:description" content="Професійні електромонтажні роботи будь-якої складності: СЕС, освітлення, електропроводка." />
+  <meta name="description" content="Професійні електромонтажні роботи будь-якої складності." />
+  <meta property="og:title" content="ПромЕлектроСервіс" />
   <meta property="og:image" content="/img/logo.png" />
-  <meta property="og:url" content="https://promelektroservice.vercel.app/" />
-  <meta property="og:type" content="website" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ПромЕлектроСервіс" />
-  <meta name="twitter:description" content="Професійні електромонтажні роботи будь-якої складності: СЕС, освітлення, електропроводка." />
-  <meta name="twitter:image" content="/img/logo.png" />
-
-  <!-- Fonts & preload CSS -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-
-  <!-- Optimized image preload -->
+  <link rel="preload" href="/static/css/main.chunk.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/static/css/main.chunk.css"></noscript>
   <link rel="preload" href="/img/background.webp" as="image" type="image/webp" />
-
-  <!-- Icons -->
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <meta name="theme-color" content="#003366" />
-
-  <!-- Firebase DNS optimization -->
-  <link rel="preconnect" href="https://firestore.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
+  <style>
+    .hero-title { font-size: 3rem; font-weight: bold; }
+    .hero-subtitle { font-size: 1.5rem; }
+    .portfolio-img { object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  </style>
 </head>
-
 <body>
   <div id="root"></div>
-
-  <!-- Tawk.to live chat -->
   <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function () {
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/6823136e8b5bf4190a3bd030/1ir4g7qn4';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
-    })();
+    requestIdleCallback(() => {
+      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+      (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/6823136e8b5bf4190a3bd030/1ir4g7qn4';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+      })();
+    });
   </script>
 </body>
 </html>

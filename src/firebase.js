@@ -1,4 +1,3 @@
-// firebaseLazy.js
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
@@ -16,22 +15,19 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const messaging = getMessaging(app);
 
-// Получение токена FCM
 getToken(messaging, {
   vapidKey: "BE6mx-nmfkaM-RJmDBA2rJVNYkQRX9Qayj4-zgSz4AM-IJFssiPlAA0XUAaGmlznUUDIpvkksUzzJbgS0glRKj8"
-})
-  .then(currentToken => {
-    if (currentToken) {
-      console.log("FCM токен:", currentToken);
-    } else {
-      console.warn("Немає токена. Дозвіл не отримано.");
-    }
-  })
-  .catch(err => {
-    console.error("Помилка отримання токена:", err);
-  });
+}).then((currentToken) => {
+  if (currentToken) {
+    console.log("FCM токен:", currentToken);
+  } else {
+    console.warn("FCM: токен не отримано. Можливо, не дозволено сповіщення.");
+  }
+}).catch((err) => {
+  console.error("FCM: помилка отримання токена:", err);
+});
 
-onMessage(messaging, payload => {
+onMessage(messaging, (payload) => {
   alert(`🔔 Повідомлення: ${payload.notification?.title}`);
 });
 

@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import "../css/HomePage.css";
 
+// Добавим компонент для переключения языка
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
   return (
@@ -18,11 +19,7 @@ function HomePage() {
   const { t } = useTranslation();
 
   return (
-    <main
-      className="hero-section"
-      itemScope
-      itemType="https://schema.org/LocalBusiness"
-    >
+    <main className="hero-section" itemScope itemType="https://schema.org/LocalBusiness">
       <Helmet>
         <title>{t("meta.title")}</title>
         <meta name="description" content={t("meta.description")} />
@@ -34,13 +31,10 @@ function HomePage() {
         <link rel="preload" as="image" href="/img/background.webp" />
       </Helmet>
 
-      <img
-        src="/img/background.webp"
-        alt="Background"
-        className="lcp-bg"
-        fetchpriority="high"
-      />
+      {/* Оптимизация загрузки фонового изображения */}
+      <img src="/img/background.webp" alt="Background" className="lcp-bg" fetchpriority="high" loading="eager" />
 
+      {/* Компонент для переключения языков */}
       <LanguageSwitcher />
 
       <div className="hero-content">
