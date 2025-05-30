@@ -1,8 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import background from "../img/background.webp";
-import background2x from "../img/background@2x.webp";
 import "../css/HomePage.css";
 
 function LanguageSwitcher() {
@@ -32,12 +30,11 @@ function HomePage() {
       </Helmet>
 
       <img
-        src={background}
-        srcSet={`${background} 1x, ${background2x} 2x`}
+        src="/img/background.webp"
         alt="Background"
         className="lcp-bg"
-        loading="eager"
         fetchpriority="high"
+        loading="eager"
       />
 
       <LanguageSwitcher />
