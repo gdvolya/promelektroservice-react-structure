@@ -2,10 +2,10 @@
   {
     "url": "https://promelektroservice-react-structure.vercel.app/",
     "isRepresentativeRun": false,
-    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_16_14.report.html",
-    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_16_14.report.json",
+    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_30_26.report.html",
+    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_30_26.report.json",
     "summary": {
-      "performance": 0.62,
+      "performance": 0.81,
       "accessibility": 0.9,
       "best-practices": 0.93,
       "seo": 1
@@ -14,10 +14,10 @@
   {
     "url": "https://promelektroservice-react-structure.vercel.app/",
     "isRepresentativeRun": false,
-    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_16_36.report.html",
-    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_16_36.report.json",
+    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_31_04.report.html",
+    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_31_04.report.json",
     "summary": {
-      "performance": 0.76,
+      "performance": 0.83,
       "accessibility": 0.9,
       "best-practices": 0.93,
       "seo": 1
@@ -26,10 +26,10 @@
   {
     "url": "https://promelektroservice-react-structure.vercel.app/",
     "isRepresentativeRun": true,
-    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_15_50.report.html",
-    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_15_50.report.json",
+    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_30_46.report.html",
+    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\promelektroservice_react_structure_vercel_app-_-2025_05_30_08_30_46.report.json",
     "summary": {
-      "performance": 0.59,
+      "performance": 0.74,
       "accessibility": 0.9,
       "best-practices": 0.93,
       "seo": 1
