@@ -27,6 +27,7 @@ body {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .nav-menu.centered {
@@ -41,7 +42,6 @@ body {
   font-weight: bold;
 }
 
-/* Герой-блок */
 .hero {
   text-align: center;
   padding: 60px 20px;
@@ -163,8 +163,9 @@ footer {
   }
 
   .nav-menu {
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
+    justify-content: space-around;
     text-align: center;
   }
 

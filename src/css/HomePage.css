@@ -57,6 +57,8 @@
   color: #ccc;
   z-index: 2;
 }
+
+/* Кнопки переключения языков */
 .language-switcher {
   position: absolute;
   top: 20px;
@@ -64,10 +66,51 @@
   z-index: 2;
 }
 
+/* Для мобильных устройств */
 .language-switcher select {
   padding: 5px 10px;
   border-radius: 5px;
   border: none;
   background-color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
+}
+
+/* Новая стилизация для кнопок переключения страниц */
+.nav-menu {
+  display: flex;
+  gap: 10px; /* Горизонтальное расстояние между кнопками */
+  justify-content: center; /* Центрируем кнопки по горизонтали */
+}
+
+.nav-menu li {
+  display: inline-block; /* Делает кнопки горизонтальными */
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .language-switcher {
+    top: 10px;
+    right: 10px;
+  }
+
+  .nav-menu {
+    flex-direction: row;
+    justify-content: space-around; /* Горизонтальное распределение кнопок */
+    width: 100%; /* Занимают всю ширину */
+  }
+
+  .nav-menu li {
+    padding: 0 10px;
+  }
+
+  .fancy-title {
+    font-size: 24px;
+  }
 }
