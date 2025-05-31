@@ -30,7 +30,7 @@
 .hero-content {
   max-width: 800px;
   padding: 40px 20px;
-  position: relative; /* чтобы быть над .lcp-bg */
+  position: relative;
   z-index: 1;
 }
 
@@ -66,7 +66,6 @@
   z-index: 2;
 }
 
-/* Для мобильных устройств */
 .language-switcher select {
   padding: 5px 10px;
   border-radius: 5px;
@@ -78,12 +77,12 @@
 /* Новая стилизация для кнопок переключения страниц */
 .nav-menu {
   display: flex;
-  gap: 10px; /* Горизонтальное расстояние между кнопками */
-  justify-content: center; /* Центрируем кнопки по горизонтали */
+  gap: 10px;
+  justify-content: center;
 }
 
 .nav-menu li {
-  display: inline-block; /* Делает кнопки горизонтальными */
+  display: inline-block;
 }
 
 @media (max-width: 768px) {
@@ -102,8 +101,8 @@
 
   .nav-menu {
     flex-direction: row;
-    justify-content: space-around; /* Горизонтальное распределение кнопок */
-    width: 100%; /* Занимают всю ширину */
+    justify-content: space-around;
+    width: 100%;
   }
 
   .nav-menu li {

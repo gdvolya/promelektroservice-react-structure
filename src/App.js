@@ -1,11 +1,10 @@
-// src/App.js
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import logo from "./img/logo.png";
 import "./css/style.css";
 
-// 🔁 Ленивая загрузка всех страниц
+// Ленивая загрузка всех страниц
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage"));
