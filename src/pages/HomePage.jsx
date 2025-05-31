@@ -1,5 +1,5 @@
 import React from "react";
-import SeoHelmet from "../components/SeoHelmet";
+import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import "../css/HomePage.css";
 
@@ -19,12 +19,16 @@ function HomePage() {
 
   return (
     <main className="hero-section" itemScope itemType="https://schema.org/LocalBusiness">
-      <SeoHelmet
-        title={t("meta.title")}
-        description={t("meta.description")}
-        image="/img/background.webp"
-        url="https://promelektroservice.vercel.app"
-      />
+      <Helmet>
+        <title>{t("meta.title")}</title>
+        <meta name="description" content={t("meta.description")} />
+        <meta property="og:title" content={t("meta.ogTitle")} />
+        <meta property="og:description" content={t("meta.ogDescription")} />
+        <meta property="og:image" content="/img/background.webp" />
+        <meta property="og:url" content="https://promelektroservice.vercel.app" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="preload" as="image" href="/img/background.webp" imagesrcset="/img/background.webp 1x, /img/background@2x.webp 2x" imagesizes="100vw" />
+      </Helmet>
 
       <img
         src="/img/background.webp"
@@ -34,6 +38,7 @@ function HomePage() {
         loading="eager"
         width="1920"
         height="1080"
+        sizes="100vw"
       />
 
       <LanguageSwitcher />
