@@ -14,24 +14,14 @@
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#003366" />
 
-    <!-- Оптимизированная загрузка стилей -->
-    <link
-      rel="stylesheet"
-      href="/static/css/main.chunk.css"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript><link rel="stylesheet" href="/static/css/main.chunk.css" /></noscript>
-
-    <!-- Шрифты с font-display: swap -->
+    <!-- Предзагрузка внешних источников -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://firestore.googleapis.com" />
 
-    <link rel="preload" href="/img/background.webp" as="image" type="image/webp" />
+    <!-- ✅ Без preload CSS — пусть React сам вставит нужное -->
+    <link rel="stylesheet" href="/static/css/main.chunk.css" />
 
+    <!-- Favicon и Manifest -->
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
