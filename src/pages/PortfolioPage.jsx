@@ -1,5 +1,7 @@
 // src/pages/PortfolioPage.jsx
 import React from "react";
+import MetaTags from "../components/MetaTags";
+
 
 // Импорт изображений
 import project1 from "../img/project1.webp";
@@ -29,27 +31,17 @@ const projects = [
 
 const PortfolioPage = () => {
   return (
-    <main className="page-with-footer">
-      <section id="portfolio">
-        <h1>Портфоліо</h1>
-        <h2>Наші роботи</h2>
-        <div className="portfolio-gallery">
-          {projects.map((img, idx) => (
-            <img
-              key={idx}
-              src={img.src}
-              srcSet={`${img.src} 1x, ${img.src2x} 2x`}
-              alt={img.alt}
-              className="portfolio-img"
-              width="300"
-              height="200"
-              loading="lazy"
-              decoding="async"
-            />
-          ))}
-        </div>
-      </section>
-    </main>
+    <>
+  <MetaTags
+    title="Портфоліо | ПромЕлектроСервіс"
+    description="Дивіться приклади наших електромонтажних робіт"
+    url="https://promelektroservice.vercel.app/portfolio"
+    image="/img/project1.webp"
+  />
+  <main className="page-with-footer">
+    ...
+  </main>
+</>
   );
 };
 

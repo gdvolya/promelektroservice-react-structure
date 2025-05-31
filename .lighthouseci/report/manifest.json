@@ -2,36 +2,36 @@
   {
     "url": "https://promelektroservice-react-structure.vercel.app/",
     "isRepresentativeRun": false,
-    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_21_34.report.html",
-    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_21_34.report.json",
+    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_42_40.report.html",
+    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_42_40.report.json",
     "summary": {
-      "performance": 0.57,
+      "performance": 0.78,
       "accessibility": 0.91,
-      "best-practices": 0.93,
+      "best-practices": 0.96,
       "seo": 1
     }
   },
   {
     "url": "https://promelektroservice-react-structure.vercel.app/",
     "isRepresentativeRun": false,
-    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_22_15.report.html",
-    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_22_15.report.json",
+    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_43_17.report.html",
+    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_43_17.report.json",
     "summary": {
-      "performance": 0.73,
+      "performance": 0.84,
       "accessibility": 0.91,
-      "best-practices": 0.93,
+      "best-practices": 0.96,
       "seo": 1
     }
   },
   {
     "url": "https://promelektroservice-react-structure.vercel.app/",
     "isRepresentativeRun": true,
-    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_21_54.report.html",
-    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_21_54.report.json",
+    "htmlPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_43_00.report.html",
+    "jsonPath": "C:\\Users\\User\\Desktop\\promelektroservice-react-structure\\.lighthouseci\\report\\promelektroservice_react_structure_vercel_app-_-2025_05_31_08_43_00.report.json",
     "summary": {
-      "performance": 0.59,
+      "performance": 0.81,
       "accessibility": 0.91,
-      "best-practices": 0.93,
+      "best-practices": 0.96,
       "seo": 1
     }
   }
