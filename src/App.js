@@ -4,7 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import logo from "./img/logo.png";
 import "./css/style.css";
 
-// Ленивая загрузка всех страниц
+// 🔁 Ленивая загрузка всех страниц
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage"));
@@ -17,12 +17,12 @@ function App() {
     <HelmetProvider>
       <Router>
         <div className="app-wrapper">
-          <header className="site-header">
+          <header className="site-header" role="banner">
             <div className="header-container">
               <Link to="/" aria-label="Головна">
-                <img src={logo} alt="Логотип ПромЕлектроСервіс" className="logo-left" width="60" height="50" />
+                <img src={logo} alt="Логотип ПромЕлектроСервіс" className="logo-left" width="60" height="60" fetchpriority="high" />
               </Link>
-              <nav aria-label="Головне меню">
+              <nav aria-label="Головне меню" role="navigation">
                 <ul className="nav-menu centered">
                   <li><Link to="/">Головна</Link></li>
                   <li><Link to="/portfolio">Портфоліо</Link></li>
@@ -34,8 +34,8 @@ function App() {
             </div>
           </header>
 
-          <main className="main-content">
-            <Suspense fallback={<div className="loading-spinner" aria-label="Завантаження..." role="status" />}> {/* 🔄 Добавлен спиннер */}
+          <main className="main-content" role="main">
+            <Suspense fallback={<div className="loading-spinner" aria-label="Завантаження..."><div className="spinner" /></div>}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/portfolio" element={<PortfolioPage />} />
@@ -47,7 +47,7 @@ function App() {
             </Suspense>
           </main>
 
-          <footer className="footer minimized-footer sticky-footer">
+          <footer className="footer minimized-footer sticky-footer" role="contentinfo">
             <div className="footer-top">
               <a href="tel:+380666229776" className="footer-link">📞 +380666229776</a>
               <a href="mailto:gdvolya@gmail.com" className="footer-link">✉️ gdvolya@gmail.com</a>
