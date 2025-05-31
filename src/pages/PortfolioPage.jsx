@@ -1,7 +1,5 @@
-// src/pages/PortfolioPage.jsx
 import React from "react";
-import MetaTags from "../components/MetaTags";
-
+import SeoHelmet from "../components/SeoHelmet";
 
 // Импорт изображений
 import project1 from "../img/project1.webp";
@@ -30,18 +28,37 @@ const projects = [
 ];
 
 const PortfolioPage = () => {
+  const seoData = {
+    title: "Портфоліо — ПромЕлектроСервіс",
+    description: "Перегляньте наші роботи у галереї портфоліо.",
+    image: "/img/portfolio-preview.webp", // если есть
+    url: "https://promelektroservice.vercel.app/portfolio",
+  };
+
   return (
-    <>
-  <MetaTags
-    title="Портфоліо | ПромЕлектроСервіс"
-    description="Дивіться приклади наших електромонтажних робіт"
-    url="https://promelektroservice.vercel.app/portfolio"
-    image="/img/project1.webp"
-  />
-  <main className="page-with-footer">
-    ...
-  </main>
-</>
+    <main className="page-with-footer">
+      <SeoHelmet {...seoData} />
+
+      <section id="portfolio">
+        <h1>Портфоліо</h1>
+        <h2>Наші роботи</h2>
+        <div className="portfolio-gallery">
+          {projects.map((img, idx) => (
+            <img
+              key={idx}
+              src={img.src}
+              srcSet={`${img.src} 1x, ${img.src2x} 2x`}
+              alt={img.alt}
+              className="portfolio-img"
+              width="300"
+              height="200"
+              loading="lazy"
+              decoding="async"
+            />
+          ))}
+        </div>
+      </section>
+    </main>
   );
 };
 
