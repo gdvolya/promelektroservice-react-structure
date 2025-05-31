@@ -10,7 +10,6 @@
   overflow: hidden;
 }
 
-/* 🔽 Новый стиль для изображения, заменяющего background-image */
 .lcp-bg {
   position: absolute;
   inset: 0;
@@ -58,7 +57,6 @@
   z-index: 2;
 }
 
-/* Кнопки переключения языков */
 .language-switcher {
   position: absolute;
   top: 20px;
@@ -66,32 +64,23 @@
   z-index: 2;
 }
 
-.language-switcher select {
-  padding: 5px 10px;
-  border-radius: 5px;
+.language-switcher button {
+  margin: 0 4px;
+  padding: 4px 8px;
+  background: #fff;
   border: none;
-  background-color: rgba(255, 255, 255, 0.8);
-  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-/* Новая стилизация для кнопок переключения страниц */
-.nav-menu {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-.nav-menu li {
-  display: inline-block;
-}
-
+/* 📱 Адаптивность */
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2rem;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .language-switcher {
@@ -99,17 +88,7 @@
     right: 10px;
   }
 
-  .nav-menu {
-    flex-direction: row;
-    justify-content: space-around;
-    width: 100%;
-  }
-
-  .nav-menu li {
-    padding: 0 10px;
-  }
-
-  .fancy-title {
-    font-size: 24px;
+  .language-switcher button {
+    font-size: 12px;
   }
 }

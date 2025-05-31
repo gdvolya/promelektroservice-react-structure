@@ -30,17 +30,21 @@ function HomePage() {
         <link rel="preload" as="image" href="/img/background.webp" />
       </Helmet>
 
-      <img src="/img/background.webp" alt="Background" className="lcp-bg" fetchpriority="high" loading="eager" />
+      <img
+        src="/img/background.webp"
+        alt="Фон головної сторінки"
+        className="lcp-bg"
+        fetchpriority="high"
+        loading="eager"
+        width="1920"
+        height="1080"
+      />
 
       <LanguageSwitcher />
 
       <div className="hero-content">
-        <h1 className="hero-title fancy-title" itemProp="name">
-          {t("companyName")}
-        </h1>
-        <h2 className="hero-subtitle" itemProp="description">
-          {t("companyDescription")}
-        </h2>
+        <h1 className="hero-title fancy-title" itemProp="name">{t("companyName")}</h1>
+        <h2 className="hero-subtitle" itemProp="description">{t("companyDescription")}</h2>
         <div className="description">
           {Array.from({ length: 7 }, (_, i) => (
             <p key={i}>{t(`services.${i}`)}</p>

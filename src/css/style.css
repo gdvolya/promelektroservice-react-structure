@@ -40,7 +40,6 @@ body {
   font-weight: bold;
 }
 
-/* Герой-блок */
 .hero {
   text-align: center;
   padding: 60px 20px;
@@ -64,7 +63,6 @@ body {
   margin: 6px 0;
 }
 
-/* Портфолио */
 .portfolio-gallery {
   display: flex;
   justify-content: center;
@@ -77,11 +75,10 @@ body {
   width: 300px;
   height: auto;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 100%;
 }
 
-/* Отзывы */
 .review-textarea {
   width: 100%;
   max-width: 600px;
@@ -91,7 +88,6 @@ body {
   padding: 10px;
 }
 
-/* Контакты */
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -108,7 +104,6 @@ body {
   font-size: 16px;
 }
 
-/* Кнопка */
 .btn {
   background: #003366;
   color: white;
@@ -123,7 +118,6 @@ body {
   background: #005599;
 }
 
-/* Футер */
 .footer {
   text-align: center;
   background: #003366;
@@ -154,7 +148,6 @@ footer {
   padding: 1em;
 }
 
-/* 📱 Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
   .header-container {
     flex-direction: column;
@@ -162,9 +155,10 @@ footer {
   }
 
   .nav-menu {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
-    text-align: center;
   }
 
   .fancy-title {
@@ -180,5 +174,22 @@ footer {
 
   .btn {
     width: 100%;
+  }
+}
+
+/* 🔁 Спиннер для ленивой загрузки */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  margin: 80px auto;
+  border: 5px solid #ccc;
+  border-top-color: #003366;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

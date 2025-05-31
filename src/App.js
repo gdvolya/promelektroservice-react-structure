@@ -20,7 +20,7 @@ function App() {
           <header className="site-header">
             <div className="header-container">
               <Link to="/" aria-label="Головна">
-                <img src={logo} alt="Логотип ПромЕлектроСервіс" className="logo-left" width="60" height="60" />
+                <img src={logo} alt="Логотип ПромЕлектроСервіс" className="logo-left" width="60" height="50" />
               </Link>
               <nav aria-label="Головне меню">
                 <ul className="nav-menu centered">
@@ -35,7 +35,7 @@ function App() {
           </header>
 
           <main className="main-content">
-            <Suspense fallback={<div className="loading">Завантаження сторінки...</div>}>
+            <Suspense fallback={<div className="loading-spinner" aria-label="Завантаження..." role="status" />}> {/* 🔄 Добавлен спиннер */}
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/portfolio" element={<PortfolioPage />} />
