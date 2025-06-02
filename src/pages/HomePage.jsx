@@ -1,6 +1,6 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
+import SeoHelmet from "../components/SeoHelmet";
 import "../css/HomePage.css";
 
 function LanguageSwitcher() {
@@ -19,23 +19,22 @@ function HomePage() {
 
   return (
     <main className="hero-section" itemScope itemType="https://schema.org/LocalBusiness">
-      <Helmet>
-        <title>{t("meta.title")}</title>
-        <meta name="description" content={t("meta.description")} />
-        <meta property="og:title" content={t("meta.ogTitle")} />
-        <meta property="og:description" content={t("meta.ogDescription")} />
-        <meta property="og:image" content="/img/background.webp" />
-        <meta property="og:url" content="https://promelektroservice.vercel.app" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="preload" as="image" href="/img/background.webp" imagesrcset="/img/background.webp 1x, /img/background@2x.webp 2x" imagesizes="100vw" />
-      </Helmet>
+      <SeoHelmet
+        title={t("meta.title")}
+        description={t("meta.description")}
+        image="/img/background.webp"
+        url="https://promelektroservice.vercel.app"
+        preloadImage={true} // ✅ LCP image preload
+      />
 
       <img
         src="/img/background.webp"
+        srcSet="/img/background.webp 1x, /img/background@2x.webp 2x"
         alt="Фон головної сторінки"
         className="lcp-bg"
         fetchpriority="high"
         loading="eager"
+        decoding="async"
         width="1920"
         height="1080"
         sizes="100vw"

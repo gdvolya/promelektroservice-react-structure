@@ -27,6 +27,7 @@ const PortfolioPage = () => {
         description="Ознайомтесь із нашими електромонтажними проектами"
         image="/img/portfolio-cover.webp"
         url="https://promelektroservice.vercel.app/portfolio"
+        preloadImage={false} // ❌ не LCP, поэтому preload отключен
       />
       <section id="portfolio">
         <h1>Портфоліо</h1>
@@ -36,6 +37,8 @@ const PortfolioPage = () => {
             <img
               key={idx}
               src={img.src}
+              srcSet={`${img.src} 1x, ${img.src.replace(".webp", "@2x.webp")} 2x`}
+              sizes="(max-width: 768px) 100vw, 300px"
               alt={img.alt}
               className="portfolio-img"
               width="300"
