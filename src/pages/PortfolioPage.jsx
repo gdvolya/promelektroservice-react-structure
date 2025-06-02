@@ -1,22 +1,14 @@
 import React from "react";
 import SeoHelmet from "../components/SeoHelmet";
 
-import project1 from "../img/project1.webp";
-import project2 from "../img/project2.webp";
-import project3 from "../img/project3.webp";
-import project4 from "../img/project4.webp";
-import project5 from "../img/project5.webp";
-import project6 from "../img/project6.webp";
-import project7 from "../img/project7.webp";
-
 const projects = [
-  { src: project1, alt: "Проєкт 1" },
-  { src: project2, alt: "Проєкт 2" },
-  { src: project3, alt: "Проєкт 3" },
-  { src: project4, alt: "Проєкт 4" },
-  { src: project5, alt: "Проєкт 5" },
-  { src: project6, alt: "Проєкт 6" },
-  { src: project7, alt: "Проєкт 7" },
+  { src: "/img/project1.webp", alt: "Проєкт 1" },
+  { src: "/img/project2.webp", alt: "Проєкт 2" },
+  { src: "/img/project3.webp", alt: "Проєкт 3" },
+  { src: "/img/project4.webp", alt: "Проєкт 4" },
+  { src: "/img/project5.webp", alt: "Проєкт 5" },
+  { src: "/img/project6.webp", alt: "Проєкт 6" },
+  { src: "/img/project7.webp", alt: "Проєкт 7" },
 ];
 
 const PortfolioPage = () => {
