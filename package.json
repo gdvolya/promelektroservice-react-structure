@@ -21,13 +21,14 @@
     "xlsx": "^0.18.5"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "npm run generate-sitemap && craco build",
-    "generate-sitemap": "node scripts/generate-sitemap.js",
-    "test": "craco test",
-    "eject": "react-scripts eject",
-    "deploy": "npm run build && vercel --prod && git add -A && git commit -m \"Refactor: ленивые маршруты и Firebase только для AdminPanel, обновления Lighthouse отчетов\" && git push origin main && lhci autorun"
+  "start": "craco start",
+  "build": "npm run generate-sitemap && craco build",
+  "generate-sitemap": "node scripts/generate-sitemap.js",
+  "test": "craco test",
+  "eject": "react-scripts eject",
+  "deploy": "npm run build && vercel --prod && git add -A && git commit -m \"Refactor: ленивые маршруты и Firebase только для AdminPanel, обновления Lighthouse отчетов\" && git push origin main && lhci autorun"
   },
+
   "browserslist": {
     "production": [
       ">0.2%",
