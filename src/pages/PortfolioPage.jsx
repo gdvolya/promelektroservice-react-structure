@@ -27,7 +27,7 @@ const PortfolioPage = () => {
         description="Ознайомтесь із нашими електромонтажними проектами"
         image="/img/portfolio-cover.webp"
         url="https://promelektroservice.vercel.app/portfolio"
-        preloadImage={false} // ❌ не LCP, поэтому preload отключен
+        preloadImage={false}
       />
       <section id="portfolio">
         <h1>Портфоліо</h1>

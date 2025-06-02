@@ -20,7 +20,15 @@ function App() {
           <header className="site-header" role="banner">
             <div className="header-container">
               <Link to="/" aria-label="Головна">
-                <img src={logo} alt="Логотип ПромЕлектроСервіс" className="logo-left" width="60" height="60" fetchpriority="high" />
+                <img
+                  src={logo}
+                  alt="Логотип ПромЕлектроСервіс"
+                  className="logo-left"
+                  width="60"
+                  height="60"
+                  fetchpriority="high"
+                  loading="eager"
+                />
               </Link>
               <nav aria-label="Головне меню" role="navigation">
                 <ul className="nav-menu centered">
@@ -35,7 +43,7 @@ function App() {
           </header>
 
           <main className="main-content" role="main">
-            <Suspense fallback={<div className="loading-spinner" aria-label="Завантаження..."><div className="spinner" /></div>}>
+            <Suspense fallback={<div className="loading-spinner" role="status" aria-live="polite"><div className="spinner" /></div>}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/portfolio" element={<PortfolioPage />} />

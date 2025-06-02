@@ -24,7 +24,7 @@ function HomePage() {
         description={t("meta.description")}
         image="/img/background.webp"
         url="https://promelektroservice.vercel.app"
-        preloadImage={true} // ✅ LCP image preload
+        preloadImage={true} // LCP изображение
       />
 
       <img
@@ -43,8 +43,12 @@ function HomePage() {
       <LanguageSwitcher />
 
       <div className="hero-content">
-        <h1 className="hero-title fancy-title" itemProp="name">{t("companyName")}</h1>
-        <h2 className="hero-subtitle" itemProp="description">{t("companyDescription")}</h2>
+        <h1 className="hero-title fancy-title" itemProp="name">
+          {t("companyName")}
+        </h1>
+        <h2 className="hero-subtitle" itemProp="description">
+          {t("companyDescription")}
+        </h2>
         <div className="description">
           {Array.from({ length: 7 }, (_, i) => (
             <p key={i}>{t(`services.${i}`)}</p>
