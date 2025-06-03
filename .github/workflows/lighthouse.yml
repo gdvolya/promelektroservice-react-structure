@@ -1,11 +1,11 @@
 name: Lighthouse CI
 
 on:
-  workflow_dispatch:  # ручной запуск из UI GitHub
+  workflow_dispatch:  # Ручной запуск из UI GitHub
   push:
     branches:
-      - main
-  pull_request:
+      - main  # Запуск при пуше в основную ветку
+  pull_request:  # Запуск для pull request'ов
 
 jobs:
   lighthouse:
@@ -18,13 +18,13 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 18  # Устанавливаем нужную версию Node.js
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm ci --legacy-peer-deps  # Устанавливаем зависимости с флагом для совместимости
 
       - name: Install Lighthouse CI
-        run: npm install -g @lhci/cli
+        run: npm install -g @lhci/cli  # Устанавливаем Lighthouse CI CLI
 
       - name: Create .lighthouserc.js
         run: |
@@ -46,16 +46,16 @@ jobs:
                 }
               }
             }
-          };" > lighthouserc.js
+          };" > .lighthouserc.js  # Создаём файл конфигурации
 
       - name: Run Lighthouse CI
-        run: lhci autorun
+        run: lhci autorun  # Запускаем Lighthouse CI
 
       - name: Check Lighthouse output
-        run: ls -R .lighthouseci
+        run: ls -R .lighthouseci  # Проверяем результат работы CI
 
       - name: Upload Lighthouse Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-report
-          path: .lighthouseci/report/*.html
+          name: lighthouse-report  # Имя артефакта
+          path: .lighthouseci/report/*.html  # Загружаем все HTML отчёты из каталога

@@ -10,6 +10,8 @@
     "i18next": "^25.1.2",
     "i18next-browser-languagedetector": "^8.1.0",
     "i18next-http-backend": "^3.0.2",
+    "postcss": "^8.5.4",
+    "postcss-cli": "^11.0.1",
     "react": "^18.0.0",
     "react-cookie-consent": "^9.0.0",
     "react-dom": "^18.0.0",
@@ -17,18 +19,17 @@
     "react-helmet-async": "^2.0.5",
     "react-i18next": "^15.5.1",
     "react-router-dom": "^6.30.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "xlsx": "^0.18.5"
   },
   "scripts": {
-  "start": "craco start",
-  "build": "npm run generate-sitemap && craco build",
-  "generate-sitemap": "node scripts/generate-sitemap.js",
-  "test": "craco test",
-  "eject": "react-scripts eject",
-  "deploy": "npm run build && vercel --prod && git add -A && git commit -m \"Refactor: ленивые маршруты и Firebase только для AdminPanel, обновления Lighthouse отчетов\" && git push origin main && lhci autorun"
+    "start": "craco start",
+    "build": "npm run generate-sitemap && craco build",
+    "generate-sitemap": "node scripts/generate-sitemap.js",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && vercel --prod && git add -A && git commit -m \"Refactor: ленивые маршруты и Firebase только для AdminPanel, обновления Lighthouse отчетов\" && git push origin main && lhci autorun"
   },
-
   "browserslist": {
     "production": [
       ">0.2%",
