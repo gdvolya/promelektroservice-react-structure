@@ -1,6 +1,6 @@
 {
   "name": "promelektroservice-react",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.1.0",
@@ -12,7 +12,6 @@
     "i18next-http-backend": "^3.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-helmet": "^6.1.0",
     "react-helmet-async": "^2.0.5",
     "react-i18next": "^15.5.1",
     "react-router-dom": "^6.30.0",
@@ -25,7 +24,7 @@
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && vercel --prod && git add -A && git commit -m \"Refactor: ленивые маршруты и Firebase только для AdminPanel, обновления Lighthouse отчетов\" && git push origin main && lhci autorun"
+    "deploy": "npm run build && vercel --prod && git add -A && git commit -m \"🚀 Релиз\" && git push origin main && lhci autorun"
   },
   "browserslist": {
     "production": [

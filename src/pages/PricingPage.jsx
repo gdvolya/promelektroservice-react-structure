@@ -1,20 +1,57 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import SeoHelmet from "../components/SeoHelmet";
+import "../styles/PricingPage.css";
 
-function PricingPage() {
+const PricingPage = () => {
+  const { t } = useTranslation();
+
   return (
-    <main className="page-with-footer">
-      <section id="pricing">
-        <h1>Ціни</h1>
-        <h2>Вартість основних послуг</h2>
-        <ul className="price-list">
-          <li>Монтаж СЕС — від 15000 грн</li>
-          <li>Електропроводка — від 120 грн/м²</li>
-          <li>Встановлення щитка — від 1000 грн</li>
-          <li>Освітлення — від 200 грн/точка</li>
-        </ul>
+    <main className="pricing-page">
+      <SeoHelmet
+        title={t("pricing.meta.title")}
+        description={t("pricing.meta.description")}
+        url="https://promelektroservice.com/pricing"
+      />
+
+      <section className="pricing-section">
+        <h1>{t("pricing.title")}</h1>
+        <p>{t("pricing.subtitle")}</p>
+
+        <div className="pricing-grid">
+          <div className="pricing-card">
+            <h2>{t("pricing.basic.title")}</h2>
+            <p className="price">₴1 000+</p>
+            <ul>
+              <li>{t("pricing.basic.item1")}</li>
+              <li>{t("pricing.basic.item2")}</li>
+              <li>{t("pricing.basic.item3")}</li>
+            </ul>
+          </div>
+
+          <div className="pricing-card">
+            <h2>{t("pricing.standard.title")}</h2>
+            <p className="price">₴3 000+</p>
+            <ul>
+              <li>{t("pricing.standard.item1")}</li>
+              <li>{t("pricing.standard.item2")}</li>
+              <li>{t("pricing.standard.item3")}</li>
+            </ul>
+          </div>
+
+          <div className="pricing-card">
+            <h2>{t("pricing.premium.title")}</h2>
+            <p className="price">₴6 000+</p>
+            <ul>
+              <li>{t("pricing.premium.item1")}</li>
+              <li>{t("pricing.premium.item2")}</li>
+              <li>{t("pricing.premium.item3")}</li>
+            </ul>
+          </div>
+        </div>
       </section>
     </main>
   );
-}
+};
 
 export default PricingPage;

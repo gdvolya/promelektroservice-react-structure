@@ -1,62 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import SeoHelmet from "../components/SeoHelmet";
+import "../styles/ReviewsPage.css";
 
-function ReviewsPage() {
-  const [reviews, setReviews] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-
-  useEffect(() => {
-    const fetchReviews = async () => {
-      const querySnapshot = await getDocs(collection(db, "reviews"));
-      const reviewsData = querySnapshot.docs.map(doc => doc.data());
-      setReviews(reviewsData);
-    };
-    fetchReviews();
-  }, []);
-
-  const handleSubmit = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (inputValue.trim() && name.trim() && email.trim() && emailRegex.test(email)) {
-      const newReview = { text: inputValue.trim(), name, email };
-      await addDoc(collection(db, "reviews"), newReview);
-      setReviews(prev => [...prev, newReview]);
-      setInputValue("");
-      setName("");
-      setEmail("");
-    } else {
-      alert("Будь ласка, заповніть всі поля коректно.");
-    }
-  };
+const ReviewsPage = () => {
+  const { t } = useTranslation();
 
   return (
-    <main className="page-with-footer">
-      <section id="reviews">
-        <h2>Відгуки клієнтів</h2>
-        <input type="text" placeholder="Ваше ім’я" value={name} onChange={(e) => setName(e.target.value)} required />
-        <input type="email" placeholder="Ваш email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <textarea
-          placeholder="Напишіть свій відгук..."
-          className="review-textarea"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        ></textarea>
-        <div style={{ textAlign: "center" }}>
-          <button className="btn" onClick={handleSubmit}>Надіслати</button>
-        </div>
+    <main className="reviews-page">
+      <SeoHelmet
+        title={t("reviews.meta.title")}
+        description={t("reviews.meta.description")}
+        url="https://promelektroservice.com/reviews"
+      />
+
+      <section className="reviews-section">
+        <h1>{t("reviews.title")}</h1>
+        <p>{t("reviews.subtitle")}</p>
+
         <div className="reviews-list">
-          {reviews.map((review, index) => (
-            <div key={index} className="review-item">
-              <p><strong>{review.name}</strong> ({review.email})</p>
-              <p>{review.text}</p>
-            </div>
-          ))}
+          <div className="review">
+            <p className="review-text">
+              “{t("reviews.review1.text")}”
+            </p>
+            <p className="review-author">- {t("reviews.review1.author")}</p>
+          </div>
+
+          <div className="review">
+            <p className="review-text">
+              “{t("reviews.review2.text")}”
+            </p>
+            <p className="review-author">- {t("reviews.review2.author")}</p>
+          </div>
+
+          <div className="review">
+            <p className="review-text">
+              “{t("reviews.review3.text")}”
+            </p>
+            <p className="review-author">- {t("reviews.review3.author")}</p>
+          </div>
         </div>
       </section>
     </main>
   );
-}
+};
 
 export default ReviewsPage;

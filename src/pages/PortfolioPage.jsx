@@ -1,46 +1,44 @@
 import React from "react";
-import SeoHelmet from "../components/SeoHelmet";
+import { Helmet } from "react-helmet-async";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import projects from "../data/projects";
+import "../styles/PortfolioPage.css";
 
-const projects = [
-  { src: "/img/project1.webp", alt: "Проєкт 1" },
-  { src: "/img/project2.webp", alt: "Проєкт 2" },
-  { src: "/img/project3.webp", alt: "Проєкт 3" },
-  { src: "/img/project4.webp", alt: "Проєкт 4" },
-  { src: "/img/project5.webp", alt: "Проєкт 5" },
-  { src: "/img/project6.webp", alt: "Проєкт 6" },
-  { src: "/img/project7.webp", alt: "Проєкт 7" },
-];
+AOS.init();
 
 const PortfolioPage = () => {
   return (
-    <main className="page-with-footer">
-      <SeoHelmet
-        title="Портфоліо | ПромЕлектроСервіс"
-        description="Ознайомтесь із нашими електромонтажними проектами"
-        image="/img/portfolio-cover.webp"
-        url="https://promelektroservice.vercel.app/portfolio"
-        preloadImage={false}
-      />
-      <section id="portfolio">
-        <h1>Портфоліо</h1>
-        <h2>Наші роботи</h2>
-        <div className="portfolio-gallery">
-          {projects.map((img, idx) => (
+    <main className="portfolio-page">
+      <Helmet>
+        <title>Портфоліо - Promelektroservice</title>
+        <meta
+          name="description"
+          content="Приклади наших робіт: електромонтаж, освітлення, щитове обладнання та інше."
+        />
+      </Helmet>
+
+      <h1 data-aos="fade-up">Наші проекти</h1>
+      <div className="portfolio-grid">
+        {projects.map((project, index) => (
+          <div
+            key={index}
+            className="portfolio-card"
+            data-aos="zoom-in"
+            data-aos-delay={index * 100}
+          >
             <img
-              key={idx}
-              src={img.src}
-              srcSet={`${img.src} 1x, ${img.src.replace(".webp", "@2x.webp")} 2x`}
-              sizes="(max-width: 768px) 100vw, 300px"
-              alt={img.alt}
-              className="portfolio-img"
-              width="300"
-              height="200"
+              src={project.image}
+              alt={project.title}
               loading="lazy"
-              decoding="async"
             />
-          ))}
-        </div>
-      </section>
+            <div className="card-content">
+              <h2>{project.title}</h2>
+              <p>{project.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </main>
   );
 };
