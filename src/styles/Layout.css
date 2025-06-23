@@ -1,20 +1,66 @@
 .site-wrapper {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #fafafa;
 }
 
-.site-header,
-.site-footer {
-  transition: background 0.3s ease;
+.site-header {
+  background: #212121;
+  padding: 1rem 0;
 }
 
-.site-header a,
-.site-footer a {
+.site-header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.logo a {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
   text-decoration: none;
-  color: inherit;
 }
 
-.site-header a:hover,
-.site-footer a:hover {
-  opacity: 0.8;
+.main-nav a {
+  color: #ddd;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  transition: color 0.3s;
+}
+
+.main-nav a:hover {
+  color: #fff;
+}
+
+.site-content {
+  flex: 1;
+  padding: 2rem 1rem;
+}
+
+.site-footer {
+  background: #212121;
+  color: #ccc;
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.site-footer .footer-links a {
+  color: #ccc;
+  margin: 0 0.5rem;
+  text-decoration: none;
+}
+
+.site-footer .footer-links a:hover {
+  color: #fff;
+}
+
+.footer-contact {
+  margin: 0.5rem 0;
 }
