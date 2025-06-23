@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Layout.css";
 
 const Layout = ({ children }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   return (
     <div className="site-wrapper">
       <header className="site-header">
@@ -10,10 +14,28 @@ const Layout = ({ children }) => {
           <div className="logo">
             <Link to="/">Promelektroservice</Link>
           </div>
-          <nav className="main-nav">
-            <Link to="/portfolio">Портфоліо</Link>
-            <Link to="/pricing">Послуги</Link>
-            <Link to="/contacts">Контакти</Link>
+
+          {/* Кнопка-бургер */}
+          <button
+            className={`menu-toggle ${isMenuOpen ? "open" : ""}`}
+            aria-label="Toggle menu"
+            onClick={toggleMenu}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <nav className={`main-nav ${isMenuOpen ? "open" : ""}`}>
+            <Link to="/portfolio" onClick={() => setIsMenuOpen(false)}>
+              Портфоліо
+            </Link>
+            <Link to="/pricing" onClick={() => setIsMenuOpen(false)}>
+              Послуги
+            </Link>
+            <Link to="/contacts" onClick={() => setIsMenuOpen(false)}>
+              Контакти
+            </Link>
           </nav>
         </div>
       </header>
