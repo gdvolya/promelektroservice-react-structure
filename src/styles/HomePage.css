@@ -14,7 +14,7 @@
   min-height: 80vh;
   color: white;
   overflow: hidden;
-  background: url('/img/background@2x.webp') center/cover no-repeat;
+  background: url('../assets/background@2x.webp') center/cover no-repeat;
 }
 
 .hero-overlay {
