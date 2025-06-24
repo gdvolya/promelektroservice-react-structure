@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import projects from "../data/projects";
 import "../styles/PortfolioPage.css";
 
-AOS.init();
-
 const PortfolioPage = () => {
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
+
   return (
     <main className="portfolio-page">
       <Helmet>
@@ -18,7 +20,11 @@ const PortfolioPage = () => {
         />
       </Helmet>
 
-      <h1 data-aos="fade-up">Наші проекти</h1>
+      <section className="portfolio-header" data-aos="fade-down">
+        <h1>Наші проекти</h1>
+        <p>Дізнайтесь більше про наші реалізовані роботи для клієнтів у Києві.</p>
+      </section>
+
       <div className="portfolio-grid">
         {projects.map((project, index) => (
           <div
@@ -29,12 +35,19 @@ const PortfolioPage = () => {
           >
             <img
               src={project.image}
-              alt={project.title}
+              alt={`Проект: ${project.title}`}
               loading="lazy"
+              className="portfolio-image"
             />
             <div className="card-content">
               <h2>{project.title}</h2>
               <p>{project.description}</p>
+              <button
+                className="details-btn"
+                onClick={() => alert(`Деталі проекту: ${project.title}`)}
+              >
+                Детальніше
+              </button>
             </div>
           </div>
         ))}

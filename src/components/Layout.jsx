@@ -12,14 +12,16 @@ const Layout = ({ children }) => {
     <div className="site-wrapper">
       <header className="site-header">
         <div className="container">
-          {/* Логотип */}
           <div className="logo">
             <Link to="/" onClick={closeMenu}>
-              <img src="/img/logo.svg" alt="Promelektroservice" className="site-logo" />
+              <img
+                src="/img/logo.png"
+                alt="Promelektroservice"
+                className="site-logo"
+              />
             </Link>
           </div>
 
-          {/* Кнопка-бургер */}
           <button
             className={`menu-toggle ${isMenuOpen ? "open" : ""}`}
             aria-label="Toggle menu"
@@ -30,7 +32,6 @@ const Layout = ({ children }) => {
             <span></span>
           </button>
 
-          {/* Навігаційне меню */}
           <nav className={`main-nav ${isMenuOpen ? "open" : ""}`}>
             <Link to="/portfolio" onClick={closeMenu}>Портфоліо</Link>
             <Link to="/pricing" onClick={closeMenu}>Послуги</Link>
