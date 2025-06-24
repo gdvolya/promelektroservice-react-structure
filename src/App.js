@@ -4,10 +4,9 @@ import { HelmetProvider } from "react-helmet-async";
 import Layout from "./components/Layout";
 import "./styles/global.css";
 
-// Динамічний імпорт сторінок
 const HomePage = lazy(() => import("./pages/HomePage"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage"));
-const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage")); // окремий проект
+const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage"));
 const ReviewsPage = lazy(() => import("./pages/ReviewsPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
@@ -35,11 +34,8 @@ function App() {
               <Route path="/pricing" element={<PricingPage />} />
               <Route path="/admin" element={<AdminPanel />} />
 
-              {/* Сторінка 404 */}
-              <Route
-                path="*"
-                element={<div className="not-found">Сторінку не знайдено</div>}
-              />
+              {/* 404 страница */}
+              <Route path="*" element={<div className="not-found">Сторінку не знайдено</div>} />
             </Route>
           </Routes>
         </Suspense>
