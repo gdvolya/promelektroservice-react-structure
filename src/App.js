@@ -29,13 +29,17 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<HomePage />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/portfolio/:projectId" element={<ProjectDetailPage />} /> {/* окремий проект */}
+              <Route path="/portfolio/:projectId" element={<ProjectDetailPage />} />
               <Route path="/contacts" element={<ContactsPage />} />
               <Route path="/reviews" element={<ReviewsPage />} />
               <Route path="/pricing" element={<PricingPage />} />
               <Route path="/admin" element={<AdminPanel />} />
+
               {/* Сторінка 404 */}
-              <Route path="*" element={<div className="not-found">Сторінку не знайдено</div>} />
+              <Route
+                path="*"
+                element={<div className="not-found">Сторінку не знайдено</div>}
+              />
             </Route>
           </Routes>
         </Suspense>
