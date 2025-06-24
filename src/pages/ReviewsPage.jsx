@@ -1,45 +1,36 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
-import SeoHelmet from "../components/SeoHelmet";
+import { Helmet } from "react-helmet-async";
 import "../styles/ReviewsPage.css";
 
 const ReviewsPage = () => {
-  const { t } = useTranslation();
-
   return (
     <main className="reviews-page">
-      <SeoHelmet
-        title={t("reviews.meta.title")}
-        description={t("reviews.meta.description")}
-        url="https://promelektroservice.com/reviews"
-      />
+      <Helmet>
+        <title>Відгуки — Promelektroservice</title>
+        <meta
+          name="description"
+          content="Відгуки наших клієнтів про електромонтажні роботи."
+        />
+      </Helmet>
 
-      <section className="reviews-section">
-        <h1>{t("reviews.title")}</h1>
-        <p>{t("reviews.subtitle")}</p>
+      <h1>Відгуки клієнтів</h1>
+      <section className="reviews-list">
+        <article className="review-item">
+          <h2>Олександр</h2>
+          <p>Чудова робота — швидко та професійно. Рекомендую всім!</p>
+        </article>
+        <article className="review-item">
+          <h2>Марія</h2>
+          <p>Монтаж освітлення зробили навіть раніше за термін. Дуже задоволена результатом.</p>
+        </article>
+      </section>
 
-        <div className="reviews-list">
-          <div className="review">
-            <p className="review-text">
-              “{t("reviews.review1.text")}”
-            </p>
-            <p className="review-author">- {t("reviews.review1.author")}</p>
-          </div>
-
-          <div className="review">
-            <p className="review-text">
-              “{t("reviews.review2.text")}”
-            </p>
-            <p className="review-author">- {t("reviews.review2.author")}</p>
-          </div>
-
-          <div className="review">
-            <p className="review-text">
-              “{t("reviews.review3.text")}”
-            </p>
-            <p className="review-author">- {t("reviews.review3.author")}</p>
-          </div>
-        </div>
+      <section className="review-form">
+        <h2>Залишити відгук</h2>
+        <form>
+          <textarea placeholder="Напишіть свій відгук..." required></textarea>
+          <button className="submit-btn" type="submit">Надіслати</button>
+        </form>
       </section>
     </main>
   );

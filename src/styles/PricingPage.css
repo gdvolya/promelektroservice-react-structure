@@ -1,23 +1,14 @@
 .pricing-page {
   padding: 4rem 2rem;
-  background-color: #fefefe;
-}
-
-.pricing-section {
-  max-width: 1200px;
-  margin: 0 auto;
+  background: #fafafa;
   text-align: center;
+  min-height: 100vh;
 }
 
-.pricing-section h1 {
+.pricing-page h1 {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.pricing-section p {
-  font-size: 1.2rem;
-  margin-bottom: 3rem;
-  color: #666;
+  margin-bottom: 2rem;
+  color: #212121;
 }
 
 .pricing-grid {
@@ -27,15 +18,15 @@
 }
 
 .pricing-card {
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  padding: 2rem;
-  transition: transform 0.3s ease;
+  background: white;
+  padding: 2rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s;
 }
 
 .pricing-card:hover {
-  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 .pricing-card h2 {
@@ -43,10 +34,10 @@
   margin-bottom: 0.5rem;
 }
 
-.pricing-card .price {
-  font-size: 2rem;
-  color: #2b6cb0;
-  margin: 1rem 0;
+.price {
+  font-size: 1.25rem;
+  color: #007bff;
+  margin: 0.5rem 0 1rem;
 }
 
 .pricing-card ul {
@@ -55,7 +46,7 @@
   margin: 0;
 }
 
-.pricing-card ul li {
-  margin-bottom: 0.5rem;
-  color: #444;
+.pricing-card li {
+  padding: 0.25rem 0;
+  color: #555;
 }
