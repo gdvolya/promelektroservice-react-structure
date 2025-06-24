@@ -6,13 +6,17 @@ const Layout = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <div className="site-wrapper">
       <header className="site-header">
         <div className="container">
+          {/* Логотип */}
           <div className="logo">
-            <Link to="/">Promelektroservice</Link>
+            <Link to="/" onClick={closeMenu}>
+              <img src="/img/logo.svg" alt="Promelektroservice" className="site-logo" />
+            </Link>
           </div>
 
           {/* Кнопка-бургер */}
@@ -26,16 +30,11 @@ const Layout = ({ children }) => {
             <span></span>
           </button>
 
+          {/* Навігаційне меню */}
           <nav className={`main-nav ${isMenuOpen ? "open" : ""}`}>
-            <Link to="/portfolio" onClick={() => setIsMenuOpen(false)}>
-              Портфоліо
-            </Link>
-            <Link to="/pricing" onClick={() => setIsMenuOpen(false)}>
-              Послуги
-            </Link>
-            <Link to="/contacts" onClick={() => setIsMenuOpen(false)}>
-              Контакти
-            </Link>
+            <Link to="/portfolio" onClick={closeMenu}>Портфоліо</Link>
+            <Link to="/pricing" onClick={closeMenu}>Послуги</Link>
+            <Link to="/contacts" onClick={closeMenu}>Контакти</Link>
           </nav>
         </div>
       </header>
@@ -50,9 +49,7 @@ const Layout = ({ children }) => {
           </div>
           <div className="footer-contact">
             <span>☎ +38 (066) 622-97-76</span> |{" "}
-            <a href="mailto:info@promelektroservice.com">
-              info@promelektroservice.com
-            </a>
+            <a href="mailto:info@promelektroservice.com">info@promelektroservice.com</a>
           </div>
           <p>&copy; {new Date().getFullYear()} Promelektroservice. Всі права захищено.</p>
         </div>

@@ -25,23 +25,21 @@
   justify-content: space-between;
 }
 
-.logo a {
-  color: #ffca28;
-  font-size: 1.75rem;
-  font-weight: 800;
-  text-decoration: none;
-  letter-spacing: 1px;
-  transition: color 0.3s;
+/* Логотип як картинка */
+.site-logo {
+  height: 50px;
+  width: auto;
+  transition: opacity 0.3s ease;
+}
+.site-logo:hover {
+  opacity: 0.8;
 }
 
-.logo a:hover {
-  color: #fff;
-}
-
-/* Main nav */
+/* Навігаційне меню */
 .main-nav {
   display: flex;
   gap: 1.5rem;
+  transition: max-height 0.3s ease-in-out;
 }
 
 .main-nav a {
@@ -55,6 +53,36 @@
 .main-nav a:hover {
   color: #212121;
   background: #ffca28;
+}
+
+/* Кнопка-бургер */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  background: #fff;
+  height: 3px;
+  border-radius: 2px;
+  width: 100%;
+  transition: all 0.3s;
+}
+
+.menu-toggle.open span:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.open span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
 }
 
 /* ===== Content ===== */
@@ -92,14 +120,28 @@
   margin: 0.5rem 0;
 }
 
-/* ===== Responsive ===== */
+/* ===== Responsive Styles ===== */
 @media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
   .main-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     background: #212121;
     padding: 1rem 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .main-nav.open {
+    max-height: 500px;
   }
 
   .main-nav a {
