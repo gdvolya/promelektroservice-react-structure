@@ -11,7 +11,7 @@ const SeoHelmet = ({
   locale = "uk_UA",
   siteName = "ПромЕлектроСервіс",
   jsonLd = null,
-  preloadImage = false, // ✅ контролируем preload вручную
+  preloadImage = false,
 }) => {
   const structuredData = jsonLd || {
     "@context": "https://schema.org",
@@ -30,9 +30,13 @@ const SeoHelmet = ({
     "telephone": "+380666229776"
   };
 
+  const image2x = image.endsWith(".webp")
+    ? image.replace(".webp", "@2x.webp")
+    : image;
+
   return (
     <Helmet>
-      {/* SEO title and description */}
+      {/* SEO basics */}
       <title>{title}</title>
       <meta name="description" content={description} />
 
@@ -54,11 +58,23 @@ const SeoHelmet = ({
       {/* Favicon */}
       <link rel="icon" href="/favicon.ico" />
 
-      {/* ✅ Optional image preload only if explicitly requested */}
-      {preloadImage && <link rel="preload" as="image" href={image} />}
+      {/* Optional LCP image preload */}
+      {preloadImage && (
+        <link
+          rel="preload"
+          as="image"
+          href={image}
+          imagesrcset={`${image} 1x, ${image2x} 2x`}
+          imagesizes="100vw"
+          type="image/webp"
+        />
+      )}
 
       {/* JSON-LD structured data */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
     </Helmet>
   );
 };
