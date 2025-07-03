@@ -1,19 +1,15 @@
 {
-  "home": "Home",
-  "portfolio": "Portfolio",
-  "reviews": "Reviews",
-  "pricing": "Pricing",
-  "contacts": "Contacts",
-  "companyName": "PromElectroService",
-  "companyDescription": "Professional electrical installation services of any complexity",
-  "services": [
-    "— Installation of solar power stations (SES)",
-    "— Cable line laying",
-    "— Assembly and installation of automation boards",
-    "— Commissioning of facilities",
-    "— Electrical equipment repair",
-    "— Maintenance of electrical installations",
-    "— Electrical measurements and reports"
-  ],
-  "views": "Views"
+  "home": {
+    "bannerAlt": "Promelektroservice — turnkey electrical installation",
+    "subtitle": "High-quality electrical installation for home, office, and business in Kyiv.",
+    "projectsBtn": "Our Projects",
+    "contactBtn": "Contact Us",
+    "whyChooseUs": "Why Choose Us?",
+    "speed": "Speed",
+    "speedDesc": "We work fast, without delays or downtime.",
+    "quality": "Quality",
+    "qualityDesc": "High standards and reliable solutions for every project.",
+    "safety": "Safety",
+    "safetyDesc": "We use only certified equipment."
+  }
 }

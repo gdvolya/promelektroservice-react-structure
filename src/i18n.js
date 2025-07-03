@@ -1,34 +1,43 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import HttpApi from "i18next-http-backend";
+import HttpBackend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
+// 📦 Инициализация i18next
 i18n
-  .use(HttpApi)
-  .use(LanguageDetector)
-  .use(initReactI18next)
+  .use(HttpBackend) // Загрузка переводов по HTTP
+  .use(LanguageDetector) // Автоопределение языка
+  .use(initReactI18next) // Подключение к react-i18next
   .init({
-    fallbackLng: "uk",
+    fallbackLng: "uk", // Язык по умолчанию
     supportedLngs: ["uk", "en", "ru"],
-    debug: false,
+
+    debug: process.env.NODE_ENV === "development",
+
     detection: {
-      order: ["localStorage", "cookie", "navigator", "htmlTag"],
+      order: ["localStorage", "navigator", "htmlTag", "cookie"],
       caches: ["localStorage"],
     },
+
     backend: {
+      // 🔽 Убедись, что файлы translation.json лежат в /public/locales/{{lng}}/
       loadPath: "/locales/{{lng}}/translation.json",
     },
+
     interpolation: {
-      escapeValue: false,
+      escapeValue: false, // React уже экранирует
     },
+
     react: {
-      useSuspense: true,
+      useSuspense: true, // Показывает fallback при загрузке переводов
     },
   });
 
-// ✅ Обновление <html lang="...">
+// ✅ Автоматическое обновление <html lang="...">
 i18n.on("languageChanged", (lng) => {
-  document.documentElement.setAttribute("lang", lng);
+  if (typeof document !== "undefined") {
+    document.documentElement.setAttribute("lang", lng);
+  }
 });
 
 export default i18n;
