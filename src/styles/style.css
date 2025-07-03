@@ -200,6 +200,27 @@ main {
   }
 }
 
+/* Language Switcher */
+.lang-switcher {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.lang-switcher button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: var(--text-light);
+}
+
+.lang-switcher button:hover {
+  transform: scale(1.2);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .nav-menu {
