@@ -1,8 +1,10 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 import logo from "./img/logo.png";
 import "./css/style.css";
+import "./i18n";
 
 // 🔁 Ленивая загрузка всех страниц
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -12,14 +14,33 @@ const ReviewsPage = lazy(() => import("./pages/ReviewsPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
 const AdminPanel = lazy(() => import("./pages/AdminPanel"));
 
+function LanguageSwitcher() {
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem("i18nextLng", lng);
+  };
+
+  return (
+    <div className="lang-switcher" aria-label="Перемикач мови">
+      <button onClick={() => changeLanguage("uk")} title="Українська">🇺🇦</button>
+      <button onClick={() => changeLanguage("en")} title="English">🇬🇧</button>
+      <button onClick={() => changeLanguage("ru")} title="Русский">🇷🇺</button>
+    </div>
+  );
+}
+
 function App() {
+  const { t } = useTranslation();
+
   return (
     <HelmetProvider>
       <Router>
         <div className="app-wrapper">
           <header className="site-header" role="banner">
             <div className="header-container">
-              <Link to="/" aria-label="Головна">
+              <Link to="/" aria-label={t("nav.home")}>
                 <img
                   src={logo}
                   alt="Логотип ПромЕлектроСервіс"
@@ -30,15 +51,18 @@ function App() {
                   loading="eager"
                 />
               </Link>
+
               <nav aria-label="Головне меню" role="navigation">
                 <ul className="nav-menu centered">
-                  <li><Link to="/">Головна</Link></li>
-                  <li><Link to="/portfolio">Портфоліо</Link></li>
-                  <li><Link to="/reviews">Відгуки</Link></li>
-                  <li><Link to="/pricing">Ціни</Link></li>
-                  <li><Link to="/contacts">Контакти</Link></li>
+                  <li><Link to="/">{t("nav.home")}</Link></li>
+                  <li><Link to="/portfolio">{t("nav.portfolio")}</Link></li>
+                  <li><Link to="/reviews">{t("nav.reviews")}</Link></li>
+                  <li><Link to="/pricing">{t("nav.pricing")}</Link></li>
+                  <li><Link to="/contacts">{t("nav.contacts")}</Link></li>
                 </ul>
               </nav>
+
+              <LanguageSwitcher />
             </div>
           </header>
 

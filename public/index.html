@@ -14,14 +14,11 @@
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#003366" />
 
-    <!-- Подключения -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://firestore.googleapis.com" />
-    
-    <!-- ✅ Простое подключение CSS, без preload -->
+
     <link rel="stylesheet" href="%PUBLIC_URL%/main.css" />
 
-    <!-- ✅ preload только одного LCP-изображения -->
     <link
       rel="preload"
       href="/img/background.webp"
@@ -31,11 +28,9 @@
       imagesizes="100vw"
     />
 
-    <!-- Иконки и manifest -->
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <!-- Встроенные стили -->
     <style>
       .hero-title {
         font-size: 3rem;
@@ -48,6 +43,19 @@
         object-fit: cover;
         border-radius: 12px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .lang-switcher {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-left: auto;
+      }
+      .lang-switcher button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.25rem;
+        padding: 0.25rem;
       }
     </style>
   </head>
