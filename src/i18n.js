@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
 import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
 
 i18n
   .use(HttpApi)
@@ -11,21 +11,24 @@ i18n
     fallbackLng: "uk",
     supportedLngs: ["uk", "en", "ru"],
     debug: false,
-    defaultNS: "translation",
-    ns: ["translation"],
-    interpolation: {
-      escapeValue: false,
-    },
     detection: {
-      order: ["querystring", "localStorage", "cookie", "navigator", "htmlTag"],
-      caches: ["localStorage", "cookie"],
+      order: ["localStorage", "cookie", "navigator", "htmlTag"],
+      caches: ["localStorage"],
     },
     backend: {
-      loadPath: "/locales/{{lng}}/{{ns}}.json",
+      loadPath: "/locales/{{lng}}/translation.json",
+    },
+    interpolation: {
+      escapeValue: false,
     },
     react: {
       useSuspense: true,
     },
   });
+
+// ✅ Автообновление <html lang="...">
+i18n.on("languageChanged", (lng) => {
+  document.documentElement.setAttribute("lang", lng);
+});
 
 export default i18n;
