@@ -26,7 +26,7 @@ i18n
     },
   });
 
-// ✅ Автообновление <html lang="...">
+// ✅ Обновление <html lang="...">
 i18n.on("languageChanged", (lng) => {
   document.documentElement.setAttribute("lang", lng);
 });

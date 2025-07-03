@@ -14,25 +14,13 @@ const ReviewsPage = lazy(() => import("./pages/ReviewsPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
 const AdminPanel = lazy(() => import("./pages/AdminPanel"));
 
-function LanguageSwitcher() {
-  const { i18n } = useTranslation();
+function App() {
+  const { t, i18n } = useTranslation();
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     localStorage.setItem("i18nextLng", lng);
   };
-
-  return (
-    <div className="lang-switcher" aria-label="Перемикач мови">
-      <button onClick={() => changeLanguage("uk")} title="Українська">🇺🇦</button>
-      <button onClick={() => changeLanguage("en")} title="English">🇬🇧</button>
-      <button onClick={() => changeLanguage("ru")} title="Русский">🇷🇺</button>
-    </div>
-  );
-}
-
-function App() {
-  const { t } = useTranslation();
 
   return (
     <HelmetProvider>
@@ -61,13 +49,15 @@ function App() {
                   <li><Link to="/contacts">{t("nav.contacts")}</Link></li>
                 </ul>
               </nav>
-
-              <LanguageSwitcher />
             </div>
           </header>
 
           <main className="main-content" role="main">
-            <Suspense fallback={<div className="loading-spinner" role="status" aria-live="polite"><div className="spinner" /></div>}>
+            <Suspense fallback={
+              <div className="loading-spinner" role="status" aria-live="polite">
+                <div className="spinner" />
+              </div>
+            }>
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/portfolio" element={<PortfolioPage />} />
@@ -84,6 +74,13 @@ function App() {
               <a href="tel:+380666229776" className="footer-link">📞 +380666229776</a>
               <a href="mailto:gdvolya@gmail.com" className="footer-link">✉️ gdvolya@gmail.com</a>
             </div>
+
+            <div className="lang-switcher" aria-label="Перемикач мови">
+              <button onClick={() => changeLanguage("uk")} title="Українська">🇺🇦</button>
+              <button onClick={() => changeLanguage("en")} title="English">🇬🇧</button>
+              <button onClick={() => changeLanguage("ru")} title="Русский">🇷🇺</button>
+            </div>
+
             <p>© 2025 ПромЕлектроСервіс. Всі права захищені.</p>
           </footer>
         </div>
