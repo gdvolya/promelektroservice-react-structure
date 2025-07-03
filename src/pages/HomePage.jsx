@@ -1,52 +1,56 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "../styles/HomePage.css";
 
 export default function HomePage() {
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    AOS.init({ once: true });
+  }, []);
+
   return (
     <main className="home-page">
       {/* Герой-секция с фоном */}
-      <section className="hero" role="banner" aria-label="Промелектросервіс — електромонтаж під ключ">
+      <section className="hero" role="banner" aria-label={t("home.bannerAlt")}>
         <div className="hero-overlay"></div>
-        <div className="hero-content">
+        <div className="hero-content" data-aos="fade-up">
           <h1 className="hero-title">Promelektroservice</h1>
-          <p className="hero-subtitle">
-            Якісний електромонтаж для дому, офісу та бізнесу у Києві.
-          </p>
+          <p className="hero-subtitle">{t("home.subtitle")}</p>
           <div className="hero-buttons">
-            <Link to="/portfolio" className="btn primary">Наші проекти</Link>
-            <Link to="/contacts" className="btn secondary">Зв'язатися з нами</Link>
+            <Link to="/portfolio" className="btn primary">
+              {t("home.projectsBtn")}
+            </Link>
+            <Link to="/contacts" className="btn secondary">
+              {t("home.contactBtn")}
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Секція з перевагами */}
-      <section className="features">
-        <h2 className="features-title">Чому обирають нас?</h2>
+      <section className="features" data-aos="fade-up">
+        <h2 className="features-title">{t("home.whyChooseUs")}</h2>
         <div className="features-grid">
           <div className="feature-card">
-            <img src="/icons/speed.svg" className="feature-icon" alt="Швидкість" />
-            <h3>Швидкість</h3>
-            <p>Працюємо швидко, без затримок і простоїв.</p>
+            <img src="/icons/speed.svg" className="feature-icon" alt={t("home.speed")} />
+            <h3>{t("home.speed")}</h3>
+            <p>{t("home.speedDesc")}</p>
           </div>
           <div className="feature-card">
-            <img src="/icons/quality.svg" className="feature-icon" alt="Якість" />
-            <h3>Якість</h3>
-            <p>Високі стандарти і надійні рішення для кожного проекту.</p>
+            <img src="/icons/quality.svg" className="feature-icon" alt={t("home.quality")} />
+            <h3>{t("home.quality")}</h3>
+            <p>{t("home.qualityDesc")}</p>
           </div>
           <div className="feature-card">
-            <img src="/icons/secure.svg" className="feature-icon" alt="Безпека" />
-            <h3>Безпека</h3>
-            <p>Працюємо тільки з сертифікованим обладнанням.</p>
+            <img src="/icons/secure.svg" className="feature-icon" alt={t("home.safety")} />
+            <h3>{t("home.safety")}</h3>
+            <p>{t("home.safetyDesc")}</p>
           </div>
         </div>
-      </section>
-
-      {/* Секція для вибору мови */}
-      <section className="language-switcher">
-        <button>UA</button>
-        <button>EN</button>
-        <button>RU</button>
       </section>
     </main>
   );

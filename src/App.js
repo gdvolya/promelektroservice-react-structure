@@ -39,7 +39,6 @@ function App() {
                   loading="eager"
                 />
               </Link>
-
               <nav aria-label="Головне меню" role="navigation">
                 <ul className="nav-menu centered">
                   <li><Link to="/">{t("nav.home")}</Link></li>
