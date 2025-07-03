@@ -9,19 +9,22 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "uk",
-    debug: false,
     supportedLngs: ["uk", "en", "ru"],
-    ns: ["translation"],
+    debug: false,
     defaultNS: "translation",
+    ns: ["translation"],
     interpolation: {
       escapeValue: false,
     },
     detection: {
-      order: ["querystring", "cookie", "localStorage", "navigator", "htmlTag"],
-      caches: ["cookie"],
+      order: ["querystring", "localStorage", "cookie", "navigator", "htmlTag"],
+      caches: ["localStorage", "cookie"],
     },
     backend: {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
+    react: {
+      useSuspense: true,
     },
   });
 
