@@ -7,7 +7,7 @@ import "../styles/PortfolioPage.css";
 
 const projects = [
   {
-    image: "/img/portfolio/project11.webp",
+    image: "/img/portfolio/project14.webp",
     title: "Монтаж електропроводки в офісі",
     description: "Комплексний монтаж електропроводки з урахуванням офісної специфіки та безпеки.",
   },
