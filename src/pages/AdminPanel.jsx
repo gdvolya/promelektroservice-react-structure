@@ -74,12 +74,12 @@ const AdminPanel = ({ enableExport = true }) => {
   };
 
   const handleLogin = () => {
-    const adminPass = import.meta.env?.VITE_ADMIN_PASS;
+    const adminPass = import.meta.env?.VITE_ADMIN_PASS?.trim();
     if (!adminPass) {
-      setError("⚠️ Пароль адміністратора не заданий у .env");
+      setError("\u26a0\ufe0f Пароль адміністратора не заданий у .env");
       return;
     }
-    if (password !== adminPass) {
+    if (password.trim() !== adminPass) {
       setError("Невірний пароль.");
       return;
     }
@@ -101,7 +101,9 @@ const AdminPanel = ({ enableExport = true }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={handleLogin} disabled={!password.trim()}>Увійти</button>
+        <button onClick={handleLogin} disabled={!password.trim()}>
+          Увійти
+        </button>
         {error && <p className="error-text">{error}</p>}
       </main>
     );
@@ -116,7 +118,9 @@ const AdminPanel = ({ enableExport = true }) => {
       {loading && <p>⏳ Завантаження даних...</p>}
       {error && <p className="error-text">{error}</p>}
       {views !== null && (
-        <p>👁 Переглядів на головній: <strong>{views}</strong></p>
+        <p>
+          👁 Переглядів на головній: <strong>{views}</strong>
+        </p>
       )}
       {submissions.length === 0 && !loading ? (
         <p>Немає заявок.</p>
