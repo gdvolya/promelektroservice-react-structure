@@ -2,13 +2,15 @@
 <html lang="uk">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ПромЕлектроСервіс — електромонтажні послуги</title>
 
     <!-- 🔍 SEO -->
-    <meta name="description" content="Професійні електромонтажні роботи будь-якої складності." />
+    <meta name="description" content="Професійні електромонтажні роботи будь-якої складності. Монтаж, обслуговування, ремонт." />
     <meta name="author" content="ПромЕлектроСервіс" />
     <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="електромонтаж, електрика, ПромЕлектроСервіс, монтаж електропроводки, Львів, Київ" />
 
     <!-- 🌐 Open Graph -->
     <meta property="og:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
@@ -17,26 +19,32 @@
     <meta property="og:url" content="https://promelektroservice.vercel.app" />
     <meta property="og:type" content="website" />
 
-    <!-- 🎨 Цветовая схема -->
+    <!-- 📱 PWA + UX -->
     <meta name="theme-color" content="#003366" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
 
-    <!-- 🔠 Шрифты и ресурсы -->
+    <!-- 🔠 Fonts & External Resources -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://firestore.googleapis.com" />
     <link rel="stylesheet" href="/main.css" />
 
-    <!-- 🧠 Favicon и PWA -->
-    <link rel="icon" href="/favicon.ico" />
+    <!-- 📦 Icons & Manifest -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- 💡 Inline-стили для ключевых компонентов -->
+    <!-- ⚡️ Performance & Styling -->
     <style>
       .hero-title {
         font-size: 3rem;
         font-weight: bold;
+        margin-bottom: 0.5em;
       }
       .hero-subtitle {
         font-size: 1.5rem;
+        color: #555;
+        margin-bottom: 1em;
       }
       .portfolio-img {
         object-fit: cover;
@@ -45,8 +53,22 @@
       }
     </style>
   </head>
+
   <body>
-    <noscript>Увімкніть JavaScript для повної функціональності сайту.</noscript>
+    <noscript>
+      <strong>Увімкніть JavaScript для повної функціональності сайту.</strong>
+    </noscript>
     <div id="root"></div>
+
+    <!-- ⚙️ Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js').catch(err =>
+            console.error('Service Worker registration failed:', err)
+          );
+        });
+      }
+    </script>
   </body>
 </html>
