@@ -13,21 +13,24 @@ const ContactsPage = () => {
         />
       </Helmet>
 
-      <h1>Контакти</h1>
-      <p>Ми завжди готові допомогти!</p>
+      <h1>📞 Контакти</h1>
+      <p>Ми завжди готові допомогти вам з електромонтажем або консультацією.</p>
+
       <div className="contact-info">
-        <div>
-          <h2>Телефон</h2>
+        <section aria-labelledby="contact-phone">
+          <h2 id="contact-phone">Телефон</h2>
           <a href="tel:+380666229776">+38 (066) 622-97-76</a>
-        </div>
-        <div>
-          <h2>Email</h2>
+        </section>
+
+        <section aria-labelledby="contact-email">
+          <h2 id="contact-email">Email</h2>
           <a href="mailto:info@promelektroservice.com">info@promelektroservice.com</a>
-        </div>
-        <div>
-          <h2>Адреса</h2>
+        </section>
+
+        <section aria-labelledby="contact-address">
+          <h2 id="contact-address">Адреса</h2>
           <p>м. Київ, вул. Прикладна, 1</p>
-        </div>
+        </section>
       </div>
     </main>
   );

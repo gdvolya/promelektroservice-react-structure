@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import AOS from "aos";
@@ -6,9 +6,11 @@ import "aos/dist/aos.css";
 import projects from "../data/projects";
 import "../styles/PortfolioPage.css";
 
-AOS.init();
-
 const PortfolioPage = () => {
+  useEffect(() => {
+    AOS.init({ once: true, duration: 600 });
+  }, []);
+
   return (
     <main className="portfolio-page">
       <Helmet>
@@ -24,7 +26,7 @@ const PortfolioPage = () => {
         {projects.map((project, index) => (
           <Link
             to={`/portfolio/${index}`}
-            key={index}
+            key={`${project.title}-${index}`}
             className="portfolio-card"
             data-aos="zoom-in"
             data-aos-delay={index * 100}

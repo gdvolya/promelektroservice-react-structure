@@ -70,7 +70,8 @@ const AdminPanel = ({ enableExport = true }) => {
     );
     const book = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(book, sheet, "Заявки");
-    XLSX.writeFile(book, "submissions.xlsx");
+    const date = new Date().toISOString().split("T")[0];
+    XLSX.writeFile(book, `submissions_${date}.xlsx`);
   };
 
   const handleLogin = () => {
@@ -96,6 +97,7 @@ const AdminPanel = ({ enableExport = true }) => {
           placeholder="Пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoFocus
         />
         <button onClick={handleLogin}>Увійти</button>
         {error && <p className="error-text">{error}</p>}
@@ -114,7 +116,7 @@ const AdminPanel = ({ enableExport = true }) => {
       {views !== null && (
         <p>👁 Переглядів на головній: <strong>{views}</strong></p>
       )}
-      {submissions.length === 0 && !loading ? (
+      {!loading && submissions.length === 0 ? (
         <p>Немає заявок.</p>
       ) : (
         <table className="admin-table">
@@ -135,7 +137,12 @@ const AdminPanel = ({ enableExport = true }) => {
                 <td>{phone}</td>
                 <td>{message}</td>
                 <td>
-                  <button onClick={() => handleDelete(id)}>🗑 Видалити</button>
+                  <button
+                    onClick={() => handleDelete(id)}
+                    aria-label={`Видалити заявку від ${name}`}
+                  >
+                    🗑 Видалити
+                  </button>
                 </td>
               </tr>
             ))}
