@@ -76,7 +76,7 @@ const AdminPanel = ({ enableExport = true }) => {
   const handleLogin = () => {
     const adminPass = import.meta.env?.VITE_ADMIN_PASS;
     if (!adminPass) {
-      setError("⚠️ Пароль адміністратора не заданий у .env");
+      setError("\u26a0\ufe0f Пароль адміністратора не заданий у .env");
       return;
     }
     if (password !== adminPass) {
@@ -101,7 +101,7 @@ const AdminPanel = ({ enableExport = true }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={handleLogin}>Увійти</button>
+        <button onClick={handleLogin} disabled={!password.trim()}>Увійти</button>
         {error && <p className="error-text">{error}</p>}
       </main>
     );
