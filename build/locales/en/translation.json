@@ -1,39 +1,46 @@
 {
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "reviews": "Reviews",
+    "pricing": "Pricing",
+    "contacts": "Contacts"
+  },
   "meta": {
     "portfolioTitle": "Portfolio — Promelektroservice",
-    "portfolioDescription": "Examples of our work: electrical installation, lighting, panel equipment and more.",
-    "pricingTitle": "Services and Prices — Promelektroservice",
-    "pricingDescription": "Price list for electrical installation services for home and business.",
+    "portfolioDescription": "Examples of our work: electrical installation, lighting, panel equipment, and more.",
+    "pricingTitle": "Services and Pricing — Promelektroservice",
+    "pricingDescription": "Pricing for residential and commercial electrical services.",
     "reviewsTitle": "Reviews — Promelektroservice",
-    "reviewsDescription": "Customer feedback on electrical installation work."
+    "reviewsDescription": "Customer reviews about our electrical services."
   },
   "portfolio": {
     "heading": "Our Projects"
   },
   "pricing": {
-    "title": "Services and Prices",
+    "title": "Services and Pricing",
     "basic": {
       "title": "Basic",
-      "price": "₴1 000+",
+      "price": "₴1,000+",
       "features": ["Socket installation", "Lighting connection"]
     },
     "standard": {
       "title": "Standard",
-      "price": "₴3 000+",
+      "price": "₴3,000+",
       "features": ["Panel installation", "Cable laying"]
     },
     "premium": {
       "title": "Premium",
-      "price": "₴6 000+",
-      "features": ["Electrical network design", "Generator connection"]
+      "price": "₴6,000+",
+      "features": ["Electrical design", "Generator connection"]
     }
   },
   "reviews": {
     "heading": "Customer Reviews",
-    "sample1": "Great job — fast and professional. Highly recommend!",
-    "sample2": "Lighting installation was done even ahead of schedule. Very satisfied with the result.",
-    "leaveReview": "Leave a Review",
-    "placeholder": "Write your feedback...",
+    "sample1": "Excellent work — fast and professional. Highly recommend!",
+    "sample2": "Lighting installation was completed even ahead of schedule. Very satisfied.",
+    "leaveReview": "Leave a review",
+    "placeholder": "Write your review...",
     "submit": "Submit",
     "thanks": "Thank you for your feedback!"
   }
