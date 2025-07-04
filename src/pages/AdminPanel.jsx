@@ -8,7 +8,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
-import "../css/AdminPanel.css";
+import "../styles/AdminPanel.css";
 
 let db = null;
 
@@ -35,8 +35,9 @@ const AdminPanel = ({ enableExport = true }) => {
     } catch (err) {
       console.error("Error loading data:", err.message);
       setError("Помилка завантаження даних.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -54,7 +55,6 @@ const AdminPanel = ({ enableExport = true }) => {
     if (!db) return;
     const confirmed = window.confirm("Ви впевнені, що хочете видалити?");
     if (!confirmed) return;
-
     try {
       await deleteDoc(doc(db, "submissions", id));
       setSubmissions((prev) => prev.filter((s) => s.id !== id));
@@ -70,13 +70,16 @@ const AdminPanel = ({ enableExport = true }) => {
     );
     const book = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(book, sheet, "Заявки");
-    const date = new Date().toISOString().split("T")[0];
-    XLSX.writeFile(book, `submissions_${date}.xlsx`);
+    XLSX.writeFile(book, "submissions.xlsx");
   };
 
   const handleLogin = () => {
-    const isAuth = password === import.meta.env.VITE_ADMIN_PASS;
-    if (!isAuth) {
+    const adminPass = import.meta.env?.VITE_ADMIN_PASS;
+    if (!adminPass) {
+      setError("⚠️ Пароль адміністратора не заданий у .env");
+      return;
+    }
+    if (password !== adminPass) {
       setError("Невірний пароль.");
       return;
     }
@@ -97,7 +100,6 @@ const AdminPanel = ({ enableExport = true }) => {
           placeholder="Пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          autoFocus
         />
         <button onClick={handleLogin}>Увійти</button>
         {error && <p className="error-text">{error}</p>}
@@ -116,7 +118,7 @@ const AdminPanel = ({ enableExport = true }) => {
       {views !== null && (
         <p>👁 Переглядів на головній: <strong>{views}</strong></p>
       )}
-      {!loading && submissions.length === 0 ? (
+      {submissions.length === 0 && !loading ? (
         <p>Немає заявок.</p>
       ) : (
         <table className="admin-table">
@@ -137,12 +139,7 @@ const AdminPanel = ({ enableExport = true }) => {
                 <td>{phone}</td>
                 <td>{message}</td>
                 <td>
-                  <button
-                    onClick={() => handleDelete(id)}
-                    aria-label={`Видалити заявку від ${name}`}
-                  >
-                    🗑 Видалити
-                  </button>
+                  <button onClick={() => handleDelete(id)}>🗑 Видалити</button>
                 </td>
               </tr>
             ))}
