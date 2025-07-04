@@ -76,7 +76,7 @@ const AdminPanel = ({ enableExport = true }) => {
   const handleLogin = () => {
     const adminPass = import.meta.env?.VITE_ADMIN_PASS;
     if (!adminPass) {
-      setError("\u26a0\ufe0f Пароль адміністратора не заданий у .env");
+      setError("⚠️ Пароль адміністратора не заданий у .env");
       return;
     }
     if (password !== adminPass) {

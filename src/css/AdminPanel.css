@@ -2,79 +2,98 @@
 .admin-panel {
   max-width: 900px;
   margin: 40px auto;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  font-family: sans-serif;
-  color: #333;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+  font-family: "Segoe UI", sans-serif;
+  color: #222;
 }
 
 .admin-login h2,
 .admin-panel h1 {
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
+  margin-bottom: 24px;
+  font-size: 28px;
+  font-weight: 600;
 }
 
 input[type="password"] {
   display: block;
   width: 100%;
-  max-width: 300px;
-  margin: 0 auto 15px;
-  padding: 10px;
+  max-width: 320px;
+  margin: 0 auto 20px;
+  padding: 12px 16px;
   font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border 0.3s;
+}
+
+input[type="password"]:focus {
+  outline: none;
+  border-color: #0070f3;
 }
 
 button {
-  padding: 10px 16px;
-  font-size: 15px;
+  padding: 12px 18px;
+  font-size: 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #0070f3;
   color: white;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s;
 }
 
-button:hover {
+button:hover:not(:disabled) {
   background-color: #005ad2;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .error-text {
   color: crimson;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 12px;
+  font-size: 14px;
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  background-color: white;
+  margin-top: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .admin-table th,
 .admin-table td {
-  border: 1px solid #ccc;
-  padding: 12px;
+  border: 1px solid #ddd;
+  padding: 14px 12px;
   text-align: left;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .admin-table th {
-  background-color: #f0f0f0;
-  font-weight: bold;
+  background-color: #f3f4f6;
+  font-weight: 600;
 }
 
 .admin-table tr:nth-child(even) {
-  background-color: #fafafa;
+  background-color: #f9f9f9;
 }
 
 .export-btn {
-  margin-top: 20px;
-  display: block;
+  margin-top: 24px;
+  display: inline-block;
   background-color: #28a745;
+  border-radius: 8px;
 }
 
 .export-btn:hover {
@@ -84,8 +103,8 @@ button:hover {
 @media (max-width: 768px) {
   .admin-table th,
   .admin-table td {
-    font-size: 12px;
-    padding: 8px;
+    font-size: 13px;
+    padding: 10px;
   }
 
   input[type="password"] {
@@ -93,6 +112,11 @@ button:hover {
   }
 
   button {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .export-btn {
     width: 100%;
   }
 }
