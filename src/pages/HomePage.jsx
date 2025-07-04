@@ -16,11 +16,11 @@ export default function HomePage() {
     <main className="home-page">
       {/* 🔷 Hero Section with Background Overlay */}
       <section className="hero" role="banner" aria-label={t("home.bannerAlt")}>
-        <div className="hero-overlay"></div>
+        <div className="hero-overlay" aria-hidden="true" />
         <div className="hero-content" data-aos="fade-up">
           <h1 className="hero-title">Promelektroservice</h1>
           <p className="hero-subtitle">{t("home.subtitle")}</p>
-          <div className="hero-buttons">
+          <div className="hero-buttons" role="group" aria-label={t("home.ctaGroup")}>
             <Link to="/portfolio" className="btn primary">
               {t("home.projectsBtn")}
             </Link>

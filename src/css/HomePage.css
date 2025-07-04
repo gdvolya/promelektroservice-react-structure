@@ -11,10 +11,15 @@
 .hero {
   position: relative;
   width: 100%;
-  min-height: 80vh;
+  min-height: 100vh;
   color: white;
   overflow: hidden;
   background: url("/img/background@2x.webp") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
 }
 
 .hero-overlay {
@@ -30,23 +35,21 @@
 .hero-content {
   position: relative;
   z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  padding: 0 1rem;
   max-width: 800px;
+  width: 100%;
 }
 
 .hero-title {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  color: white;
 }
 
 .hero-subtitle {
   font-size: 1.5rem;
   margin-bottom: 2rem;
+  color: white;
 }
 
 .hero-buttons {
