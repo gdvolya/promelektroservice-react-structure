@@ -1,19 +1,40 @@
 {
-  "companyName": "PromElektroService",
-  "companyDescription": "Professional electrical installation work of any complexity",
-  "services": [
-    "Installation of solar power plants (SPP)",
-    "Laying cable lines",
-    "Assembly and installation of automation panels",
-    "Commissioning of facilities",
-    "Repair of electrical equipment",
-    "Maintenance of electrical installations",
-    "Electrical measurements and reports"
-  ],
-  "home": "Home",
-  "portfolio": "Portfolio",
-  "reviews": "Reviews",
-  "pricing": "Prices",
-  "contacts": "Contacts",
-  "views": "Views"
+  "meta": {
+    "portfolioTitle": "Portfolio — Promelektroservice",
+    "portfolioDescription": "Examples of our work: electrical installation, lighting, panel equipment and more.",
+    "pricingTitle": "Services and Prices — Promelektroservice",
+    "pricingDescription": "Price list for electrical installation services for home and business.",
+    "reviewsTitle": "Reviews — Promelektroservice",
+    "reviewsDescription": "Customer feedback on electrical installation work."
+  },
+  "portfolio": {
+    "heading": "Our Projects"
+  },
+  "pricing": {
+    "title": "Services and Prices",
+    "basic": {
+      "title": "Basic",
+      "price": "₴1 000+",
+      "features": ["Socket installation", "Lighting connection"]
+    },
+    "standard": {
+      "title": "Standard",
+      "price": "₴3 000+",
+      "features": ["Panel installation", "Cable laying"]
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "₴6 000+",
+      "features": ["Electrical network design", "Generator connection"]
+    }
+  },
+  "reviews": {
+    "heading": "Customer Reviews",
+    "sample1": "Great job — fast and professional. Highly recommend!",
+    "sample2": "Lighting installation was done even ahead of schedule. Very satisfied with the result.",
+    "leaveReview": "Leave a Review",
+    "placeholder": "Write your feedback...",
+    "submit": "Submit",
+    "thanks": "Thank you for your feedback!"
+  }
 }
