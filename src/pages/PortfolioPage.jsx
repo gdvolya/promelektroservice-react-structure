@@ -72,8 +72,9 @@ const PortfolioPage = () => {
               src={project.image}
               alt={project.title}
               loading="lazy"
-              width="400"
-              height="300"
+              width="100%"
+              height="auto"
+              className="portfolio-img"
             />
             <div className="card-content">
               <h2>{project.title}</h2>
