@@ -74,7 +74,7 @@ const AdminPanel = ({ enableExport = true }) => {
   };
 
   const handleLogin = () => {
-    const adminPass = import.meta.env?.VITE_ADMIN_PASS?.trim();
+    const adminPass = process.env.REACT_APP_ADMIN_PASS?.trim();
     if (!adminPass) {
       setError("\u26a0\ufe0f Пароль адміністратора не заданий у .env");
       return;
