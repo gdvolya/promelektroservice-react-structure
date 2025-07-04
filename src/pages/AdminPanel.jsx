@@ -19,6 +19,7 @@ const AdminPanel = ({ enableExport = true }) => {
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = useCallback(async () => {
     if (!db) return;
@@ -29,7 +30,11 @@ const AdminPanel = ({ enableExport = true }) => {
         getDoc(doc(db, "views", "home")),
       ]);
       setSubmissions(
-        subsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+        subsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: doc.data().createdAt || null,
+        }))
       );
       setViews(viewsDoc.exists() ? viewsDoc.data().count : 0);
     } catch (err) {
@@ -88,6 +93,14 @@ const AdminPanel = ({ enableExport = true }) => {
     setError("");
   };
 
+  const filteredSubmissions = submissions.filter(
+    ({ name, email, phone, message }) =>
+      name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      message?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (!authenticated) {
     return (
       <main className="admin-login">
@@ -122,7 +135,14 @@ const AdminPanel = ({ enableExport = true }) => {
           👁 Переглядів на головній: <strong>{views}</strong>
         </p>
       )}
-      {submissions.length === 0 && !loading ? (
+      <input
+        type="text"
+        placeholder="Пошук по заявках..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{ marginTop: 10, padding: 8, width: "100%", maxWidth: 400 }}
+      />
+      {filteredSubmissions.length === 0 && !loading ? (
         <p>Немає заявок.</p>
       ) : (
         <table className="admin-table">
@@ -132,16 +152,22 @@ const AdminPanel = ({ enableExport = true }) => {
               <th>Email</th>
               <th>Телефон</th>
               <th>Повідомлення</th>
+              <th>Дата</th>
               <th>Дії</th>
             </tr>
           </thead>
           <tbody>
-            {submissions.map(({ id, name, email, phone, message }) => (
+            {filteredSubmissions.map(({ id, name, email, phone, message, createdAt }) => (
               <tr key={id}>
                 <td>{name}</td>
                 <td>{email}</td>
                 <td>{phone}</td>
                 <td>{message}</td>
+                <td>
+                  {createdAt?.seconds
+                    ? new Date(createdAt.seconds * 1000).toLocaleString("uk-UA")
+                    : "—"}
+                </td>
                 <td>
                   <button onClick={() => handleDelete(id)}>🗑 Видалити</button>
                 </td>
