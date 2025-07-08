@@ -1,24 +1,24 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 import "../styles/ContactsPage.css";
 
 const ContactsPage = () => {
+  const { t } = useTranslation();
+
   return (
     <main className="contacts-page">
       <Helmet>
-        <title>Контакти — Promelektroservice</title>
-        <meta
-          name="description"
-          content="Зв’яжіться з Promelektroservice для замовлення послуг або консультації."
-        />
+        <title>{t("contacts.metaTitle")}</title>
+        <meta name="description" content={t("contacts.metaDescription")} />
       </Helmet>
 
-      <h1>📞 Контакти</h1>
-      <p>Ми завжди готові допомогти вам з електромонтажем або консультацією.</p>
+      <h1>📞 {t("contacts.heading")}</h1>
+      <p>{t("contacts.intro")}</p>
 
       <div className="contact-info">
         <section aria-labelledby="contact-phone">
-          <h2 id="contact-phone">Телефон</h2>
+          <h2 id="contact-phone">{t("contacts.phone")}</h2>
           <a href="tel:+380666229776">+38 (066) 622-97-76</a>
         </section>
 
@@ -28,8 +28,8 @@ const ContactsPage = () => {
         </section>
 
         <section aria-labelledby="contact-address">
-          <h2 id="contact-address">Адреса</h2>
-          <p>м. Київ, вул. Прикладна, 1</p>
+          <h2 id="contact-address">{t("contacts.addressTitle")}</h2>
+          <p>{t("contacts.addressValue")}</p>
         </section>
       </div>
     </main>
