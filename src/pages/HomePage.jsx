@@ -16,7 +16,7 @@ export default function HomePage() {
     <main className="home-page">
       {/* 🔷 Hero Section with Background Overlay */}
       <section className="hero" role="banner" aria-label={t("home.bannerAlt")}>
-        <div className="hero-overlay"></div>
+        <div className="hero-overlay" />
         <div className="hero-content" data-aos="fade-up">
           <h1 className="hero-title">Promelektroservice</h1>
           <p className="hero-subtitle">{t("home.subtitle")}</p>
@@ -38,11 +38,11 @@ export default function HomePage() {
           <div className="feature-card" data-aos="fade-up" data-aos-delay="100">
             <img
               src="/icons/speed.svg"
-              className="feature-icon"
               alt={t("home.speed")}
-              loading="lazy"
+              className="feature-icon"
               width="64"
               height="64"
+              loading="lazy"
             />
             <h3>{t("home.speed")}</h3>
             <p>{t("home.speedDesc")}</p>
@@ -50,11 +50,11 @@ export default function HomePage() {
           <div className="feature-card" data-aos="fade-up" data-aos-delay="200">
             <img
               src="/icons/quality.svg"
-              className="feature-icon"
               alt={t("home.quality")}
-              loading="lazy"
+              className="feature-icon"
               width="64"
               height="64"
+              loading="lazy"
             />
             <h3>{t("home.quality")}</h3>
             <p>{t("home.qualityDesc")}</p>
@@ -62,11 +62,11 @@ export default function HomePage() {
           <div className="feature-card" data-aos="fade-up" data-aos-delay="300">
             <img
               src="/icons/secure.svg"
-              className="feature-icon"
               alt={t("home.safety")}
-              loading="lazy"
+              className="feature-icon"
               width="64"
               height="64"
+              loading="lazy"
             />
             <h3>{t("home.safety")}</h3>
             <p>{t("home.safetyDesc")}</p>

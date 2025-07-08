@@ -23,7 +23,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Темна підкладка для контрасту тексту */
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 
@@ -133,31 +133,6 @@
 .feature-icon {
   width: 64px;
   margin-bottom: 1rem;
-}
-
-/* 🌐 Language switcher */
-.language-switcher {
-  padding: 2rem;
-  text-align: center;
-  background-color: #fafafa;
-  border-top: 1px solid #eee;
-}
-
-.language-switcher button {
-  background: none;
-  border: 1px solid #007bff;
-  color: #007bff;
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 500;
-}
-
-.language-switcher button:hover {
-  background-color: #007bff;
-  color: white;
 }
 
 /* 📱 Responsiveness */
