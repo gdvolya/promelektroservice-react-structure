@@ -1,36 +1,90 @@
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0056b3;
+  --text-color: #212121;
+  --subtext-color: #555;
+  --bg-light: #f7f9fc;
+  --font-main: "Segoe UI", sans-serif;
+}
+
 .contacts-page {
   padding: 4rem 2rem;
-  background: #f7f9fc;
+  background: var(--bg-light);
   min-height: 100vh;
   text-align: center;
+  font-family: var(--font-main);
+  animation: fadeIn 0.8s ease-in-out;
 }
 
 .contacts-page h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  color: var(--text-color);
 }
 
 .contacts-page p {
-  color: #555;
+  color: var(--subtext-color);
   margin-bottom: 2rem;
+  font-size: 1.1rem;
 }
 
 .contact-info {
   max-width: 600px;
   margin: 0 auto;
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
+  text-align: left;
+}
+
+.contact-info section {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s;
+}
+
+.contact-info section:hover {
+  transform: translateY(-3px);
 }
 
 .contact-info h2 {
   font-size: 1.2rem;
-  margin-bottom: 0.3rem;
-  color: #212121;
+  margin-bottom: 0.4rem;
+  color: var(--text-color);
 }
 
 .contact-info a,
 .contact-info p {
-  color: #007bff;
+  color: var(--primary-color);
   text-decoration: none;
   font-size: 1rem;
+  word-break: break-word;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .contacts-page {
+    padding: 3rem 1rem;
+  }
+
+  .contacts-page h1 {
+    font-size: 2rem;
+  }
+}
+
+/* 🎬 Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

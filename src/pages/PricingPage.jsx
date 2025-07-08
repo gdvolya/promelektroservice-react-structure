@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "../styles/PricingPage.css";
 
 const tiers = [
@@ -21,6 +23,10 @@ const tiers = [
 ];
 
 const PricingPage = () => {
+  useEffect(() => {
+    AOS.init({ once: true, duration: 600 });
+  }, []);
+
   return (
     <main className="pricing-page">
       <Helmet>
@@ -31,10 +37,15 @@ const PricingPage = () => {
         />
       </Helmet>
 
-      <h1>Послуги та ціни</h1>
+      <h1 data-aos="fade-up">Послуги та ціни</h1>
       <div className="pricing-grid">
-        {tiers.map(({ title, price, features }) => (
-          <div key={title} className="pricing-card">
+        {tiers.map(({ title, price, features }, index) => (
+          <div
+            key={title}
+            className="pricing-card"
+            data-aos="zoom-in"
+            data-aos-delay={index * 150}
+          >
             <h2>{title}</h2>
             <p className="price">{price}</p>
             <ul>

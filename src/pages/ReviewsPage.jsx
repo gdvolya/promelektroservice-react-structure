@@ -1,14 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "../styles/ReviewsPage.css";
+
+const initialReviews = [
+  {
+    name: "Олександр",
+    content: "Чудова робота — швидко та професійно. Рекомендую всім!",
+  },
+  {
+    name: "Марія",
+    content:
+      "Монтаж освітлення зробили навіть раніше за термін. Дуже задоволена результатом.",
+  },
+];
 
 const ReviewsPage = () => {
   const [feedback, setFeedback] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [reviews, setReviews] = useState(initialReviews);
+
+  useEffect(() => {
+    AOS.init({ once: true, duration: 600 });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (feedback.trim()) {
+      setReviews((prev) => [
+        ...prev,
+        { name: "Анонім", content: feedback.trim() },
+      ]);
       setSubmitted(true);
       setFeedback("");
       setTimeout(() => setSubmitted(false), 3000);
@@ -25,22 +48,22 @@ const ReviewsPage = () => {
         />
       </Helmet>
 
-      <h1>Відгуки клієнтів</h1>
-      <section className="reviews-list">
-        <article className="review-item">
-          <h2>Олександр</h2>
-          <p>Чудова робота — швидко та професійно. Рекомендую всім!</p>
-        </article>
-        <article className="review-item">
-          <h2>Марія</h2>
-          <p>
-            Монтаж освітлення зробили навіть раніше за термін. Дуже задоволена
-            результатом.
-          </p>
-        </article>
+      <h1 data-aos="fade-up">Відгуки клієнтів</h1>
+      <section className="reviews-grid">
+        {reviews.map((review, idx) => (
+          <div
+            className="review-card"
+            key={idx}
+            data-aos="fade-up"
+            data-aos-delay={idx * 100}
+          >
+            <div className="review-content">“{review.content}”</div>
+            <div className="review-author">— {review.name}</div>
+          </div>
+        ))}
       </section>
 
-      <section className="review-form">
+      <section className="review-form" data-aos="fade-up" data-aos-delay="300">
         <h2>Залишити відгук</h2>
         <form onSubmit={handleSubmit}>
           <textarea

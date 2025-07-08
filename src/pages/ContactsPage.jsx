@@ -6,10 +6,10 @@ const ContactsPage = () => {
   return (
     <main className="contacts-page">
       <Helmet>
-        <title>Контакти — Promelektroservice</title>
+        <title>Контакти — ПромЕлектроСервіс</title>
         <meta
           name="description"
-          content="Зв’яжіться з Promelektroservice для замовлення послуг або консультації."
+          content="Зв’яжіться з ПромЕлектроСервіс для замовлення послуг або консультації."
         />
       </Helmet>
 
@@ -24,7 +24,9 @@ const ContactsPage = () => {
 
         <section aria-labelledby="contact-email">
           <h2 id="contact-email">Email</h2>
-          <a href="mailto:info@promelektroservice.com">info@promelektroservice.com</a>
+          <a href="mailto:info@promelektroservice.com">
+            info@promelektroservice.com
+          </a>
         </section>
 
         <section aria-labelledby="contact-address">

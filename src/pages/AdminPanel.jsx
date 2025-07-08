@@ -81,7 +81,7 @@ const AdminPanel = ({ enableExport = true }) => {
   const handleLogin = () => {
     const adminPass = process.env.REACT_APP_ADMIN_PASS?.trim();
     if (!adminPass) {
-      setError("\u26a0\ufe0f Пароль адміністратора не заданий у .env");
+      setError("⚠️ Пароль адміністратора не заданий у .env");
       return;
     }
     if (password.trim() !== adminPass) {
@@ -140,7 +140,7 @@ const AdminPanel = ({ enableExport = true }) => {
         placeholder="Пошук по заявках..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ marginTop: 10, padding: 8, width: "100%", maxWidth: 400 }}
+        className="search-input"
       />
       {filteredSubmissions.length === 0 && !loading ? (
         <p>Немає заявок.</p>
