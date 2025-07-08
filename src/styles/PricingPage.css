@@ -1,27 +1,14 @@
-:root {
-  --primary-color: #007bff;
-  --primary-hover: #0056b3;
-  --text-color: #212121;
-  --subtext-color: #555;
-  --bg-light: #fafafa;
-  --bg-white: #fff;
-  --shadow-default: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
-  --font-main: "Segoe UI", sans-serif;
-}
-
 .pricing-page {
   padding: 4rem 2rem;
-  background: var(--bg-light);
+  background: #fafafa;
   text-align: center;
   min-height: 100vh;
-  font-family: var(--font-main);
 }
 
 .pricing-page h1 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: var(--text-color);
+  color: #212121;
 }
 
 .pricing-grid {
@@ -31,28 +18,25 @@
 }
 
 .pricing-card {
-  background: var(--bg-white);
-  padding: 2rem 1.5rem;
+  background: white;
+  padding: 2rem 1rem;
   border-radius: 12px;
-  box-shadow: var(--shadow-default);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s;
 }
 
 .pricing-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 .pricing-card h2 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  color: var(--text-color);
 }
 
 .price {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--primary-color);
+  font-size: 1.25rem;
+  color: #007bff;
   margin: 0.5rem 0 1rem;
 }
 
@@ -60,32 +44,9 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  text-align: left;
 }
 
 .pricing-card li {
-  padding: 0.4rem 0;
-  color: var(--subtext-color);
-  font-size: 0.95rem;
-  position: relative;
-  padding-left: 1.2rem;
-}
-
-.pricing-card li::before {
-  content: "✔";
-  color: var(--primary-color);
-  position: absolute;
-  left: 0;
-  font-size: 0.9rem;
-}
-
-/* 📱 Responsive */
-@media (max-width: 600px) {
-  .pricing-card {
-    padding: 1.5rem 1rem;
-  }
-
-  .price {
-    font-size: 1.2rem;
-  }
+  padding: 0.25rem 0;
+  color: #555;
 }

@@ -1,75 +1,38 @@
 /* src/styles/global.css */
 
-/* === Reset & Base === */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html, body, #root {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  scroll-behavior: smooth;
   background: #f7f7f7;
-  color: #333;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* === Layout Wrapper === */
 .app-wrapper {
+  font-family: Arial, sans-serif;
   padding: 1rem;
+  box-sizing: border-box;
   min-height: 100vh;
+  color: #333;
   background-color: #fff;
 }
 
-/* === Typography === */
-h1, h2, h3, h4, h5, h6 {
-  margin: 0 0 1rem;
-  font-weight: 600;
-  color: inherit;
-}
-
-p {
-  margin: 0 0 1rem;
-  line-height: 1.6;
-  font-size: 1rem;
-}
-
-/* === Links === */
+/* Добавим базовые стили для ссылок, заголовков и текста */
 a {
   color: #007bff;
   text-decoration: none;
-  transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease;
 }
 a:hover {
   color: #0056b3;
 }
 
-/* === Images === */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 1rem;
+  font-weight: 600;
 }
 
-/* === Forms & Buttons === */
-input, textarea, select, button {
-  font-family: inherit;
-  font-size: 1rem;
+p {
+  margin: 0 0 1rem;
   line-height: 1.5;
-  border: none;
-  outline: none;
-}
-
-button {
-  cursor: pointer;
-}
-
-/* === Responsive Utility === */
-@media (max-width: 768px) {
-  .app-wrapper {
-    padding: 0.75rem;
-  }
+  font-size: 1rem;
 }

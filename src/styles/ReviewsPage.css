@@ -1,18 +1,6 @@
-:root {
-  --primary-color: #007bff;
-  --text-dark: #2d3748;
-  --text-muted: #666;
-  --bg-light: #f7fafc;
-  --bg-white: #fff;
-  --shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  --font-main: "Segoe UI", sans-serif;
-  --accent-yellow: #f6ad55;
-}
-
 .reviews-page {
   padding: 4rem 2rem;
-  background-color: var(--bg-light);
-  font-family: var(--font-main);
+  background-color: #f7fafc;
 }
 
 .reviews-section {
@@ -23,15 +11,13 @@
 
 .reviews-section h1 {
   font-size: 2.5rem;
-  font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--text-dark);
 }
 
 .reviews-section p {
   font-size: 1.2rem;
   margin-bottom: 3rem;
-  color: var(--text-muted);
+  color: #666;
 }
 
 .reviews-grid {
@@ -41,22 +27,20 @@
 }
 
 .review-card {
-  background: var(--bg-white);
+  background: #ffffff;
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: var(--shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: left;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
 }
 
 .review-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .review-rating {
   font-size: 1.2rem;
-  color: var(--accent-yellow);
+  color: #f6ad55;
   margin-bottom: 0.5rem;
 }
 
@@ -65,34 +49,9 @@
   color: #333;
   margin-bottom: 1rem;
   font-style: italic;
-  line-height: 1.5;
 }
 
 .review-author {
   font-weight: bold;
-  color: var(--text-dark);
-  font-size: 1rem;
-}
-
-/* 📱 Responsive */
-@media (max-width: 600px) {
-  .reviews-section h1 {
-    font-size: 2rem;
-  }
-
-  .reviews-section p {
-    font-size: 1rem;
-  }
-
-  .review-card {
-    padding: 1.2rem;
-  }
-
-  .review-content {
-    font-size: 0.95rem;
-  }
-
-  .review-author {
-    font-size: 0.95rem;
-  }
+  color: #2d3748;
 }

@@ -1,40 +1,49 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { useTranslation } from "react-i18next";
 import "../styles/PricingPage.css";
 
-const tiers = ["basic", "standard", "premium"];
+const tiers = [
+  {
+    title: "Базовий",
+    price: "₴1 000+",
+    features: ["Монтаж розеток", "Підключення освітлення"],
+  },
+  {
+    title: "Стандарт",
+    price: "₴3 000+",
+    features: ["Монтаж щита", "Прокладка кабелю"],
+  },
+  {
+    title: "Преміум",
+    price: "₴6 000+",
+    features: ["Проєктування електромереж", "Підключення генераторів"],
+  },
+];
 
 const PricingPage = () => {
-  const { t } = useTranslation();
-
   return (
     <main className="pricing-page">
       <Helmet>
-        <title>{t("meta.pricingTitle")}</title>
-        <meta name="description" content={t("meta.pricingDescription")} />
+        <title>Послуги та ціни — Promelektroservice</title>
+        <meta
+          name="description"
+          content="Прайс на електромонтажні послуги для дому та бізнесу."
+        />
       </Helmet>
 
-      <h1>{t("pricing.title")}</h1>
-
+      <h1>Послуги та ціни</h1>
       <div className="pricing-grid">
-        {tiers.map((tierKey) => {
-          const title = t(`pricing.${tierKey}.title`);
-          const price = t(`pricing.${tierKey}.price`);
-          const features = t(`pricing.${tierKey}.features`, { returnObjects: true });
-
-          return (
-            <div key={tierKey} className="pricing-card" aria-label={`${title} — ${price}`}>
-              <h2>{title}</h2>
-              <p className="price">{price}</p>
-              <ul>
-                {features.map((feature, i) => (
-                  <li key={i}>{feature}</li>
-                ))}
-              </ul>
-            </div>
-          );
-        })}
+        {tiers.map(({ title, price, features }) => (
+          <div key={title} className="pricing-card">
+            <h2>{title}</h2>
+            <p className="price">{price}</p>
+            <ul>
+              {features.map((feature) => (
+                <li key={feature}>{feature}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </main>
   );

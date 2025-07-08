@@ -1,19 +1,8 @@
-:root {
-  --primary-color: #007bff;
-  --text-color: #222;
-  --subtext-color: #666;
-  --bg-light: #f9f9f9;
-  --bg-white: #fff;
-  --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  --card-hover-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-  --font-main: "Segoe UI", sans-serif;
-}
-
 .portfolio-page {
   padding: 4rem 2rem;
-  background: var(--bg-light);
+  background: #f9f9f9;
   min-height: 100vh;
-  font-family: var(--font-main);
+  font-family: Arial, sans-serif;
 }
 
 .portfolio-page h1 {
@@ -21,7 +10,7 @@
   font-weight: 700;
   margin-bottom: 2rem;
   text-align: center;
-  color: var(--text-color);
+  color: #222;
   letter-spacing: 0.5px;
 }
 
@@ -32,9 +21,9 @@
 }
 
 .portfolio-card {
-  background: var(--bg-white);
+  background: #fff;
   border-radius: 16px;
-  box-shadow: var(--card-shadow);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -42,14 +31,14 @@
 
 .portfolio-card:hover {
   transform: translateY(-8px);
-  box-shadow: var(--card-hover-shadow);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
 }
 
 .portfolio-card img {
   width: 100%;
   height: 220px;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s;
 }
 
 .portfolio-card:hover img {
@@ -58,32 +47,17 @@
 
 .card-content {
   padding: 1.2rem 1rem;
-  background: var(--bg-white);
+  background: #fff;
 }
 
 .card-content h2 {
   font-size: 1.35rem;
   margin: 0 0 0.5rem;
-  color: var(--text-color);
+  color: #222;
 }
 
 .card-content p {
   font-size: 0.95rem;
-  color: var(--subtext-color);
-  line-height: 1.5;
-}
-
-/* 📱 Responsive */
-@media (max-width: 600px) {
-  .portfolio-card img {
-    height: 180px;
-  }
-
-  .card-content h2 {
-    font-size: 1.2rem;
-  }
-
-  .card-content p {
-    font-size: 0.9rem;
-  }
+  color: #666;
+  line-height: 1.4;
 }

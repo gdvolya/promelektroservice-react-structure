@@ -1,118 +1,17 @@
-:root {
-  --admin-bg: #f8f9fa;
-  --admin-text: #212121;
-  --admin-subtext: #555;
-  --admin-border: #ddd;
-  --accent: #007bff;
-  --danger: #dc3545;
-  --success: #28a745;
-}
-
 .admin-panel {
   padding: 2rem;
-  background-color: var(--admin-bg);
+  background-color: #f8f9fa;
   min-height: 100vh;
   text-align: center;
-  font-family: "Segoe UI", sans-serif;
 }
 
 .admin-panel h1 {
-  font-size: 2.2rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
-  color: var(--admin-text);
+  color: #212121;
 }
 
 .admin-panel p {
-  color: var(--admin-subtext);
+  color: #555;
   margin-bottom: 2rem;
-}
-
-.admin-panel .search-input {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: 1px solid var(--admin-border);
-  border-radius: 6px;
-  margin-bottom: 2rem;
-  width: 100%;
-  max-width: 400px;
-}
-
-.submissions-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  overflow-x: auto;
-}
-
-.submissions-table th,
-.submissions-table td {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--admin-border);
-  text-align: left;
-}
-
-.submissions-table th {
-  background-color: #e9ecef;
-  color: #333;
-}
-
-.submissions-table td {
-  background-color: #fff;
-}
-
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.actions button {
-  padding: 0.4rem 0.75rem;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.3s ease;
-}
-
-.actions .delete-btn {
-  background-color: var(--danger);
-  color: #fff;
-}
-
-.actions .delete-btn:hover {
-  background-color: #c82333;
-}
-
-.actions .export-btn {
-  background-color: var(--accent);
-  color: #fff;
-}
-
-.actions .export-btn:hover {
-  background-color: #0056b3;
-}
-
-.loading,
-.error,
-.empty {
-  margin-top: 2rem;
-  font-size: 1rem;
-  color: var(--admin-subtext);
-}
-
-.success-message {
-  color: var(--success);
-  margin-top: 1rem;
-}
-
-/* 📱 Responsive */
-@media (max-width: 768px) {
-  .submissions-table {
-    font-size: 0.85rem;
-  }
-
-  .admin-panel h1 {
-    font-size: 1.6rem;
-  }
 }
