@@ -6,7 +6,6 @@ import logo from "./img/logo.png";
 import "./css/style.css";
 import "./i18n";
 
-// 🔁 Ленивая загрузка страниц с .jsx
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -47,7 +46,7 @@ function AppContent() {
       <div className="app-wrapper">
         <header className="site-header" role="banner">
           <div className="header-container">
-            <Link to="/" aria-label={t("nav.home")}>
+            <Link to="/" aria-label={t("nav.home")} className="logo-link">
               <img
                 src={logo}
                 alt="Логотип ПромЕлектроСервіс"
