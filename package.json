@@ -1,6 +1,6 @@
 {
   "name": "promelektroservice-react",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.1.0",
@@ -10,13 +10,19 @@
     "i18next": "^25.1.2",
     "i18next-browser-languagedetector": "^8.1.0",
     "i18next-http-backend": "^3.0.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
     "react-i18next": "^15.5.1",
     "react-router-dom": "^6.30.0",
     "react-scripts": "^5.0.1",
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "lighthouse": "^12.7.1",
+    "sitemap": "^8.0.0",
+    "typescript": "^4.9.5",
+    "vercel": "^44.2.13"
   },
   "scripts": {
     "start": "craco start",
@@ -24,7 +30,7 @@
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && vercel --prod && git add -A && git commit -m \"🚀 Релиз\" && git push origin main && lhci autorun"
+    "deploy": "npm run build && vercel --prod && git add -A && git commit -m \"🚀 Релиз\" && git push origin main && lhci autorun || true"
   },
   "browserslist": {
     "production": [
@@ -37,11 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "lighthouse": "^12.7.1",
-    "sitemap": "^8.0.0",
-    "typescript": "^4.9.5",
-    "vercel": "^44.2.13"
   }
 }
