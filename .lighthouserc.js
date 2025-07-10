@@ -7,13 +7,15 @@ module.exports = {
         preset: "desktop",
         disableStorageReset: true,
         throttlingMethod: "simulate",
-        waitForTimeout: 10000
+        screenEmulation: { disabled: false },
+        onlyCategories: ["performance", "accessibility", "seo", "best-practices"],
+        waitForTimeout: 10000 // или увеличь до 15000, если SSR + анимации
       }
     },
     upload: {
       target: "filesystem",
-      outputDir: ".lighthouseci/report",
-      reportFilenamePattern: "promelektroservice_%-date%.report.html"
+      outputDir: "./report", // 💡 измени путь, чтобы точно не затерлось
+      reportFilenamePattern: "report_%DATE%.html"
     },
     assert: {
       assertions: {
