@@ -1,33 +1,44 @@
 const fs = require("fs");
 const path = require("path");
 
-const reportsDir = path.join(__dirname, "..", "report");
-const publicDir = path.join(__dirname, "..", "public", "report");
-const outputFile = path.join(reportsDir, "index.html");
-const publicOutputFile = path.join(publicDir, "index.html");
+// Папки с отчётами
+const paths = {
+  lighthouseci: path.join(__dirname, "..", ".lighthouseci"),
+  lighthouseciReport: path.join(__dirname, "..", ".lighthouseci", "report"),
+  report: path.join(__dirname, "..", "report"),
+  publicReport: path.join(__dirname, "..", "public", "report"),
+};
 
-if (!fs.existsSync(reportsDir)) fs.mkdirSync(reportsDir, { recursive: true });
-if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
+// Удаление всех .html и .json, кроме index.html
+for (const dir of Object.values(paths)) {
+  if (!fs.existsSync(dir)) continue;
+  const files = fs.readdirSync(dir);
+  for (const file of files) {
+    const ext = path.extname(file);
+    const keep = file === "index.html";
+    if ((ext === ".html" || ext === ".json") && !keep) {
+      fs.unlinkSync(path.join(dir, file));
+    }
+  }
+}
 
+// Убедимся, что папки существуют
+fs.mkdirSync(paths.report, { recursive: true });
+fs.mkdirSync(paths.publicReport, { recursive: true });
+
+// Собираем .html отчёты из report/
 const files = fs
-  .readdirSync(reportsDir)
+  .readdirSync(paths.report)
   .filter(f => f.endsWith(".html") && f !== "index.html")
   .sort((a, b) => {
-    const aTime = fs.statSync(path.join(reportsDir, a)).mtimeMs;
-    const bTime = fs.statSync(path.join(reportsDir, b)).mtimeMs;
+    const aTime = fs.statSync(path.join(paths.report, a)).mtimeMs;
+    const bTime = fs.statSync(path.join(paths.report, b)).mtimeMs;
     return bTime - aTime;
   });
 
-// Скопировать каждый отчёт в public/report
-files.forEach(file => {
-  const src = path.join(reportsDir, file);
-  const dest = path.join(publicDir, file);
-  fs.copyFileSync(src, dest);
-});
-
 const rows = files
   .map(file => {
-    const time = fs.statSync(path.join(reportsDir, file)).mtime.toLocaleString("uk-UA");
+    const time = fs.statSync(path.join(paths.report, file)).mtime.toLocaleString("uk-UA");
     return `<tr><td>${time}</td><td><a href="${file}" target="_blank">${file}</a></td></tr>`;
   })
   .join("\n");
@@ -35,7 +46,7 @@ const rows = files
 const html = `<!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Promelektroservice — Lighthouse Звіти</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #f8f9fa; }
@@ -52,14 +63,15 @@ const html = `<!DOCTYPE html>
       <tr><th>Час створення</th><th>Файл</th></tr>
     </thead>
     <tbody>
-      ${rows}
+      ${rows || `<tr><td colspan="2">📭 Звітів не знайдено.</td></tr>`}
     </tbody>
   </table>
 </body>
 </html>`;
 
-fs.writeFileSync(outputFile, html, "utf-8");
-fs.writeFileSync(publicOutputFile, html, "utf-8");
+// Записываем в report/ и public/report/
+fs.writeFileSync(path.join(paths.report, "index.html"), html, "utf-8");
+fs.writeFileSync(path.join(paths.publicReport, "index.html"), html, "utf-8");
 
-console.log(`✅ Створено: ${outputFile}`);
-console.log(`✅ Скопійовано у public: ${publicOutputFile}`);
+console.log("✅ Очищено старі звіти");
+console.log("✅ Створено index.html з оновленими посиланнями");

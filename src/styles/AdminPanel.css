@@ -38,6 +38,10 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+  background-color: white;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
 .admin-table th,
@@ -130,4 +134,7 @@
   color: var(--error-color);
   margin-top: 0.5rem;
   font-weight: 500;
+  max-width: 320px;
+  text-align: center;
+  line-height: 1.4;
 }
