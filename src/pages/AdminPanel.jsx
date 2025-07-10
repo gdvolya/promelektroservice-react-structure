@@ -181,6 +181,16 @@ const AdminPanel = ({ enableExport = true }) => {
           ⬇️ Експортувати в Excel
         </button>
       )}
+      <div style={{ marginTop: "2rem" }}>
+        <a
+          href="/report/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="report-link"
+        >
+          📊 Переглянути Lighthouse звіти
+        </a>
+      </div>
     </main>
   );
 };
