@@ -29,6 +29,7 @@
     "build": "npm run generate-sitemap && craco build",
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "lh-index": "node scripts/generate-lh-index.js",
+    "clean:reports": "node scripts/cleanup-reports.js",
     "test": "craco test",
     "eject": "react-scripts eject",
     "deploy": "npm run build && vercel --prod && sleep 10 && git add -A && (git commit -m \"🚀 Релиз\" || echo \"Nothing to commit\") && git pull --rebase origin main && git push origin main && lhci collect && lhci upload && npm run lh-index || true"

@@ -81,7 +81,7 @@ const AdminPanel = ({ enableExport = true }) => {
   const handleLogin = () => {
     const adminPass = process.env.REACT_APP_ADMIN_PASS?.trim();
     if (!adminPass) {
-      setError("⚠️ Пароль адміністратора не заданий у .env");
+      setError("⚠️ Пароль адміністратора не заданий у .env.local або середовищі.");
       return;
     }
     if (password.trim() !== adminPass) {
@@ -91,6 +91,10 @@ const AdminPanel = ({ enableExport = true }) => {
     setAuthenticated(true);
     setPassword("");
     setError("");
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleLogin();
   };
 
   const filteredSubmissions = submissions.filter(
@@ -110,12 +114,14 @@ const AdminPanel = ({ enableExport = true }) => {
         <h2>🔐 Вхід до адмін-панелі</h2>
         <input
           type="password"
-          placeholder="Пароль"
+          placeholder="Введіть пароль адміністратора"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
+          autoFocus
         />
         <button onClick={handleLogin} disabled={!password.trim()}>
-          Увійти
+          🔓 Увійти
         </button>
         {error && <p className="error-text">{error}</p>}
       </main>
@@ -137,7 +143,7 @@ const AdminPanel = ({ enableExport = true }) => {
       )}
       <input
         type="text"
-        placeholder="Пошук по заявках..."
+        placeholder="🔎 Пошук по заявках..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="search-input"
