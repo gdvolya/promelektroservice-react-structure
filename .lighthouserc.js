@@ -5,7 +5,9 @@ module.exports = {
       url: ["https://promelektroservice-react-structure.vercel.app/"],
       numberOfRuns: 3,
       settings: {
-        preset: "desktop"
+        preset: "desktop",
+        disableStorageReset: true, // Сохраняет состояние между прогонами
+        throttlingMethod: "simulate" // Стандартное моделирование сети
       }
     },
     upload: {
@@ -19,7 +21,7 @@ module.exports = {
         "categories:accessibility": ["warn", { minScore: 0.9 }],
         "categories:seo": ["warn", { minScore: 0.9 }],
         "categories:best-practices": ["warn", { minScore: 0.9 }],
-        "categories:pwa": "off" // Отключено, если сайт не PWA
+        "categories:pwa": "off"
       }
     }
   }
