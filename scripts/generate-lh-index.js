@@ -2,11 +2,12 @@ const fs = require("fs");
 const path = require("path");
 
 const reportsDir = path.join(__dirname, "..", "report");
+const publicDir = path.join(__dirname, "..", "public", "report");
 const outputFile = path.join(reportsDir, "index.html");
+const publicOutputFile = path.join(publicDir, "index.html");
 
-if (!fs.existsSync(reportsDir)) {
-  fs.mkdirSync(reportsDir, { recursive: true });
-}
+if (!fs.existsSync(reportsDir)) fs.mkdirSync(reportsDir, { recursive: true });
+if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
 
 const files = fs
   .readdirSync(reportsDir)
@@ -20,7 +21,7 @@ const files = fs
 const rows = files
   .map(file => {
     const time = fs.statSync(path.join(reportsDir, file)).mtime.toLocaleString("uk-UA");
-    return `<tr><td>${time}</td><td><a href="./${file}" target="_blank">${file}</a></td></tr>`;
+    return `<tr><td>${time}</td><td><a href="${file}" target="_blank">${file}</a></td></tr>`;
   })
   .join("\n");
 
@@ -31,7 +32,6 @@ const html = `<!DOCTYPE html>
   <title>Promelektroservice — Lighthouse Звіти</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #f8f9fa; }
-    h1 { color: #333; }
     table { border-collapse: collapse; width: 100%; background: white; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
     th { background-color: #f2f2f2; }
@@ -52,4 +52,7 @@ const html = `<!DOCTYPE html>
 </html>`;
 
 fs.writeFileSync(outputFile, html, "utf-8");
+fs.writeFileSync(publicOutputFile, html, "utf-8");
+
 console.log(`✅ Створено: ${outputFile}`);
+console.log(`✅ Скопійовано у public: ${publicOutputFile}`);
