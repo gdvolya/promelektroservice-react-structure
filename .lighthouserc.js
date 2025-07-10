@@ -7,7 +7,7 @@ module.exports = {
         preset: "desktop",
         disableStorageReset: true,
         throttlingMethod: "simulate",
-        waitForTimeout: 10000
+        waitForTimeout: 10000 // ждём 10 сек перед началом аудита
       }
     },
     upload: {
