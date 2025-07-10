@@ -6,6 +6,7 @@ import logo from "./img/logo.png";
 import "./css/style.css";
 import "./i18n";
 
+// 🔁 Ленивая загрузка страниц
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -41,6 +42,9 @@ function AppContent() {
           name="description"
           content={t("meta.description") || "Професійні електромонтажні роботи будь-якої складності."}
         />
+        {/* 🔤 Предзагрузка шрифтов (если есть) */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </Helmet>
 
       <div className="app-wrapper">
@@ -86,11 +90,11 @@ function AppContent() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/portfolio/:projectId" element={<ProjectDetailPage />} />
               <Route path="/reviews" element={<ReviewsPage />} />
               <Route path="/pricing" element={<PricingPage />} />
               <Route path="/contacts" element={<ContactsPage />} />
               <Route path="/admin" element={<AdminPanel enableExport />} />
-              <Route path="/portfolio/:projectId" element={<ProjectDetailPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
