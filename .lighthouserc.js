@@ -7,7 +7,8 @@ module.exports = {
       settings: {
         preset: "desktop",
         disableStorageReset: true, // Сохраняет состояние между прогонами
-        throttlingMethod: "simulate" // Стандартное моделирование сети
+        throttlingMethod: "simulate", // Стандартное моделирование сети
+        waitForTimeout: 5000 // ⏱ Ждём 5 секунд перед началом аудита
       }
     },
     upload: {
