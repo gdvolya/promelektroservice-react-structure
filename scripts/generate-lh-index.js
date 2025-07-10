@@ -9,20 +9,21 @@ const publicOutputFile = path.join(publicDir, "index.html");
 if (!fs.existsSync(reportsDir)) fs.mkdirSync(reportsDir, { recursive: true });
 if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
 
-const isValidHtmlReport = (filePath) => {
-  const content = fs.readFileSync(filePath, "utf-8");
-  return content.includes("<html") && content.includes("<body") && content.includes("Lighthouse Report");
-};
-
 const files = fs
   .readdirSync(reportsDir)
   .filter(f => f.endsWith(".html") && f !== "index.html")
-  .filter(f => isValidHtmlReport(path.join(reportsDir, f)))
   .sort((a, b) => {
     const aTime = fs.statSync(path.join(reportsDir, a)).mtimeMs;
     const bTime = fs.statSync(path.join(reportsDir, b)).mtimeMs;
     return bTime - aTime;
   });
+
+// Скопировать каждый отчёт в public/report
+files.forEach(file => {
+  const src = path.join(reportsDir, file);
+  const dest = path.join(publicDir, file);
+  fs.copyFileSync(src, dest);
+});
 
 const rows = files
   .map(file => {
@@ -51,7 +52,7 @@ const html = `<!DOCTYPE html>
       <tr><th>Час створення</th><th>Файл</th></tr>
     </thead>
     <tbody>
-      ${rows || `<tr><td colspan="2">❌ Жодного коректного звіту не знайдено.</td></tr>`}
+      ${rows}
     </tbody>
   </table>
 </body>
