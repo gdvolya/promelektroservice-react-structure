@@ -1,6 +1,6 @@
 {
   "name": "promelektroservice-react",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "private": true,
   "dependencies": {
     "@craco/craco": "^7.1.0",
@@ -30,7 +30,7 @@
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && vercel --prod && sleep 10 && git add -A && (git commit -m \"🚀 Релиз\" || echo \"Nothing to commit\") && git pull --rebase origin main && git push origin main && lhci autorun || true"
+    "deploy": "npm run build && vercel --prod && sleep 10 && git add -A && (git commit -m \"🚀 Релиз\" || echo \"Nothing to commit\") && git pull --rebase origin main && git push origin main && lhci collect && lhci upload || true"
   },
   "browserslist": {
     "production": [
