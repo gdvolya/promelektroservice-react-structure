@@ -1,14 +1,14 @@
 module.exports = {
   ci: {
     collect: {
-      staticDistDir: "./build",
-      url: ["https://promelektroservice-react-structure.vercel.app/"],
+      staticDistDir: "./build", // используется при проверке локальной сборки
+      url: ["https://promelektroservice-react-structure.vercel.app/"], // проверка продакшн-версии
       numberOfRuns: 3,
       settings: {
         preset: "desktop",
-        disableStorageReset: true, // Сохраняет состояние между прогонами
-        throttlingMethod: "simulate", // Стандартное моделирование сети
-        waitForTimeout: 5000 // ⏱ Ждём 5 секунд перед началом аудита
+        disableStorageReset: true, // сохраняем localStorage, sessionStorage и cookies
+        throttlingMethod: "simulate", // эмуляция скорости сети и CPU
+        waitForTimeout: 5000 // ждём 5 секунд после загрузки страницы перед началом аудита
       }
     },
     upload: {
@@ -22,7 +22,7 @@ module.exports = {
         "categories:accessibility": ["warn", { minScore: 0.9 }],
         "categories:seo": ["warn", { minScore: 0.9 }],
         "categories:best-practices": ["warn", { minScore: 0.9 }],
-        "categories:pwa": "off"
+        "categories:pwa": "off" // отключено, так как сайт не является PWA
       }
     }
   }
