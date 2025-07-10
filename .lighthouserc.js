@@ -7,15 +7,13 @@ module.exports = {
         preset: "desktop",
         disableStorageReset: true,
         throttlingMethod: "simulate",
-        screenEmulation: { disabled: false },
-        onlyCategories: ["performance", "accessibility", "seo", "best-practices"],
-        waitForTimeout: 10000 // или увеличь до 15000, если SSR + анимации
+        waitForTimeout: 10000
       }
     },
     upload: {
       target: "filesystem",
-      outputDir: "./report", // 💡 измени путь, чтобы точно не затерлось
-      reportFilenamePattern: "report_%DATE%.html"
+      outputDir: "report"
+      // ❌ НЕ указываем reportFilenamePattern
     },
     assert: {
       assertions: {
