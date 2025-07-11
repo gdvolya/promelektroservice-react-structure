@@ -79,15 +79,26 @@ const AdminPanel = ({ enableExport = true }) => {
   };
 
   const handleLogin = () => {
-    const adminPass = process.env.REACT_APP_ADMIN_PASS?.trim();
-    if (!adminPass) {
+    const rawPass = process.env.REACT_APP_ADMIN_PASS;
+
+    if (typeof rawPass === "undefined") {
+      console.warn("⚠️ REACT_APP_ADMIN_PASS не задана у .env.local або середовищі.");
       setError("⚠️ Пароль адміністратора не заданий у .env.local або середовищі.");
       return;
     }
+
+    const adminPass = rawPass.trim();
+    if (!adminPass) {
+      console.warn("⚠️ REACT_APP_ADMIN_PASS існує, але порожній.");
+      setError("⚠️ Пароль адміністратора заданий як порожній рядок.");
+      return;
+    }
+
     if (password.trim() !== adminPass) {
       setError("Невірний пароль.");
       return;
     }
+
     setAuthenticated(true);
     setPassword("");
     setError("");
@@ -163,22 +174,24 @@ const AdminPanel = ({ enableExport = true }) => {
             </tr>
           </thead>
           <tbody>
-            {filteredSubmissions.map(({ id, name, email, phone, message, createdAt }) => (
-              <tr key={id}>
-                <td>{name}</td>
-                <td>{email}</td>
-                <td>{phone}</td>
-                <td>{message}</td>
-                <td>
-                  {createdAt?.seconds
-                    ? new Date(createdAt.seconds * 1000).toLocaleString("uk-UA")
-                    : "—"}
-                </td>
-                <td>
-                  <button onClick={() => handleDelete(id)}>🗑 Видалити</button>
-                </td>
-              </tr>
-            ))}
+            {filteredSubmissions.map(
+              ({ id, name, email, phone, message, createdAt }) => (
+                <tr key={id}>
+                  <td>{name}</td>
+                  <td>{email}</td>
+                  <td>{phone}</td>
+                  <td>{message}</td>
+                  <td>
+                    {createdAt?.seconds
+                      ? new Date(createdAt.seconds * 1000).toLocaleString("uk-UA")
+                      : "—"}
+                  </td>
+                  <td>
+                    <button onClick={() => handleDelete(id)}>🗑 Видалити</button>
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
       )}
