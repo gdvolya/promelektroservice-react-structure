@@ -79,7 +79,8 @@ const AdminPanel = ({ enableExport = true }) => {
   };
 
   const handleLogin = () => {
-    const rawPass = process.env.REACT_APP_ADMIN_PASS;
+    const rawPass =
+      import.meta.env?.REACT_APP_ADMIN_PASS || process.env.REACT_APP_ADMIN_PASS;
 
     if (typeof rawPass === "undefined") {
       console.warn("⛔ REACT_APP_ADMIN_PASS is undefined. Check .env.local or Vercel variables.");
