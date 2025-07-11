@@ -33,6 +33,20 @@ const ContactsPage = () => {
           <h2 id="contact-address">Адреса</h2>
           <p>м. Київ, вул. Прикладна, 1</p>
         </section>
+
+        <section aria-labelledby="contact-form">
+          <h2 id="contact-form">Форма зворотного зв’язку</h2>
+          <form
+            action="https://formspree.io/f/xeogalqn"
+            method="POST"
+            className="contact-form"
+          >
+            <input type="text" name="name" placeholder="Ваше ім’я" required />
+            <input type="email" name="email" placeholder="Ваш email" required />
+            <textarea name="message" placeholder="Ваше повідомлення" required></textarea>
+            <button type="submit">📨 Надіслати</button>
+          </form>
+        </section>
       </div>
     </main>
   );
