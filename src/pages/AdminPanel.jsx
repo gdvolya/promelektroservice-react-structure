@@ -38,7 +38,7 @@ const AdminPanel = ({ enableExport = true }) => {
       );
       setViews(viewsDoc.exists() ? viewsDoc.data().count : 0);
     } catch (err) {
-      console.error("Error loading data:", err.message);
+      console.error("Помилка завантаження даних:", err);
       setError("Помилка завантаження даних.");
     } finally {
       setLoading(false);
@@ -82,16 +82,21 @@ const AdminPanel = ({ enableExport = true }) => {
     const rawPass = process.env.REACT_APP_ADMIN_PASS;
 
     if (typeof rawPass === "undefined") {
-      console.warn("⚠️ REACT_APP_ADMIN_PASS не задана у .env.local або середовищі.");
+      console.warn("⛔ REACT_APP_ADMIN_PASS is undefined. Check .env.local or Vercel variables.");
       setError("⚠️ Пароль адміністратора не заданий у .env.local або середовищі.");
       return;
     }
 
     const adminPass = rawPass.trim();
+
     if (!adminPass) {
       console.warn("⚠️ REACT_APP_ADMIN_PASS існує, але порожній.");
       setError("⚠️ Пароль адміністратора заданий як порожній рядок.");
       return;
+    }
+
+    if (import.meta.env.MODE === "development") {
+      console.log("[DEBUG] Пароль з env:", adminPass);
     }
 
     if (password.trim() !== adminPass) {
@@ -99,9 +104,11 @@ const AdminPanel = ({ enableExport = true }) => {
       return;
     }
 
-    setAuthenticated(true);
-    setPassword("");
-    setError("");
+    setTimeout(() => {
+      setAuthenticated(true);
+      setPassword("");
+      setError("");
+    }, 300);
   };
 
   const handleKeyDown = (e) => {
