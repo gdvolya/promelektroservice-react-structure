@@ -96,7 +96,7 @@ const AdminPanel = ({ enableExport = true }) => {
       return;
     }
 
-    if (import.meta.env.MODE === "development") {
+    if (import.meta.env?.MODE === "development") {
       console.log("[DEBUG] Пароль з env:", adminPass);
     }
 
