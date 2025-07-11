@@ -11,9 +11,9 @@ const paths = {
 const isReportFile = file =>
   file.endsWith(".html") || file.endsWith(".json");
 
-// Удалить все отчёты кроме самого последнего .html из /report
+// Удалить все отчёты кроме последнего из папки report/
 function cleanupDir(dirPath) {
-  if (!fs.existsSync(dirPath)) return;
+  if (!fs.existsSync(dirPath)) return null;
 
   const htmlFiles = fs.readdirSync(dirPath)
     .filter(f => f.endsWith(".html") && f !== "index.html")
@@ -23,7 +23,7 @@ function cleanupDir(dirPath) {
     }))
     .sort((a, b) => b.time - a.time);
 
-  const keep = htmlFiles.length > 0 ? htmlFiles[0].name : null;
+  const keep = htmlFiles[0]?.name || null;
 
   fs.readdirSync(dirPath).forEach(file => {
     if (isReportFile(file) && file !== "index.html" && file !== keep) {
@@ -31,13 +31,10 @@ function cleanupDir(dirPath) {
     }
   });
 
-  return keep; // Возвращаем имя последнего отчёта
+  return keep;
 }
 
-// Удалить лишние отчёты и получить последний отчёт
-const lastReport = cleanupDir(paths.report);
-
-// Очистить остальные директории
+// Удаляем лишние отчёты в других папках
 for (const key of ["lighthouseci", "lighthouseciReport", "publicReport"]) {
   if (fs.existsSync(paths[key])) {
     fs.readdirSync(paths[key]).forEach(file => {
@@ -48,10 +45,15 @@ for (const key of ["lighthouseci", "lighthouseciReport", "publicReport"]) {
   }
 }
 
+// Очищаем report/ и получаем имя последнего отчёта
+const lastReport = cleanupDir(paths.report);
+
+// Генерируем HTML строку для таблицы
 const rows = lastReport
   ? `<tr><td>${new Date().toLocaleString("uk-UA")}</td><td><a href="${lastReport}" target="_blank">${lastReport}</a></td></tr>`
   : `<tr><td colspan="2">📭 Звітів не знайдено.</td></tr>`;
 
+// Генерируем HTML-страницу
 const html = `<!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -74,8 +76,19 @@ const html = `<!DOCTYPE html>
 </body>
 </html>`;
 
-fs.writeFileSync(path.join(paths.report, "index.html"), html, "utf-8");
+// Создаём директории при необходимости
 fs.mkdirSync(paths.publicReport, { recursive: true });
+
+// Сохраняем index.html
+fs.writeFileSync(path.join(paths.report, "index.html"), html, "utf-8");
 fs.writeFileSync(path.join(paths.publicReport, "index.html"), html, "utf-8");
+
+// Копируем последний отчёт в public/report
+if (lastReport) {
+  const from = path.join(paths.report, lastReport);
+  const to = path.join(paths.publicReport, lastReport);
+  fs.copyFileSync(from, to);
+  console.log(`✅ Скопійовано у public/report/${lastReport}`);
+}
 
 console.log("✅ Очистка завершена, збережено останній звіт.");
