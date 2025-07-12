@@ -23,13 +23,22 @@ const ContactsPage = () => {
       }
 
       const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+      
+      // Проверяем, что все данные формы заполнены
+      if (!form.name || !form.email || !form.message) {
+        setStatus("error");
+        setLoading(false);
+        return;
+      }
+
+      // Добавляем данные в Firestore
       await addDoc(collection(db, "submissions"), {
         ...form,
         createdAt: serverTimestamp(),
       });
 
       setStatus("success");
-      setForm({ name: "", email: "", phone: "", message: "" });
+      setForm({ name: "", email: "", phone: "", message: "" });  // Очищаем форму
     } catch (err) {
       console.error("Помилка надсилання форми:", err);
       setStatus("error");

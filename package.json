@@ -6,7 +6,7 @@
     "@craco/craco": "^7.1.0",
     "aos": "^2.3.4",
     "craco-plugin-scoped-css": "^1.1.1",
-    "firebase": "^11.6.1",
+    "firebase": "^11.10.0",
     "i18next": "^25.1.2",
     "i18next-browser-languagedetector": "^8.1.0",
     "i18next-http-backend": "^3.0.2",
