@@ -3,14 +3,11 @@ let db = null;
 let messaging = null;
 
 export const loadFirebase = async () => {
-  const firebase = await import("firebase/app");
-  await import("firebase/firestore");
-  await import("firebase/messaging");
-
   const { initializeApp, getApps } = await import("firebase/app");
   const { getFirestore } = await import("firebase/firestore");
   const { getMessaging } = await import("firebase/messaging");
 
+  // Проверяем, если Firebase уже инициализирован
   if (getApps().length === 0) {
     const app = initializeApp({
       apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -21,6 +18,7 @@ export const loadFirebase = async () => {
       appId: import.meta.env.VITE_FIREBASE_APP_ID,
     });
 
+    // Получаем экземпляр Firestore и Messaging
     db = getFirestore(app);
     messaging = getMessaging(app);
   }
