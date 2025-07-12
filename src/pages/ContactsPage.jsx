@@ -1,288 +1,122 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import {
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-  getDoc,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
-import * as XLSX from "xlsx";
-import "../styles/AdminPanel.css";
+import "../styles/ContactsPage.css";
 
 let db = null;
 
-const AdminPanel = ({ enableExport = true }) => {
-  const [submissions, setSubmissions] = useState([]);
-  const [views, setViews] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
-  const [error, setError] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
-  const [formStatus, setFormStatus] = useState(null);
+const ContactsPage = () => {
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const fetchData = useCallback(async () => {
-    if (!db) return;
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
+    setStatus(null);
+
     try {
-      const [subsSnapshot, viewsDoc] = await Promise.all([
-        getDocs(collection(db, "submissions")),
-        getDoc(doc(db, "views", "home")),
-      ]);
-      setSubmissions(
-        subsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-          createdAt: doc.data().createdAt || null,
-        }))
-      );
-      setViews(viewsDoc.exists() ? viewsDoc.data().count : 0);
+      if (!db) {
+        const firebase = await import("../firebaseLazy");
+        db = firebase.db;
+      }
+
+      const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+      await addDoc(collection(db, "submissions"), {
+        ...form,
+        createdAt: serverTimestamp(),
+      });
+
+      setStatus("success");
+      setForm({ name: "", email: "", phone: "", message: "" });
     } catch (err) {
-      console.error("Помилка завантаження даних:", err);
-      setError("Помилка завантаження даних.");
+      console.error("Помилка надсилання форми:", err);
+      setStatus("error");
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    if (authenticated && !db) {
-      import("../firebaseLazy").then(({ db: loadedDb }) => {
-        db = loadedDb;
-        fetchData();
-      });
-    } else if (authenticated && db) {
-      fetchData();
-    }
-  }, [authenticated, fetchData]);
-
-  const handleDelete = async (id) => {
-    if (!db) return;
-    const confirmed = window.confirm("Ви впевнені, що хочете видалити?");
-    if (!confirmed) return;
-    try {
-      await deleteDoc(doc(db, "submissions", id));
-      setSubmissions((prev) => prev.filter((s) => s.id !== id));
-    } catch (err) {
-      alert("Не вдалося видалити.");
-      console.error(err);
-    }
   };
-
-  const exportToExcel = () => {
-    const sheet = XLSX.utils.json_to_sheet(
-      submissions.map(({ id, ...rest }) => rest)
-    );
-    const book = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(book, sheet, "Заявки");
-    XLSX.writeFile(book, "submissions.xlsx");
-  };
-
-  const handleLogin = () => {
-    const rawPass =
-      import.meta.env?.REACT_APP_ADMIN_PASS || process.env.REACT_APP_ADMIN_PASS;
-
-    if (typeof rawPass === "undefined") {
-      console.warn("⛔ REACT_APP_ADMIN_PASS is undefined. Check .env.local or Vercel variables.");
-      setError("⚠️ Пароль адміністратора не заданий у .env.local або середовищі.");
-      return;
-    }
-
-    const adminPass = rawPass.trim();
-
-    if (!adminPass) {
-      console.warn("⚠️ REACT_APP_ADMIN_PASS існує, але порожній.");
-      setError("⚠️ Пароль адміністратора заданий як порожній рядок.");
-      return;
-    }
-
-    if (import.meta.env?.MODE === "development") {
-      console.log("[DEBUG] Пароль з env:", adminPass);
-    }
-
-    if (password.trim() !== adminPass) {
-      setError("Невірний пароль.");
-      return;
-    }
-
-    setTimeout(() => {
-      setAuthenticated(true);
-      setPassword("");
-      setError("");
-    }, 300);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleLogin();
-  };
-
-  const filteredSubmissions = submissions.filter(
-    ({ name, email, phone, message }) =>
-      name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      message?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handleFormChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    if (!db) return;
-
-    try {
-      await addDoc(collection(db, "submissions"), {
-        ...formData,
-        createdAt: serverTimestamp(),
-      });
-      setFormData({ name: "", email: "", phone: "", message: "" });
-      setFormStatus("✅ Повідомлення надіслано успішно.");
-      fetchData();
-    } catch (err) {
-      console.error("Помилка надсилання форми:", err);
-      setFormStatus("❌ Не вдалося надіслати повідомлення.");
-    }
-  };
-
-  if (!authenticated) {
-    return (
-      <main className="admin-login">
-        <Helmet>
-          <title>Вхід в адмін-панель — ПромЕлектроСервіс</title>
-        </Helmet>
-        <h2>🔐 Вхід до адмін-панелі</h2>
-        <input
-          type="password"
-          placeholder="Введіть пароль адміністратора"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoFocus
-        />
-        <button onClick={handleLogin} disabled={!password.trim()}>
-          🔓 Увійти
-        </button>
-        {error && <p className="error-text">{error}</p>}
-      </main>
-    );
-  }
 
   return (
-    <main className="admin-panel">
+    <main className="contacts-page">
       <Helmet>
-        <title>Адмін-панель — ПромЕлектроСервіс</title>
+        <title>Контакти — ПромЕлектроСервіс</title>
+        <meta
+          name="description"
+          content="Зв’яжіться з ПромЕлектроСервіс для замовлення послуг або консультації."
+        />
       </Helmet>
-      <h1>Адмін-панель</h1>
-      {loading && <p>⏳ Завантаження даних...</p>}
-      {error && <p className="error-text">{error}</p>}
-      {views !== null && (
-        <p>
-          👁 Переглядів на головній: <strong>{views}</strong>
-        </p>
-      )}
-      <input
-        type="text"
-        placeholder="🔎 Пошук по заявках..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-input"
-      />
-      {filteredSubmissions.length === 0 && !loading ? (
-        <p>Немає заявок.</p>
-      ) : (
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Ім’я</th>
-              <th>Email</th>
-              <th>Телефон</th>
-              <th>Повідомлення</th>
-              <th>Дата</th>
-              <th>Дії</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredSubmissions.map(
-              ({ id, name, email, phone, message, createdAt }) => (
-                <tr key={id}>
-                  <td>{name}</td>
-                  <td>{email}</td>
-                  <td>{phone}</td>
-                  <td>{message}</td>
-                  <td>
-                    {createdAt?.seconds
-                      ? new Date(createdAt.seconds * 1000).toLocaleString("uk-UA")
-                      : "—"}
-                  </td>
-                  <td>
-                    <button onClick={() => handleDelete(id)}>🗑 Видалити</button>
-                  </td>
-                </tr>
-              )
+
+      <h1>📞 Контакти</h1>
+      <p>Ми завжди готові допомогти вам з електромонтажем або консультацією.</p>
+
+      <div className="contact-info">
+        <section aria-labelledby="contact-phone">
+          <h2 id="contact-phone">Телефон</h2>
+          <a href="tel:+380666229776">+38 (066) 622-97-76</a>
+        </section>
+
+        <section aria-labelledby="contact-email">
+          <h2 id="contact-email">Email</h2>
+          <a href="mailto:info@promelektroservice.com">
+            info@promelektroservice.com
+          </a>
+        </section>
+
+        <section aria-labelledby="contact-address">
+          <h2 id="contact-address">Адреса</h2>
+          <p>м. Київ, вул. Прикладна, 1</p>
+        </section>
+
+        <section aria-labelledby="contact-form">
+          <h2 id="contact-form">Форма зворотного зв’язку</h2>
+          <form onSubmit={handleSubmit} className="contact-form">
+            <input
+              type="text"
+              name="name"
+              placeholder="Ваше ім’я"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Ваш email"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="phone"
+              placeholder="Ваш телефон"
+              value={form.phone}
+              onChange={handleChange}
+            />
+            <textarea
+              name="message"
+              placeholder="Ваше повідомлення"
+              value={form.message}
+              onChange={handleChange}
+              rows={5}
+              required
+            />
+            <button type="submit" disabled={loading}>
+              {loading ? "Надсилання..." : "📨 Надіслати"}
+            </button>
+            {status === "success" && (
+              <p className="success-message">✅ Дякуємо! Повідомлення надіслано.</p>
             )}
-          </tbody>
-        </table>
-      )}
-      {enableExport && submissions.length > 0 && (
-        <button onClick={exportToExcel} className="export-btn">
-          ⬇️ Експортувати в Excel
-        </button>
-      )}
-      <div style={{ marginTop: "2rem" }}>
-        <a
-          href="/report/index.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="report-link"
-        >
-          📊 Переглянути Lighthouse звіти
-        </a>
-      </div>
-      <div className="feedback-form" style={{ marginTop: "3rem", maxWidth: 600, marginInline: "auto" }}>
-        <h2>📬 Додати заявку вручну</h2>
-        <form onSubmit={handleFormSubmit} className="admin-form">
-          <input
-            type="text"
-            name="name"
-            placeholder="Ім’я"
-            value={formData.name}
-            onChange={handleFormChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleFormChange}
-            required
-          />
-          <input
-            type="text"
-            name="phone"
-            placeholder="Телефон"
-            value={formData.phone}
-            onChange={handleFormChange}
-          />
-          <textarea
-            name="message"
-            placeholder="Повідомлення"
-            value={formData.message}
-            onChange={handleFormChange}
-            required
-          />
-          <button type="submit">📩 Надіслати</button>
-        </form>
-        {formStatus && <p style={{ marginTop: "1rem" }}>{formStatus}</p>}
+            {status === "error" && (
+              <p className="error-message">❌ Помилка. Спробуйте ще раз.</p>
+            )}
+          </form>
+        </section>
       </div>
     </main>
   );
 };
 
-export default AdminPanel;
+export default ContactsPage;
