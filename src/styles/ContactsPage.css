@@ -106,19 +106,6 @@
   background-color: var(--primary-hover);
 }
 
-.contact-form .success-message {
-  color: green;
-  font-weight: 500;
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.contact-form .error-message {
-  color: var(--error-color);
-  text-align: center;
-  margin-top: 1rem;
-}
-
 @media (max-width: 600px) {
   .contacts-page {
     padding: 3rem 1rem;

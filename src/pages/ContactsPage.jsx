@@ -1,53 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
 import "../styles/ContactsPage.css";
 
-// Подключаем Firestore для работы с базой данных
-let db = null;
-
 const ContactsPage = () => {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
-  const [status, setStatus] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setStatus(null);
-
-    try {
-      if (!db) {
-        const firebase = await import("../firebaseLazy");
-        db = firebase.db;
-      }
-
-      const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
-
-      // Проверяем, что все данные формы заполнены
-      if (!form.name || !form.email || !form.message) {
-        setStatus("error");
-        setLoading(false);
-        return;
-      }
-
-      // Добавляем данные в Firestore
-      await addDoc(collection(db, "submissions"), {
-        ...form,
-        createdAt: serverTimestamp(),
-      });
-
-      setStatus("success");
-      setForm({ name: "", email: "", phone: "", message: "" });  // Очищаем форму
-    } catch (err) {
-      console.error("Помилка надсилання форми:", err);
-      setStatus("error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <main className="contacts-page">
       <Helmet>
@@ -81,47 +36,35 @@ const ContactsPage = () => {
 
         <section aria-labelledby="contact-form">
           <h2 id="contact-form">Форма зворотного зв’язку</h2>
-          <form onSubmit={handleSubmit} className="contact-form">
+          <form
+            action="https://formspree.io/f/xeogalqn"
+            method="POST"
+            className="contact-form"
+          >
             <input
               type="text"
               name="name"
               placeholder="Ваше ім’я"
-              value={form.name}
-              onChange={handleChange}
               required
             />
             <input
               type="email"
               name="email"
               placeholder="Ваш email"
-              value={form.email}
-              onChange={handleChange}
               required
             />
             <input
               type="text"
               name="phone"
               placeholder="Ваш телефон"
-              value={form.phone}
-              onChange={handleChange}
             />
             <textarea
               name="message"
               placeholder="Ваше повідомлення"
-              value={form.message}
-              onChange={handleChange}
               rows={5}
               required
             />
-            <button type="submit" disabled={loading}>
-              {loading ? "Надсилання..." : "📨 Надіслати"}
-            </button>
-            {status === "success" && (
-              <p className="success-message">✅ Дякуємо! Повідомлення надіслано.</p>
-            )}
-            {status === "error" && (
-              <p className="error-message">❌ Помилка. Спробуйте ще раз.</p>
-            )}
+            <button type="submit">📨 Надіслати</button>
           </form>
         </section>
       </div>
