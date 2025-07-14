@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import "../styles/ContactsPage.css";
 
+// Подключаем Firestore для работы с базой данных
 let db = null;
 
 const ContactsPage = () => {
@@ -23,7 +24,7 @@ const ContactsPage = () => {
       }
 
       const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
-      
+
       // Проверяем, что все данные формы заполнены
       if (!form.name || !form.email || !form.message) {
         setStatus("error");
