@@ -6,8 +6,6 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  addDoc,
-  serverTimestamp,
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
 import "../styles/AdminPanel.css";
@@ -22,8 +20,6 @@ const AdminPanel = ({ enableExport = true }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
-  const [formStatus, setFormStatus] = useState(null);
 
   const fetchData = useCallback(async () => {
     if (!db) return;
@@ -128,28 +124,6 @@ const AdminPanel = ({ enableExport = true }) => {
       message?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleFormChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    if (!db) return;
-
-    try {
-      await addDoc(collection(db, "submissions"), {
-        ...formData,
-        createdAt: serverTimestamp(),
-      });
-      setFormData({ name: "", email: "", phone: "", message: "" });
-      setFormStatus("✅ Повідомлення надіслано успішно.");
-      fetchData();
-    } catch (err) {
-      console.error("Помилка надсилання форми:", err);
-      setFormStatus("❌ Не вдалося надіслати повідомлення.");
-    }
-  };
-
   if (!authenticated) {
     return (
       <main className="admin-login">
@@ -243,43 +217,6 @@ const AdminPanel = ({ enableExport = true }) => {
         >
           📊 Переглянути Lighthouse звіти
         </a>
-      </div>
-      <div className="feedback-form" style={{ marginTop: "3rem", maxWidth: 600, marginInline: "auto" }}>
-        <h2>📬 Додати заявку вручну</h2>
-        <form onSubmit={handleFormSubmit} className="admin-form">
-          <input
-            type="text"
-            name="name"
-            placeholder="Ім’я"
-            value={formData.name}
-            onChange={handleFormChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleFormChange}
-            required
-          />
-          <input
-            type="text"
-            name="phone"
-            placeholder="Телефон"
-            value={formData.phone}
-            onChange={handleFormChange}
-          />
-          <textarea
-            name="message"
-            placeholder="Повідомлення"
-            value={formData.message}
-            onChange={handleFormChange}
-            required
-          />
-          <button type="submit">📩 Надіслати</button>
-        </form>
-        {formStatus && <p style={{ marginTop: "1rem" }}>{formStatus}</p>}
       </div>
     </main>
   );
