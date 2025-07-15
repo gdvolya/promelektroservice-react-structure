@@ -1,15 +1,77 @@
 {
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "reviews": "Reviews",
+    "pricing": "Pricing",
+    "contacts": "Contacts"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "meta": {
+    "portfolioTitle": "Portfolio — Promelektroservice",
+    "portfolioDescription": "Examples of our work: electrical installation, lighting, switchboards and more.",
+    "pricingTitle": "Services & Pricing — Promelektroservice",
+    "pricingDescription": "Price list for electrical services for home and business.",
+    "reviewsTitle": "Reviews — Promelektroservice",
+    "reviewsDescription": "Customer feedback about our electrical work.",
+    "contactsTitle": "Contacts — Promelektroservice",
+    "contactsDescription": "Contact us to order services or get a consultation."
+  },
   "home": {
-    "bannerAlt": "Promelektroservice — turnkey electrical installation",
-    "subtitle": "High-quality electrical installation for home, office, and business in Kyiv.",
+    "subtitle": "Professional electrical services for homes and businesses.",
     "projectsBtn": "Our Projects",
     "contactBtn": "Contact Us",
-    "whyChooseUs": "Why Choose Us?",
+    "whyChooseUs": "Why Choose Us",
     "speed": "Speed",
-    "speedDesc": "We work fast, without delays or downtime.",
+    "speedDesc": "We deliver projects on time without delays.",
     "quality": "Quality",
-    "qualityDesc": "High standards and reliable solutions for every project.",
+    "qualityDesc": "We guarantee high quality of performed work.",
     "safety": "Safety",
-    "safetyDesc": "We use only certified equipment."
+    "safetyDesc": "We follow all safety regulations in our work."
+  },
+  "portfolio": {
+    "heading": "Our Projects"
+  },
+  "pricing": {
+    "title": "Services & Pricing",
+    "basic": {
+      "title": "Basic",
+      "price": "₴1,000+",
+      "features": ["Outlet installation", "Lighting setup"]
+    },
+    "standard": {
+      "title": "Standard",
+      "price": "₴3,000+",
+      "features": ["Panel installation", "Cable laying"]
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "₴6,000+",
+      "features": ["Electrical network design", "Generator connection"]
+    }
+  },
+  "reviews": {
+    "heading": "Customer Reviews",
+    "sample1": "Excellent work — fast and professional. Highly recommend!",
+    "sample2": "Lighting installation was completed ahead of schedule. Very satisfied.",
+    "leaveReview": "Leave a Review",
+    "placeholder": "Write your review...",
+    "submit": "Send",
+    "thanks": "Thank you for your review!"
+  },
+  "contacts": {
+    "heading": "Contacts",
+    "description": "We are always ready to help with electrical work or consultations.",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address",
+    "address": "Kyiv, Prykladna St, 1",
+    "formTitle": "Feedback Form",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "phonePlaceholder": "Your phone",
+    "messagePlaceholder": "Your message",
+    "sendBtn": "Send"
   }
 }

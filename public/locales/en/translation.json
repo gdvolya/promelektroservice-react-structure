@@ -11,33 +11,35 @@
   },
   "meta": {
     "portfolioTitle": "Portfolio — Promelektroservice",
-    "portfolioDescription": "Examples of our work: electrical installation, lighting, panel equipment, and more.",
-    "pricingTitle": "Services and Prices — Promelektroservice",
+    "portfolioDescription": "Examples of our work: electrical installation, lighting, switchboards and more.",
+    "pricingTitle": "Services & Pricing — Promelektroservice",
     "pricingDescription": "Price list for electrical services for home and business.",
     "reviewsTitle": "Reviews — Promelektroservice",
-    "reviewsDescription": "Customer reviews about our electrical installation services."
+    "reviewsDescription": "Customer feedback about our electrical work.",
+    "contactsTitle": "Contacts — Promelektroservice",
+    "contactsDescription": "Contact us to order services or get a consultation."
   },
   "home": {
-    "subtitle": "Professional electrical services for home and business.",
+    "subtitle": "Professional electrical services for homes and businesses.",
     "projectsBtn": "Our Projects",
     "contactBtn": "Contact Us",
     "whyChooseUs": "Why Choose Us",
     "speed": "Speed",
-    "speedDesc": "We complete the work within the agreed deadlines.",
+    "speedDesc": "We deliver projects on time without delays.",
     "quality": "Quality",
-    "qualityDesc": "We guarantee high quality of completed work.",
+    "qualityDesc": "We guarantee high quality of performed work.",
     "safety": "Safety",
-    "safetyDesc": "We follow all safety standards during projects."
+    "safetyDesc": "We follow all safety regulations in our work."
   },
   "portfolio": {
     "heading": "Our Projects"
   },
   "pricing": {
-    "title": "Services and Prices",
+    "title": "Services & Pricing",
     "basic": {
       "title": "Basic",
       "price": "₴1,000+",
-      "features": ["Socket installation", "Lighting connection"]
+      "features": ["Outlet installation", "Lighting setup"]
     },
     "standard": {
       "title": "Standard",
@@ -47,16 +49,29 @@
     "premium": {
       "title": "Premium",
       "price": "₴6,000+",
-      "features": ["Network design", "Generator connection"]
+      "features": ["Electrical network design", "Generator connection"]
     }
   },
   "reviews": {
     "heading": "Customer Reviews",
-    "sample1": "Great work — fast and professional. Highly recommended!",
-    "sample2": "Lighting installation was done even ahead of schedule. Very satisfied with the result.",
+    "sample1": "Excellent work — fast and professional. Highly recommend!",
+    "sample2": "Lighting installation was completed ahead of schedule. Very satisfied.",
     "leaveReview": "Leave a Review",
     "placeholder": "Write your review...",
-    "submit": "Submit",
+    "submit": "Send",
     "thanks": "Thank you for your review!"
+  },
+  "contacts": {
+    "heading": "Contacts",
+    "description": "We are always ready to help with electrical work or consultations.",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address",
+    "address": "Kyiv, Prykladna St, 1",
+    "formTitle": "Feedback Form",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "phonePlaceholder": "Your phone",
+    "messagePlaceholder": "Your message",
+    "sendBtn": "Send"
   }
 }

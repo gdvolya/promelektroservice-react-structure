@@ -9,38 +9,31 @@ import "../styles/PortfolioPage.css";
 const projects = [
   {
     image: "/img/portfolio/project14.webp",
-    title: "Монтаж електропроводки в офісі",
-    description: "Комплексний монтаж електропроводки з урахуванням офісної специфіки та безпеки.",
+    key: "project1",
   },
   {
     image: "/img/portfolio/project10.webp",
-    title: "Освітлення торгового центру",
-    description: "Проєктування та встановлення сучасного освітлення у великому ТЦ.",
+    key: "project2",
   },
   {
     image: "/img/portfolio/project12.webp",
-    title: "Умний дім",
-    description: "Інтеграція систем розумного дому з автоматизацією електромереж.",
+    key: "project3",
   },
   {
     image: "/img/portfolio/project7.webp",
-    title: "Промисловий монтаж",
-    description: "Промислове електромонтажне рішення для виробничого комплексу.",
+    key: "project4",
   },
   {
     image: "/img/portfolio/project13.webp",
-    title: "Монтаж фасадного освітлення",
-    description: "Естетичне та функціональне освітлення фасаду бізнес-центру.",
+    key: "project5",
   },
   {
     image: "/img/portfolio/project2.webp",
-    title: "Щитові шафи",
-    description: "Збірка, монтаж і підключення розподільчих щитів для комерційного об’єкта.",
+    key: "project6",
   },
   {
     image: "/img/portfolio/project1.webp",
-    title: "Сонячні панелі",
-    description: "Установка та підключення сонячних панелей для автономного енергоживлення.",
+    key: "project7",
   },
 ];
 
@@ -68,11 +61,11 @@ const PortfolioPage = () => {
             className="portfolio-card"
             data-aos="fade-up"
             data-aos-delay={index * 100}
-            aria-label={`${project.title} — ${project.description}`}
+            aria-label={`${t(`portfolio.${project.key}.title`)} — ${t(`portfolio.${project.key}.description`)}`}
           >
             <img
               src={project.image}
-              alt={project.title}
+              alt={t(`portfolio.${project.key}.title`)}
               loading="lazy"
               decoding="async"
               className="portfolio-img"
@@ -80,8 +73,8 @@ const PortfolioPage = () => {
               height="auto"
             />
             <div className="card-content">
-              <h2>{project.title}</h2>
-              <p>{project.description}</p>
+              <h2>{t(`portfolio.${project.key}.title`)}</h2>
+              <p>{t(`portfolio.${project.key}.description`)}</p>
             </div>
           </Link>
         ))}

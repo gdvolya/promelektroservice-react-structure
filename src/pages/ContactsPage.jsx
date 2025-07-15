@@ -1,24 +1,27 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 import "../styles/ContactsPage.css";
 
 const ContactsPage = () => {
+  const { t } = useTranslation();
+
   return (
     <main className="contacts-page">
       <Helmet>
-        <title>Контакти — ПромЕлектроСервіс</title>
+        <title>{t("meta.contactsTitle")}</title>
         <meta
           name="description"
-          content="Зв’яжіться з ПромЕлектроСервіс для замовлення послуг або консультації."
+          content={t("meta.contactsDescription")}
         />
       </Helmet>
 
-      <h1>📞 Контакти</h1>
-      <p>Ми завжди готові допомогти вам з електромонтажем або консультацією.</p>
+      <h1>📞 {t("contacts.heading")}</h1>
+      <p>{t("contacts.description")}</p>
 
       <div className="contact-info">
         <section aria-labelledby="contact-phone">
-          <h2 id="contact-phone">Телефон</h2>
+          <h2 id="contact-phone">{t("contacts.phoneLabel")}</h2>
           <a href="tel:+380666229776">+38 (066) 622-97-76</a>
         </section>
 
@@ -30,12 +33,12 @@ const ContactsPage = () => {
         </section>
 
         <section aria-labelledby="contact-address">
-          <h2 id="contact-address">Адреса</h2>
-          <p>м. Київ, вул. Прикладна, 1</p>
+          <h2 id="contact-address">{t("contacts.addressLabel")}</h2>
+          <p>{t("contacts.address")}</p>
         </section>
 
         <section aria-labelledby="contact-form">
-          <h2 id="contact-form">Форма зворотного зв’язку</h2>
+          <h2 id="contact-form">{t("contacts.formTitle")}</h2>
           <form
             action="https://formspree.io/f/xeogalqn"
             method="POST"
@@ -44,27 +47,27 @@ const ContactsPage = () => {
             <input
               type="text"
               name="name"
-              placeholder="Ваше ім’я"
+              placeholder={t("contacts.namePlaceholder")}
               required
             />
             <input
               type="email"
               name="email"
-              placeholder="Ваш email"
+              placeholder={t("contacts.emailPlaceholder")}
               required
             />
             <input
               type="text"
               name="phone"
-              placeholder="Ваш телефон"
+              placeholder={t("contacts.phonePlaceholder")}
             />
             <textarea
               name="message"
-              placeholder="Ваше повідомлення"
+              placeholder={t("contacts.messagePlaceholder")}
               rows={5}
               required
             />
-            <button type="submit">📨 Надіслати</button>
+            <button type="submit">📨 {t("contacts.sendBtn")}</button>
           </form>
         </section>
       </div>
