@@ -11,28 +11,69 @@
   },
   "meta": {
     "portfolioTitle": "Portfolio — Promelektroservice",
-    "portfolioDescription": "Examples of our work: wiring, lighting, panels, and more.",
-    "pricingTitle": "Services and Prices — Promelektroservice",
-    "pricingDescription": "Price list for electrical services for home and business.",
+    "portfolioDescription": "Examples of our work: electrical installation, lighting, switchboards and more.",
+    "pricingTitle": "Services and Pricing — Promelektroservice",
+    "pricingDescription": "Pricing for electrical services for home and business.",
     "reviewsTitle": "Reviews — Promelektroservice",
-    "reviewsDescription": "Client feedback on our electrical work.",
+    "reviewsDescription": "Customer feedback on our electrical services.",
     "contactsTitle": "Contacts — Promelektroservice",
-    "contactsDescription": "Contact Promelektroservice to request services or consultations."
+    "contactsDescription": "Contact Promelektroservice for service requests or consultations."
   },
   "home": {
-    "subtitle": "Professional electrical installation for home and business.",
-    "projectsBtn": "Our Projects",
-    "contactBtn": "Contact Us",
-    "whyChooseUs": "Why Choose Us",
+    "subtitle": "Professional electrical services for home and business.",
+    "projectsBtn": "Our projects",
+    "contactBtn": "Contact us",
+    "whyChooseUs": "Why choose us",
     "speed": "Speed",
-    "speedDesc": "We deliver work on time without delays.",
+    "speedDesc": "We meet deadlines without delays.",
     "quality": "Quality",
     "qualityDesc": "We guarantee high-quality workmanship.",
     "safety": "Safety",
-    "safetyDesc": "We comply with all safety standards during projects."
+    "safetyDesc": "We follow all safety standards during our work."
   },
   "portfolio": {
-    "heading": "Our Projects"
+    "heading": "Our Projects",
+    "project1": {
+      "title": "Office Wiring Installation",
+      "description": "Comprehensive wiring installation tailored to office safety and structure."
+    },
+    "project2": {
+      "title": "Shopping Mall Lighting",
+      "description": "Design and installation of modern lighting for a large shopping center."
+    },
+    "project3": {
+      "title": "Smart Home",
+      "description": "Integration of smart home systems with electrical automation."
+    },
+    "project4": {
+      "title": "Industrial Installation",
+      "description": "Industrial electrical solution for a production complex."
+    },
+    "project5": {
+      "title": "Facade Lighting",
+      "description": "Aesthetic and functional facade lighting for a business center."
+    },
+    "project6": {
+      "title": "Switchgear Cabinets",
+      "description": "Assembly and connection of switchgear for a commercial facility."
+    },
+    "project7": {
+      "title": "Solar Panels",
+      "description": "Installation and connection of solar panels for autonomous power."
+    }
+  },
+  "contacts": {
+    "heading": "Contacts",
+    "description": "We are always ready to help you with electrical work or consultations.",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address",
+    "address": "Kyiv, Prykladna St. 1",
+    "formTitle": "Contact Form",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "phonePlaceholder": "Your phone",
+    "messagePlaceholder": "Your message",
+    "sendBtn": "Send"
   },
   "pricing": {
     "title": "Services and Pricing",
@@ -53,25 +94,12 @@
     }
   },
   "reviews": {
-    "heading": "Client Reviews",
-    "sample1": "Great work — fast and professional. Highly recommended!",
-    "sample2": "They completed the lighting installation ahead of schedule. Very satisfied.",
+    "heading": "Customer Reviews",
+    "sample1": "Great job — fast and professional. Highly recommend!",
+    "sample2": "Lighting was installed even before the deadline. Very satisfied.",
     "leaveReview": "Leave a review",
     "placeholder": "Write your review...",
     "submit": "Submit",
     "thanks": "Thank you for your feedback!"
-  },
-  "contacts": {
-    "heading": "Contacts",
-    "description": "We are always ready to help with electrical installation or consultation.",
-    "phone": "Phone",
-    "email": "Email",
-    "address": "Address",
-    "form": "Contact Form",
-    "namePlaceholder": "Your Name",
-    "emailPlaceholder": "Your Email",
-    "phonePlaceholder": "Your Phone",
-    "messagePlaceholder": "Your Message",
-    "submitBtn": "Send"
   }
 }
