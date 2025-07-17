@@ -11,13 +11,13 @@
   },
   "meta": {
     "portfolioTitle": "Portfolio — Promelektroservice",
-    "portfolioDescription": "Examples of our work: wiring, lighting, panel equipment and more.",
+    "portfolioDescription": "Examples of our work: electrical installation, lighting, panel equipment, and more.",
     "pricingTitle": "Services and Pricing — Promelektroservice",
-    "pricingDescription": "Pricing for electrical services for home and business.",
+    "pricingDescription": "Price list for electrical installation services for home and business.",
     "reviewsTitle": "Reviews — Promelektroservice",
-    "reviewsDescription": "What our clients say about our electrical services.",
+    "reviewsDescription": "Client reviews about our electrical installation work.",
     "contactsTitle": "Contacts — Promelektroservice",
-    "contactsDescription": "Contact Promelektroservice to order services or request a consultation."
+    "contactsDescription": "Contact Promelektroservice to request services or a consultation."
   },
   "home": {
     "subtitle": "Professional electrical services for home and business.",
@@ -25,54 +25,54 @@
     "contactBtn": "Contact Us",
     "whyChooseUs": "Why Choose Us",
     "speed": "Speed",
-    "speedDesc": "We meet deadlines without delays.",
+    "speedDesc": "We complete work within agreed timeframes without delays.",
     "quality": "Quality",
-    "qualityDesc": "We guarantee high-quality workmanship.",
+    "qualityDesc": "We guarantee high quality of work performed.",
     "safety": "Safety",
-    "safetyDesc": "We follow all safety regulations in every project."
+    "safetyDesc": "We comply with all safety standards when executing projects."
   },
   "portfolio": {
     "heading": "Our Projects",
     "project1": {
       "title": "Office Wiring Installation",
-      "description": "Comprehensive office wiring with attention to safety and specifics."
+      "description": "Complete wiring installation considering office specifics and safety."
     },
     "project2": {
-      "title": "Mall Lighting",
+      "title": "Shopping Mall Lighting",
       "description": "Design and installation of modern lighting in a large mall."
     },
     "project3": {
       "title": "Smart Home",
-      "description": "Integration of smart home systems with power automation."
+      "description": "Integration of smart home systems with electrical automation."
     },
     "project4": {
       "title": "Industrial Installation",
-      "description": "Electrical solutions for industrial facilities."
+      "description": "Industrial electrical solution for a manufacturing complex."
     },
     "project5": {
-      "title": "Facade Lighting",
-      "description": "Aesthetic and functional facade lighting for business centers."
+      "title": "Facade Lighting Installation",
+      "description": "Aesthetic and functional lighting for a business center facade."
     },
     "project6": {
-      "title": "Distribution Panels",
-      "description": "Assembly and connection of panels for commercial properties."
+      "title": "Panel Cabinets",
+      "description": "Assembly, installation, and connection of distribution panels for a commercial facility."
     },
     "project7": {
       "title": "Solar Panels",
-      "description": "Installation and connection of solar panels for autonomous power."
+      "description": "Installation and connection of solar panels for autonomous power supply."
     }
   },
   "contacts": {
     "heading": "Contacts",
-    "description": "We are always ready to help with electrical services or consultation.",
+    "description": "We are always ready to assist you with electrical installation or consultation.",
     "phoneLabel": "Phone",
     "addressLabel": "Address",
-    "address": "Kyiv, Prykladna Street, 1",
-    "formTitle": "Contact Form",
-    "namePlaceholder": "Your name",
-    "emailPlaceholder": "Your email",
-    "phonePlaceholder": "Your phone",
-    "messagePlaceholder": "Your message",
+    "address": "Kyiv, Prykladna St, 1",
+    "formTitle": "Feedback Form",
+    "namePlaceholder": "Your Name",
+    "emailPlaceholder": "Your Email",
+    "phonePlaceholder": "Your Phone",
+    "messagePlaceholder": "Your Message",
     "sendBtn": "Send"
   },
   "pricing": {
@@ -85,21 +85,21 @@
     "standard": {
       "title": "Standard",
       "price": "₴3,000+",
-      "features": ["Panel assembly", "Cable laying"]
+      "features": ["Panel installation", "Cable laying"]
     },
     "premium": {
       "title": "Premium",
       "price": "₴6,000+",
-      "features": ["Power grid design", "Generator connection"]
+      "features": ["Electrical system design", "Generator connection"]
     }
   },
   "reviews": {
-    "heading": "Client Reviews",
-    "sample1": "Great job — fast and professional. Highly recommend!",
-    "sample2": "Lighting was installed even before the deadline. Very satisfied.",
+    "heading": "Customer Reviews",
+    "sample1": "Great job — fast and professional. Highly recommended!",
+    "sample2": "Lighting was installed even earlier than expected. Very satisfied.",
     "leaveReview": "Leave a Review",
     "placeholder": "Write your review...",
-    "submit": "Submit",
+    "submit": "Send",
     "thanks": "Thank you for your review!"
   }
 }
