@@ -31,10 +31,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 🔹 Features */}
+      {/* 🔹 Why Choose Us Section */}
       <section className="features" data-aos="fade-up">
         <h2 className="features-title">{t("home.whyChooseUs")}</h2>
         <div className="features-grid">
+          {/* 🔸 Speed */}
           <div className="feature-card" data-aos="fade-up" data-aos-delay="100">
             <img
               src="/icons/speed.svg"
@@ -47,6 +48,8 @@ export default function HomePage() {
             <h3>{t("home.speed")}</h3>
             <p>{t("home.speedDesc")}</p>
           </div>
+
+          {/* 🔸 Quality */}
           <div className="feature-card" data-aos="fade-up" data-aos-delay="200">
             <img
               src="/icons/quality.svg"
@@ -59,6 +62,8 @@ export default function HomePage() {
             <h3>{t("home.quality")}</h3>
             <p>{t("home.qualityDesc")}</p>
           </div>
+
+          {/* 🔸 Safety */}
           <div className="feature-card" data-aos="fade-up" data-aos-delay="300">
             <img
               src="/icons/secure.svg"
