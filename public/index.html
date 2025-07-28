@@ -41,7 +41,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="ПромЕлектроСервіс" />
 
-    <!-- 🔠 Fonts -->
+    <!-- 🔗 Preconnect + Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link
@@ -53,6 +53,10 @@
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
     </noscript>
+
+    <!-- 📷 Preload LCP image -->
+    <link rel="preload" as="image" href="/img/background@2x.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" />
 
     <!-- 📦 Icons -->
     <link rel="icon" href="/favicon.ico" />

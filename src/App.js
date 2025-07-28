@@ -2,7 +2,8 @@ import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import logo from "./img/logo.png";
+import logoPng from "./img/logo.png";
+import logoWebp from "./img/logo.webp";
 import "./css/style.css";
 import "./i18n";
 
@@ -44,21 +45,25 @@ function AppContent() {
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preload" as="image" href="/img/background@2x.webp" type="image/webp" fetchpriority="high" />
       </Helmet>
 
       <div className="app-wrapper">
         <header className="site-header" role="banner">
           <div className="header-container">
             <Link to="/" aria-label={t("nav.home")} className="logo-link">
-              <img
-                src={logo}
-                alt="Логотип ПромЕлектроСервіс"
-                className="logo-left"
-                width="60"
-                height="60"
-                loading="eager"
-                fetchpriority="high"
-              />
+              <picture>
+                <source srcSet={logoWebp} type="image/webp" />
+                <img
+                  src={logoPng}
+                  alt="Логотип ПромЕлектроСервіс"
+                  className="logo-left"
+                  width="60"
+                  height="60"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </picture>
             </Link>
 
             <nav aria-label="Головне меню">
