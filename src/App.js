@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
@@ -26,6 +26,12 @@ function AppContent() {
     localStorage.setItem("i18nextLng", lng);
   };
 
+  useEffect(() => {
+    if (location.pathname === "/") {
+      import("aos").then((AOS) => AOS.init());
+    }
+  }, [location.pathname]);
+
   const navItems = [
     { path: "/", label: t("nav.home") },
     { path: "/portfolio", label: t("nav.portfolio") },
@@ -46,7 +52,7 @@ function AppContent() {
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preload" as="image" href="/img/background@2x.webp" type="image/webp" fetchpriority="high" />
-        <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" />
+        <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" fetchpriority="high" />
       </Helmet>
 
       <div className="app-wrapper">
@@ -84,7 +90,19 @@ function AppContent() {
           </div>
         </header>
 
-        <main className="main-content" role="main">
+        <main className="main-content" role="main" style={{ minHeight: "60vh" }}>
+          {location.pathname === "/" && (
+            <img
+              src="/img/background@2x.webp"
+              alt="Hero background"
+              width="0"
+              height="0"
+              style={{ display: "none" }}
+              fetchpriority="high"
+              loading="eager"
+            />
+          )}
+
           <Suspense
             fallback={
               <div className="loading-spinner" role="status" aria-live="polite">
@@ -105,7 +123,7 @@ function AppContent() {
           </Suspense>
         </main>
 
-        <footer className="footer minimized-footer sticky-footer" role="contentinfo">
+        <footer className="footer minimized-footer sticky-footer" role="contentinfo" style={{ minHeight: "80px" }}>
           <div className="footer-top">
             <a href="tel:+380666229776" className="footer-link">📞 +380666229776</a>
             <a href="mailto:info@promelektroservice.com" className="footer-link">✉️ info@promelektroservice.com</a>
