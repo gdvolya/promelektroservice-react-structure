@@ -37,12 +37,11 @@ function AppContent() {
     <>
       <Helmet>
         <html lang={i18n.language} />
-        <title>ПромЕлектроСервіс — {t("meta.title") || "електромонтажні послуги"}</title>
+        <title>{`ПромЕлектроСервіс — ${t("meta.title") || "електромонтажні послуги"}`}</title>
         <meta
           name="description"
           content={t("meta.description") || "Професійні електромонтажні роботи будь-якої складності."}
         />
-        {/* 🔤 Предзагрузка шрифтов (если есть) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </Helmet>
@@ -107,21 +106,21 @@ function AppContent() {
           </div>
 
           <div className="lang-switcher" role="group" aria-label="Language selector">
-            {[
-              { lng: "uk", flag: "🇺🇦", label: "Українська" },
-              { lng: "en", flag: "🇬🇧", label: "English" },
-              { lng: "ru", flag: "🇷🇺", label: "Русский" },
-            ].map(({ lng, flag, label }) => (
-              <button
-                key={lng}
-                onClick={() => changeLanguage(lng)}
-                title={label}
-                aria-label={label}
-                className={`lang-btn ${i18n.language === lng ? "active" : ""}`}
-              >
-                {flag}
-              </button>
-            ))}
+            {["uk", "en", "ru"].map((lng) => {
+              const labels = { uk: "Українська", en: "English", ru: "Русский" };
+              const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
+              return (
+                <button
+                  key={lng}
+                  onClick={() => changeLanguage(lng)}
+                  title={labels[lng]}
+                  aria-label={labels[lng]}
+                  className={`lang-btn ${i18n.language === lng ? "active" : ""}`}
+                >
+                  {flags[lng]}
+                </button>
+              );
+            })}
           </div>
 
           <p>© {new Date().getFullYear()} Promelektroservice. {t("footer.rights")}</p>
