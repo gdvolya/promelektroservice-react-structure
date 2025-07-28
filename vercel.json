@@ -8,7 +8,16 @@
   ],
   "headers": [
     {
-      "source": "/(assets|static|icons|img|fonts)/(.*)",
+      "source": "/icons/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(assets|static|img|fonts)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
