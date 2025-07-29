@@ -23,7 +23,6 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: url("../assets/background@2x.webp") center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,6 +30,22 @@
   padding: 2rem;
   color: #fff;
   animation: fadeIn 1s ease-in-out;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/background@2x.webp") center/cover no-repeat;
+  image-rendering: auto;
+  background-size: cover;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .hero::before {
+    background-image: url("../assets/background@2x.webp");
+  }
 }
 
 .hero-overlay {
