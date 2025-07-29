@@ -44,6 +44,8 @@ body {
   text-align: center;
   padding: 60px 20px;
   background: #e0f7fa;
+  position: relative;
+  overflow: hidden;
 }
 
 .fancy-title {
@@ -76,7 +78,7 @@ body {
   height: 200px;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: block;
 }
 
@@ -144,7 +146,7 @@ main {
 
 footer {
   background-color: #222;
-  color: black;
+  color: white;
   text-align: center;
   padding: 1em;
 }
@@ -194,4 +196,3 @@ footer {
     transform: rotate(360deg);
   }
 }
-

@@ -95,15 +95,21 @@ function AppContent() {
 
         <main className="main-content" role="main" style={{ minHeight: "60vh" }}>
           {location.pathname === "/" && (
-            <img
-              src="/img/background@2x.webp"
-              alt="Hero background"
-              width="0"
-              height="0"
-              style={{ display: "none" }}
-              fetchpriority="high"
-              loading="eager"
-            />
+            <picture style={{ position: "absolute", width: 0, height: 0, opacity: 0 }}>
+              <source
+                srcSet="/img/background@2x.webp"
+                type="image/webp"
+                media="(min-width: 768px)"
+              />
+              <img
+                src="/img/background@2x.webp"
+                alt="Hero background"
+                width="1920"
+                height="1080"
+                fetchpriority="high"
+                loading="eager"
+              />
+            </picture>
           )}
 
           <Suspense
