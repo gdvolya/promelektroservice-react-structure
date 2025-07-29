@@ -1,6 +1,5 @@
 import React, { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
-import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import logoPng from "./img/logo.png";
 import logoWebp from "./img/logo.webp";
@@ -16,6 +15,8 @@ const PricingPage = lazy(() => import("./pages/PricingPage.jsx"));
 const AdminPanel = lazy(() => import("./pages/AdminPanel.jsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage.jsx"));
+const HelmetProvider = lazy(() => import("react-helmet-async").then(mod => ({ default: mod.HelmetProvider })));
+const Helmet = lazy(() => import("react-helmet-async").then(mod => ({ default: mod.Helmet })));
 
 function AppContent() {
   const { t, i18n } = useTranslation();
@@ -42,18 +43,20 @@ function AppContent() {
 
   return (
     <>
-      <Helmet>
-        <html lang={i18n.language} />
-        <title>{`ПромЕлектроСервіс — ${t("meta.title") || "електромонтажні послуги"}`}</title>
-        <meta
-          name="description"
-          content={t("meta.description") || "Професійні електромонтажні роботи будь-якої складності."}
-        />
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preload" as="image" href="/img/background@2x.webp" type="image/webp" fetchpriority="high" />
-        <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" fetchpriority="high" />
-      </Helmet>
+      <Suspense fallback={null}>
+        <Helmet>
+          <html lang={i18n.language} />
+          <title>{`ПромЕлектроСервіс — ${t("meta.title") || "електромонтажні послуги"}`}</title>
+          <meta
+            name="description"
+            content={t("meta.description") || "Професійні електромонтажні роботи будь-якої складності."}
+          />
+          <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link rel="preload" as="image" href="/img/background@2x.webp" type="image/webp" fetchpriority="high" />
+          <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" fetchpriority="high" />
+        </Helmet>
+      </Suspense>
 
       <div className="app-wrapper">
         <header className="site-header" role="banner">
@@ -156,10 +159,12 @@ function AppContent() {
 
 export default function App() {
   return (
-    <HelmetProvider>
-      <Router>
-        <AppContent />
-      </Router>
-    </HelmetProvider>
+    <Suspense fallback={null}>
+      <HelmetProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </HelmetProvider>
+    </Suspense>
   );
 }

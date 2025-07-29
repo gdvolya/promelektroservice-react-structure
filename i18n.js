@@ -1,19 +1,18 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from './locales/en.json'; // Путь к файлам с переводами
-import uk from './locales/uk.json';
+import HttpBackend from 'i18next-http-backend';
 
 i18n
+  .use(HttpBackend) // загружает переводы по запросу
   .use(initReactI18next)
   .init({
-    resources: {
-      en: { translation: en },
-      uk: { translation: uk },
+    fallbackLng: 'en',
+    lng: 'en',
+    backend: {
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
-    lng: 'en', // начальный язык
-    fallbackLng: 'en', // если перевод для выбранного языка не найден
     interpolation: {
-      escapeValue: false, // для XSS безопасности
+      escapeValue: false,
     },
   });
 
