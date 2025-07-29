@@ -71,6 +71,7 @@ const PortfolioPage = () => {
               className="portfolio-img"
               width="100%"
               height="auto"
+              fetchpriority="low"
             />
             <div className="card-content">
               <h2>{t(`portfolio.${project.key}.title`)}</h2>

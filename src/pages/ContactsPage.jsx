@@ -26,7 +26,7 @@ const ContactsPage = () => {
         </section>
 
         <section aria-labelledby="contact-email">
-          <h2 id="contact-email">Email</h2>
+          <h2 id="contact-email">{t("contacts.emailLabel")}</h2>
           <a href="mailto:info@promelektroservice.com">
             info@promelektroservice.com
           </a>
@@ -43,31 +43,58 @@ const ContactsPage = () => {
             action="https://formspree.io/f/xeogalqn"
             method="POST"
             className="contact-form"
+            aria-describedby="form-description"
           >
-            <input
-              type="text"
-              name="name"
-              placeholder={t("contacts.namePlaceholder")}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder={t("contacts.emailPlaceholder")}
-              required
-            />
-            <input
-              type="text"
-              name="phone"
-              placeholder={t("contacts.phonePlaceholder")}
-            />
-            <textarea
-              name="message"
-              placeholder={t("contacts.messagePlaceholder")}
-              rows={5}
-              required
-            />
-            <button type="submit">📨 {t("contacts.sendBtn")}</button>
+            <div className="form-group">
+              <label htmlFor="name">{t("contacts.nameLabel")}</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder={t("contacts.namePlaceholder")}
+                required
+                aria-required="true"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="email">{t("contacts.emailLabel")}</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder={t("contacts.emailPlaceholder")}
+                required
+                aria-required="true"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="phone">{t("contacts.phoneLabel")}</label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                placeholder={t("contacts.phonePlaceholder")}
+                aria-label={t("contacts.phoneLabel")}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="message">{t("contacts.messageLabel")}</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder={t("contacts.messagePlaceholder")}
+                rows={5}
+                required
+                aria-required="true"
+              />
+            </div>
+
+            <button type="submit" aria-label={t("contacts.sendBtn")}>
+              📨 {t("contacts.sendBtn")}
+            </button>
           </form>
         </section>
       </div>
