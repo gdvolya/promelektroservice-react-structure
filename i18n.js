@@ -10,7 +10,7 @@ i18n
       en: { translation: en },
       uk: { translation: uk },
     },
-    lng: 'en', // начальный язык
+    lng: 'uk', // начальный язык
     fallbackLng: 'en', // если перевод для выбранного языка не найден
     interpolation: {
       escapeValue: false, // для XSS безопасности

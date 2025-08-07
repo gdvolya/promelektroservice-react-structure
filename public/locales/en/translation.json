@@ -17,7 +17,9 @@
     "reviewsTitle": "Reviews — Promelektroservice",
     "reviewsDescription": "Client testimonials about our electrical installation services.",
     "contactsTitle": "Contacts — Promelektroservice",
-    "contactsDescription": "Contact us to order services or get a consultation."
+    "contactsDescription": "Contact us to order services or get a consultation.",
+    "homeTitle": "Home — Promelektroservice",
+    "homeDescription": "Professional electrical installation services for home and business."
   },
   "home": {
     "subtitle": "Professional electrical installation services for home and business.",
