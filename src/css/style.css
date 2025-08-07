@@ -38,6 +38,17 @@ body {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  padding: 5px 10px;
+  transition: background-color 0.3s;
+}
+
+.nav-menu li a.active {
+  background-color: #005599; /* Цвет для активной кнопки */
+  border-radius: 4px;
+}
+
+.nav-menu li a:hover {
+  background-color: #005599;
 }
 
 .hero {
@@ -149,6 +160,11 @@ footer {
   padding: 1em;
 }
 
+.lang-btn.active {
+  background-color: #ff9900; /* Цвет для активной кнопки языка */
+  color: white;
+}
+
 @media (max-width: 768px) {
   .portfolio-img {
     width: 100%;
@@ -194,4 +210,3 @@ footer {
     transform: rotate(360deg);
   }
 }
-

@@ -79,6 +79,7 @@ function AppContent() {
                   <li key={path}>
                     <Link
                       to={path}
+                      className={location.pathname === path ? "active" : ""}
                       aria-current={location.pathname === path ? "page" : undefined}
                     >
                       {label}
