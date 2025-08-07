@@ -11,18 +11,18 @@
   },
   "meta": {
     "portfolioTitle": "Portfolio — Promelektroservice",
-    "portfolioDescription": "Examples of our work: electrical wiring, lighting, switchboards, and more.",
+    "portfolioDescription": "Examples of our work: electrical installation, lighting, switchboards, and more.",
     "pricingTitle": "Services and Pricing — Promelektroservice",
-    "pricingDescription": "Prices for electrical installation services for homes and businesses.",
+    "pricingDescription": "Prices for electrical installation services for home and business.",
     "reviewsTitle": "Reviews — Promelektroservice",
-    "reviewsDescription": "Client testimonials about our electrical installation services.",
+    "reviewsDescription": "Client reviews about our electrical installation services.",
     "contactsTitle": "Contacts — Promelektroservice",
     "contactsDescription": "Contact us to order services or get a consultation.",
     "homeTitle": "Home — Promelektroservice",
-    "homeDescription": "Professional electrical installation services for homes and businesses."
+    "homeDescription": "Professional electrical installation services for home and business."
   },
   "home": {
-    "subtitle": "Professional electrical installation services for homes and businesses.",
+    "subtitle": "Professional electrical installation services for home and business.",
     "projectsBtn": "Our Projects",
     "contactBtn": "Contact Us",
     "whyChooseUs": "Why Choose Us",
@@ -38,31 +38,31 @@
     "heading": "Our Projects",
     "project1": {
       "title": "Office Electrical Wiring",
-      "description": "Complete electrical wiring installation tailored to office requirements, ensuring safety and efficiency. We use high-quality materials to meet safety standards and ensure a reliable power supply."
+      "description": "Complete electrical wiring installation tailored to office needs and safety. We use modern materials that meet all quality standards."
     },
     "project2": {
       "title": "Shopping Mall Lighting",
-      "description": "Design and installation of modern, energy-efficient lighting solutions in a large shopping mall, enhancing visibility and ambiance while reducing energy consumption."
+      "description": "Design and installation of modern lighting in a large shopping mall using energy-saving technologies. Increases lighting efficiency and reduces energy costs."
     },
     "project3": {
       "title": "Smart Home",
-      "description": "Integration of smart home systems, including automated lighting and power management, for increased comfort, security, and energy savings."
+      "description": "Integration of smart home systems with power automation to provide convenience and energy efficiency. Controlled via mobile app or voice commands."
     },
     "project4": {
       "title": "Industrial Installation",
-      "description": "Electrical solutions for industrial facilities, ensuring reliable power distribution and meeting the unique demands of manufacturing environments."
+      "description": "Electrical installation solution for manufacturing facilities, considering high load and safety requirements."
     },
     "project5": {
       "title": "Facade Lighting",
-      "description": "Functional and aesthetic lighting solutions for building facades, enhancing the architectural appeal of business centers while providing safety and visibility at night."
+      "description": "Aesthetic and functional facade lighting for a business center that enhances security and the attractiveness of the building while creating a pleasant atmosphere."
     },
     "project6": {
       "title": "Switchboards",
-      "description": "Assembly and installation of commercial switchboards, designed to handle high loads and ensure the safe distribution of electrical power throughout the facility."
+      "description": "Assembly, installation, and connection of distribution switchboards for commercial objects, ensuring reliable power supply according to the facility's specifications."
     },
     "project7": {
       "title": "Solar Panels",
-      "description": "Installation of solar panels to provide autonomous energy supply, reducing reliance on the grid and offering long-term savings on electricity costs."
+      "description": "Installation and connection of solar panels for autonomous energy supply to reduce electricity costs and increase energy efficiency."
     }
   },
   "contacts": {
@@ -99,7 +99,7 @@
   "reviews": {
     "heading": "Customer Reviews",
     "sample1": "Great work — fast and professional. Highly recommend!",
-    "sample2": "They installed the lighting ahead of schedule. Very pleased!",
+    "sample2": "They installed the lighting ahead of schedule. Very pleased with the result.",
     "leaveReview": "Leave a review",
     "placeholder": "Write your review...",
     "submit": "Submit",

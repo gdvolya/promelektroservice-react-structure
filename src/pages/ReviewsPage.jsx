@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next"; // Импортируем useTranslation
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "../styles/ReviewsPage.css";
@@ -17,6 +18,7 @@ const initialReviews = [
 ];
 
 const ReviewsPage = () => {
+  const { t } = useTranslation(); // Используем hook для перевода
   const [feedback, setFeedback] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [reviews, setReviews] = useState(initialReviews);
@@ -30,7 +32,7 @@ const ReviewsPage = () => {
     if (feedback.trim()) {
       setReviews((prev) => [
         ...prev,
-        { name: "Анонім", content: feedback.trim() },
+        { name: t("reviews.anonymous"), content: feedback.trim() }, // Переводим имя
       ]);
       setSubmitted(true);
       setFeedback("");
@@ -41,14 +43,14 @@ const ReviewsPage = () => {
   return (
     <main className="reviews-page">
       <Helmet>
-        <title>Відгуки — Promelektroservice</title>
+        <title>{t("meta.reviewsTitle")}</title> {/* Переводим title */}
         <meta
           name="description"
-          content="Відгуки наших клієнтів про електромонтажні роботи."
+          content={t("meta.reviewsDescription")} // Переводим description
         />
       </Helmet>
 
-      <h1 data-aos="fade-up">Відгуки клієнтів</h1>
+      <h1 data-aos="fade-up">{t("reviews.heading")}</h1> {/* Переводим заголовок */}
       <section className="reviews-grid">
         {reviews.map((review, idx) => (
           <div
@@ -64,19 +66,19 @@ const ReviewsPage = () => {
       </section>
 
       <section className="review-form" data-aos="fade-up" data-aos-delay="300">
-        <h2>Залишити відгук</h2>
+        <h2>{t("reviews.leaveReview")}</h2> {/* Переводим заголовок формы */}
         <form onSubmit={handleSubmit}>
           <textarea
-            placeholder="Напишіть свій відгук..."
+            placeholder={t("reviews.placeholder")} // Переводим placeholder
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
             required
           />
           <button className="submit-btn" type="submit">
-            Надіслати
+            {t("reviews.submit")} {/* Переводим кнопку */}
           </button>
           {submitted && (
-            <p className="success-msg">✅ Дякуємо за ваш відгук!</p>
+            <p className="success-msg">{t("reviews.thanks")}</p> // Переводим сообщение об успехе
           )}
         </form>
       </section>
