@@ -11,18 +11,18 @@
   },
   "meta": {
     "portfolioTitle": "Portfolio — Promelektroservice",
-    "portfolioDescription": "Examples of our work: wiring, lighting, switchboards and more.",
+    "portfolioDescription": "Examples of our work: electrical wiring, lighting, switchboards, and more.",
     "pricingTitle": "Services and Pricing — Promelektroservice",
-    "pricingDescription": "Prices for electrical installation services for home and business.",
+    "pricingDescription": "Prices for electrical installation services for homes and businesses.",
     "reviewsTitle": "Reviews — Promelektroservice",
     "reviewsDescription": "Client testimonials about our electrical installation services.",
     "contactsTitle": "Contacts — Promelektroservice",
     "contactsDescription": "Contact us to order services or get a consultation.",
     "homeTitle": "Home — Promelektroservice",
-    "homeDescription": "Professional electrical installation services for home and business."
+    "homeDescription": "Professional electrical installation services for homes and businesses."
   },
   "home": {
-    "subtitle": "Professional electrical installation services for home and business.",
+    "subtitle": "Professional electrical installation services for homes and businesses.",
     "projectsBtn": "Our Projects",
     "contactBtn": "Contact Us",
     "whyChooseUs": "Why Choose Us",
@@ -38,36 +38,36 @@
     "heading": "Our Projects",
     "project1": {
       "title": "Office Electrical Wiring",
-      "description": "Complete wiring installation tailored for office needs and safety."
+      "description": "Complete electrical wiring installation tailored to office requirements, ensuring safety and efficiency. We use high-quality materials to meet safety standards and ensure a reliable power supply."
     },
     "project2": {
       "title": "Shopping Mall Lighting",
-      "description": "Design and installation of modern lighting in a large mall."
+      "description": "Design and installation of modern, energy-efficient lighting solutions in a large shopping mall, enhancing visibility and ambiance while reducing energy consumption."
     },
     "project3": {
       "title": "Smart Home",
-      "description": "Integration of smart home systems with power automation."
+      "description": "Integration of smart home systems, including automated lighting and power management, for increased comfort, security, and energy savings."
     },
     "project4": {
       "title": "Industrial Installation",
-      "description": "Electrical solution for a manufacturing facility."
+      "description": "Electrical solutions for industrial facilities, ensuring reliable power distribution and meeting the unique demands of manufacturing environments."
     },
     "project5": {
       "title": "Facade Lighting",
-      "description": "Functional and aesthetic facade lighting for a business center."
+      "description": "Functional and aesthetic lighting solutions for building facades, enhancing the architectural appeal of business centers while providing safety and visibility at night."
     },
     "project6": {
       "title": "Switchboards",
-      "description": "Assembly and connection of commercial distribution panels."
+      "description": "Assembly and installation of commercial switchboards, designed to handle high loads and ensure the safe distribution of electrical power throughout the facility."
     },
     "project7": {
       "title": "Solar Panels",
-      "description": "Installation of solar panels for autonomous energy supply."
+      "description": "Installation of solar panels to provide autonomous energy supply, reducing reliance on the grid and offering long-term savings on electricity costs."
     }
   },
   "contacts": {
     "heading": "Contacts",
-    "description": "We’re always ready to help you with electrical work or a consultation.",
+    "description": "We are always ready to assist you with electrical work or provide a consultation.",
     "phoneLabel": "Phone",
     "addressLabel": "Address",
     "address": "Kyiv, Prykladna St, 1",
