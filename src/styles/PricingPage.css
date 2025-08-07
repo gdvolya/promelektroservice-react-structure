@@ -25,72 +25,62 @@
   color: var(--text-color);
 }
 
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
-  max-width: 1000px;
+/* Стили для списка услуг */
+.pricing-list {
+  max-width: 700px;
   margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  text-align: left;
 }
 
-.pricing-card {
+.pricing-item {
+  display: flex;
+  justify-content: space-between;
   background: var(--bg-white);
-  padding: 2rem 1.5rem;
-  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
   box-shadow: var(--card-shadow);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.pricing-card:hover {
+.pricing-item:hover {
   box-shadow: var(--card-hover-shadow);
-  transform: translateY(-6px);
+  transform: translateY(-4px);
 }
 
-.pricing-card h2 {
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
+.service-title {
   color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.1rem;
 }
 
-.price {
-  font-size: 1.3rem;
+.service-price {
   color: var(--primary-color);
-  margin: 0.5rem 0 1.2rem;
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
-.pricing-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.pricing-card li {
-  padding: 0.4rem 0;
-  color: var(--subtext-color);
-  font-size: 0.95rem;
-}
-
-/* 📱 Responsive */
+/* 📱 Адаптив */
 @media (max-width: 600px) {
   .pricing-page h1 {
     font-size: 2rem;
   }
 
-  .price {
-    font-size: 1.15rem;
+  .pricing-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
   }
 
-  .pricing-card h2 {
-    font-size: 1.3rem;
-  }
-
-  .pricing-card li {
-    font-size: 0.9rem;
+  .service-price {
+    margin-top: 0.3rem;
+    font-size: 1rem;
   }
 }
 
-/* 🎬 Animations */
+/* 🎬 Анимация */
 @keyframes fadeIn {
   from {
     opacity: 0;

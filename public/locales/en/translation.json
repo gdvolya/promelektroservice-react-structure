@@ -80,20 +80,125 @@
   },
   "pricing": {
     "title": "Services and Pricing",
-    "basic": {
-      "title": "Basic",
-      "price": "₴1,000+",
-      "features": ["Socket installation", "Lighting connection"]
+    "service1": {
+      "title": "Socket Installation",
+      "price": "₴500+"
     },
-    "standard": {
-      "title": "Standard",
-      "price": "₴3,000+",
-      "features": ["Panel installation", "Cable routing"]
+    "service2": {
+      "title": "Lighting Connection",
+      "price": "₴700+"
     },
-    "premium": {
-      "title": "Premium",
-      "price": "₴6,000+",
-      "features": ["Network design", "Generator connection"]
+    "service3": {
+      "title": "Project Consultation",
+      "price": "₴300+"
+    },
+    "service4": {
+      "title": "Cable Routing",
+      "price": "₴900+"
+    },
+    "service5": {
+      "title": "Material Selection Consultation",
+      "price": "₴400+"
+    },
+    "service6": {
+      "title": "Socket Installation",
+      "price": "₴200+"
+    },
+    "service7": {
+      "title": "Lighting Fixture Installation",
+      "price": "₴600+"
+    },
+    "service8": {
+      "title": "Custom Approach",
+      "price": "₴1000+"
+    },
+    "service9": {
+      "title": "Fault Diagnosis",
+      "price": "₴800+"
+    },
+    "service10": {
+      "title": "Appliance Connection",
+      "price": "₴500+"
+    },
+    "service11": {
+      "title": "Panel Installation",
+      "price": "₴1500+"
+    },
+    "service12": {
+      "title": "Wiring Replacement",
+      "price": "₴1200+"
+    },
+    "service13": {
+      "title": "Additional Lighting Installation",
+      "price": "₴600+"
+    },
+    "service14": {
+      "title": "Energy Saving Consultation",
+      "price": "₴350+"
+    },
+    "service15": {
+      "title": "Electrical Scheme Design",
+      "price": "₴2000+"
+    },
+    "service16": {
+      "title": "Process Automation",
+      "price": "₴3000+"
+    },
+    "service17": {
+      "title": "Smart Home Integration",
+      "price": "₴2500+"
+    },
+    "service18": {
+      "title": "Old Wiring Modernization",
+      "price": "₴1500+"
+    },
+    "service19": {
+      "title": "Energy Efficiency Solutions",
+      "price": "₴3500+"
+    },
+    "service20": {
+      "title": "Business Electrical Systems",
+      "price": "₴5000+"
+    },
+    "service21": {
+      "title": "Home Security Systems",
+      "price": "₴4000+"
+    },
+    "service22": {
+      "title": "Remote System Control",
+      "price": "₴2500+"
+    },
+    "service23": {
+      "title": "Energy Saving",
+      "price": "₴1500+"
+    },
+    "service24": {
+      "title": "Large Infrastructure Design",
+      "price": "₴10000+"
+    },
+    "service25": {
+      "title": "Personalized Support",
+      "price": "₴3000+"
+    },
+    "service26": {
+      "title": "Warranty Service",
+      "price": "₴500+"
+    },
+    "service27": {
+      "title": "Industrial Process Automation",
+      "price": "₴5000+"
+    },
+    "service28": {
+      "title": "Communications Design",
+      "price": "₴4000+"
+    },
+    "service29": {
+      "title": "Enterprise Project Development",
+      "price": "₴8000+"
+    },
+    "service30": {
+      "title": "Industrial Network Installation",
+      "price": "₴12000+"
     }
   },
   "reviews": {
