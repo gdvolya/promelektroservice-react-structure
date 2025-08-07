@@ -1,0 +1,107 @@
+{
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "reviews": "Reviews",
+    "pricing": "Pricing",
+    "contacts": "Contacts"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "meta": {
+    "portfolioTitle": "Portfolio — Promelektroservice",
+    "portfolioDescription": "Examples of our work: wiring, lighting, switchboards and more.",
+    "pricingTitle": "Services and Pricing — Promelektroservice",
+    "pricingDescription": "Prices for electrical installation services for home and business.",
+    "reviewsTitle": "Reviews — Promelektroservice",
+    "reviewsDescription": "Client testimonials about our electrical installation services.",
+    "contactsTitle": "Contacts — Promelektroservice",
+    "contactsDescription": "Contact us to order services or get a consultation."
+  },
+  "home": {
+    "title": "Promelektroservice", 
+    "subtitle": "Professional electrical installation services for home and business.",
+    "projectsBtn": "Our Projects",
+    "contactBtn": "Contact Us",
+    "whyChooseUs": "Why Choose Us",
+    "speed": "Speed",
+    "speedDesc": "We complete work on time without delays.",
+    "quality": "Quality",
+    "qualityDesc": "We guarantee high-quality results.",
+    "safety": "Safety",
+    "safetyDesc": "We follow all safety standards in every project.",
+    "bannerAlt": "Hero section with service description"
+  },
+  "portfolio": {
+    "heading": "Our Projects",
+    "project1": {
+      "title": "Office Electrical Wiring",
+      "description": "Complete wiring installation tailored for office needs and safety."
+    },
+    "project2": {
+      "title": "Shopping Mall Lighting",
+      "description": "Design and installation of modern lighting in a large mall."
+    },
+    "project3": {
+      "title": "Smart Home",
+      "description": "Integration of smart home systems with power automation."
+    },
+    "project4": {
+      "title": "Industrial Installation",
+      "description": "Electrical solution for a manufacturing facility."
+    },
+    "project5": {
+      "title": "Facade Lighting",
+      "description": "Functional and aesthetic facade lighting for a business center."
+    },
+    "project6": {
+      "title": "Switchboards",
+      "description": "Assembly and connection of commercial distribution panels."
+    },
+    "project7": {
+      "title": "Solar Panels",
+      "description": "Installation of solar panels for autonomous energy supply."
+    }
+  },
+  "contacts": {
+    "heading": "Contacts",
+    "description": "We’re always ready to help you with electrical work or a consultation.",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address",
+    "address": "Kyiv, Prykladna St, 1",
+    "formTitle": "Contact Form",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "phonePlaceholder": "Your phone",
+    "messagePlaceholder": "Your message",
+    "sendBtn": "Send"
+  },
+  "pricing": {
+    "title": "Services and Pricing",
+    "basic": {
+      "title": "Basic",
+      "price": "₴1,000+",
+      "features": ["Socket installation", "Lighting connection"]
+    },
+    "standard": {
+      "title": "Standard",
+      "price": "₴3,000+",
+      "features": ["Panel installation", "Cable routing"]
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "₴6,000+",
+      "features": ["Network design", "Generator connection"]
+    }
+  },
+  "reviews": {
+    "heading": "Customer Reviews",
+    "sample1": "Great work — fast and professional. Highly recommend!",
+    "sample2": "They installed the lighting ahead of schedule. Very pleased!",
+    "leaveReview": "Leave a review",
+    "placeholder": "Write your review...",
+    "submit": "Submit",
+    "thanks": "Thanks for your feedback!"
+  }
+}
