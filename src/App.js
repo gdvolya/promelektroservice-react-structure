@@ -7,7 +7,6 @@ import logoWebp from "./img/logo.webp";
 import "./css/style.css";
 import "./i18n";
 
-// Ленивая загрузка страниц
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -21,7 +20,6 @@ function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
 
-  // Мемоизированная функция для смены языка
   const changeLanguage = useCallback((lng) => {
     if (i18n.language !== lng) {
       i18n.changeLanguage(lng);
@@ -29,7 +27,6 @@ function AppContent() {
     }
   }, [i18n]);
 
-  // Инициализация AOS только при заходе на главную страницу
   useEffect(() => {
     if (location.pathname === "/") {
       import("aos").then((AOS) => {
@@ -102,7 +99,6 @@ function AppContent() {
 
         <main className="main-content" role="main" style={{ minHeight: "60vh" }}>
           {location.pathname === "/" && (
-            // Предзагрузка фонового изображения для LCP
             <img
               src="/img/background@2x.webp"
               alt=""
@@ -135,11 +131,7 @@ function AppContent() {
           </Suspense>
         </main>
 
-        <footer
-          className="footer minimized-footer sticky-footer"
-          role="contentinfo"
-          style={{ minHeight: 80 }}
-        >
+        <footer className="footer minimized-footer sticky-footer" role="contentinfo" style={{ minHeight: 80 }}>
           <div className="footer-top">
             <a href="tel:+380666229776" className="footer-link" aria-label="Телефон">
               📞 +380666229776
