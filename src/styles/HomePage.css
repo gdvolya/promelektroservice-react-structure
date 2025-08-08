@@ -23,7 +23,7 @@
 .hero {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -42,6 +42,7 @@
   z-index: 0;
   user-select: none;
   pointer-events: none;
+  aspect-ratio: 16 / 9;
 }
 
 .hero-overlay {
@@ -50,6 +51,8 @@
   background: rgba(0, 0, 0, 0.55);
   z-index: 1;
   will-change: opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .hero-content {
@@ -62,6 +65,7 @@
   align-items: center;
   will-change: transform;
   animation: fadeUp 1s ease-out forwards;
+  text-wrap: balance;
 }
 
 .hero-title {
@@ -193,6 +197,15 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* 🔕 Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

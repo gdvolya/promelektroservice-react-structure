@@ -13,13 +13,14 @@
   <meta name="robots" content="index, follow" />
   <meta name="keywords" content="електромонтаж, електрика, ПромЕлектроСервіс, монтаж електропроводки, Львів, Київ" />
   <link rel="canonical" href="https://promelektroservice.vercel.app/" />
-  
-  <!-- Hreflang для мультиязычности -->
-  <link rel="alternate" hreflang="uk" href="https://promelektroservice.vercel.app/" />
-  <link rel="alternate" hreflang="en" href="https://promelektroservice.vercel.app/en" />
-  <link rel="alternate" hreflang="ru" href="https://promelektroservice.vercel.app/ru" />
 
-  <!-- Open Graph для соцсетей -->
+  <!-- Hreflang: мультиязычие -->
+  <link rel="alternate" hreflang="uk-UA" href="https://promelektroservice.vercel.app/" />
+  <link rel="alternate" hreflang="en-US" href="https://promelektroservice.vercel.app/en" />
+  <link rel="alternate" hreflang="ru-RU" href="https://promelektroservice.vercel.app/ru" />
+  <link rel="alternate" hreflang="x-default" href="https://promelektroservice.vercel.app/" />
+
+  <!-- Open Graph -->
   <meta property="og:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
   <meta property="og:description" content="Професійні електромонтажні роботи будь-якої складності." />
   <meta property="og:image" content="/img/og-cover.webp" />
@@ -43,7 +44,7 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="ПромЕлектроСервіс" />
 
-  <!-- Preconnect & Preload для шрифтов и критичных ресурсов -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -59,16 +60,16 @@
     />
   </noscript>
 
-  <!-- Preload критичных изображений -->
+  <!-- Preload images -->
   <link rel="preload" as="image" href="/assets/background@2x.webp" type="image/webp" fetchpriority="high" />
   <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" />
 
-  <!-- Иконки и манифест -->
+  <!-- Icons -->
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- Inline fallback стили для быстрого отображения -->
+  <!-- Fallback styles -->
   <style>
     html, body {
       margin: 0;
@@ -113,13 +114,12 @@
 
   <div id="root"></div>
 
-  <!-- Service Worker: регистрация для PWA -->
+  <!-- PWA Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js').catch(err =>
-          console.error('Service Worker registration failed:', err)
-        );
+        navigator.serviceWorker.register('/service-worker.js')
+          .catch(err => console.error('Service Worker registration failed:', err));
       });
     }
   </script>

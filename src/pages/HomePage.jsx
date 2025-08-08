@@ -29,7 +29,11 @@ export default function HomePage() {
 
       <main className="home-page">
         {/* 🔷 Hero Section */}
-        <section className="hero" role="banner" aria-label={t("home.bannerAlt")}>
+        <section
+          className="hero"
+          role="banner"
+          aria-label={t("home.bannerAlt")}
+        >
           <img
             src="/assets/background@2x.webp"
             alt=""
@@ -55,11 +59,21 @@ export default function HomePage() {
         </section>
 
         {/* 🔹 Why Choose Us Section */}
-        <section className="features" data-aos="fade-up">
-          <h2 className="features-title">{t("home.whyChooseUs")}</h2>
+        <section
+          className="features"
+          data-aos="fade-up"
+          aria-labelledby="features-title"
+        >
+          <h2 id="features-title" className="features-title">
+            {t("home.whyChooseUs")}
+          </h2>
           <div className="features-grid">
             {/* 🔸 Speed */}
-            <div className="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div
+              className="feature-card"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
               <img
                 src="/icons/speed.svg"
                 className="feature-icon"
@@ -73,7 +87,11 @@ export default function HomePage() {
             </div>
 
             {/* 🔸 Quality */}
-            <div className="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div
+              className="feature-card"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
               <img
                 src="/icons/quality.svg"
                 className="feature-icon"
@@ -87,7 +105,11 @@ export default function HomePage() {
             </div>
 
             {/* 🔸 Safety */}
-            <div className="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div
+              className="feature-card"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
               <img
                 src="/icons/secure.svg"
                 className="feature-icon"
