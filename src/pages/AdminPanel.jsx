@@ -8,6 +8,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
+import { FaTrash, FaDownload, FaSearch, FaSignInAlt } from "react-icons/fa";
 import "../styles/AdminPanel.css";
 
 let db = null;
@@ -83,21 +84,14 @@ const AdminPanel = ({ enableExport = true }) => {
       import.meta.env?.REACT_APP_ADMIN_PASS || process.env.REACT_APP_ADMIN_PASS;
 
     if (typeof rawPass === "undefined") {
-      console.warn("⛔ REACT_APP_ADMIN_PASS is undefined. Check .env.local or Vercel variables.");
       setError("⚠️ Пароль адміністратора не заданий у .env.local або середовищі.");
       return;
     }
 
     const adminPass = rawPass.trim();
-
     if (!adminPass) {
-      console.warn("⚠️ REACT_APP_ADMIN_PASS існує, але порожній.");
       setError("⚠️ Пароль адміністратора заданий як порожній рядок.");
       return;
-    }
-
-    if (import.meta.env?.MODE === "development") {
-      console.log("[DEBUG] Пароль з env:", adminPass);
     }
 
     if (password.trim() !== adminPass) {
@@ -140,7 +134,7 @@ const AdminPanel = ({ enableExport = true }) => {
           autoFocus
         />
         <button onClick={handleLogin} disabled={!password.trim()}>
-          🔓 Увійти
+          <FaSignInAlt /> Увійти
         </button>
         {error && <p className="error-text">{error}</p>}
       </main>
@@ -152,21 +146,34 @@ const AdminPanel = ({ enableExport = true }) => {
       <Helmet>
         <title>Адмін-панель — ПромЕлектроСервіс</title>
       </Helmet>
-      <h1>Адмін-панель</h1>
+      <header className="admin-header">
+        <h1>📋 Адмін-панель</h1>
+        <div>
+          {views !== null && (
+            <p>
+              👁 Переглядів на головній: <strong>{views}</strong>
+            </p>
+          )}
+        </div>
+      </header>
+      <div className="admin-controls">
+        <input
+          type="text"
+          placeholder="🔎 Пошук по заявках..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+        {enableExport && submissions.length > 0 && (
+          <button onClick={exportToExcel} className="export-btn">
+            <FaDownload /> Експортувати в Excel
+          </button>
+        )}
+      </div>
+
       {loading && <p>⏳ Завантаження даних...</p>}
       {error && <p className="error-text">{error}</p>}
-      {views !== null && (
-        <p>
-          👁 Переглядів на головній: <strong>{views}</strong>
-        </p>
-      )}
-      <input
-        type="text"
-        placeholder="🔎 Пошук по заявках..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-input"
-      />
+
       {filteredSubmissions.length === 0 && !loading ? (
         <p>Немає заявок.</p>
       ) : (
@@ -195,7 +202,12 @@ const AdminPanel = ({ enableExport = true }) => {
                       : "—"}
                   </td>
                   <td>
-                    <button onClick={() => handleDelete(id)}>🗑 Видалити</button>
+                    <button
+                      onClick={() => handleDelete(id)}
+                      className="delete-btn"
+                    >
+                      <FaTrash /> Видалити
+                    </button>
                   </td>
                 </tr>
               )
@@ -203,12 +215,8 @@ const AdminPanel = ({ enableExport = true }) => {
           </tbody>
         </table>
       )}
-      {enableExport && submissions.length > 0 && (
-        <button onClick={exportToExcel} className="export-btn">
-          ⬇️ Експортувати в Excel
-        </button>
-      )}
-      <div style={{ marginTop: "2rem" }}>
+
+      <div className="extra-links">
         <a
           href="/report/index.html"
           target="_blank"
