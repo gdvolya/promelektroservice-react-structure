@@ -1,114 +1,127 @@
 <!DOCTYPE html>
 <html lang="uk">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ПромЕлектроСервіс — електромонтажні послуги</title>
+  <title>ПромЕлектроСервіс — електромонтажні послуги</title>
 
-    <!-- 🔍 SEO -->
-    <meta name="description" content="Професійні електромонтажні роботи будь-якої складності. Монтаж, обслуговування, ремонт." />
-    <meta name="author" content="ПромЕлектроСервіс" />
-    <meta name="robots" content="index, follow" />
-    <meta name="keywords" content="електромонтаж, електрика, ПромЕлектроСервіс, монтаж електропроводки, Львів, Київ" />
-    <link rel="canonical" href="https://promelektroservice.vercel.app/" />
-    <link rel="alternate" hreflang="uk" href="https://promelektroservice.vercel.app/" />
-    <link rel="alternate" hreflang="en" href="https://promelektroservice.vercel.app/en" />
-    <link rel="alternate" hreflang="ru" href="https://promelektroservice.vercel.app/ru" />
+  <!-- SEO -->
+  <meta name="description" content="Професійні електромонтажні роботи будь-якої складності. Монтаж, обслуговування, ремонт." />
+  <meta name="author" content="ПромЕлектроСервіс" />
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="електромонтаж, електрика, ПромЕлектроСервіс, монтаж електропроводки, Львів, Київ" />
+  <link rel="canonical" href="https://promelektroservice.vercel.app/" />
+  
+  <!-- Hreflang для мультиязычности -->
+  <link rel="alternate" hreflang="uk" href="https://promelektroservice.vercel.app/" />
+  <link rel="alternate" hreflang="en" href="https://promelektroservice.vercel.app/en" />
+  <link rel="alternate" hreflang="ru" href="https://promelektroservice.vercel.app/ru" />
 
-    <!-- 🌐 Open Graph -->
-    <meta property="og:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
-    <meta property="og:description" content="Професійні електромонтажні роботи будь-якої складності." />
-    <meta property="og:image" content="/img/og-cover.webp" />
-    <meta property="og:image:type" content="image/webp" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:url" content="https://promelektroservice.vercel.app/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="uk_UA" />
-    <meta property="og:site_name" content="ПромЕлектроСервіс" />
+  <!-- Open Graph для соцсетей -->
+  <meta property="og:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
+  <meta property="og:description" content="Професійні електромонтажні роботи будь-якої складності." />
+  <meta property="og:image" content="/img/og-cover.webp" />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://promelektroservice.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="uk_UA" />
+  <meta property="og:site_name" content="ПромЕлектроСервіс" />
 
-    <!-- 🐦 Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
-    <meta name="twitter:description" content="Професійні електромонтажні роботи будь-якої складності." />
-    <meta name="twitter:image" content="/img/og-cover.webp" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
+  <meta name="twitter:description" content="Професійні електромонтажні роботи будь-якої складності." />
+  <meta name="twitter:image" content="/img/og-cover.webp" />
 
-    <!-- 📱 PWA -->
-    <meta name="theme-color" content="#003366" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="ПромЕлектроСервіс" />
+  <!-- PWA -->
+  <meta name="theme-color" content="#003366" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="ПромЕлектроСервіс" />
 
-    <!-- 🔗 Preconnect + Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <!-- Preconnect & Preload для шрифтов и критичных ресурсов -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript>
     <link
-      rel="preload"
-      as="style"
+      rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
     />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
-    </noscript>
+  </noscript>
 
-    <!-- 📷 Preload LCP image -->
-    <link rel="preload" as="image" href="/img/background@2x.webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" />
+  <!-- Preload критичных изображений -->
+  <link rel="preload" as="image" href="/img/background@2x.webp" type="image/webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" />
 
-    <!-- 📦 Icons -->
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-    <link rel="manifest" href="/manifest.json" />
+  <!-- Иконки и манифест -->
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
+  <link rel="manifest" href="/manifest.json" />
 
-    <!-- 🎨 Inline fallback styles -->
-    <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        font-family: "Inter", "Segoe UI", sans-serif;
-        background-color: #f5f7fa;
-        color: #222;
-      }
-      .hero-title {
-        font-size: 3rem;
-        font-weight: 700;
-        margin: 1rem 0 0.5rem;
-        color: #003366;
-        text-align: center;
-      }
-      .hero-subtitle {
-        font-size: 1.5rem;
-        color: #333;
-        text-align: center;
-      }
-      .portfolio-img {
-        object-fit: cover;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-    </style>
-  </head>
+  <!-- Inline fallback стили для быстрого отображения -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      color: #222;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 1rem 0 0.5rem;
+      color: #003366;
+      text-align: center;
+    }
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: #333;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .portfolio-img {
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+    <strong style="display:block; text-align:center; margin:2rem;">
+      Увімкніть JavaScript для повної функціональності сайту.
+    </strong>
+  </noscript>
 
-  <body>
-    <noscript>
-      <strong style="display:block;text-align:center;margin:2rem">
-        Увімкніть JavaScript для повної функціональності сайту.
-      </strong>
-    </noscript>
-    <div id="root"></div>
+  <div id="root"></div>
 
-    <!-- ⚙️ Service Worker -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js').catch(err =>
-            console.error('Service Worker registration failed:', err)
-          );
-        });
-      }
-    </script>
-  </body>
+  <!-- Service Worker: регистрация для PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').catch(err =>
+          console.error('Service Worker registration failed:', err)
+        );
+      });
+    }
+  </script>
+</body>
 </html>

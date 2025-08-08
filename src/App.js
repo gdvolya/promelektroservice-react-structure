@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from "react";
+import React, { Suspense, lazy, useEffect, useCallback } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,7 @@ import logoWebp from "./img/logo.webp";
 import "./css/style.css";
 import "./i18n";
 
-// 🔁 Ленивая загрузка страниц
+// Ленивая загрузка страниц
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -21,14 +21,20 @@ function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    localStorage.setItem("i18nextLng", lng);
-  };
+  // Мемоизированная функция для смены языка
+  const changeLanguage = useCallback((lng) => {
+    if (i18n.language !== lng) {
+      i18n.changeLanguage(lng);
+      localStorage.setItem("i18nextLng", lng);
+    }
+  }, [i18n]);
 
+  // Инициализация AOS только при заходе на главную страницу
   useEffect(() => {
     if (location.pathname === "/") {
-      import("aos").then((AOS) => AOS.init());
+      import("aos").then((AOS) => {
+        AOS.init({ once: true, duration: 700 });
+      });
     }
   }, [location.pathname]);
 
@@ -65,27 +71,30 @@ function AppContent() {
                   src={logoPng}
                   alt="Логотип ПромЕлектроСервіс"
                   className="logo-left"
-                  width="60"
-                  height="60"
+                  width={60}
+                  height={60}
                   loading="eager"
                   fetchpriority="high"
                 />
               </picture>
             </Link>
 
-            <nav aria-label="Головне меню">
+            <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
               <ul className="nav-menu centered">
-                {navItems.map(({ path, label }) => (
-                  <li key={path}>
-                    <Link
-                      to={path}
-                      className={location.pathname === path ? "active" : ""}
-                      aria-current={location.pathname === path ? "page" : undefined}
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                ))}
+                {navItems.map(({ path, label }) => {
+                  const isActive = location.pathname === path;
+                  return (
+                    <li key={path}>
+                      <Link
+                        to={path}
+                        className={isActive ? "active" : ""}
+                        aria-current={isActive ? "page" : undefined}
+                      >
+                        {label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
           </div>
@@ -93,11 +102,13 @@ function AppContent() {
 
         <main className="main-content" role="main" style={{ minHeight: "60vh" }}>
           {location.pathname === "/" && (
+            // Предзагрузка фонового изображения для LCP
             <img
               src="/img/background@2x.webp"
-              alt="Hero background"
-              width="0"
-              height="0"
+              alt=""
+              aria-hidden="true"
+              width={0}
+              height={0}
               style={{ display: "none" }}
               fetchpriority="high"
               loading="eager"
@@ -106,7 +117,7 @@ function AppContent() {
 
           <Suspense
             fallback={
-              <div className="loading-spinner" role="status" aria-live="polite">
+              <div className="loading-spinner" role="status" aria-live="polite" aria-label="Завантаження...">
                 <div className="spinner" />
               </div>
             }
@@ -124,23 +135,33 @@ function AppContent() {
           </Suspense>
         </main>
 
-        <footer className="footer minimized-footer sticky-footer" role="contentinfo" style={{ minHeight: "80px" }}>
+        <footer
+          className="footer minimized-footer sticky-footer"
+          role="contentinfo"
+          style={{ minHeight: 80 }}
+        >
           <div className="footer-top">
-            <a href="tel:+380666229776" className="footer-link">📞 +380666229776</a>
-            <a href="mailto:info@promelektroservice.com" className="footer-link">✉️ info@promelektroservice.com</a>
+            <a href="tel:+380666229776" className="footer-link" aria-label="Телефон">
+              📞 +380666229776
+            </a>
+            <a href="mailto:info@promelektroservice.com" className="footer-link" aria-label="Email">
+              ✉️ info@promelektroservice.com
+            </a>
           </div>
 
-          <div className="lang-switcher" role="group" aria-label="Language selector">
+          <div className="lang-switcher" role="group" aria-label={t("langSelectorLabel") || "Вибір мови"}>
             {["uk", "en", "ru"].map((lng) => {
               const labels = { uk: "Українська", en: "English", ru: "Русский" };
               const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
+              const isActive = i18n.language === lng;
               return (
                 <button
                   key={lng}
                   onClick={() => changeLanguage(lng)}
                   title={labels[lng]}
                   aria-label={labels[lng]}
-                  className={`lang-btn ${i18n.language === lng ? "active" : ""}`}
+                  className={`lang-btn${isActive ? " active" : ""}`}
+                  type="button"
                 >
                   {flags[lng]}
                 </button>
