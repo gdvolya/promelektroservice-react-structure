@@ -18,11 +18,28 @@ export default function HomePage() {
       <Helmet>
         <title>{t("meta.homeTitle")}</title>
         <meta name="description" content={t("meta.homeDescription")} />
+        {/* Предзагрузка фонового изображения */}
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/background@2x.webp"
+          type="image/webp"
+          fetchpriority="high"
+        />
       </Helmet>
 
       <main className="home-page">
         {/* 🔷 Hero Section */}
         <section className="hero" role="banner" aria-label={t("home.bannerAlt")}>
+          <img
+            src="/assets/background@2x.webp"
+            alt=""
+            aria-hidden="true"
+            className="hero-background-img"
+            width={1920}
+            height={1080}
+            loading="eager"
+          />
           <div className="hero-overlay"></div>
           <div className="hero-content" data-aos="fade-up">
             <h1 className="hero-title">Promelektroservice</h1>
