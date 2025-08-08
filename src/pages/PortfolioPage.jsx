@@ -8,38 +8,31 @@ import "../styles/PortfolioPage.css";
 
 const projects = [
   {
-    thumb: "/img/portfolio/project14.webp",
-    full: "/img/projects/project14.webp",
+    image: "/img/portfolio/project14.webp",
     key: "project1",
   },
   {
-    thumb: "/img/portfolio/project10.webp",
-    full: "/img/projects/project10.webp",
+    image: "/img/portfolio/project10.webp",
     key: "project2",
   },
   {
-    thumb: "/img/portfolio/project12.webp",
-    full: "/img/projects/project12.webp",
+    image: "/img/portfolio/project12.webp",
     key: "project3",
   },
   {
-    thumb: "/img/portfolio/project7.webp",
-    full: "/img/projects/project7.webp",
+    image: "/img/portfolio/project7.webp",
     key: "project4",
   },
   {
-    thumb: "/img/portfolio/project13.webp",
-    full: "/img/projects/project13.webp",
+    image: "/img/portfolio/project13.webp",
     key: "project5",
   },
   {
-    thumb: "/img/portfolio/project2.webp",
-    full: "/img/projects/project2.webp",
+    image: "/img/portfolio/project2.webp",
     key: "project6",
   },
   {
-    thumb: "/img/portfolio/project1.webp",
-    full: "/img/projects/project1.webp",
+    image: "/img/portfolio/project1.webp",
     key: "project7",
   },
 ];
@@ -62,18 +55,16 @@ const PortfolioPage = () => {
 
       <div className="portfolio-grid">
         {projects.map((project, index) => (
-          <a
-            href={project.full}
+          <Link
+            to={`/portfolio/${index}`}
             key={index}
             className="portfolio-card"
             data-aos="fade-up"
             data-aos-delay={index * 100}
-            target="_blank"
-            rel="noopener noreferrer"
             aria-label={`${t(`portfolio.${project.key}.title`)} — ${t(`portfolio.${project.key}.description`)}`}
           >
             <img
-              src={project.thumb}
+              src={project.image}
               alt={t(`portfolio.${project.key}.title`)}
               loading="lazy"
               decoding="async"
@@ -85,7 +76,7 @@ const PortfolioPage = () => {
               <h2>{t(`portfolio.${project.key}.title`)}</h2>
               <p>{t(`portfolio.${project.key}.description`)}</p>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </main>
