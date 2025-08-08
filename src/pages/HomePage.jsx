@@ -18,7 +18,6 @@ export default function HomePage() {
       <Helmet>
         <title>{t("meta.homeTitle")}</title>
         <meta name="description" content={t("meta.homeDescription")} />
-        {/* Предзагрузка фонового изображения */}
         <link
           rel="preload"
           as="image"

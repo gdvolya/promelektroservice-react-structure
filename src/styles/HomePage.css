@@ -19,6 +19,7 @@
   flex-direction: column;
 }
 
+/* 🔷 Hero Section */
 .hero {
   position: relative;
   width: 100%;
@@ -84,6 +85,7 @@
   animation: fadeUp 1.2s ease-out forwards;
 }
 
+/* 🔘 Buttons */
 .btn {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -119,6 +121,7 @@
   color: #fff;
 }
 
+/* 🔹 Features Section */
 .features {
   padding: 4rem 2rem;
   background-color: var(--bg-white);
@@ -139,6 +142,7 @@
   gap: 2rem;
 }
 
+/* 🔸 Feature Card */
 .feature-card {
   background: var(--accent-bg);
   padding: 2rem 1rem;
@@ -169,6 +173,7 @@
   color: var(--subtext-color);
 }
 
+/* 🌀 Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -191,6 +196,7 @@
   }
 }
 
+/* 📱 Responsive */
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.2rem;
