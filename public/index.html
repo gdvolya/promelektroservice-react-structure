@@ -45,8 +45,8 @@
   <meta name="apple-mobile-web-app-title" content="ПромЕлектроСервіс" />
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
   <link
     rel="preload"
     as="style"
@@ -60,9 +60,22 @@
     />
   </noscript>
 
-  <!-- Preload images -->
-  <link rel="preload" as="image" href="/assets/background@2x.webp" type="image/webp" fetchpriority="high" />
-  <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" />
+  <!-- Preload important images с размерами -->
+  <link
+    rel="preload"
+    as="image"
+    href="/img/background@2x.webp"
+    type="image/webp"
+    fetchpriority="high"
+    imagesizes="(max-width: 600px) 100vw, 1920px"
+  />
+  <link
+    rel="preload"
+    as="image"
+    href="/img/logo.webp"
+    type="image/webp"
+    imagesrcset="/img/logo.webp 1x, /img/logo@2x.webp 2x"
+  />
 
   <!-- Icons -->
   <link rel="icon" href="/favicon.ico" />
@@ -71,7 +84,8 @@
 
   <!-- Fallback styles -->
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       font-family: 'Inter', 'Segoe UI', sans-serif;
@@ -118,8 +132,9 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .catch(err => console.error('Service Worker registration failed:', err));
+        navigator.serviceWorker.register('/service-worker.js').catch((err) =>
+          console.error('Service Worker registration failed:', err)
+        );
       });
     }
   </script>

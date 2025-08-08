@@ -20,12 +20,15 @@ function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
 
-  const changeLanguage = useCallback((lng) => {
-    if (i18n.language !== lng) {
-      i18n.changeLanguage(lng);
-      localStorage.setItem("i18nextLng", lng);
-    }
-  }, [i18n]);
+  const changeLanguage = useCallback(
+    (lng) => {
+      if (i18n.language !== lng) {
+        i18n.changeLanguage(lng);
+        localStorage.setItem("i18nextLng", lng);
+      }
+    },
+    [i18n]
+  );
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -72,20 +75,23 @@ function AppContent() {
                   height={60}
                   loading="eager"
                   fetchpriority="high"
+                  decoding="async"
                 />
               </picture>
             </Link>
 
             <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
-              <ul className="nav-menu centered">
+              <ul className="nav-menu centered" role="menubar">
                 {navItems.map(({ path, label }) => {
                   const isActive = location.pathname === path;
                   return (
-                    <li key={path}>
+                    <li key={path} role="none">
                       <Link
                         to={path}
                         className={isActive ? "active" : ""}
                         aria-current={isActive ? "page" : undefined}
+                        role="menuitem"
+                        tabIndex={0}
                       >
                         {label}
                       </Link>
@@ -97,23 +103,36 @@ function AppContent() {
           </div>
         </header>
 
-        <main className="main-content" role="main" style={{ minHeight: "60vh" }}>
+        <main
+          className="main-content"
+          role="main"
+          style={{ minHeight: "75vh", minWidth: "320px" }}
+          id="main-content"
+          tabIndex={-1} // для доступности, чтобы можно было фокус перейти
+        >
+          {/* Предзагрузка фона для быстрого отображения */}
           {location.pathname === "/" && (
             <img
               src="/img/background@2x.webp"
               alt=""
               aria-hidden="true"
-              width={0}
-              height={0}
+              width={1920}
+              height={1080}
               style={{ display: "none" }}
               fetchpriority="high"
               loading="eager"
+              decoding="async"
             />
           )}
 
           <Suspense
             fallback={
-              <div className="loading-spinner" role="status" aria-live="polite" aria-label="Завантаження...">
+              <div
+                className="loading-spinner"
+                role="status"
+                aria-live="polite"
+                aria-label={t("loading") || "Завантаження..."}
+              >
                 <div className="spinner" />
               </div>
             }
@@ -131,17 +150,29 @@ function AppContent() {
           </Suspense>
         </main>
 
-        <footer className="footer minimized-footer sticky-footer" role="contentinfo" style={{ minHeight: 80 }}>
+        <footer
+          className="footer minimized-footer sticky-footer"
+          role="contentinfo"
+          style={{ minHeight: 80 }}
+        >
           <div className="footer-top">
-            <a href="tel:+380666229776" className="footer-link" aria-label="Телефон">
+            <a href="tel:+380666229776" className="footer-link" aria-label={t("phoneLabel") || "Телефон"}>
               📞 +380666229776
             </a>
-            <a href="mailto:info@promelektroservice.com" className="footer-link" aria-label="Email">
+            <a
+              href="mailto:info@promelektroservice.com"
+              className="footer-link"
+              aria-label={t("emailLabel") || "Email"}
+            >
               ✉️ info@promelektroservice.com
             </a>
           </div>
 
-          <div className="lang-switcher" role="group" aria-label={t("langSelectorLabel") || "Вибір мови"}>
+          <div
+            className="lang-switcher"
+            role="group"
+            aria-label={t("langSelectorLabel") || "Вибір мови"}
+          >
             {["uk", "en", "ru"].map((lng) => {
               const labels = { uk: "Українська", en: "English", ru: "Русский" };
               const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
