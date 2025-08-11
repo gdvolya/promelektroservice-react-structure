@@ -33,24 +33,39 @@ export default function HomePage() {
         <style>{`
           .hero-content {
             position: absolute;
-            top: 15%; /* поднимаем контент ближе к шапке */
+            top: 8%; /* Ещё выше */
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
             z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 1rem;
           }
           .hero-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             margin-bottom: 0.8rem;
+            color: #fff;
+          }
+          .hero-subtitle {
+            font-size: 1.5rem;
+            color: #f0f0f0;
+            margin-bottom: 1.5rem;
+          }
+          .hero-buttons .btn {
+            margin: 0 0.5rem;
           }
           @media (max-width: 768px) {
-            .hero-title {
-              font-size: 2.4rem;
-            }
             .hero-content {
-              top: 10%;
+              top: 5%;
+            }
+            .hero-title {
+              font-size: 2.5rem;
+            }
+            .hero-subtitle {
+              font-size: 1.2rem;
             }
           }
         `}</style>
