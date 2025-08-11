@@ -31,17 +31,26 @@ export default function HomePage() {
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap"
         />
         <style>{`
+          .hero-content {
+            position: absolute;
+            top: 15%; /* поднимаем контент ближе к шапке */
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 2;
+          }
           .hero-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
             font-size: 3.5rem;
             margin-bottom: 0.8rem;
-            transform: translateY(-20%);
           }
           @media (max-width: 768px) {
             .hero-title {
               font-size: 2.4rem;
-              transform: translateY(-10%);
+            }
+            .hero-content {
+              top: 10%;
             }
           }
         `}</style>
@@ -53,6 +62,7 @@ export default function HomePage() {
           className="hero"
           role="banner"
           aria-label={t("home.bannerAlt")}
+          style={{ position: "relative", overflow: "hidden" }}
         >
           <img
             src="/assets/background@2x.webp"
