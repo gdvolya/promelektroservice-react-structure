@@ -25,6 +25,26 @@ export default function HomePage() {
           type="image/webp"
           fetchpriority="high"
         />
+        {/* Красивый шрифт */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap"
+        />
+        <style>{`
+          .hero-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 3.5rem;
+            margin-bottom: 0.8rem;
+            transform: translateY(-20%);
+          }
+          @media (max-width: 768px) {
+            .hero-title {
+              font-size: 2.4rem;
+              transform: translateY(-10%);
+            }
+          }
+        `}</style>
       </Helmet>
 
       <main className="home-page">
@@ -45,7 +65,7 @@ export default function HomePage() {
           />
           <div className="hero-overlay"></div>
           <div className="hero-content" data-aos="fade-up">
-            <h1 className="hero-title">Promelektroservice</h1>
+            <h1 className="hero-title">ПромЕлектроСервіс</h1>
             <p className="hero-subtitle">{t("home.subtitle")}</p>
             <div className="hero-buttons">
               <Link to="/portfolio" className="btn primary">

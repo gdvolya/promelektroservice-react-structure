@@ -5,7 +5,7 @@
   --bg-light: #f9f9f9;
   --bg-white: #fff;
   --accent-bg: #f5f5f5;
-  --font-main: "Segoe UI", sans-serif;
+  --font-main: "Montserrat", "Segoe UI", sans-serif;
   --heading-color: #111;
   --subtext-color: #555;
 }
@@ -26,9 +26,10 @@
   min-height: 100dvh;
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* 📌 поднять контент выше */
   justify-content: center;
   text-align: center;
+  padding-top: 15vh; /* 📌 смещение вниз от верхнего края */
   color: #fff;
   animation: fadeIn 1s ease-in-out;
 }
@@ -69,10 +70,12 @@
 }
 
 .hero-title {
-  font-size: 3rem;
-  font-weight: 700;
+  font-size: 3.5rem;
+  font-weight: 800;
   margin-bottom: 1rem;
   color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .hero-subtitle {
@@ -93,7 +96,7 @@
 .btn {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   border: none;
   border-radius: 6px;
   text-decoration: none;
@@ -211,14 +214,16 @@
 
 /* 📱 Responsive */
 @media (max-width: 768px) {
+  .hero {
+    padding-top: 20vh;
+    align-items: flex-start;
+  }
   .hero-title {
     font-size: 2.2rem;
   }
-
   .hero-subtitle {
     font-size: 1.2rem;
   }
-
   .features-grid {
     grid-template-columns: 1fr;
   }
