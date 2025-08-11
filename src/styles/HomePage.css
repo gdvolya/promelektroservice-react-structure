@@ -26,10 +26,11 @@
   min-height: 100dvh;
   overflow: hidden;
   display: flex;
-  align-items: flex-start; /* 📌 поднять контент выше */
-  justify-content: center;
+  flex-direction: column;      /* вертикальный поток */
+  align-items: center;         /* центр по горизонтали */
+  justify-content: flex-start; /* прижать к верху */
   text-align: center;
-  padding-top: 15vh; /* 📌 смещение вниз от верхнего края */
+  padding-top: 8vh;            /* ближе к шапке */
   color: #fff;
   animation: fadeIn 1s ease-in-out;
 }
@@ -60,7 +61,7 @@
   position: relative;
   z-index: 2;
   max-width: 800px;
-  margin: auto;
+  margin-top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -215,8 +216,8 @@
 /* 📱 Responsive */
 @media (max-width: 768px) {
   .hero {
-    padding-top: 20vh;
-    align-items: flex-start;
+    padding-top: 12vh; /* чуть ниже, чтобы не прилипало */
+    align-items: center;
   }
   .hero-title {
     font-size: 2.2rem;

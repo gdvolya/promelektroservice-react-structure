@@ -30,7 +30,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
-  min-height: 75px; /* фиксированная высота, чтобы избежать сдвигов */
+  min-height: 75px;
 }
 
 .logo-left {
@@ -52,7 +52,7 @@ a {
   flex-wrap: wrap;
   justify-content: center;
   flex-grow: 1;
-  min-height: 40px; /* фиксированная высота для nav */
+  min-height: 40px;
 }
 
 .nav-menu li a {
@@ -75,15 +75,15 @@ a {
 /* Hero section */
 .hero {
   text-align: center;
-  padding: 80px 20px 100px;
+  padding: 40px 20px 60px; /* уменьшил верхний паддинг */
   background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
   box-shadow: inset 0 0 50px #81d4fa;
   border-radius: 0 0 50% 50% / 15%;
   margin-bottom: 60px;
-  min-height: 400px; /* фиксированная минимальная высота для стабильности */
+  min-height: 350px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* поднял содержимое к верху */
   align-items: center;
 }
 
@@ -91,6 +91,7 @@ a {
   font-size: 3.8rem;
   font-weight: 900;
   color: #003366;
+  margin-top: 20px; /* сдвинул вниз чуть-чуть для баланса */
   margin-bottom: 15px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   animation: slideUpFade 1.2s ease-out forwards;
@@ -108,7 +109,7 @@ a {
   animation-delay: 0.6s;
 }
 
-/* Анимация для "promelectroservise" и заголовка */
+/* Анимация */
 @keyframes slideUpFade {
   from {
     transform: translateY(40px);
@@ -154,7 +155,7 @@ a {
   box-shadow: 0 10px 20px rgba(0, 102, 204, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  aspect-ratio: 16 / 10; /* фиксирует пропорции */
+  aspect-ratio: 16 / 10;
 }
 
 .portfolio-img:hover {
@@ -162,7 +163,7 @@ a {
   box-shadow: 0 20px 30px rgba(0, 102, 204, 0.3);
 }
 
-/* Форма отзывов и контактов */
+/* Форма */
 .review-textarea,
 .contact-form input,
 .contact-form textarea {
@@ -227,20 +228,19 @@ a {
   font-size: 0.9rem;
   box-shadow: inset 0 1px 5px rgba(255, 255, 255, 0.15);
   user-select: none;
-  min-height: 80px; /* фиксированная высота для предотвращения сдвигов */
+  min-height: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* Нижняя часть футера */
 .bottom-footer {
   margin-top: 40px;
   font-size: 0.8rem;
   opacity: 0.7;
 }
 
-/* Гибкий layout */
+/* Layout */
 html, body {
   height: 100%;
   margin: 0;
@@ -251,12 +251,12 @@ html, body {
 
 main {
   flex: 1;
-  min-height: 75vh; /* добавлено фиксированное минимальное пространство */
+  min-height: 75vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Кнопки переключения языка */
+/* Кнопки языка */
 .lang-btn {
   background: transparent;
   border: 2px solid #e0e7ff;
@@ -276,25 +276,21 @@ main {
   color: #222;
 }
 
-/* Адаптивность */
+/* Адаптив */
 @media (max-width: 992px) {
   .header-container {
     padding: 12px 20px;
     min-height: 60px;
   }
-
   .logo-left {
     height: 50px;
   }
-
   .fancy-title {
     font-size: 3rem;
   }
-
   .hero-subtitle {
     font-size: 1.15rem;
   }
-
   .portfolio-img {
     width: 280px;
     height: 185px;
@@ -306,35 +302,30 @@ main {
     gap: 12px;
     min-height: 35px;
   }
-
   .fancy-title {
     font-size: 2.4rem;
   }
-
   .hero-subtitle,
   .description p,
   .contact-form input,
   .contact-form textarea {
     font-size: 1rem;
   }
-
   .portfolio-img {
     width: 100%;
     height: auto;
     border-radius: 12px;
   }
-
   .btn {
     width: 100%;
     min-width: unset;
   }
-
   .contact-form {
     gap: 12px;
   }
 }
 
-/* Спиннер загрузки */
+/* Спиннер */
 .loading-spinner {
   width: 48px;
   height: 48px;
