@@ -14,7 +14,7 @@
   <meta name="keywords" content="електромонтаж, електрика, ПромЕлектроСервіс, монтаж електропроводки, Львів, Київ" />
   <link rel="canonical" href="https://promelektroservice.vercel.app/" />
 
-  <!-- Hreflang: мультиязычие -->
+  <!-- Hreflang -->
   <link rel="alternate" hreflang="uk-UA" href="https://promelektroservice.vercel.app/" />
   <link rel="alternate" hreflang="en-US" href="https://promelektroservice.vercel.app/en" />
   <link rel="alternate" hreflang="ru-RU" href="https://promelektroservice.vercel.app/ru" />
@@ -50,17 +50,17 @@
   <link
     rel="preload"
     as="style"
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@400;700&display=swap"
     onload="this.onload=null;this.rel='stylesheet'"
   />
   <noscript>
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@400;700&display=swap"
     />
   </noscript>
 
-  <!-- Preload important images с размерами -->
+  <!-- Preload important images -->
   <link
     rel="preload"
     as="image"
@@ -82,7 +82,7 @@
   <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- Fallback styles -->
+  <!-- Styles -->
   <style>
     html,
     body {
@@ -96,19 +96,33 @@
       min-height: 100vh;
       scroll-behavior: smooth;
     }
+
+    /* Анимация */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .hero-title {
-      font-size: 3rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 700;
       margin: 1rem 0 0.5rem;
       color: #003366;
       text-align: center;
+      animation: fadeUp 1s ease-out forwards;
     }
+
     .hero-subtitle {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       color: #333;
       text-align: center;
       margin-bottom: 2rem;
+      animation: fadeUp 1s ease-out forwards;
+      animation-delay: 0.3s;
+      opacity: 0;
     }
+
     .portfolio-img {
       object-fit: cover;
       border-radius: 12px;
@@ -126,7 +140,10 @@
     </strong>
   </noscript>
 
-  <div id="root"></div>
+  <div id="root">
+    <h1 class="hero-title">ПромЕлектроСервіс</h1>
+    <p class="hero-subtitle">Професійні електромонтажні роботи будь-якої складності</p>
+  </div>
 
   <!-- PWA Service Worker -->
   <script>
