@@ -29,6 +29,8 @@ export default function HomePage() {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;800;900&display=swap"
         />
+        {/*
+        Встроенный блок <style> был удален, чтобы избежать конфликтов со стилями из HomePage.css
         <style>{`
           body, main {
             margin-top: 0 !important;
@@ -123,6 +125,7 @@ export default function HomePage() {
             }
           }
         `}</style>
+        */}
       </Helmet>
 
       <main className="home-page">
