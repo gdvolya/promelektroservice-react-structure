@@ -34,7 +34,7 @@ body, main {
   overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center; /* Центрируем по вертикали */
   text-align: center;
   padding: 0 !important;
   margin-top: 0 !important;
@@ -62,25 +62,24 @@ body, main {
 }
 
 .hero-content {
-  position: absolute;
-  top: 50%; /* Изменено, чтобы центрировать по вертикали */
-  left: 50%; /* Добавлено для горизонтального центрирования */
-  transform: translate(-50%, -50%); /* Добавлено для точного центрирования */
+  position: relative; /* Изменено на 'relative', чтобы центрировать внутри flex-контейнера '.hero' */
+  top: auto; /* Удаляем старое позиционирование */
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   text-align: center;
   text-wrap: balance;
   animation: fadeUp 1s ease-out forwards;
+  z-index: 2;
 }
 
 .hero-title, .fancy-title {
-  font-size: 3.8rem;
+  font-size: clamp(2.4rem, 6vw, 4rem);
   font-weight: 900;
   margin: 0 0 0.5rem 0 !important;
   color: #fff !important;
@@ -93,7 +92,7 @@ body, main {
 }
 
 .hero-subtitle {
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
   font-weight: 500;
   margin: 0 0 0.8rem 0 !important;
   color: #f1f1f1 !important;
@@ -243,8 +242,7 @@ body, main {
     padding: 0 !important;
   }
   .hero-content {
-    top: 60px;
-    transform: translate(-50%, -50%); /* Добавлено */
+    top: auto;
   }
   .hero-title, .fancy-title {
     font-size: 3rem;
@@ -271,8 +269,7 @@ body, main {
     padding: 0 !important;
   }
   .hero-content {
-    top: 60px;
-    transform: translate(-50%, -50%); /* Добавлено */
+    top: auto;
   }
   .hero-title, .fancy-title {
     font-size: 2.4rem;

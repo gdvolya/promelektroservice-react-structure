@@ -106,25 +106,9 @@ function AppContent() {
         <main
           className="main-content"
           role="main"
-          style={{ minHeight: "75vh", minWidth: "320px" }}
           id="main-content"
           tabIndex={-1} // для доступности, чтобы можно было фокус перейти
         >
-          {/* Предзагрузка фона для быстрого отображения */}
-          {location.pathname === "/" && (
-            <img
-              src="/img/background@2x.webp"
-              alt=""
-              aria-hidden="true"
-              width={1920}
-              height={1080}
-              style={{ display: "none" }}
-              fetchpriority="high"
-              loading="eager"
-              decoding="async"
-            />
-          )}
-
           <Suspense
             fallback={
               <div
@@ -153,7 +137,6 @@ function AppContent() {
         <footer
           className="footer minimized-footer sticky-footer"
           role="contentinfo"
-          style={{ minHeight: 80 }}
         >
           <div className="footer-top">
             <a href="tel:+380666229776" className="footer-link" aria-label={t("phoneLabel") || "Телефон"}>
