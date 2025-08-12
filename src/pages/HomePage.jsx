@@ -25,7 +25,7 @@ export default function HomePage() {
           type="image/webp"
           fetchpriority="high"
         />
-        {/* Красивый шрифт */}
+        {/* Шрифт Montserrat */}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap"
@@ -33,7 +33,7 @@ export default function HomePage() {
         <style>{`
           .hero-content {
             position: absolute;
-            top: 8%; /* Ещё выше */
+            top: 5%; /* подняли выше */
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
@@ -45,12 +45,15 @@ export default function HomePage() {
           .hero-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 3.8rem;
+            font-size: 4rem;
             margin-bottom: 0.8rem;
             color: #fff;
+            letter-spacing: 1px;
           }
           .hero-subtitle {
-            font-size: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 400;
             color: #f0f0f0;
             margin-bottom: 1.5rem;
           }
@@ -59,7 +62,7 @@ export default function HomePage() {
           }
           @media (max-width: 768px) {
             .hero-content {
-              top: 5%;
+              top: 3%;
             }
             .hero-title {
               font-size: 2.5rem;

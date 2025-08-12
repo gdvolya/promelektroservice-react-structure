@@ -26,10 +26,9 @@
   min-height: 100dvh;
   overflow: hidden;
   display: flex;
-  align-items: center; /* 📌 Центр по вертикали */
-  justify-content: center; /* 📌 Центр по горизонтали */
+  justify-content: center; /* Центр по горизонтали */
   text-align: center;
-  padding: 0; /* 📌 Убираем отступы */
+  padding: 0;
   color: #fff;
   animation: fadeIn 1s ease-in-out;
 }
@@ -43,7 +42,6 @@
   z-index: 0;
   user-select: none;
   pointer-events: none;
-  aspect-ratio: 16 / 9;
 }
 
 .hero-overlay {
@@ -51,32 +49,31 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
   z-index: 1;
-  will-change: opacity;
-  backface-visibility: hidden;
-  transform: translateZ(0);
 }
 
 .hero-content {
-  position: relative;
+  position: absolute;
+  top: 10%; /* Подняли выше */
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 2;
   max-width: 800px;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* 📌 Центрирование внутри блока */
-  will-change: transform;
-  animation: fadeUp 1s ease-out forwards;
   text-wrap: balance;
+  animation: fadeUp 1s ease-out forwards;
 }
 
 .hero-title {
-  font-size: 3.5rem;
+  font-size: 3.8rem;
   font-weight: 800;
   margin-bottom: 1rem;
   color: #fff;
   letter-spacing: 1px;
   text-transform: uppercase;
+  font-family: var(--font-main);
 }
 
 .hero-subtitle {
@@ -90,7 +87,6 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  animation: fadeUp 1.2s ease-out forwards;
 }
 
 /* 🔘 Buttons */
@@ -215,12 +211,11 @@
 
 /* 📱 Responsive */
 @media (max-width: 768px) {
-  .hero {
-    padding-top: 0;
-    align-items: center;
+  .hero-content {
+    top: 6%;
   }
   .hero-title {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
   .hero-subtitle {
     font-size: 1.2rem;
