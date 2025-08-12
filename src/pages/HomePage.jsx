@@ -31,38 +31,39 @@ export default function HomePage() {
         />
         <style>{`
           .hero-content {
-            position: absolute;
-            top: 12%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            z-index: 2;
-            width: 100%;
-            max-width: 1200px;
-            padding: 0 1rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+            top: 12%;
           }
           .hero-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
             font-size: 4rem;
-            margin: 0 0 0.8rem;
+            margin: 0 0 0.8rem 0;
             color: #fff;
             letter-spacing: 1px;
             text-transform: uppercase;
             text-align: center;
+            width: 100%;
           }
           .hero-subtitle {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.6rem;
             font-weight: 400;
             color: #f0f0f0;
-            margin: 0 0 1.5rem;
+            margin: 0 0 1.5rem 0;
             text-align: center;
             max-width: 800px;
+            width: 100%;
           }
           .hero-buttons {
             display: flex;
@@ -71,11 +72,12 @@ export default function HomePage() {
             align-items: center;
             gap: 1rem;
             flex-wrap: nowrap;
+            width: 100%;
           }
           .hero-buttons .btn {
-            margin: 0;
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
+            margin: 0;
           }
           @media (max-width: 768px) {
             .hero-content {
@@ -88,7 +90,6 @@ export default function HomePage() {
               font-size: 1.2rem;
             }
             .hero-buttons {
-              flex-direction: row;
               gap: 0.5rem;
             }
             .hero-buttons .btn {
