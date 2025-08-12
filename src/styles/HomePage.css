@@ -62,16 +62,17 @@ body, main {
 }
 
 .hero-content {
-  position: relative; /* Изменено на 'relative', чтобы центрировать внутри flex-контейнера '.hero' */
-  top: auto; /* Удаляем старое позиционирование */
+  /* ИСПОЛЬЗУЕМ СВОЙСТВА FLEXBOX ВМЕСТО ABSOLUTE POSITIONING */
+  position: relative;
+  top: auto;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin-top: 60px; /* Чтобы поднять контент вверх, можно использовать margin-top, который будет работать с Flexbox */
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
   text-wrap: balance;
   animation: fadeUp 1s ease-out forwards;
@@ -243,6 +244,7 @@ body, main {
   }
   .hero-content {
     top: auto;
+    margin-top: 60px;
   }
   .hero-title, .fancy-title {
     font-size: 3rem;
@@ -270,6 +272,7 @@ body, main {
   }
   .hero-content {
     top: auto;
+    margin-top: 60px;
   }
   .hero-title, .fancy-title {
     font-size: 2.4rem;
