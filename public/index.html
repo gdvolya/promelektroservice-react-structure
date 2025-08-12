@@ -7,20 +7,17 @@
 
   <title>ПромЕлектроСервіс — електромонтажні послуги</title>
 
-  <!-- SEO -->
   <meta name="description" content="Професійні електромонтажні роботи будь-якої складності. Монтаж, обслуговування, ремонт." />
   <meta name="author" content="ПромЕлектроСервіс" />
   <meta name="robots" content="index, follow" />
   <meta name="keywords" content="електромонтаж, електрика, ПромЕлектроСервіс, монтаж електропроводки, Львів, Київ" />
   <link rel="canonical" href="https://promelektroservice.vercel.app/" />
 
-  <!-- Hreflang -->
   <link rel="alternate" hreflang="uk-UA" href="https://promelektroservice.vercel.app/" />
   <link rel="alternate" hreflang="en-US" href="https://promelektroservice.vercel.app/en" />
   <link rel="alternate" hreflang="ru-RU" href="https://promelektroservice.vercel.app/ru" />
   <link rel="alternate" hreflang="x-default" href="https://promelektroservice.vercel.app/" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
   <meta property="og:description" content="Професійні електромонтажні роботи будь-якої складності." />
   <meta property="og:image" content="/img/og-cover.webp" />
@@ -32,19 +29,16 @@
   <meta property="og:locale" content="uk_UA" />
   <meta property="og:site_name" content="ПромЕлектроСервіс" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
   <meta name="twitter:description" content="Професійні електромонтажні роботи будь-якої складності." />
   <meta name="twitter:image" content="/img/og-cover.webp" />
 
-  <!-- PWA -->
   <meta name="theme-color" content="#003366" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="ПромЕлектроСервіс" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
   <link
@@ -60,7 +54,6 @@
     />
   </noscript>
 
-  <!-- Preload important images -->
   <link
     rel="preload"
     as="image"
@@ -77,62 +70,11 @@
     imagesrcset="/img/logo.webp 1x, /img/logo@2x.webp 2x"
   />
 
-  <!-- Icons -->
   <link rel="icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- Styles -->
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', 'Segoe UI', sans-serif;
-      background-color: #f5f7fa;
-      color: #222;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      min-height: 100vh;
-      scroll-behavior: smooth;
-    }
-
-    /* Анимация */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 700;
-      margin: 1rem 0 0.5rem;
-      color: #003366;
-      text-align: center;
-      animation: fadeUp 1s ease-out forwards;
-    }
-
-    .hero-subtitle {
-      font-size: 1.25rem;
-      color: #333;
-      text-align: center;
-      margin-bottom: 2rem;
-      animation: fadeUp 1s ease-out forwards;
-      animation-delay: 0.3s;
-      opacity: 0;
-    }
-
-    .portfolio-img {
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-  </style>
-</head>
+  </head>
 <body>
   <noscript>
     <strong style="display:block; text-align:center; margin:2rem;">
@@ -142,7 +84,6 @@
 
   <div id="root"></div>
 
-  <!-- PWA Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
