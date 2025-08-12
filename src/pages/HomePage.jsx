@@ -40,30 +40,42 @@ export default function HomePage() {
             width: 100%;
             max-width: 1200px;
             padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
           }
           .hero-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
             font-size: 4rem;
-            margin-bottom: 0.8rem;
+            margin: 0 0 0.8rem;
             color: #fff;
             letter-spacing: 1px;
             text-transform: uppercase;
+            text-align: center;
           }
           .hero-subtitle {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.6rem;
             font-weight: 400;
             color: #f0f0f0;
-            margin-bottom: 1.5rem;
+            margin: 0 0 1.5rem;
+            text-align: center;
+            max-width: 800px;
           }
           .hero-buttons {
             display: flex;
+            flex-direction: row;
             justify-content: center;
+            align-items: center;
             gap: 1rem;
+            flex-wrap: nowrap;
           }
           .hero-buttons .btn {
-            margin: 0 0.5rem;
+            margin: 0;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
           }
           @media (max-width: 768px) {
             .hero-content {
@@ -74,6 +86,14 @@ export default function HomePage() {
             }
             .hero-subtitle {
               font-size: 1.2rem;
+            }
+            .hero-buttons {
+              flex-direction: row;
+              gap: 0.5rem;
+            }
+            .hero-buttons .btn {
+              padding: 0.5rem 1rem;
+              font-size: 0.9rem;
             }
           }
         `}</style>
