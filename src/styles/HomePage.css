@@ -27,6 +27,7 @@
   overflow: hidden;
   display: flex;
   justify-content: center; /* Центр по горизонтали */
+  align-items: center; /* Центр по вертикали */
   text-align: center;
   padding: 0;
   color: #fff;
@@ -52,10 +53,7 @@
 }
 
 .hero-content {
-  position: absolute;
-  top: 10%; /* Подняли выше */
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   z-index: 2;
   max-width: 800px;
   margin: auto;
@@ -211,9 +209,6 @@
 
 /* 📱 Responsive */
 @media (max-width: 768px) {
-  .hero-content {
-    top: 6%;
-  }
   .hero-title {
     font-size: 2.5rem;
   }

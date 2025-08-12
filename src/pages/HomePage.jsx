@@ -25,7 +25,6 @@ export default function HomePage() {
           type="image/webp"
           fetchpriority="high"
         />
-        {/* Шрифт Montserrat */}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap"
@@ -33,7 +32,7 @@ export default function HomePage() {
         <style>{`
           .hero-content {
             position: absolute;
-            top: 5%; /* подняли выше */
+            top: 12%;
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
@@ -49,6 +48,7 @@ export default function HomePage() {
             margin-bottom: 0.8rem;
             color: #fff;
             letter-spacing: 1px;
+            text-transform: uppercase;
           }
           .hero-subtitle {
             font-family: 'Montserrat', sans-serif;
@@ -57,12 +57,17 @@ export default function HomePage() {
             color: #f0f0f0;
             margin-bottom: 1.5rem;
           }
+          .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+          }
           .hero-buttons .btn {
             margin: 0 0.5rem;
           }
           @media (max-width: 768px) {
             .hero-content {
-              top: 3%;
+              top: 8%;
             }
             .hero-title {
               font-size: 2.5rem;
@@ -75,12 +80,10 @@ export default function HomePage() {
       </Helmet>
 
       <main className="home-page">
-        {/* 🔷 Hero Section */}
         <section
           className="hero"
           role="banner"
           aria-label={t("home.bannerAlt")}
-          style={{ position: "relative", overflow: "hidden" }}
         >
           <img
             src="/assets/background@2x.webp"
@@ -106,7 +109,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 🔹 Why Choose Us Section */}
         <section
           className="features"
           data-aos="fade-up"
@@ -116,12 +118,7 @@ export default function HomePage() {
             {t("home.whyChooseUs")}
           </h2>
           <div className="features-grid">
-            {/* 🔸 Speed */}
-            <div
-              className="feature-card"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
+            <div className="feature-card" data-aos="fade-up" data-aos-delay="100">
               <img
                 src="/icons/speed.svg"
                 className="feature-icon"
@@ -133,13 +130,7 @@ export default function HomePage() {
               <h3>{t("home.speed")}</h3>
               <p>{t("home.speedDesc")}</p>
             </div>
-
-            {/* 🔸 Quality */}
-            <div
-              className="feature-card"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
+            <div className="feature-card" data-aos="fade-up" data-aos-delay="200">
               <img
                 src="/icons/quality.svg"
                 className="feature-icon"
@@ -151,13 +142,7 @@ export default function HomePage() {
               <h3>{t("home.quality")}</h3>
               <p>{t("home.qualityDesc")}</p>
             </div>
-
-            {/* 🔸 Safety */}
-            <div
-              className="feature-card"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
+            <div className="feature-card" data-aos="fade-up" data-aos-delay="300">
               <img
                 src="/icons/secure.svg"
                 className="feature-icon"
