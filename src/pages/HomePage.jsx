@@ -30,7 +30,15 @@ export default function HomePage() {
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;800;900&display=swap"
         />
         <style>{`
+          body, main {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+          }
           .hero-content {
+            position: absolute;
+            top: 75px; /* Учитываем высоту шапки */
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -46,7 +54,7 @@ export default function HomePage() {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
             font-size: 4rem;
-            margin: 0 0 0.5rem 0;
+            margin: 0 0 0.5rem 0 !important;
             color: #fff;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -59,7 +67,7 @@ export default function HomePage() {
             font-size: 1.6rem;
             font-weight: 500;
             color: #f0f0f0;
-            margin: 0 0 0.8rem 0;
+            margin: 0 0 0.8rem 0 !important;
             text-align: center;
             max-width: 800px;
             width: 100%;
@@ -73,7 +81,7 @@ export default function HomePage() {
             gap: 1rem;
             flex-wrap: nowrap;
             width: 100%;
-            margin: 0;
+            margin: 0 !important;
           }
           .hero-buttons .btn {
             padding: 0.75rem 1.5rem;
@@ -82,18 +90,18 @@ export default function HomePage() {
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
           }
-          @media (max-width: 768px) {
+          @media (max-width: 992px) {
             .hero-content {
-              padding: 0;
+              top: 60px; /* Учитываем уменьшенную высоту шапки */
             }
             .hero-title {
-              font-size: 2.5rem;
+              font-size: 3rem;
               letter-spacing: 1px;
-              margin: 0 0 0.3rem 0;
+              margin: 0 0 0.3rem 0 !important;
             }
             .hero-subtitle {
-              font-size: 1.2rem;
-              margin: 0 0 0.5rem 0;
+              font-size: 1.15rem;
+              margin: 0 0 0.5rem 0 !important;
             }
             .hero-buttons {
               gap: 0.5rem;
@@ -101,6 +109,19 @@ export default function HomePage() {
             .hero-buttons .btn {
               padding: 0.5rem 1rem;
               font-size: 0.9rem;
+            }
+          }
+          @media (max-width: 600px) {
+            .hero-content {
+              top: 60px;
+            }
+            .hero-title {
+              font-size: 2.4rem;
+              margin: 0 0 0.3rem 0 !important;
+            }
+            .hero-subtitle {
+              font-size: 1rem;
+              margin: 0 0 0.5rem 0 !important;
             }
           }
         `}</style>
