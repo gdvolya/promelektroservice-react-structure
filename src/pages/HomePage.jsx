@@ -36,18 +36,16 @@ export default function HomePage() {
           }
           .hero-content {
             position: absolute;
-            top: 75px; /* Учитываем высоту шапки */
-            left: 50%;
-            transform: translateX(-50%);
+            top: 75px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             text-align: center;
             z-index: 2;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
             padding: 0;
           }
           .hero-title {
@@ -92,7 +90,7 @@ export default function HomePage() {
           }
           @media (max-width: 992px) {
             .hero-content {
-              top: 60px; /* Учитываем уменьшенную высоту шапки */
+              top: 60px;
             }
             .hero-title {
               font-size: 3rem;

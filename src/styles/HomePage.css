@@ -61,9 +61,8 @@ body, main {
 
 .hero-content {
   position: absolute;
-  top: 75px; /* Учитываем высоту шапки */
-  left: 50%;
-  transform: translateX(-50%);
+  top: 75px;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0;
@@ -240,7 +239,7 @@ body, main {
     padding: 0 !important;
   }
   .hero-content {
-    top: 60px; /* Учитываем уменьшенную высоту шапки */
+    top: 60px;
   }
   .hero-title, .fancy-title {
     font-size: 3rem;
