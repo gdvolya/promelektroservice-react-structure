@@ -40,15 +40,15 @@ export default function HomePage() {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0.5rem;
             position: relative;
-            top: 2%;
+            top: 0;
           }
           .hero-title {
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
             font-size: 4rem;
-            margin: 0 0 0.8rem 0;
+            margin: 0 0 0.5rem 0;
             color: #fff;
             letter-spacing: 1.5px;
             text-transform: uppercase;
@@ -61,7 +61,7 @@ export default function HomePage() {
             font-size: 1.6rem;
             font-weight: 500;
             color: #f0f0f0;
-            margin: 0 0 1.5rem 0;
+            margin: 0 0 1rem 0;
             text-align: center;
             max-width: 800px;
             width: 100%;
@@ -85,14 +85,17 @@ export default function HomePage() {
           }
           @media (max-width: 768px) {
             .hero-content {
-              top: 1%;
+              padding: 0.25rem;
+              top: 0;
             }
             .hero-title {
               font-size: 2.5rem;
               letter-spacing: 1px;
+              margin: 0 0 0.3rem 0;
             }
             .hero-subtitle {
               font-size: 1.2rem;
+              margin: 0 0 0.8rem 0;
             }
             .hero-buttons {
               gap: 0.5rem;

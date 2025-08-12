@@ -57,7 +57,7 @@
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,7 +70,7 @@
 .hero-title {
   font-size: 3.8rem;
   font-weight: 900;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.5rem 0;
   color: #fff;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -83,7 +83,7 @@
 .hero-subtitle {
   font-size: 1.5rem;
   font-weight: 500;
-  margin: 0 0 2rem 0;
+  margin: 0 0 1rem 0;
   color: #f1f1f1;
   text-align: center;
   max-width: 800px;
@@ -227,12 +227,17 @@
   .hero {
     align-items: flex-start;
   }
+  .hero-content {
+    padding: 0.25rem;
+  }
   .hero-title {
     font-size: 2.5rem;
     letter-spacing: 1px;
+    margin: 0 0 0.3rem 0;
   }
   .hero-subtitle {
     font-size: 1.2rem;
+    margin: 0 0 0.8rem 0;
   }
   .hero-buttons {
     gap: 0.5rem;
