@@ -27,7 +27,7 @@ export default function HomePage() {
         />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;800;900&display=swap"
         />
         <style>{`
           .hero-content {
@@ -42,28 +42,30 @@ export default function HomePage() {
             margin: 0 auto;
             padding: 0 1rem;
             position: relative;
-            top: 12%;
+            top: 2%;
           }
           .hero-title {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
+            font-weight: 900;
             font-size: 4rem;
             margin: 0 0 0.8rem 0;
             color: #fff;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             text-align: center;
             width: 100%;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
           }
           .hero-subtitle {
             font-family: 'Montserrat', sans-serif;
             font-size: 1.6rem;
-            font-weight: 400;
+            font-weight: 500;
             color: #f0f0f0;
             margin: 0 0 1.5rem 0;
             text-align: center;
             max-width: 800px;
             width: 100%;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
           }
           .hero-buttons {
             display: flex;
@@ -78,13 +80,16 @@ export default function HomePage() {
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
             margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
           }
           @media (max-width: 768px) {
             .hero-content {
-              top: 8%;
+              top: 1%;
             }
             .hero-title {
               font-size: 2.5rem;
+              letter-spacing: 1px;
             }
             .hero-subtitle {
               font-size: 1.2rem;
