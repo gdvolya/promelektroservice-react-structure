@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   collection,
@@ -6,39 +6,23 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  updateDoc,
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
-import {
-  FaTrash,
-  FaDownload,
-  FaSearch,
-  FaSignInAlt,
-  FaSort,
-  FaSortUp,
-  FaSortDown,
-} from "react-icons/fa";
+import { FaTrash, FaDownload, FaSearch, FaSignInAlt } from "react-icons/fa";
 import "../styles/AdminPanel.css";
-import Modal from "./Modal";
-
-let db = null;
 
 const AdminPanel = ({ enableExport = true }) => {
   const [submissions, setSubmissions] = useState([]);
   const [views, setViews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState(
-    sessionStorage.getItem("authenticated") === "true"
-  );
+  const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [submissionToDelete, setSubmissionToDelete] = useState(null);
-  const [sortBy, setSortBy] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const dbRef = useRef(null);
 
   const fetchData = useCallback(async () => {
+    const db = dbRef.current;
     if (!db) return;
     setLoading(true);
     try {
@@ -46,92 +30,78 @@ const AdminPanel = ({ enableExport = true }) => {
         getDocs(collection(db, "submissions")),
         getDoc(doc(db, "views", "home")),
       ]);
-      const fetchedSubmissions = subsSnapshot.docs.map((docSnap) => ({
-        id: docSnap.id,
-        ...docSnap.data(),
-        createdAt: docSnap.data().createdAt?.toDate() || null,
-      }));
-      setSubmissions(fetchedSubmissions);
+      setSubmissions(
+        subsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          createdAt: doc.data().createdAt || null,
+        }))
+      );
       setViews(viewsDoc.exists() ? viewsDoc.data().count : 0);
     } catch (err) {
-      console.error("Помилка завантаження даних:", err);
-      setError("Помилка завантаження даних.");
+      console.error("Ошибка загрузки данных:", err);
+      setError("Ошибка загрузки данных.");
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    if (authenticated) {
+    if (authenticated && !dbRef.current) {
       import("../firebaseLazy").then(({ db: loadedDb }) => {
-        db = loadedDb;
+        dbRef.current = loadedDb;
         fetchData();
       });
+    } else if (authenticated && dbRef.current) {
+      fetchData();
     }
   }, [authenticated, fetchData]);
 
-  const handleLogin = () => {
-    const adminPass = import.meta.env.REACT_APP_ADMIN_PASS?.trim();
-    if (password.trim() === adminPass) {
-      setAuthenticated(true);
-      sessionStorage.setItem("authenticated", "true");
-      setPassword("");
-      setError("");
-    } else {
-      setError("Невірний пароль.");
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleLogin();
-  };
-
-  const confirmDelete = (submission) => {
-    setSubmissionToDelete(submission);
-    setShowModal(true);
-  };
-
-  const handleDelete = async () => {
-    if (!db || !submissionToDelete) return;
+  const handleDelete = async (id) => {
+    const db = dbRef.current;
+    if (!db) return;
+    const confirmed = window.confirm("Вы уверены, что хотите удалить?");
+    if (!confirmed) return;
     try {
-      await deleteDoc(doc(db, "submissions", submissionToDelete.id));
-      setSubmissions((prev) =>
-        prev.filter((s) => s.id !== submissionToDelete.id)
-      );
-      setShowModal(false);
-      setSubmissionToDelete(null);
+      await deleteDoc(doc(db, "submissions", id));
+      setSubmissions((prev) => prev.filter((s) => s.id !== id));
     } catch (err) {
-      alert("Не вдалося видалити.");
+      alert("Не удалось удалить.");
       console.error(err);
     }
   };
 
-  const handleUpdateStatus = async (id, newStatus) => {
-    if (!db) return;
-    try {
-      await updateDoc(doc(db, "submissions", id), {
-        status: newStatus,
-      });
-      setSubmissions((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s))
-      );
-    } catch (err) {
-      console.error("Помилка оновлення статусу:", err);
-    }
+  const exportToExcel = () => {
+    const sheet = XLSX.utils.json_to_sheet(
+      submissions.map(({ id, ...rest }) => rest)
+    );
+    const book = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(book, sheet, "Заявки");
+    XLSX.writeFile(book, "submissions.xlsx");
   };
 
-  const handleSort = (key) => {
-    if (sortBy === key) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-    } else {
-      setSortBy(key);
-      setSortOrder("asc");
+  const handleLogin = () => {
+    const adminPass = process.env.REACT_APP_ADMIN_PASS;
+
+    if (!adminPass) {
+      setError("⚠️ Пароль администратора не задан в .env.local или среде.");
+      return;
     }
+
+    if (password.trim() !== adminPass.trim()) {
+      setError("Неверный пароль.");
+      return;
+    }
+
+    setTimeout(() => {
+      setAuthenticated(true);
+      setPassword("");
+      setError("");
+    }, 300);
   };
 
-  const getSortIcon = (key) => {
-    if (sortBy !== key) return <FaSort />;
-    return sortOrder === "asc" ? <FaSortUp /> : <FaSortDown />;
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleLogin();
   };
 
   const filteredSubmissions = submissions.filter(
@@ -142,51 +112,25 @@ const AdminPanel = ({ enableExport = true }) => {
       message?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getSortedSubmissions = () => {
-    if (!sortBy) return filteredSubmissions;
-    return [...filteredSubmissions].sort((a, b) => {
-      const aValue = a[sortBy] || "";
-      const bValue = b[sortBy] || "";
-      if (aValue < bValue) return sortOrder === "asc" ? -1 : 1;
-      if (aValue > bValue) return sortOrder === "asc" ? 1 : -1;
-      return 0;
-    });
-  };
-
-  const sortedSubmissions = getSortedSubmissions();
-
-  const exportToExcel = () => {
-    const sheet = XLSX.utils.json_to_sheet(
-      submissions.map(({ id, createdAt, ...rest }) => ({
-        ...rest,
-        Дата: createdAt ? createdAt.toLocaleString("uk-UA") : "—",
-      }))
-    );
-    const book = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(book, sheet, "Заявки");
-    XLSX.writeFile(book, "submissions.xlsx");
-  };
-
   if (!authenticated) {
     return (
       <main className="admin-login">
         <Helmet>
-          <title>Вхід в адмін-панель</title>
+          <title>Вход в админ-панель — ПромЕлектроСервіс</title>
         </Helmet>
-        <div className="login-box">
-          <h2>
-            <FaSignInAlt /> Вхід в адмін-панель
-          </h2>
-          <input
-            type="password"
-            placeholder="Введіть пароль"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-          <button onClick={handleLogin}>Увійти</button>
-          {error && <p className="error-text">{error}</p>}
-        </div>
+        <h2>🔐 Вход в админ-панель</h2>
+        <input
+          type="password"
+          placeholder="Введите пароль администратора"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
+          autoFocus
+        />
+        <button onClick={handleLogin} disabled={!password.trim()}>
+          <FaSignInAlt /> Войти
+        </button>
+        {error && <p className="error-text">{error}</p>}
       </main>
     );
   }
@@ -194,92 +138,69 @@ const AdminPanel = ({ enableExport = true }) => {
   return (
     <main className="admin-panel">
       <Helmet>
-        <title>Адмін-панель — ПромЕлектроСервіс</title>
+        <title>Админ-панель — ПромЕлектроСервіс</title>
       </Helmet>
       <header className="admin-header">
-        <h1>📋 Адмін-панель</h1>
-        {views !== null && (
-          <p>
-            👁 Переглядів на головній: <strong>{views}</strong>
-          </p>
-        )}
-      </header>
-
-      <div className="admin-controls">
-        <div className="search-container">
-          <FaSearch className="search-icon" />
-          <input
-            type="text"
-            placeholder="Пошук по заявках..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+        <h1>📋 Админ-панель</h1>
+        <div>
+          {views !== null && (
+            <p>
+              👁 Просмотров на главной: <strong>{views}</strong>
+            </p>
+          )}
         </div>
+      </header>
+      <div className="admin-controls">
+        <input
+          type="text"
+          placeholder="🔎 Поиск по заявкам..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
         {enableExport && submissions.length > 0 && (
           <button onClick={exportToExcel} className="export-btn">
-            <FaDownload /> Експортувати в Excel
+            <FaDownload /> Экспортировать в Excel
           </button>
         )}
       </div>
 
-      {loading && <p>⏳ Завантаження даних...</p>}
-      {error && <p className="error-text">❌ {error}</p>}
+      {loading && <p>⏳ Загрузка данных...</p>}
+      {error && <p className="error-text">{error}</p>}
 
-      {sortedSubmissions.length === 0 && !loading ? (
-        <p>Немає заявок, які відповідають критеріям пошуку.</p>
+      {filteredSubmissions.length === 0 && !loading ? (
+        <p>Нет заявок.</p>
       ) : (
         <table className="admin-table">
           <thead>
             <tr>
-              <th onClick={() => handleSort("name")}>
-                Ім’я {getSortIcon("name")}
-              </th>
-              <th onClick={() => handleSort("email")}>
-                Email {getSortIcon("email")}
-              </th>
-              <th onClick={() => handleSort("phone")}>
-                Телефон {getSortIcon("phone")}
-              </th>
-              <th>Повідомлення</th>
-              <th onClick={() => handleSort("createdAt")}>
-                Дата {getSortIcon("createdAt")}
-              </th>
-              <th>Статус</th>
-              <th>Дії</th>
+              <th>Имя</th>
+              <th>Email</th>
+              <th>Телефон</th>
+              <th>Сообщение</th>
+              <th>Дата</th>
+              <th>Действия</th>
             </tr>
           </thead>
           <tbody>
-            {sortedSubmissions.map(
-              ({ id, name, email, phone, message, createdAt, status }) => (
+            {filteredSubmissions.map(
+              ({ id, name, email, phone, message, createdAt }) => (
                 <tr key={id}>
                   <td>{name}</td>
                   <td>{email}</td>
                   <td>{phone}</td>
+                  <td>{message}</td>
                   <td>
-                    <div className="message-cell">{message}</div>
-                  </td>
-                  <td>
-                    {createdAt
-                      ? new Date(createdAt).toLocaleString("uk-UA")
+                    {createdAt?.seconds
+                      ? new Date(createdAt.seconds * 1000).toLocaleString("uk-UA")
                       : "—"}
                   </td>
                   <td>
-                    <select
-                      value={status || "New"}
-                      onChange={(e) => handleUpdateStatus(id, e.target.value)}
-                    >
-                      <option value="New">Нова</option>
-                      <option value="In Progress">В роботі</option>
-                      <option value="Completed">Завершено</option>
-                      <option value="Canceled">Скасовано</option>
-                    </select>
-                  </td>
-                  <td>
                     <button
-                      onClick={() => confirmDelete({ id, name })}
+                      onClick={() => handleDelete(id)}
                       className="delete-btn"
                     >
-                      <FaTrash /> Видалити
+                      <FaTrash /> Удалить
                     </button>
                   </td>
                 </tr>
@@ -289,26 +210,16 @@ const AdminPanel = ({ enableExport = true }) => {
         </table>
       )}
 
-      {showModal && (
-        <Modal
-          title="Підтвердження видалення"
-          onClose={() => setShowModal(false)}
+      <div className="extra-links">
+        <a
+          href="/report/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="report-link"
         >
-          <p>
-            Ви впевнені, що хочете видалити заявку від{" "}
-            <strong>{submissionToDelete?.name}</strong>?
-          </p>
-          <button onClick={handleDelete} className="modal-confirm-btn">
-            Видалити
-          </button>
-          <button
-            onClick={() => setShowModal(false)}
-            className="modal-cancel-btn"
-          >
-            Скасувати
-          </button>
-        </Modal>
-      )}
+          📊 Просмотреть Lighthouse отчеты
+        </a>
+      </div>
     </main>
   );
 };
