@@ -1,12 +1,14 @@
-import React, { Suspense, lazy, useEffect, useCallback } from "react";
+import React, { Suspense, lazy, useEffect, useCallback, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
+import ErrorBoundary from "./components/ErrorBoundary"; // Приклад компонента для обробки помилок
 import logoPng from "./img/logo.png";
 import logoWebp from "./img/logo.webp";
 import "./css/style.css";
 import "./i18n";
 
+// Динамічне імпортування сторінок
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -16,6 +18,10 @@ const AdminPanel = lazy(() => import("./pages/AdminPanel.jsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage.jsx"));
 
+// Конфігурація для навігації та мов
+const languages = ["uk", "en", "ru"];
+
+// Компонент-оболонка для відображення
 function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
@@ -31,6 +37,7 @@ function AppContent() {
   );
 
   useEffect(() => {
+    // Ініціалізація AOS тільки один раз на головній сторінці
     if (location.pathname === "/") {
       import("aos").then((AOS) => {
         AOS.init({ once: true, duration: 700 });
@@ -38,50 +45,34 @@ function AppContent() {
     }
   }, [location.pathname]);
 
-  const navItems = [
+  const navItems = useMemo(() => [
     { path: "/", label: t("nav.home") },
     { path: "/portfolio", label: t("nav.portfolio") },
     { path: "/reviews", label: t("nav.reviews") },
     { path: "/pricing", label: t("nav.pricing") },
     { path: "/contacts", label: t("nav.contacts") },
-  ];
+  ], [t]);
 
-  const getPageMeta = (pathname) => {
-    switch (pathname) {
-      case "/":
-        return {
-          title: t("meta.homeTitle"),
-          description: t("meta.homeDescription"),
-        };
-      case "/portfolio":
-        return {
-          title: t("meta.portfolioTitle"),
-          description: t("meta.portfolioDescription"),
-        };
-      case "/pricing":
-        return {
-          title: t("meta.pricingTitle"),
-          description: t("meta.pricingDescription"),
-        };
-      case "/reviews":
-        return {
-          title: t("meta.reviewsTitle"),
-          description: t("meta.reviewsDescription"),
-        };
-      case "/contacts":
-        return {
-          title: t("meta.contactsTitle"),
-          description: t("meta.contactsDescription"),
-        };
-      default:
-        return {
-          title: t("meta.homeTitle"),
-          description: t("meta.homeDescription"),
-        };
+  const getPageMeta = useCallback((pathname) => {
+    const metaKey = pathname.split("/")[1] || "home";
+    const projectMatch = pathname.match(/\/portfolio\/([^/]+)/);
+    if (projectMatch) {
+      // Можна додати логіку для отримання мета-тегів для конкретного проекту
+      return {
+        title: t("meta.projectTitle", { projectName: projectMatch[1] }),
+        description: t("meta.projectDescription", { projectName: projectMatch[1] }),
+      };
     }
-  };
 
-  const { title, description } = getPageMeta(location.pathname);
+    return {
+      title: t(`meta.${metaKey}Title`),
+      description: t(`meta.${metaKey}Description`),
+      url: `https://promelektroservice.vercel.app/${i18n.language}/${pathname.substring(1)}`,
+      canonical: `https://promelektroservice.vercel.app/${pathname}`,
+    };
+  }, [t, i18n.language]);
+
+  const { title, description, url, canonical } = getPageMeta(location.pathname);
 
   return (
     <>
@@ -89,9 +80,24 @@ function AppContent() {
         <html lang={i18n.language} />
         <title>{title}</title>
         <meta name="description" content={description} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={url} />
+        <link rel="canonical" href={canonical} />
+        {/* Додавання hreflang поточної мови */}
+        {languages.map(lng => (
+          <link
+            key={lng}
+            rel="alternate"
+            hrefLang={lng}
+            href={`https://promelektroservice.vercel.app/${lng}/${location.pathname.substring(1)}`}
+          />
+        ))}
       </Helmet>
+      
+      <a href="#main-content" className="skip-link">
+        Пропустити навігацію
+      </a>
 
       <div className="app-wrapper">
         <header className="site-header" role="banner">
@@ -141,29 +147,27 @@ function AppContent() {
           id="main-content"
           tabIndex={-1}
         >
-          <Suspense
-            fallback={
-              <div
-                className="loading-spinner"
-                role="status"
-                aria-live="polite"
-                aria-label={t("loading") || "Завантаження..."}
-              >
-                <div className="spinner" />
-              </div>
-            }
-          >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/portfolio/:projectId" element={<ProjectDetailPage />} />
-              <Route path="/reviews" element={<ReviewsPage />} />
-              <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/contacts" element={<ContactsPage />} />
-              <Route path="/admin" element={<AdminPanel enableExport />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense
+              fallback={
+                <div className="loading-spinner" role="status" aria-live="polite">
+                  <div className="spinner" />
+                  <p>{t("loading") || "Завантаження..."}</p>
+                </div>
+              }
+            >
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/portfolio" element={<PortfolioPage />} />
+                <Route path="/portfolio/:projectId" element={<ProjectDetailPage />} />
+                <Route path="/reviews" element={<ReviewsPage />} />
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/contacts" element={<ContactsPage />} />
+                <Route path="/admin" element={<AdminPanel enableExport />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
         </main>
 
         <footer
@@ -188,7 +192,7 @@ function AppContent() {
             role="group"
             aria-label={t("langSelectorLabel") || "Вибір мови"}
           >
-            {["uk", "en", "ru"].map((lng) => {
+            {languages.map((lng) => {
               const labels = { uk: "Українська", en: "English", ru: "Русский" };
               const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
               const isActive = i18n.language === lng;
@@ -214,6 +218,7 @@ function AppContent() {
   );
 }
 
+// Загальний компонент для Router та HelmetProvider
 export default function App() {
   return (
     <HelmetProvider>
