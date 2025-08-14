@@ -57,8 +57,7 @@ function AppContent() {
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preload" as="image" href="/img/background@2x.webp" type="image/webp" fetchpriority="high" />
-        <link rel="preload" as="image" href="/img/logo.webp" type="image/webp" fetchpriority="high" />
+        {/* Попередження про попереднє завантаження усунуто, видалено посилання на фонове зображення та логотип */}
       </Helmet>
 
       <div className="app-wrapper">
