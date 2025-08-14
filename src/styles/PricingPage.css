@@ -25,62 +25,94 @@
   color: var(--text-color);
 }
 
-/* Стили для списка услуг */
-.pricing-list {
-  max-width: 700px;
+.pricing-sections {
+  max-width: 900px;
   margin: 0 auto;
+  text-align: left;
+}
+
+.pricing-section {
+  background: var(--bg-white);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 2rem;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.pricing-section:hover {
+  box-shadow: var(--card-hover-shadow);
+}
+
+.pricing-category-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.pricing-list {
   padding: 0;
   list-style: none;
-  text-align: left;
 }
 
 .pricing-item {
   display: flex;
   justify-content: space-between;
-  background: var(--bg-white);
-  padding: 1rem 1.5rem;
-  margin-bottom: 1rem;
-  border-radius: 12px;
-  box-shadow: var(--card-shadow);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e1e1e1;
 }
 
-.pricing-item:hover {
-  box-shadow: var(--card-hover-shadow);
-  transform: translateY(-4px);
+.pricing-item:last-child {
+  border-bottom: none;
 }
 
 .service-title {
   color: var(--text-color);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.1rem;
+  flex-grow: 1;
 }
 
 .service-price {
   color: var(--primary-color);
   font-weight: 700;
   font-size: 1.1rem;
+  min-width: 100px;
+  text-align: right;
 }
 
-/* 📱 Адаптив */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .pricing-page {
+    padding: 2rem 1rem;
+  }
   .pricing-page h1 {
     font-size: 2rem;
   }
-
-  .pricing-item {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1rem;
+  .pricing-section {
+    padding: 1.5rem;
   }
-
-  .service-price {
-    margin-top: 0.3rem;
-    font-size: 1rem;
+  .pricing-category-title {
+    font-size: 1.5rem;
   }
 }
 
-/* 🎬 Анимация */
+@media (max-width: 500px) {
+  .pricing-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem 0;
+  }
+  .service-price {
+    margin-top: 0.2rem;
+    font-size: 1rem;
+    text-align: left;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

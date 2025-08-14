@@ -1,5 +1,6 @@
 :root {
   --primary-color: #007bff;
+  --primary-hover: #0056b3;
   --text-color: #212121;
   --subtext-color: #666;
   --bg-light: #f7fafc;
@@ -7,6 +8,8 @@
   --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
   --card-hover-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
   --font-main: "Segoe UI", sans-serif;
+  --success-color: #28a745;
+  --placeholder-color: #aaa;
 }
 
 .reviews-page {
@@ -62,26 +65,47 @@
   margin: 0 auto;
   text-align: center;
   background: var(--bg-white);
-  padding: 2rem 1.5rem;
+  padding: 2.5rem;
   border-radius: 12px;
   box-shadow: var(--card-shadow);
 }
 
 .review-form h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: var(--text-color);
 }
 
+.review-form p {
+  color: var(--subtext-color);
+  margin-bottom: 1.5rem;
+}
+
+.review-form input,
 .review-form textarea {
   width: 100%;
-  min-height: 100px;
   padding: 1rem;
   font-size: 1rem;
-  resize: vertical;
+  margin-bottom: 1rem;
   border-radius: 8px;
   border: 1px solid #ccc;
-  margin-bottom: 1rem;
   font-family: var(--font-main);
+  transition: border-color 0.3s ease;
+}
+
+.review-form input:focus,
+.review-form textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.review-form input::placeholder,
+.review-form textarea::placeholder {
+  color: var(--placeholder-color);
+}
+
+.review-form textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 .submit-btn {
@@ -89,33 +113,58 @@
   color: #fff;
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  width: auto;
 }
 
-.submit-btn:hover {
-  background-color: #0056b3;
+.submit-btn:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.submit-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .success-msg {
-  color: green;
+  color: var(--success-color);
   margin-top: 1rem;
   font-weight: 500;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.loading-message,
+.no-reviews-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--subtext-color);
+  margin-top: 2rem;
 }
 
 /* 📱 Responsive */
 @media (max-width: 600px) {
+  .reviews-page {
+    padding: 2rem 1rem;
+  }
   .reviews-page h1 {
     font-size: 2rem;
   }
-
   .review-form {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem;
   }
-
   .submit-btn {
     width: 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

@@ -5,21 +5,52 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "../styles/PricingPage.css";
 
+const services = [
+  {
+    categoryKey: "industrialInstallation",
+    items: [
+      "wiringIndustrial",
+      "cableTrays",
+      "powerPanels",
+      "lightingIndustrial",
+      "grounding",
+      "motorInstallation",
+    ],
+  },
+  {
+    categoryKey: "maintenanceRepair",
+    items: [
+      "troubleshooting",
+      "equipmentRepair",
+      "preventiveMaintenance",
+      "electricalTests",
+    ],
+  },
+  {
+    categoryKey: "automationControl",
+    items: [
+      "plcSystems",
+      "scadaSystems",
+      "variableFrequencyDrives",
+      "sensorIntegration",
+    ],
+  },
+  {
+    categoryKey: "designDocumentation",
+    items: [
+      "projectDevelopment",
+      "executiveDocumentation",
+      "technicalConsultation",
+    ],
+  },
+];
+
 const PricingPage = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
     AOS.init({ once: true, duration: 600 });
   }, []);
-
-  // Собираем 30 услуг из translation.json, ключи service1..service30
-  const services = Array.from({ length: 30 }, (_, i) => {
-    const key = `service${i + 1}`;
-    return {
-      title: t(`pricing.${key}.title`),
-      price: t(`pricing.${key}.price`),
-    };
-  });
 
   return (
     <main className="pricing-page">
@@ -30,14 +61,21 @@ const PricingPage = () => {
 
       <h1 data-aos="fade-up">{t("pricing.title")}</h1>
 
-      <ul className="pricing-list" data-aos="fade-up" data-aos-delay="200">
-        {services.map(({ title, price }, index) => (
-          <li key={index} className="pricing-item">
-            <span className="service-title">{title}</span>
-            <span className="service-price">{price}</span>
-          </li>
+      <div className="pricing-sections">
+        {services.map((section, sectionIndex) => (
+          <section key={sectionIndex} className="pricing-section" data-aos="fade-up" data-aos-delay={100 * (sectionIndex + 1)}>
+            <h2 className="pricing-category-title">{t(`pricing.${section.categoryKey}.title`)}</h2>
+            <ul className="pricing-list">
+              {section.items.map((itemKey, itemIndex) => (
+                <li key={itemIndex} className="pricing-item">
+                  <span className="service-title">{t(`pricing.${itemKey}.title`)}</span>
+                  <span className="service-price">{t(`pricing.${itemKey}.price`)}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
         ))}
-      </ul>
+      </div>
     </main>
   );
 };
