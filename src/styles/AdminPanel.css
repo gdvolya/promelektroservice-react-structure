@@ -1,486 +1,132 @@
-:root {
-  --primary-color: #007bff;
-  --primary-hover: #0056b3;
-  --success-color: #28a745;
-  --danger-color: #dc3545;
-  --info-color: #17a2b8;
-  --warning-color: #ffc107;
-  --bg-light: #f4f7fa;
-  --text-color: #1a1a1a;
-  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --radius: 10px;
-  --transition: 0.3s ease;
-  --font-family: "Inter", sans-serif;
+.admin-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
 }
 
-body {
-  font-family: var(--font-family);
-  background-color: var(--bg-light);
-  color: var(--text-color);
-  margin: 0;
-  padding: 0;
+.login-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.login-box input {
+  padding: 0.6rem;
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.login-box button {
+  margin-top: 1rem;
+  background: #007bff;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login-box button:hover {
+  background: #0056b3;
+}
+
+.error-text {
+  color: red;
+  margin-top: 0.5rem;
 }
 
 .admin-panel {
-  padding: 2.5rem 1rem;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: fadeIn 0.5s ease-in-out;
+  padding: 1rem;
 }
 
 .admin-header {
-  width: 100%;
-  max-width: 1100px;
-  margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.admin-header h1 {
-  font-size: 2.5rem;
-  margin: 0;
-  color: var(--text-color);
-  font-weight: 700;
-}
-
-.admin-header p {
-  color: #444;
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-  background-color: #fff;
-  border-radius: var(--radius);
-  box-shadow: var(--card-shadow);
 }
 
 .admin-controls {
-  width: 100%;
-  max-width: 1100px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  gap: 1rem;
-  flex-wrap: wrap;
+  margin: 1rem 0;
 }
 
 .search-container {
-  position: relative;
-  flex-grow: 1;
-  max-width: 400px;
+  display: flex;
+  align-items: center;
 }
 
-.search-input {
-  width: 100%;
-  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
-  border-radius: var(--radius);
+.search-container input {
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 1rem;
-  box-shadow: var(--card-shadow);
-  transition: all var(--transition);
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-}
-
-.search-icon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #888;
-  pointer-events: none;
 }
 
 .export-btn {
-  padding: 0.75rem 1.25rem;
-  font-size: 1rem;
-  background-color: var(--success-color);
+  background: #28a745;
   color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   border: none;
-  border-radius: var(--radius);
   cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
-  box-shadow: var(--card-shadow);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  white-space: nowrap;
 }
 
 .export-btn:hover {
-  background-color: #218838;
-  transform: translateY(-2px);
+  background: #218838;
 }
 
 .admin-table {
   width: 100%;
-  max-width: 1100px;
-  border-collapse: separate;
-  border-spacing: 0;
-  background-color: white;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--card-shadow);
+  border-collapse: collapse;
 }
 
-.admin-table th,
-.admin-table td {
-  padding: 1.25rem 1rem;
-  border-bottom: 1px solid #e1e1e1;
-  font-size: 0.95rem;
+.admin-table th, .admin-table td {
+  border: 1px solid #ddd;
+  padding: 0.6rem;
   text-align: left;
-}
-
-.admin-table thead tr:last-child th {
-  border-bottom: none;
-}
-
-.admin-table tbody tr:last-child td {
-  border-bottom: none;
 }
 
 .admin-table th {
-  background-color: #f1f4f8;
-  color: #222;
-  font-weight: 600;
-  letter-spacing: 0.4px;
+  background: #f5f5f5;
   cursor: pointer;
-  position: relative;
-  user-select: none;
-}
-
-.admin-table th:hover {
-  background-color: #e2e6eb;
-}
-
-.sort-icon {
-  margin-left: 0.5rem;
-  vertical-align: middle;
 }
 
 .message-cell {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  cursor: pointer;
-  color: var(--primary-color);
-  text-decoration: underline;
+  max-width: 250px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
-.message-cell:hover {
-  color: var(--primary-hover);
-}
-
-.admin-table select {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  background-color: #fff;
-  transition: border-color var(--transition);
-}
-
-.admin-table select:focus {
-  outline: none;
-  border-color: var(--primary-color);
-}
-
-.admin-table td .delete-btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  color: #fff;
-  background-color: var(--danger-color);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.admin-table td .delete-btn:hover {
-  background-color: #bd2130;
-}
-
-.admin-login {
-  padding: 2rem;
-  background-color: #f2f5f9;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.6s ease-in-out;
-}
-
-.admin-login h2 {
-  font-size: 2rem;
-  margin-bottom: 1.25rem;
-  color: var(--text-color);
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.admin-login input {
-  padding: 0.75rem;
-  font-size: 1rem;
-  width: 100%;
-  max-width: 340px;
-  margin-bottom: 1rem;
-  border-radius: var(--radius);
-  border: 1px solid #ccc;
-  box-shadow: var(--card-shadow);
-  transition: all var(--transition);
-}
-
-.admin-login input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-}
-
-.admin-login button {
-  padding: 0.75rem 1.4rem;
-  font-size: 1rem;
-  background-color: var(--primary-color);
+.delete-btn {
+  background: #dc3545;
   color: white;
   border: none;
-  border-radius: var(--radius);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background var(--transition), transform var(--transition);
-  box-shadow: var(--card-shadow);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
-.admin-login button:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px);
-}
-
-.error-text {
-  color: var(--danger-color);
-  margin-top: 0.75rem;
-  font-weight: 500;
-  max-width: 340px;
-  text-align: center;
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.loading-spinner, .no-data {
-  width: 100%;
-  max-width: 1100px;
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
-  color: #6c757d;
-}
-
-/* Pagination styles */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.pagination button {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: all var(--transition);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.pagination button:hover:not(:disabled) {
-  background-color: #e9ecef;
-  transform: translateY(-1px);
-}
-
-.pagination button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.pagination span {
-  font-weight: 600;
-  color: #555;
-  white-space: nowrap;
-}
-
-/* Modal styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.modal-content {
-  background: white;
-  padding: 2.5rem;
-  border-radius: var(--radius);
-  box-shadow: var(--card-shadow);
-  max-width: 500px;
-  position: relative;
-  animation: slideIn 0.3s ease-out;
-  text-align: left;
-}
-
-.modal-close-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #888;
-  transition: color var(--transition);
-}
-
-.modal-close-btn:hover {
-  color: #1a1a1a;
-}
-
-.modal-content h3 {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
-  color: var(--text-color);
-  text-align: center;
-}
-
-.modal-content p {
-  margin-bottom: 0.75rem;
-  line-height: 1.6;
-}
-
-.modal-content p strong {
-  color: var(--primary-color);
-}
-
-.submission-details .submission-message {
-  margin-top: 1.5rem;
-  font-weight: 600;
-  color: #555;
-}
-
-.submission-details p:last-child {
-  margin-bottom: 0;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  border: 1px solid #e9ecef;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.modal-confirm-btn, .modal-cancel-btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
-  border: none;
-  cursor: pointer;
-  transition: background var(--transition);
-  font-size: 1rem;
-  font-weight: 600;
+.delete-btn:hover {
+  background: #b02a37;
 }
 
 .modal-confirm-btn {
-  background-color: var(--danger-color);
+  background: #dc3545;
   color: white;
-}
-
-.modal-confirm-btn:hover {
-  background-color: #bd2130;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-right: 0.5rem;
 }
 
 .modal-cancel-btn {
-  background-color: #e9ecef;
-  color: var(--text-color);
-}
-
-.modal-cancel-btn:hover {
-  background-color: #dee2e6;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideIn {
-  from { transform: translateY(-50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@media (max-width: 768px) {
-  .admin-header, .admin-controls {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .admin-header h1 {
-    font-size: 2rem;
-  }
-  
-  .admin-table {
-    overflow-x: auto;
-    display: block;
-  }
-  
-  .admin-table th, .admin-table td {
-    white-space: nowrap;
-    padding: 1rem 0.75rem;
-  }
-  
-  .search-container {
-    width: 100%;
-    max-width: none;
-  }
-
-  .export-btn {
-    width: 100%;
-  }
-
-  .modal-content {
-    padding: 1.5rem;
-    max-width: 90%;
-  }
+  background: #6c757d;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
