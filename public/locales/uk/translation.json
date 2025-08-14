@@ -1,5 +1,6 @@
 {
   "nav": {
+    "mainMenu": "Головне меню",
     "home": "Головна",
     "portfolio": "Портфоліо",
     "reviews": "Відгуки",
@@ -202,5 +203,9 @@
     "submit": "Надіслати",
     "thanks": "Дякуємо за ваш відгук!",
     "anonymous": "Анонімний користувач"
-  }
+  },
+  "phoneLabel": "Телефон",
+  "emailLabel": "Email",
+  "langSelectorLabel": "Вибір мови",
+  "loading": "Завантаження..."
 }

@@ -1,5 +1,6 @@
 {
   "nav": {
+    "mainMenu": "Main menu",
     "home": "Home",
     "portfolio": "Portfolio",
     "reviews": "Reviews",
@@ -202,5 +203,9 @@
     "submit": "Submit",
     "thanks": "Thank you for your feedback!",
     "anonymous": "Anonymous user"
-  }
+  },
+  "phoneLabel": "Phone",
+  "emailLabel": "Email",
+  "langSelectorLabel": "Language selection",
+  "loading": "Loading..."
 }

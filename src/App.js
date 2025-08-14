@@ -46,18 +46,51 @@ function AppContent() {
     { path: "/contacts", label: t("nav.contacts") },
   ];
 
+  const getPageMeta = (pathname) => {
+    switch (pathname) {
+      case "/":
+        return {
+          title: t("meta.homeTitle"),
+          description: t("meta.homeDescription"),
+        };
+      case "/portfolio":
+        return {
+          title: t("meta.portfolioTitle"),
+          description: t("meta.portfolioDescription"),
+        };
+      case "/pricing":
+        return {
+          title: t("meta.pricingTitle"),
+          description: t("meta.pricingDescription"),
+        };
+      case "/reviews":
+        return {
+          title: t("meta.reviewsTitle"),
+          description: t("meta.reviewsDescription"),
+        };
+      case "/contacts":
+        return {
+          title: t("meta.contactsTitle"),
+          description: t("meta.contactsDescription"),
+        };
+      default:
+        return {
+          title: t("meta.homeTitle"),
+          description: t("meta.homeDescription"),
+        };
+    }
+  };
+
+  const { title, description } = getPageMeta(location.pathname);
+
   return (
     <>
       <Helmet>
         <html lang={i18n.language} />
-        <title>{`ПромЕлектроСервіс — ${t("meta.title") || "електромонтажні послуги"}`}</title>
-        <meta
-          name="description"
-          content={t("meta.description") || "Професійні електромонтажні роботи будь-якої складності."}
-        />
+        <title>{title}</title>
+        <meta name="description" content={description} />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Попередження про попереднє завантаження усунуто, видалено посилання на фонове зображення та логотип */}
       </Helmet>
 
       <div className="app-wrapper">
@@ -106,7 +139,7 @@ function AppContent() {
           className="main-content"
           role="main"
           id="main-content"
-          tabIndex={-1} // для доступности, чтобы можно было фокус перейти
+          tabIndex={-1}
         >
           <Suspense
             fallback={
