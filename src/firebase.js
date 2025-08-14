@@ -1,15 +1,17 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
+// Використання змінних середовища замість хардкодингу
 const firebaseConfig = {
-  apiKey: "AIzaSyAnIolE-wxhUdtOuKcDwwIEj66fNdOIsSU",
-  authDomain: "promelektroservice.firebaseapp.com",
-  projectId: "promelektroservice",
-  storageBucket: "promelektroservice.appspot.com",
-  messagingSenderId: "159290070933",
-  appId: "1:159290070933:web:ad36370727f99459a0889c",
-  measurementId: "G-SCE9TK4FMJ"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -18,7 +20,7 @@ const db = getFirestore(app);
 const messaging = getMessaging(app);
 
 getToken(messaging, {
-  vapidKey: "BE6mx-nmfkaM-RJmDBA2rJVNYkQRX9Qayj4-zgSz4AM-IJFssiPlAA0XUAaGmlznUUDIpvkksUzzJbgS0glRKj8"
+  vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY
 })
   .then((currentToken) => {
     if (currentToken) {
