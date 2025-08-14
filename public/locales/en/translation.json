@@ -7,21 +7,29 @@
     "contacts": "Contacts"
   },
   "footer": {
-    "rights": "All rights reserved."
+    "rights": "© 2025 Promelektroservice. All rights reserved."
   },
   "meta": {
+    "homeTitle": "Home — Promelektroservice",
+    "homeDescription": "Professional electrical installation services for home and business.",
     "portfolioTitle": "Portfolio — Promelektroservice",
     "portfolioDescription": "Examples of our work: electrical installation, lighting, switchboards, and more.",
-    "pricingTitle": "Services and Pricing — Promelektroservice",
-    "pricingDescription": "Prices for electrical installation services for home and business.",
+    "pricingTitle": "Pricelist for electrical services — Promelektroservice",
+    "pricingDescription": "Current prices for industrial electrical works, automation, and maintenance.",
     "reviewsTitle": "Reviews — Promelektroservice",
     "reviewsDescription": "Client reviews about our electrical installation services.",
     "contactsTitle": "Contacts — Promelektroservice",
-    "contactsDescription": "Contact us to order services or get a consultation.",
-    "homeTitle": "Home — Promelektroservice",
-    "homeDescription": "Professional electrical installation services for home and business."
+    "contactsDescription": "Contact us to order services or get a consultation."
   },
   "home": {
+    "mainTitle": "Professional Electrical Installation in Kyiv",
+    "ourWorksTitle": "Examples of Our Work",
+    "ourWorksSubtitle": "Our best projects from the last year",
+    "project1Title": "Electrical Wiring Installation",
+    "project1Desc": "Comprehensive electrical wiring installation considering office specifics and safety.",
+    "project2Title": "Smart Home",
+    "project2Desc": "Integration of smart home systems with power grid automation for convenience.",
+    "viewAllProjectsBtn": "View All Projects",
     "subtitle": "Professional electrical installation services for home and business.",
     "projectsBtn": "Our Projects",
     "contactBtn": "Contact Us",
@@ -29,10 +37,10 @@
     "speed": "Speed",
     "speedDesc": "We complete work on time without delays.",
     "quality": "Quality",
-    "qualityDesc": "We guarantee high-quality results.",
+    "qualityDesc": "We guarantee high-quality results and adherence to standards.",
     "safety": "Safety",
     "safetyDesc": "We follow all safety standards in every project.",
-    "bannerAlt": "Hero section with service description"
+    "bannerAlt": "Hero section with service description of Promelektroservice in front of a power station."
   },
   "portfolio": {
     "heading": "Our Projects",
@@ -63,11 +71,28 @@
     "project7": {
       "title": "Solar Panels",
       "description": "Installation and connection of solar panels for autonomous energy supply to reduce electricity costs and increase energy efficiency."
+    },
+    "project10": {
+      "title": "Electrical Switchgear Installation",
+      "description": "Professional installation and connection of electrical switchgear to ensure an uninterrupted power supply."
+    },
+    "project12": {
+      "title": "House Wiring Upgrade",
+      "description": "A full range of work to replace old electrical wiring with a new, safe, and efficient network."
+    },
+    "project13": {
+      "title": "CCTV System Installation",
+      "description": "Integration and connection of CCTV systems for security and access control."
+    },
+    "project14": {
+      "title": "New Construction Electrical Work",
+      "description": "A complete cycle of electrical work in a new building, from design to project handover."
     }
   },
   "contacts": {
     "heading": "Contacts",
     "description": "We are always ready to assist you with electrical work or provide a consultation.",
+    "detailsTitle": "Our Contact Details",
     "phoneLabel": "Phone",
     "addressLabel": "Address",
     "address": "Kyiv, Prykladna St, 1",
@@ -76,129 +101,93 @@
     "emailPlaceholder": "Your email",
     "phonePlaceholder": "Your phone",
     "messagePlaceholder": "Your message",
-    "sendBtn": "Send"
+    "sendBtn": "Send",
+    "sendingBtn": "Sending...",
+    "successMsg": "Your message has been sent successfully!",
+    "errorMsg": "There was an error sending your message. Please try again later.",
+    "mapTitle": "Our Location on the Map"
   },
   "pricing": {
-    "title": "Services and Pricing",
-    "service1": {
-      "title": "Socket Installation",
-      "price": "₴500+"
+    "title": "Pricelist for electrical services",
+    "industrialInstallation": {
+      "title": "Industrial Electrical Installation"
     },
-    "service2": {
-      "title": "Lighting Connection",
-      "price": "₴700+"
+    "wiringIndustrial": {
+      "title": "Installation of power wiring in conduits/trays",
+      "price": "from 150 UAH/m"
     },
-    "service3": {
-      "title": "Project Consultation",
-      "price": "₴300+"
+    "cableTrays": {
+      "title": "Installation of cable trays",
+      "price": "from 180 UAH/m"
     },
-    "service4": {
-      "title": "Cable Routing",
-      "price": "₴900+"
+    "powerPanels": {
+      "title": "Assembly and installation of power panels",
+      "price": "from 3500 UAH/unit"
     },
-    "service5": {
-      "title": "Material Selection Consultation",
-      "price": "₴400+"
+    "lightingIndustrial": {
+      "title": "Installation of industrial lighting",
+      "price": "from 120 UAH/point"
     },
-    "service6": {
-      "title": "Socket Installation",
-      "price": "₴200+"
+    "grounding": {
+      "title": "Installation of grounding loop",
+      "price": "from 5000 UAH/loop"
     },
-    "service7": {
-      "title": "Lighting Fixture Installation",
-      "price": "₴600+"
+    "motorInstallation": {
+      "title": "Connection of electric motors and equipment",
+      "price": "By agreement"
     },
-    "service8": {
-      "title": "Custom Approach",
-      "price": "₴1000+"
+    "maintenanceRepair": {
+      "title": "Maintenance and Repair"
     },
-    "service9": {
-      "title": "Fault Diagnosis",
-      "price": "₴800+"
+    "troubleshooting": {
+      "title": "Diagnosis and troubleshooting",
+      "price": "from 500 UAH/hour"
     },
-    "service10": {
-      "title": "Appliance Connection",
-      "price": "₴500+"
+    "equipmentRepair": {
+      "title": "Repair of industrial electrical equipment",
+      "price": "By agreement"
     },
-    "service11": {
-      "title": "Panel Installation",
-      "price": "₴1500+"
+    "preventiveMaintenance": {
+      "title": "Conducting scheduled maintenance",
+      "price": "By agreement"
     },
-    "service12": {
-      "title": "Wiring Replacement",
-      "price": "₴1200+"
+    "electricalTests": {
+      "title": "Measurement of insulation and grounding resistance",
+      "price": "from 250 UAH/measurement"
     },
-    "service13": {
-      "title": "Additional Lighting Installation",
-      "price": "₴600+"
+    "automationControl": {
+      "title": "Automation and Control"
     },
-    "service14": {
-      "title": "Energy Saving Consultation",
-      "price": "₴350+"
+    "plcSystems": {
+      "title": "Installation of automation systems (PLC)",
+      "price": "By agreement"
     },
-    "service15": {
-      "title": "Electrical Scheme Design",
-      "price": "₴2000+"
+    "scadaSystems": {
+      "title": "Implementation of SCADA-systems",
+      "price": "By agreement"
     },
-    "service16": {
-      "title": "Process Automation",
-      "price": "₴3000+"
+    "variableFrequencyDrives": {
+      "title": "Connection of variable frequency drives",
+      "price": "from 1500 UAH/unit"
     },
-    "service17": {
-      "title": "Smart Home Integration",
-      "price": "₴2500+"
+    "sensorIntegration": {
+      "title": "Installation and integration of sensors",
+      "price": "By agreement"
     },
-    "service18": {
-      "title": "Old Wiring Modernization",
-      "price": "₴1500+"
+    "designDocumentation": {
+      "title": "Design and Documentation"
     },
-    "service19": {
-      "title": "Energy Efficiency Solutions",
-      "price": "₴3500+"
+    "projectDevelopment": {
+      "title": "Development of project documentation",
+      "price": "By agreement"
     },
-    "service20": {
-      "title": "Business Electrical Systems",
-      "price": "₴5000+"
+    "executiveDocumentation": {
+      "title": "Preparation of as-built documentation",
+      "price": "By agreement"
     },
-    "service21": {
-      "title": "Home Security Systems",
-      "price": "₴4000+"
-    },
-    "service22": {
-      "title": "Remote System Control",
-      "price": "₴2500+"
-    },
-    "service23": {
-      "title": "Energy Saving",
-      "price": "₴1500+"
-    },
-    "service24": {
-      "title": "Large Infrastructure Design",
-      "price": "₴10000+"
-    },
-    "service25": {
-      "title": "Personalized Support",
-      "price": "₴3000+"
-    },
-    "service26": {
-      "title": "Warranty Service",
-      "price": "₴500+"
-    },
-    "service27": {
-      "title": "Industrial Process Automation",
-      "price": "₴5000+"
-    },
-    "service28": {
-      "title": "Communications Design",
-      "price": "₴4000+"
-    },
-    "service29": {
-      "title": "Enterprise Project Development",
-      "price": "₴8000+"
-    },
-    "service30": {
-      "title": "Industrial Network Installation",
-      "price": "₴12000+"
+    "technicalConsultation": {
+      "title": "Technical consultation",
+      "price": "By agreement"
     }
   },
   "reviews": {
@@ -206,8 +195,12 @@
     "sample1": "Great work — fast and professional. Highly recommend!",
     "sample2": "They installed the lighting ahead of schedule. Very pleased with the result.",
     "leaveReview": "Leave a review",
-    "placeholder": "Write your review...",
+    "formDescription": "Fill out the form to share your experience with us.",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "messagePlaceholder": "Your message",
     "submit": "Submit",
-    "thanks": "Thanks for your feedback!"
+    "thanks": "Thank you for your feedback!",
+    "anonymous": "Anonymous user"
   }
 }
