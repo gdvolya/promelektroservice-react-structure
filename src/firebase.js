@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore"; // Імпорт Firestore
-import { getMessaging } from "firebase/messaging"; // Імпорт Messaging
+import { getFirestore } from "firebase/firestore";
+import { getMessaging } from "firebase/messaging";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -12,14 +12,11 @@ const firebaseConfig = {
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId: "G-D4WWLPBDWH",
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-// Ініціалізація та експорт сервісів Firebase
 const db = getFirestore(app);
 const messaging = getMessaging(app);
 
