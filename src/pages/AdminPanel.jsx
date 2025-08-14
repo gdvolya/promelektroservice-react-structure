@@ -25,7 +25,7 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import "../styles/AdminPanel.css";
-import Modal from "./Modal"; // Assuming this component exists
+import Modal from "./Modal";
 
 let db = null;
 const PAGE_SIZE = 10;
@@ -94,9 +94,10 @@ const AdminPanel = ({ enableExport = true }) => {
     }
   }, [authenticated, refresh]);
 
-  const handleLogin = async () => {
-    const adminPass = import.meta.env.REACT_APP_ADMIN_PASS?.trim();
-    if (password.trim() === adminPass) {
+  const handleLogin = () => {
+    const adminPass = process.env.REACT_APP_ADMIN_PASS;
+
+    if (password.trim() === adminPass?.trim()) {
       setAuthenticated(true);
       sessionStorage.setItem("authenticated", "true");
       setPassword("");
