@@ -23,4 +23,4 @@ const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const messaging = getMessaging(app);
 
-export { db, messaging };
+export { db, messaging, analytics };
