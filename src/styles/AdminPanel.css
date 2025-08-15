@@ -1,326 +1,330 @@
-/* ========================================================== */
-/* Общие переменные для всего приложения                      */
-/* ========================================================== */
-:root {
-  --primary-color: #007bff;
-  --primary-hover: #0056b3;
-  --danger-color: #dc3545;
-  --danger-hover: #b02a37;
-  --success-color: #28a745;
-  --success-hover: #218838;
-  --bg-light: #f4f7fa;
-  --bg-white: #ffffff;
-  --text-color: #1a1a1a;
-  --border-color: #ccc;
-  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  --box-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.1);
-  --border-radius: 10px;
-  --transition-speed: 0.3s;
-  --font-family: 'Segoe UI', sans-serif;
-  --modal-bg-color: rgba(0, 0, 0, 0.5);
-  --table-header-bg: #f8f9fa;
-  --table-row-hover-bg: #f0f3f5;
-  --select-border-color: #ced4da;
-}
-
-/* ========================================================== */
-/* Стили для страницы входа (Admin Login)                     */
-/* ========================================================== */
-.admin-login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: var(--bg-light);
-  font-family: var(--font-family);
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.login-box {
-  background: var(--bg-white);
-  padding: 2.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  text-align: center;
-  width: 100%;
-  max-width: 400px;
-  transition: box-shadow var(--transition-speed) ease-in-out;
-}
-
-.login-box:hover {
-  box-shadow: var(--box-shadow-hover);
-}
-
-.login-box h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: var(--text-color);
-}
-
-.login-box input {
-  padding: 0.8rem;
-  margin-top: 1rem;
-  border: 1px solid var(--border-color);
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  transition: border-color var(--transition-speed);
-}
-
-.login-box input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-}
-
-.login-box button {
-  margin-top: 1.5rem;
-  background: var(--primary-color);
-  color: var(--bg-white);
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  width: 100%;
-  font-size: 1rem;
-  transition: background var(--transition-speed);
-}
-
-.login-box button:hover {
-  background: var(--primary-hover);
-}
-
-.error-text {
-  color: var(--danger-color);
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
-
-/* ========================================================== */
-/* Стили для админ-панели (Admin Panel)                       */
-/* ========================================================== */
+/* Общие стили для админ-панели */
 .admin-panel {
-  padding: 2.5rem;
-  font-family: var(--font-family);
-  background-color: var(--bg-light);
-  min-height: 100vh;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
 .admin-header {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
 }
 
 .admin-header h1 {
-  font-size: 2.5rem;
+  color: #003366;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .header-stats {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .header-stats p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1em;
+  color: #555;
 }
 
 .logout-btn {
-  background: #6c757d;
+  background-color: #dc3545;
   color: white;
-  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: var(--border-radius);
+  padding: 8px 15px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background var(--transition-speed);
+  transition: background-color 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 5px;
 }
 
 .logout-btn:hover {
-  background: #5a6268;
+  background-color: #c82333;
 }
 
+/* Стили для формы входа */
+.admin-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  gap: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 50px auto;
+}
+
+.admin-login h2 {
+  color: #003366;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-login input[type="password"] {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 300px;
+  font-size: 1em;
+}
+
+.admin-login button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-login button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.admin-login button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.error-text {
+  color: #dc3545;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Стили для элементов управления (поиск, экспорт, пагинация) */
 .admin-controls {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  gap: 1rem;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Для адаптивности */
+  gap: 15px;
 }
 
 .search-container {
-  display: flex;
-  align-items: center;
   flex-grow: 1;
+  min-width: 250px;
 }
 
-.search-container input {
-  padding: 0.75rem;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
+.search-input {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
   width: 100%;
-  font-size: 1rem;
-}
-
-.export-btn,
-.delete-btn {
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius);
-  border: none;
-  cursor: pointer;
-  transition: background var(--transition-speed);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  box-sizing: border-box;
 }
 
 .export-btn {
-  background: var(--success-color);
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .export-btn:hover {
-  background: var(--success-hover);
+  background-color: #218838;
 }
 
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95em;
+  color: #555;
+}
+
+.pagination-controls select {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+}
+
+/* Стили для таблицы */
 .admin-table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--box-shadow);
-  background-color: var(--bg-white);
-  margin-bottom: 2rem;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
 }
 
 .admin-table th,
 .admin-table td {
-  border-bottom: 1px solid #eee;
-  padding: 1rem;
+  border: 1px solid #eee;
+  padding: 12px 15px;
   text-align: left;
 }
 
 .admin-table th {
-  background: var(--table-header-bg);
-  cursor: pointer;
+  background-color: #f2f2f2;
   font-weight: bold;
-  color: var(--text-color);
-  user-select: none;
-  position: relative;
+  cursor: pointer;
+  white-space: nowrap; /* Предотвращает перенос текста в заголовках */
+  display: table-cell; /* Важно для работы display flex с иконками */
+  align-items: center;
+  gap: 5px;
+}
+
+.admin-table th:hover {
+  background-color: #e9e9e9;
 }
 
 .admin-table th svg {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
+  vertical-align: middle;
+  margin-left: 5px;
 }
 
-.admin-table tbody tr:last-child td {
-  border-bottom: none;
+.admin-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
 .admin-table tbody tr:hover {
-  background-color: var(--table-row-hover-bg);
+  background-color: #f1f1f1;
 }
 
 .message-cell {
-  max-width: 300px;
+  max-width: 250px; /* Ограничиваем ширину ячейки с сообщением */
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
+  text-overflow: ellipsis; /* Добавляем троеточие */
+  cursor: pointer; /* Указываем, что ячейка кликабельна */
 }
 
+/* Стили для селектора статуса */
+.status-select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  font-weight: bold;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Цветовые стили для статусов */
+.status-select.status-new {
+  color: #007bff; /* Синий */
+  border-color: #007bff;
+}
+
+.status-select.status-in-progress {
+  color: #ffc107; /* Желтый */
+  border-color: #ffc107;
+}
+
+.status-select.status-done {
+  color: #28a745; /* Зеленый */
+  border-color: #28a745;
+}
+
+/* Кнопка удаления */
 .delete-btn {
-  background: var(--danger-color);
-  padding: 0.5rem 1rem;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 .delete-btn:hover {
-  background: var(--danger-hover);
+  background-color: #c82333;
 }
 
-.admin-table select {
-  padding: 0.5rem;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--select-border-color);
-  background-color: var(--bg-white);
-  cursor: pointer;
-}
-
+/* Пагинация */
 .pagination {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .pagination button {
-  background: var(--primary-color);
-  color: var(--bg-white);
-  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: var(--border-radius);
+  padding: 8px 15px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background var(--transition-speed);
-}
-
-.pagination button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
+  transition: background-color 0.3s ease;
 }
 
 .pagination button:hover:not(:disabled) {
-  background: var(--primary-hover);
+  background-color: #0056b3;
 }
 
+.pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-weight: bold;
+  color: #555;
+}
+
+/* Состояния загрузки и отсутствия данных */
 .loading-spinner,
 .no-data {
   text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
+  padding: 20px;
+  font-size: 1.2em;
   color: #666;
 }
 
-.extra-links {
-  margin-top: 2rem;
-  text-align: center;
+.no-data {
+  font-style: italic;
 }
 
-.report-link {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: bold;
-  transition: color var(--transition-speed);
-}
-
-.report-link:hover {
-  color: var(--primary-hover);
-}
-
-/* ========================================================== */
-/* Стили для модальных окон                                   */
-/* ========================================================== */
-.modal-overlay {
+/* Стили для модального окна (из вашего компонента Modal.jsx) */
+/* Убедитесь, что стили для Modal.jsx присутствуют и работают */
+/* Пример базовых стилей для Modal (если их нет) */
+/* .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--modal-bg-color);
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -328,120 +332,134 @@
 }
 
 .modal-content {
-  background-color: var(--bg-white);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  width: 90%;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   max-width: 500px;
+  width: 90%;
+  text-align: center;
   position: relative;
 }
 
 .modal-content h3 {
   margin-top: 0;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 1rem;
+  color: #003366;
 }
 
 .modal-content p {
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
 }
 
-.modal-actions {
-  text-align: right;
-  margin-top: 1.5rem;
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
 }
 
-.modal-actions button {
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius);
+.modal-buttons button {
+  padding: 10px 20px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background var(--transition-speed);
-  margin-left: 0.5rem;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
 }
 
-.modal-confirm-btn {
-  background: var(--danger-color);
+.modal-buttons .confirm-btn {
+  background-color: #dc3545;
   color: white;
 }
 
-.modal-confirm-btn:hover {
-  background: var(--danger-hover);
+.modal-buttons .confirm-btn:hover {
+  background-color: #c82333;
 }
 
-.modal-cancel-btn {
-  background: #6c757d;
+.modal-buttons .cancel-btn {
+  background-color: #6c757d;
   color: white;
 }
 
-.modal-cancel-btn:hover {
-  background: #5a6268;
-}
+.modal-buttons .cancel-btn:hover {
+  background-color: #5a6268;
+} */
 
+
+/* Стили для деталей заявки в модальном окне */
 .submission-details {
+  text-align: left;
   line-height: 1.6;
 }
 
+.submission-details p {
+  margin-bottom: 8px;
+  word-wrap: break-word; /* Перенос длинных слов */
+}
+
+.submission-details strong {
+  color: #003366;
+}
+
 .submission-message {
-  white-space: pre-wrap;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.extra-links {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.report-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #6f42c1;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.report-link:hover {
+  background-color: #5f35af;
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
-  .admin-panel {
-    padding: 1rem;
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
   }
-  .admin-header, .admin-controls {
+
+  .admin-controls {
     flex-direction: column;
     align-items: stretch;
+    gap: 15px;
   }
+
   .header-stats {
-    flex-direction: column;
-    align-items: stretch;
+    width: 100%;
+    justify-content: space-between;
   }
-  .search-container {
-    margin-bottom: 1rem;
+
+  .admin-table th, .admin-table td {
+    padding: 10px;
+    font-size: 0.9em;
   }
-  .admin-table,
-  .admin-table thead,
-  .admin-table tbody,
-  .admin-table th,
-  .admin-table td,
-  .admin-table tr {
-    display: block;
+
+  .admin-table th {
+    white-space: normal; /* Разрешаем перенос текста в заголовках на маленьких экранах */
   }
-  .admin-table thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-  .admin-table tr {
-    border: 1px solid #ddd;
-    margin-bottom: 1rem;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-  }
-  .admin-table td {
-    border: none;
-    position: relative;
-    padding-left: 50%;
-    text-align: right;
-    white-space: normal;
-  }
-  .admin-table td:before {
-    content: attr(data-label);
-    position: absolute;
-    left: 1rem;
-    width: 45%;
-    padding-right: 1rem;
-    white-space: nowrap;
-    text-align: left;
-    font-weight: bold;
-  }
+
   .message-cell {
-    max-width: none;
-    white-space: normal;
+    max-width: 150px; /* Уменьшаем ширину на мобильных */
+  }
+
+  .pagination {
+    justify-content: space-around;
   }
 }

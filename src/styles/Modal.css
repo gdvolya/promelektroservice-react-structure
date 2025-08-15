@@ -1,69 +1,92 @@
-/* Modal Overlay */
+/* Общий фон модального окна */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s ease-out; /* Анимация появления */
 }
 
-/* Modal Content Box */
+/* Контейнер модального окна */
 .modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  max-width: 90%;
-  width: 450px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
   position: relative;
-  animation: slideIn 0.3s ease-out;
+  transform: scale(0.95);
+  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Modal Close Button */
-.modal-close-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #888;
-  transition: color 0.3s ease;
-}
-
-.modal-close-btn:hover {
-  color: #333;
-}
-
-/* Modal Header */
-.modal-title {
+/* Заголовок модального окна */
+.modal-content h3 {
   margin-top: 0;
-  font-size: 1.5rem;
+  color: #003366;
+  font-size: 1.5em;
   font-weight: bold;
-  color: #333;
 }
 
-/* Modal Body */
-.modal-body {
-  margin-top: 1rem;
-  line-height: 1.5;
+/* Текст сообщения */
+.modal-content p {
+  margin-bottom: 20px;
+  line-height: 1.6;
   color: #555;
 }
 
-/* Animations */
+/* Контейнер кнопок */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+/* Кнопка "Подтвердить" */
+.confirm-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #c82333;
+}
+
+/* Кнопка "Отмена/Закрыть" */
+.cancel-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Анимации */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-@keyframes slideIn {
-  from { transform: translateY(-50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes scaleIn {
+  from { transform: scale(0.8); }
+  to { transform: scale(1); }
 }

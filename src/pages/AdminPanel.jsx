@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   collection,
-  getDocs,
   deleteDoc,
   doc,
   getDoc,
   updateDoc,
   query,
   orderBy,
+  onSnapshot, // Импорт onSnapshot для реального времени
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
 import {
@@ -23,10 +23,11 @@ import {
 import "../styles/AdminPanel.css";
 import Modal from "./Modal"; // Предполагается, что у вас есть компонент Modal.jsx
 
+// Определение опций статусов с классами для стилизации
 const statusOptions = {
-  new: "Новая",
-  "in-progress": "В обработке",
-  done: "Выполнена",
+  new: { label: "Новая", className: "status-new" },
+  "in-progress": { label: "В обработке", className: "status-in-progress" },
+  done: { label: "Выполнена", className: "status-done" },
 };
 
 const AdminPanel = ({ enableExport = true }) => {
@@ -42,55 +43,91 @@ const AdminPanel = ({ enableExport = true }) => {
     direction: "descending",
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(10); // По умолчанию 10 элементов на страницу
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [submissionToDelete, setSubmissionToDelete] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [submissionDetails, setSubmissionDetails] = useState(null);
 
-  const dbRef = useRef(null);
+  const dbRef = useRef(null); // Используем useRef для хранения ссылки на базу данных
 
-  const fetchData = useCallback(async () => {
-    const db = dbRef.current;
-    if (!db) return;
-    setLoading(true);
-    try {
-      const q = query(
-        collection(db, "submissions"),
-        orderBy(sortConfig.key, sortConfig.direction === "ascending" ? "asc" : "desc")
-      );
-      const [subsSnapshot, viewsDoc] = await Promise.all([
-        getDocs(q),
-        getDoc(doc(db, "views", "home")),
-      ]);
-      setSubmissions(
-        subsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-          createdAt: doc.data().createdAt || null,
-        }))
-      );
-      setViews(viewsDoc.exists() ? viewsDoc.data().count : 0);
-    } catch (err) {
-      console.error("Ошибка загрузки данных:", err);
-      setError("Ошибка загрузки данных.");
-    } finally {
-      setLoading(false);
-    }
-  }, [sortConfig]);
+  // Функция для форматирования даты
+  const formatFirestoreTimestamp = (timestamp) => {
+    if (!timestamp || !timestamp.seconds) return "—";
+    return new Date(timestamp.seconds * 1000).toLocaleString("uk-UA");
+  };
 
+  // Инициализация Firebase и подписка на данные
   useEffect(() => {
-    if (authenticated && !dbRef.current) {
-      import("../firebaseLazy").then(({ db: loadedDb }) => {
-        dbRef.current = loadedDb;
-        fetchData();
-      });
-    } else if (authenticated && dbRef.current) {
-      fetchData();
+    if (!authenticated) {
+      setLoading(false); // Остановить загрузку, если не аутентифицирован
+      return;
     }
-  }, [authenticated, fetchData]);
 
-  const handleDelete = async (id) => {
+    setLoading(true);
+    let unsubscribeSubmissions;
+    let unsubscribeViews;
+
+    // Динамический импорт Firebase
+    import("../firebaseLazy")
+      .then(({ db: loadedDb }) => {
+        dbRef.current = loadedDb;
+        const db = dbRef.current;
+
+        // Подписка на заявки (submissions)
+        const submissionsQuery = query(
+          collection(db, "submissions"),
+          orderBy(
+            sortConfig.key,
+            sortConfig.direction === "ascending" ? "asc" : "desc"
+          )
+        );
+        unsubscribeSubmissions = onSnapshot(
+          submissionsQuery,
+          (snapshot) => {
+            const fetchedSubmissions = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+              createdAt: doc.data().createdAt || null,
+            }));
+            setSubmissions(fetchedSubmissions);
+            setLoading(false);
+            setError(""); // Очистить ошибку после успешной загрузки
+          },
+          (err) => {
+            console.error("Ошибка при получении заявок:", err);
+            setError("Ошибка загрузки заявок.");
+            setLoading(false);
+          }
+        );
+
+        // Подписка на просмотры (views)
+        const viewsDocRef = doc(db, "views", "home");
+        unsubscribeViews = onSnapshot(
+          viewsDocRef,
+          (docSnapshot) => {
+            setViews(docSnapshot.exists() ? docSnapshot.data().count : 0);
+          },
+          (err) => {
+            console.error("Ошибка при получении просмотров:", err);
+            // setError("Ошибка загрузки просмотров."); // Можно добавить отдельную ошибку, но обычно не критично
+          }
+        );
+      })
+      .catch((err) => {
+        console.error("Ошибка загрузки Firebase:", err);
+        setError("Ошибка инициализации базы данных.");
+        setLoading(false);
+      });
+
+    // Функция очистки подписок при размонтировании компонента или изменении authenticated
+    return () => {
+      if (unsubscribeSubmissions) unsubscribeSubmissions();
+      if (unsubscribeViews) unsubscribeViews();
+    };
+  }, [authenticated, sortConfig]); // Перезапускать эффект при изменении authenticated или sortConfig
+
+  const handleDelete = (id) => {
     setSubmissionToDelete(id);
     setShowDeleteModal(true);
   };
@@ -100,7 +137,7 @@ const AdminPanel = ({ enableExport = true }) => {
     if (!db || !submissionToDelete) return;
     try {
       await deleteDoc(doc(db, "submissions", submissionToDelete));
-      setSubmissions((prev) => prev.filter((s) => s.id !== submissionToDelete));
+      // setSubmissions((prev) => prev.filter((s) => s.id !== submissionToDelete)); // onSnapshot обновит сам
       setShowDeleteModal(false);
       setSubmissionToDelete(null);
     } catch (err) {
@@ -116,9 +153,9 @@ const AdminPanel = ({ enableExport = true }) => {
       await updateDoc(doc(db, "submissions", id), {
         status: newStatus,
       });
-      setSubmissions((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s))
-      );
+      // setSubmissions((prev) =>
+      //   prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s))
+      // ); // onSnapshot обновит сам
     } catch (err) {
       alert("Не удалось обновить статус.");
       console.error(err);
@@ -126,9 +163,13 @@ const AdminPanel = ({ enableExport = true }) => {
   };
 
   const exportToExcel = () => {
-    const sheet = XLSX.utils.json_to_sheet(
-      submissions.map(({ id, ...rest }) => rest)
+    const dataToExport = submissions.map(
+      ({ id, createdAt, ...rest }) => ({
+        ...rest,
+        createdAt: formatFirestoreTimestamp(createdAt), // Форматируем дату для Excel
+      })
     );
+    const sheet = XLSX.utils.json_to_sheet(dataToExport);
     const book = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(book, sheet, "Заявки");
     XLSX.writeFile(book, "submissions.xlsx");
@@ -158,7 +199,8 @@ const AdminPanel = ({ enableExport = true }) => {
     setAuthenticated(false);
     setViews(null);
     setSubmissions([]);
-    // Дополнительная логика очистки, если требуется
+    // Дополнительная логика очистки, если требуется (например, сброс dbRef.current = null)
+    dbRef.current = null;
   };
 
   const handleKeyDown = (e) => {
@@ -171,6 +213,7 @@ const AdminPanel = ({ enableExport = true }) => {
       direction = "descending";
     }
     setSortConfig({ key, direction });
+    setCurrentPage(1); // Сбросить страницу при сортировке
   };
 
   const getSortIcon = (key) => {
@@ -197,10 +240,9 @@ const AdminPanel = ({ enableExport = true }) => {
   );
 
   const totalPages = Math.ceil(filteredSubmissions.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
   const currentSubmissions = filteredSubmissions.slice(
-    startIndex,
-    startIndex + itemsPerPage
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   if (!authenticated) {
@@ -250,9 +292,27 @@ const AdminPanel = ({ enableExport = true }) => {
             type="text"
             placeholder="🔎 Поиск по заявкам..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1); // Сбросить страницу при поиске
+            }}
             className="search-input"
           />
+        </div>
+        <div className="pagination-controls">
+          <label htmlFor="itemsPerPage">Заявок на странице:</label>
+          <select
+            id="itemsPerPage"
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value));
+              setCurrentPage(1); // Сбросить на первую страницу при изменении кол-ва элементов
+            }}
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
         </div>
         {enableExport && submissions.length > 0 && (
           <button onClick={exportToExcel} className="export-btn">
@@ -264,8 +324,10 @@ const AdminPanel = ({ enableExport = true }) => {
       {loading && <p className="loading-spinner">⏳ Загрузка данных...</p>}
       {error && <p className="error-text">{error}</p>}
 
-      {filteredSubmissions.length === 0 && !loading ? (
-        <p className="no-data">Нет заявок.</p>
+      {!loading && filteredSubmissions.length === 0 ? (
+        <p className="no-data">
+          {searchTerm ? "Ничего не найдено по вашему запросу." : "Нет заявок."}
+        </p>
       ) : (
         <>
           <table className="admin-table">
@@ -300,26 +362,26 @@ const AdminPanel = ({ enableExport = true }) => {
                     <td
                       className="message-cell"
                       onClick={() => handleRowClick({ name, email, phone, message, createdAt })}
+                      title="Нажмите, чтобы прочитать полностью"
                     >
-                      {message}
+                      {message?.length > 50
+                        ? `${message.substring(0, 50)}...`
+                        : message}
                     </td>
                     <td>
                       <select
                         value={status}
                         onChange={(e) => handleUpdateStatus(id, e.target.value)}
+                        className={`status-select ${statusOptions[status]?.className}`}
                       >
                         {Object.entries(statusOptions).map(([key, value]) => (
                           <option key={key} value={key}>
-                            {value}
+                            {value.label}
                           </option>
                         ))}
                       </select>
                     </td>
-                    <td>
-                      {createdAt?.seconds
-                        ? new Date(createdAt.seconds * 1000).toLocaleString("uk-UA")
-                        : "—"}
-                    </td>
+                    <td>{formatFirestoreTimestamp(createdAt)}</td>
                     <td>
                       <button
                         onClick={() => handleDelete(id)}
@@ -371,6 +433,7 @@ const AdminPanel = ({ enableExport = true }) => {
             <p><strong>Имя:</strong> {submissionDetails.name}</p>
             <p><strong>Email:</strong> {submissionDetails.email}</p>
             <p><strong>Телефон:</strong> {submissionDetails.phone}</p>
+            <p><strong>Дата:</strong> {formatFirestoreTimestamp(submissionDetails.createdAt)}</p>
             <p className="submission-message"><strong>Сообщение:</strong></p>
             <p>{submissionDetails.message}</p>
           </div>
