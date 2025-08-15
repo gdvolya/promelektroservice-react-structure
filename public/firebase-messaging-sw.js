@@ -1,7 +1,7 @@
 importScripts("https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js");
 importScripts("https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js");
 
-// Використання єдиної, правильної конфігурації з файлу .env
+// Использование единой, правильной конфигурации
 firebase.initializeApp({
   apiKey: "AIzaSyAnIolE-wxhUdtOuKcDwwIEj66fNdOIsSU",
   authDomain: "promelektroservice.firebaseapp.com",
@@ -17,7 +17,7 @@ messaging.onBackgroundMessage(function(payload) {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: "/icons/icon-192.png" // Використовуємо більш універсальний значок
+    icon: "/icons/icon-192.png"
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
