@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
@@ -16,8 +16,16 @@ const ContactsPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
 
+  // Используем useRef для хранения ссылки на базу данных, чтобы не вызывать импорт многократно
+  const dbRef = useRef(null);
+
   useEffect(() => {
     AOS.init({ once: true, duration: 600 });
+
+    // Динамический импорт Firebase
+    import("../firebaseLazy").then(({ db }) => {
+      dbRef.current = db;
+    });
   }, []);
 
   const handleChange = (e) => {
@@ -32,28 +40,34 @@ const ContactsPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmissionStatus(null);
+    
+    // Проверяем, что dbRef.current доступен
+    const db = dbRef.current;
+    if (!db) {
+      setSubmissionStatus("error");
+      setIsSubmitting(false);
+      console.error("Firebase database is not initialized.");
+      return;
+    }
 
     try {
-      const response = await fetch("https://formspree.io/f/xeogalqn", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+
+      await addDoc(collection(db, "submissions"), {
+        ...formData,
+        createdAt: serverTimestamp(), // Используем временную метку сервера
+        status: "new", // Устанавливаем начальный статус
       });
 
-      if (response.ok) {
-        setSubmissionStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
-      } else {
-        setSubmissionStatus("error");
-      }
+      setSubmissionStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
     } catch (error) {
+      console.error("Ошибка при отправке заявки в Firebase:", error);
       setSubmissionStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -62,6 +76,7 @@ const ContactsPage = () => {
 
   return (
     <main className="contacts-page">
+      {/* Остальная часть компонента остается без изменений */}
       <Helmet>
         <title>{t("meta.contactsTitle")}</title>
         <meta
@@ -154,7 +169,7 @@ const ContactsPage = () => {
           <div className="map-container">
             <iframe
               title="Google Map Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.098877665268!2d30.49089021573022!3d50.4578137794715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce56c701777d%3A0x7d6a54124e4d588a!2z0L_QtdGA0LXRgNGB0Lg!5e0!3m2!1suk!2sua!4v1628178864789!5m2!1suk!2sua"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2033.465134608332!2d24.64098931215162!3d50.31686976935212!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47253573c24b12d9%3A0xc38d58c148c4a162!2z0LLRg9C70LjRhNC10YHRjNC60L7Qu9CwINC_0L7QvdGD0YHQstC-0YHQutCw0Y8g0L_RgNC-0YjQvdC-0YHRgQ!5e0!3m2!1sru!2sua!4v1719992562477!5m2!1sru!2sua"
               allowFullScreen=""
               loading="lazy"
             ></iframe>

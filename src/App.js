@@ -2,13 +2,13 @@ import React, { Suspense, lazy, useEffect, useCallback, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import ErrorBoundary from "./components/ErrorBoundary"; // Приклад компонента для обробки помилок
+import ErrorBoundary from "./components/ErrorBoundary";
 import logoPng from "./img/logo.png";
 import logoWebp from "./img/logo.webp";
 import "./css/style.css";
 import "./i18n";
 
-// Динамічне імпортування сторінок
+// Динамическое импортирование страниц
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -18,10 +18,10 @@ const AdminPanel = lazy(() => import("./pages/AdminPanel.jsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage.jsx"));
 
-// Конфігурація для навігації та мов
+// Конфигурация для навигации и языков
 const languages = ["uk", "en", "ru"];
 
-// Компонент-оболонка для відображення
+// Компонент-оболочка для отображения
 function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
@@ -37,7 +37,7 @@ function AppContent() {
   );
 
   useEffect(() => {
-    // Ініціалізація AOS тільки один раз на головній сторінці
+    // Инициализация AOS только один раз на главной странице
     if (location.pathname === "/") {
       import("aos").then((AOS) => {
         AOS.init({ once: true, duration: 700 });
@@ -57,7 +57,7 @@ function AppContent() {
     const metaKey = pathname.split("/")[1] || "home";
     const projectMatch = pathname.match(/\/portfolio\/([^/]+)/);
     if (projectMatch) {
-      // Можна додати логіку для отримання мета-тегів для конкретного проекту
+      // Можно добавить логику для получения мета-тегов для конкретного проекта
       return {
         title: t("meta.projectTitle", { projectName: projectMatch[1] }),
         description: t("meta.projectDescription", { projectName: projectMatch[1] }),
@@ -84,19 +84,19 @@ function AppContent() {
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
         <link rel="canonical" href={canonical} />
-        {/* Додавання hreflang поточної мови */}
+        {/* Добавление hreflang для текущей страницы */}
         {languages.map(lng => (
           <link
             key={lng}
             rel="alternate"
             hrefLang={lng}
-            href={`https://promelektroservice.vercel.app/${lng}/${location.pathname.substring(1)}`}
+            href={`https://promelektroservice.vercel.app/${lng}${location.pathname}`}
           />
         ))}
       </Helmet>
       
       <a href="#main-content" className="skip-link">
-        Пропустити навігацію
+        Пропустить навигацию
       </a>
 
       <div className="app-wrapper">
@@ -218,7 +218,7 @@ function AppContent() {
   );
 }
 
-// Загальний компонент для Router та HelmetProvider
+// Общий компонент для Router и HelmetProvider
 export default function App() {
   return (
     <HelmetProvider>
