@@ -9,18 +9,14 @@
   <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- Fonts & Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Preload critical assets -->
   <link rel="preload" as="style" href="/assets/index-68e14620.css" />
   <link rel="preload" as="script" href="/assets/index-b166bd7d.js" />
   <link rel="preload" as="image" href="/img/logo.webp" fetchpriority="high" />
 
-  <!-- Styles -->
   <link rel="stylesheet" href="/assets/index-68e14620.css" />
-  <script src="/assets/index-b166bd7d.js" defer></script>
 </head>
 <body>
   <noscript>
@@ -30,6 +26,8 @@
   </noscript>
 
   <div id="root"></div>
+  
+  <script src="/assets/index-b166bd7d.js" defer></script>
 
   <script>
     if ('serviceWorker' in navigator) {
