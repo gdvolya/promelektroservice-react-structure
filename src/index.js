@@ -6,7 +6,16 @@ import './i18n';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 
-// ✅ Регистрация Service Worker
+// ❌ Временное отключение Service Worker для исправления ошибок кэширования
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.ready.then(registration => {
+    registration.unregister();
+    console.log('✅ Service Worker успешно отменен.');
+  });
+}
+
+// Закомментированная старая регистрация:
+/*
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
@@ -19,3 +28,4 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
+*/
