@@ -162,54 +162,7 @@ function AppContent() {
                     );
                   })}
                 </ul>
-                <div
-                  className="lang-switcher mobile-lang-switcher"
-                  role="group"
-                  aria-label={t("langSelectorLabel") || "Вибір мови"}
-                >
-                  {languages.map((lng) => {
-                    const labels = { uk: "Українська", en: "English", ru: "Русский" };
-                    const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
-                    const isActive = i18n.language === lng;
-                    return (
-                      <button
-                        key={lng}
-                        onClick={() => changeLanguage(lng)}
-                        title={labels[lng]}
-                        aria-label={labels[lng]}
-                        className={`lang-btn${isActive ? " active" : ""}`}
-                        type="button"
-                      >
-                        {flags[lng]}
-                      </button>
-                    );
-                  })}
-                </div>
             </nav>
-            {/* На десктопе переключатель языков остается в хедере */}
-            <div
-              className="lang-switcher desktop-lang-switcher"
-              role="group"
-              aria-label={t("langSelectorLabel") || "Вибір мови"}
-            >
-                {languages.map((lng) => {
-                    const labels = { uk: "Українська", en: "English", ru: "Русский" };
-                    const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
-                    const isActive = i18n.language === lng;
-                    return (
-                      <button
-                        key={lng}
-                        onClick={() => changeLanguage(lng)}
-                        title={labels[lng]}
-                        aria-label={labels[lng]}
-                        className={`lang-btn${isActive ? " active" : ""}`}
-                        type="button"
-                      >
-                        {flags[lng]}
-                      </button>
-                    );
-                  })}
-            </div>
           </div>
         </header>
 
@@ -258,7 +211,29 @@ function AppContent() {
               ✉️ info@promelektroservice.com
             </a>
           </div>
-
+          <div
+            className="lang-switcher"
+            role="group"
+            aria-label={t("langSelectorLabel") || "Вибір мови"}
+          >
+            {languages.map((lng) => {
+              const labels = { uk: "Українська", en: "English", ru: "Русский" };
+              const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
+              const isActive = i18n.language === lng;
+              return (
+                <button
+                  key={lng}
+                  onClick={() => changeLanguage(lng)}
+                  title={labels[lng]}
+                  aria-label={labels[lng]}
+                  className={`lang-btn${isActive ? " active" : ""}`}
+                  type="button"
+                >
+                  {flags[lng]}
+                </button>
+              );
+            })}
+          </div>
           <p>© {new Date().getFullYear()} Promelektroservice. {t("footer.rights")}</p>
         </footer>
       </div>
