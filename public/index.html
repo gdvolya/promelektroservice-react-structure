@@ -1,56 +1,49 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    
-    <title>ПромЕлектроСервіс - Професійні електромонтажні послуги</title>
-    <meta name="description" content="ПромЕлектроСервіс - надійні електромонтажні послуги для вашого дому та бізнесу. Висока якість, безпека та гарантія на всі роботи." />
-    
-    <meta name="theme-color" content="#003366" />
-    
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.json" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+  <title>ПромЕлектроСервіс - Професійні електромонтажні послуги</title>
+  <meta name="description" content="ПромЕлектроСервіс - надійні електромонтажні послуги для вашого дому та бізнесу." />
+  
+  <meta name="theme-color" content="#003366" />
+  
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
+  <link rel="manifest" href="/manifest.json" />
 
-    <link rel="preload" as="image" href="/assets/background@2x.webp" fetchpriority="high" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <link rel="preload" as="font" href="/assets/Montserrat-Regular.woff2" type="font/woff2" crossorigin />
-    <link rel="preload" as="font" href="/assets/Montserrat-SemiBold.woff2" type="font/woff2" crossorigin />
-    <link rel="preload" as="font" href="/assets/Montserrat-ExtraBold.woff2" type="font/woff2" crossorigin />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="/assets/index-68e14620.css" />
-    
-    </head>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="/assets/index-68e14620.css" />
+</head>
 <body>
-    <noscript>
-        <strong style="display:block; text-align:center; margin:2rem;">
-            Будь ласка, увімкніть JavaScript для повної функціональності сайту.
-        </strong>
-    </noscript>
+  <noscript>
+    <strong style="display:block; text-align:center; margin:2rem;">
+      Будь ласка, увімкніть JavaScript для повної функціональності сайту.
+    </strong>
+  </noscript>
 
-    <div id="root"></div>
-    
-    <script src="/assets/index-b166bd7d.js" defer></script>
-    
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(registration => {
-                        console.log('✅ Service Worker зарегистрирован:', registration);
-                    })
-                    .catch(error => {
-                        console.warn('❌ Ошибка при регистрации Service Worker:', error);
-                    });
-            });
-        }
-    </script>
+  <div id="root"></div>
+  
+  <script src="/assets/index-b166bd7d.js" defer></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('✅ Service Worker зарегистрирован:', registration);
+          })
+          .catch(error => {
+            console.warn('❌ Ошибка при регистрации Service Worker:', error);
+          });
+      });
+    }
+  </script>
 </body>
 </html>
