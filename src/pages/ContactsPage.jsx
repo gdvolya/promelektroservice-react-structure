@@ -1,9 +1,28 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
+import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "../styles/ContactsPage.css";
+
+// Контейнер та опції для карти
+const mapContainerStyle = {
+  width: "100%",
+  height: "500px",
+  borderRadius: "12px",
+  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+};
+
+const center = {
+  lat: 50.31686, // Координати Радехіва, Львівська область
+  lng: 24.64695,
+};
+
+const options = {
+  disableDefaultUI: true,
+  zoomControl: true,
+};
 
 const ContactsPage = () => {
   const { t } = useTranslation();
@@ -18,10 +37,17 @@ const ContactsPage = () => {
 
   const dbRef = useRef(null);
 
+  // Завантаження Google Maps JS API
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  });
+
   useEffect(() => {
     AOS.init({ once: true, duration: 600 });
+  }, []);
 
-    // Ленивая загрузка Firebase
+  // Ленивая загрузка Firebase
+  useEffect(() => {
     import("../firebaseLazy")
       .then(({ db }) => {
         dbRef.current = db;
@@ -31,13 +57,13 @@ const ContactsPage = () => {
       });
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,12 +105,9 @@ const ContactsPage = () => {
 
       <div className="container">
         <h1 data-aos="fade-up">{t("contacts.heading")}</h1>
-        <p data-aos="fade-up" data-aos-delay="100">
-          {t("contacts.description")}
-        </p>
+        <p data-aos="fade-up" data-aos-delay="100">{t("contacts.description")}</p>
 
         <div className="contacts-content">
-          {/* 🔹 Контактные данные */}
           <section className="contact-info" data-aos="fade-right" data-aos-delay="200">
             <h2 className="section-title">{t("contacts.detailsTitle")}</h2>
             <div className="info-item">
@@ -95,9 +118,7 @@ const ContactsPage = () => {
             <div className="info-item">
               <span className="icon">📧</span>
               <h3>Email</h3>
-              <a href="mailto:info@promelektroservice.com">
-                info@promelektroservice.com
-              </a>
+              <a href="mailto:info@promelektroservice.com">info@promelektroservice.com</a>
             </div>
             <div className="info-item">
               <span className="icon">📍</span>
@@ -106,7 +127,6 @@ const ContactsPage = () => {
             </div>
           </section>
 
-          {/* 🔹 Форма */}
           <section className="contact-form-section" data-aos="fade-left" data-aos-delay="200">
             <h2 className="section-title">{t("contacts.formTitle")}</h2>
             <form className="contact-form" onSubmit={handleSubmit}>
@@ -162,12 +182,22 @@ const ContactsPage = () => {
         <section className="map-section" data-aos="fade-up" data-aos-delay="300">
           <h2 className="section-title">{t("contacts.mapTitle")}</h2>
           <div className="map-container">
-            <iframe
-              title="Google Map Location"
-              src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&q=Radekhiv`}
-              allowFullScreen
-              loading="lazy"
-            ></iframe>
+            {isLoaded ? (
+              <GoogleMap
+                mapContainerStyle={mapContainerStyle}
+                center={center}
+                zoom={12}
+                options={options}
+              >
+                <MarkerF position={center} />
+              </GoogleMap>
+            ) : loadError ? (
+              <p className="map-error-message">
+                {t("contacts.mapLoadError") || "Помилка завантаження карти."}
+              </p>
+            ) : (
+              <div className="loading-spinner-map"></div>
+            )}
           </div>
         </section>
       </div>
