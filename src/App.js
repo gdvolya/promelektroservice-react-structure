@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useCallback, useMemo } from "react";
+import React, { Suspense, lazy, useEffect, useCallback, useMemo, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
@@ -25,6 +25,7 @@ const languages = ["uk", "en", "ru"];
 function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const changeLanguage = useCallback(
     (lng) => {
@@ -35,6 +36,14 @@ function AppContent() {
     },
     [i18n]
   );
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen(prevState => !prevState);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false);
+  }, []);
 
   useEffect(() => {
     // Инициализация AOS только один раз на главной странице
@@ -99,7 +108,7 @@ function AppContent() {
         Пропустить навигацию
       </a>
 
-      <div className="app-wrapper">
+      <div className={`app-wrapper ${isMenuOpen ? "menu-open" : ""}`}>
         <header className="site-header" role="banner">
           <div className="header-container">
             <Link to="/" aria-label={t("nav.home")} className="logo-link">
@@ -118,26 +127,89 @@ function AppContent() {
               </picture>
             </Link>
 
-            <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
-              <ul className="nav-menu centered" role="menubar">
-                {navItems.map(({ path, label }) => {
-                  const isActive = location.pathname === path;
-                  return (
-                    <li key={path} role="none">
-                      <Link
-                        to={path}
-                        className={isActive ? "active" : ""}
-                        aria-current={isActive ? "page" : undefined}
-                        role="menuitem"
-                        tabIndex={0}
+            <button
+              className="menu-toggle"
+              onClick={toggleMenu}
+              aria-expanded={isMenuOpen}
+              aria-controls="main-nav-menu"
+              aria-label={t("aria.toggleMenu") || "Переключить меню"}
+            >
+              <span className="hamburger-icon"></span>
+            </button>
+
+            <nav 
+              aria-label={t("nav.mainMenu") || "Головне меню"} 
+              className={`nav-menu-container ${isMenuOpen ? "nav-menu-open" : ""}`}
+            >
+                <button className="close-menu-btn" onClick={closeMenu}>
+                  &times;
+                </button>
+                <ul className="nav-menu centered" role="menubar" id="main-nav-menu">
+                  {navItems.map(({ path, label }) => {
+                    const isActive = location.pathname === path;
+                    return (
+                      <li key={path} role="none" onClick={closeMenu}>
+                        <Link
+                          to={path}
+                          className={isActive ? "active" : ""}
+                          aria-current={isActive ? "page" : undefined}
+                          role="menuitem"
+                          tabIndex={0}
+                        >
+                          {label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <div
+                  className="lang-switcher mobile-lang-switcher"
+                  role="group"
+                  aria-label={t("langSelectorLabel") || "Вибір мови"}
+                >
+                  {languages.map((lng) => {
+                    const labels = { uk: "Українська", en: "English", ru: "Русский" };
+                    const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
+                    const isActive = i18n.language === lng;
+                    return (
+                      <button
+                        key={lng}
+                        onClick={() => changeLanguage(lng)}
+                        title={labels[lng]}
+                        aria-label={labels[lng]}
+                        className={`lang-btn${isActive ? " active" : ""}`}
+                        type="button"
                       >
-                        {label}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+                        {flags[lng]}
+                      </button>
+                    );
+                  })}
+                </div>
             </nav>
+            {/* На десктопе переключатель языков остается в хедере */}
+            <div
+              className="lang-switcher desktop-lang-switcher"
+              role="group"
+              aria-label={t("langSelectorLabel") || "Вибір мови"}
+            >
+                {languages.map((lng) => {
+                    const labels = { uk: "Українська", en: "English", ru: "Русский" };
+                    const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
+                    const isActive = i18n.language === lng;
+                    return (
+                      <button
+                        key={lng}
+                        onClick={() => changeLanguage(lng)}
+                        title={labels[lng]}
+                        aria-label={labels[lng]}
+                        className={`lang-btn${isActive ? " active" : ""}`}
+                        type="button"
+                      >
+                        {flags[lng]}
+                      </button>
+                    );
+                  })}
+            </div>
           </div>
         </header>
 
@@ -185,30 +257,6 @@ function AppContent() {
             >
               ✉️ info@promelektroservice.com
             </a>
-          </div>
-
-          <div
-            className="lang-switcher"
-            role="group"
-            aria-label={t("langSelectorLabel") || "Вибір мови"}
-          >
-            {languages.map((lng) => {
-              const labels = { uk: "Українська", en: "English", ru: "Русский" };
-              const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
-              const isActive = i18n.language === lng;
-              return (
-                <button
-                  key={lng}
-                  onClick={() => changeLanguage(lng)}
-                  title={labels[lng]}
-                  aria-label={labels[lng]}
-                  className={`lang-btn${isActive ? " active" : ""}`}
-                  type="button"
-                >
-                  {flags[lng]}
-                </button>
-              );
-            })}
           </div>
 
           <p>© {new Date().getFullYear()} Promelektroservice. {t("footer.rights")}</p>

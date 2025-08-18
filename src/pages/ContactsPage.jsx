@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
@@ -16,8 +16,15 @@ const ContactsPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
 
+  const dbRef = useRef(null);
+
   useEffect(() => {
     AOS.init({ once: true, duration: 600 });
+    import("../firebaseLazy").then(({ db }) => {
+      dbRef.current = db;
+    }).catch((error) => {
+      console.error("Ошибка загрузки Firebase:", error);
+    });
   }, []);
 
   const handleChange = (e) => {
@@ -32,28 +39,32 @@ const ContactsPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmissionStatus(null);
+    
+    const db = dbRef.current;
+    if (!db) {
+      console.error("Firebase database is not initialized.");
+      setSubmissionStatus("error");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
-      const response = await fetch("https://formspree.io/f/xeogalqn", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+      await addDoc(collection(db, "submissions"), {
+        ...formData,
+        createdAt: serverTimestamp(),
+        status: "new",
       });
 
-      if (response.ok) {
-        setSubmissionStatus("success");
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          message: "",
-        });
-      } else {
-        setSubmissionStatus("error");
-      }
+      setSubmissionStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
     } catch (error) {
+      console.error("Ошибка при отправке заявки в Firebase:", error);
       setSubmissionStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -69,13 +80,12 @@ const ContactsPage = () => {
           content={t("meta.contactsDescription")}
         />
       </Helmet>
-
+      
       <div className="container">
         <h1 data-aos="fade-up">{t("contacts.heading")}</h1>
         <p data-aos="fade-up" data-aos-delay="100">
           {t("contacts.description")}
         </p>
-
         <div className="contacts-content">
           <section className="contact-info" data-aos="fade-right" data-aos-delay="200">
             <h2 className="section-title">{t("contacts.detailsTitle")}</h2>
@@ -97,7 +107,6 @@ const ContactsPage = () => {
               <p>{t("contacts.address")}</p>
             </div>
           </section>
-
           <section className="contact-form-section" data-aos="fade-left" data-aos-delay="200">
             <h2 className="section-title">{t("contacts.formTitle")}</h2>
             <form className="contact-form" onSubmit={handleSubmit}>
@@ -148,13 +157,12 @@ const ContactsPage = () => {
             </form>
           </section>
         </div>
-
         <section className="map-section" data-aos="fade-up" data-aos-delay="300">
           <h2 className="section-title">{t("contacts.mapTitle")}</h2>
           <div className="map-container">
             <iframe
               title="Google Map Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.098877665268!2d30.49089021573022!3d50.4578137794715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce56c701777d%3A0x7d6a54124e4d588a!2z0L_QtdGA0LXRgNGB0Lg!5e0!3m2!1suk!2sua!4v1628178864789!5m2!1suk!2sua"
+              src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Radekhiv"
               allowFullScreen=""
               loading="lazy"
             ></iframe>
