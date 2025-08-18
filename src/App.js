@@ -1,14 +1,14 @@
-import React, { Suspense, lazy, useEffect, useCallback, useMemo, useState } from "react";
+import React, { Suspense, lazy, useEffect, useCallback, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import ErrorBoundary from "./components/ErrorBoundary";
+import ErrorBoundary from "./components/ErrorBoundary"; // Приклад компонента для обробки помилок
 import logoPng from "./img/logo.png";
 import logoWebp from "./img/logo.webp";
 import "./css/style.css";
 import "./i18n";
 
-// Динамическое импортирование страниц
+// Динамічне імпортування сторінок
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -18,14 +18,13 @@ const AdminPanel = lazy(() => import("./pages/AdminPanel.jsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage.jsx"));
 
-// Конфигурация для навигации и языков
+// Конфігурація для навігації та мов
 const languages = ["uk", "en", "ru"];
 
-// Компонент-оболочка для отображения
+// Компонент-оболонка для відображення
 function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const changeLanguage = useCallback(
     (lng) => {
@@ -37,16 +36,8 @@ function AppContent() {
     [i18n]
   );
 
-  const toggleMenu = useCallback(() => {
-    setIsMenuOpen(prevState => !prevState);
-  }, []);
-
-  const closeMenu = useCallback(() => {
-    setIsMenuOpen(false);
-  }, []);
-
   useEffect(() => {
-    // Инициализация AOS только один раз на главной странице
+    // Ініціалізація AOS тільки один раз на головній сторінці
     if (location.pathname === "/") {
       import("aos").then((AOS) => {
         AOS.init({ once: true, duration: 700 });
@@ -66,6 +57,7 @@ function AppContent() {
     const metaKey = pathname.split("/")[1] || "home";
     const projectMatch = pathname.match(/\/portfolio\/([^/]+)/);
     if (projectMatch) {
+      // Можна додати логіку для отримання мета-тегів для конкретного проекту
       return {
         title: t("meta.projectTitle", { projectName: projectMatch[1] }),
         description: t("meta.projectDescription", { projectName: projectMatch[1] }),
@@ -92,6 +84,7 @@ function AppContent() {
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
         <link rel="canonical" href={canonical} />
+        {/* Додавання hreflang поточної мови */}
         {languages.map(lng => (
           <link
             key={lng}
@@ -106,7 +99,7 @@ function AppContent() {
         Пропустити навігацію
       </a>
 
-      <div className={`app-wrapper ${isMenuOpen ? "menu-open" : ""}`}>
+      <div className="app-wrapper">
         <header className="site-header" role="banner">
           <div className="header-container">
             <Link to="/" aria-label={t("nav.home")} className="logo-link">
@@ -125,30 +118,12 @@ function AppContent() {
               </picture>
             </Link>
 
-            {/* Кнопка-гамбургер для мобильных устройств */}
-            <button
-              className="menu-toggle"
-              onClick={toggleMenu}
-              aria-expanded={isMenuOpen}
-              aria-controls="main-nav-menu"
-              aria-label={t("aria.toggleMenu") || "Переключить меню"}
-            >
-              <span className="hamburger-icon"></span>
-            </button>
-
-            {/* Контейнер меню, который будет отображаться и скрываться */}
-            <nav 
-              aria-label={t("nav.mainMenu") || "Головне меню"} 
-              className={`nav-menu-container ${isMenuOpen ? "nav-menu-open" : ""}`}
-            >
-              <button className="close-menu-btn" onClick={closeMenu}>
-                &times;
-              </button>
-              <ul className="nav-menu centered" role="menubar" id="main-nav-menu">
+            <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
+              <ul className="nav-menu centered" role="menubar">
                 {navItems.map(({ path, label }) => {
                   const isActive = location.pathname === path;
                   return (
-                    <li key={path} role="none" onClick={closeMenu}>
+                    <li key={path} role="none">
                       <Link
                         to={path}
                         className={isActive ? "active" : ""}
@@ -162,52 +137,7 @@ function AppContent() {
                   );
                 })}
               </ul>
-              {/* Переключатель языков в мобильном меню */}
-              <div className="lang-switcher mobile-lang-switcher" role="group" aria-label={t("langSelectorLabel") || "Вибір мови"}>
-                {languages.map((lng) => {
-                  const labels = { uk: "Українська", en: "English", ru: "Русский" };
-                  const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
-                  const isActive = i18n.language === lng;
-                  return (
-                    <button
-                      key={lng}
-                      onClick={() => changeLanguage(lng)}
-                      title={labels[lng]}
-                      aria-label={labels[lng]}
-                      className={`lang-btn${isActive ? " active" : ""}`}
-                      type="button"
-                    >
-                      {flags[lng]}
-                    </button>
-                  );
-                })}
-              </div>
             </nav>
-
-            {/* Переключатель языков для десктопной версии */}
-            <div
-              className="lang-switcher desktop-lang-switcher"
-              role="group"
-              aria-label={t("langSelectorLabel") || "Вибір мови"}
-            >
-              {languages.map((lng) => {
-                const labels = { uk: "Українська", en: "English", ru: "Русский" };
-                const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
-                const isActive = i18n.language === lng;
-                return (
-                  <button
-                    key={lng}
-                    onClick={() => changeLanguage(lng)}
-                    title={labels[lng]}
-                    aria-label={labels[lng]}
-                    className={`lang-btn${isActive ? " active" : ""}`}
-                    type="button"
-                  >
-                    {flags[lng]}
-                  </button>
-                );
-              })}
-            </div>
           </div>
         </header>
 
@@ -257,6 +187,30 @@ function AppContent() {
             </a>
           </div>
 
+          <div
+            className="lang-switcher"
+            role="group"
+            aria-label={t("langSelectorLabel") || "Вибір мови"}
+          >
+            {languages.map((lng) => {
+              const labels = { uk: "Українська", en: "English", ru: "Русский" };
+              const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
+              const isActive = i18n.language === lng;
+              return (
+                <button
+                  key={lng}
+                  onClick={() => changeLanguage(lng)}
+                  title={labels[lng]}
+                  aria-label={labels[lng]}
+                  className={`lang-btn${isActive ? " active" : ""}`}
+                  type="button"
+                >
+                  {flags[lng]}
+                </button>
+              );
+            })}
+          </div>
+
           <p>© {new Date().getFullYear()} Promelektroservice. {t("footer.rights")}</p>
         </footer>
       </div>
@@ -264,7 +218,7 @@ function AppContent() {
   );
 }
 
-// Общий компонент для Router и HelmetProvider
+// Загальний компонент для Router та HelmetProvider
 export default function App() {
   return (
     <HelmetProvider>

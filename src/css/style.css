@@ -43,13 +43,6 @@ a {
   transform: scale(1.05);
 }
 
-/* Навигация */
-.nav-menu-container {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-}
-
 .nav-menu {
   list-style: none;
   padding: 0;
@@ -58,6 +51,7 @@ a {
   gap: 25px;
   flex-wrap: wrap;
   justify-content: center;
+  flex-grow: 1;
   min-height: 40px;
 }
 
@@ -81,7 +75,7 @@ a {
 /* Hero section */
 .hero {
   text-align: center;
-  padding: 20px 20px 60px;
+  padding: 20px 20px 60px; /* ещё меньше верхний паддинг */
   background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
   box-shadow: inset 0 0 50px #81d4fa;
   border-radius: 0 0 50% 50% / 15%;
@@ -89,7 +83,7 @@ a {
   min-height: 350px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-start; /* поднял содержимое к самому верху */
   align-items: center;
 }
 
@@ -97,7 +91,7 @@ a {
   font-size: 3.8rem;
   font-weight: 900;
   color: #003366;
-  margin-top: 10px;
+  margin-top: 10px; /* ещё меньше отступ сверху */
   margin-bottom: 15px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   animation: slideUpFade 1.2s ease-out forwards;
@@ -263,12 +257,6 @@ main {
 }
 
 /* Кнопки языка */
-.lang-switcher {
-  display: flex;
-  justify-content: flex-end; /* Переместил направо для десктопа */
-  align-items: center;
-}
-
 .lang-btn {
   background: transparent;
   border: 2px solid #e0e7ff;
@@ -288,6 +276,55 @@ main {
   color: #222;
 }
 
+/* Адаптив */
+@media (max-width: 992px) {
+  .header-container {
+    padding: 12px 20px;
+    min-height: 60px;
+  }
+  .logo-left {
+    height: 50px;
+  }
+  .fancy-title {
+    font-size: 3rem;
+  }
+  .hero-subtitle {
+    font-size: 1.15rem;
+  }
+  .portfolio-img {
+    width: 280px;
+    height: 185px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-menu {
+    gap: 12px;
+    min-height: 35px;
+  }
+  .fancy-title {
+    font-size: 2.4rem;
+  }
+  .hero-subtitle,
+  .description p,
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 1rem;
+  }
+  .portfolio-img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  .btn {
+    width: 100%;
+    min-width: unset;
+  }
+  .contact-form {
+    gap: 12px;
+  }
+}
+
 /* Спиннер */
 .loading-spinner {
   width: 48px;
@@ -302,176 +339,5 @@ main {
 @keyframes spin {
   to {
     transform: rotate(360deg);
-  }
-}
-
-/* ================================== */
-/* Мобильная оптимизация с гамбургер-меню */
-/* ================================== */
-
-/* Скрываем гамбургер-кнопку и мобильное меню на десктопе */
-.menu-toggle,
-.nav-menu-container {
-  display: none;
-}
-
-/* Скрываем десктопные элементы на мобильных */
-.desktop-lang-switcher {
-  display: flex;
-}
-.mobile-lang-switcher {
-  display: none;
-}
-
-/* Медиазапросы для экранов меньше 768px */
-@media (max-width: 768px) {
-  /* Показываем гамбургер-кнопку и скрываем десктопное меню */
-  .menu-toggle {
-    display: block;
-    position: relative;
-    z-index: 101;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .nav-menu-container {
-    display: block; /* Показываем контейнер на мобильных */
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    max-width: 300px;
-    height: 100%;
-    background-color: #004080;
-    padding-top: 80px;
-    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
-    transition: right 0.4s ease-in-out;
-    z-index: 100;
-  }
-
-  .nav-menu-open {
-    right: 0;
-  }
-  
-  .desktop-lang-switcher {
-    display: none;
-  }
-  .mobile-lang-switcher {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-
-  /* Стили для гамбургер-иконки */
-  .hamburger-icon,
-  .hamburger-icon::before,
-  .hamburger-icon::after {
-    display: block;
-    width: 30px;
-    height: 3px;
-    background-color: #e0e7ff;
-    border-radius: 2px;
-    position: relative;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-  }
-  
-  .hamburger-icon::before {
-    content: '';
-    position: absolute;
-    top: -9px;
-  }
-  
-  .hamburger-icon::after {
-    content: '';
-    position: absolute;
-    top: 9px;
-  }
-  
-  .menu-toggle[aria-expanded="true"] .hamburger-icon {
-    background-color: transparent;
-  }
-  
-  .menu-toggle[aria-expanded="true"] .hamburger-icon::before {
-    transform: translateY(9px) rotate(45deg);
-  }
-  
-  .menu-toggle[aria-expanded="true"] .hamburger-icon::after {
-    transform: translateY(-9px) rotate(-45deg);
-  }
-
-  /* Мобильное меню */
-  .nav-menu {
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    gap: 0;
-  }
-
-  .nav-menu li {
-    width: 100%;
-    text-align: center;
-  }
-
-  .nav-menu li a {
-    display: block;
-    padding: 15px 0;
-    color: #fff;
-    border-radius: 0;
-    transition: background-color 0.2s ease;
-  }
-  
-  .nav-menu li a:hover,
-  .nav-menu li a.active {
-    background-color: #005599;
-    color: #fff;
-  }
-
-  /* Кнопка закрытия меню */
-  .close-menu-btn {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 2.5rem;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    cursor: pointer;
-    z-index: 102;
-  }
-  
-  /* Перестройка заголовка, контента и футера */
-  .header-container {
-    padding: 12px 20px;
-    min-height: 60px;
-  }
-  .logo-left {
-    height: 50px;
-  }
-  .fancy-title {
-    font-size: 2.5rem;
-  }
-  .hero-subtitle {
-    font-size: 1.15rem;
-  }
-  .portfolio-img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-  }
-  .btn {
-    width: 100%;
-    min-width: unset;
-  }
-  .contact-form {
-    gap: 12px;
-    padding: 0 15px;
-  }
-  .footer-top {
-    flex-direction: column;
-    align-items: center;
-  }
-  .footer-link {
-    margin: 5px 0;
   }
 }
