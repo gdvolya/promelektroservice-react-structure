@@ -57,8 +57,9 @@ const AdminPanel = ({ enableExport = true }) => {
     return date.toLocaleString("uk-UA");
   }, []);
 
+  // Восстановлена оригинальная логика авторизации
   const handleLogin = useCallback(() => {
-    const adminPass = import.meta.env.VITE_ADMIN_PASS; // Используем VITE_ для Vite
+    const adminPass = process.env.REACT_APP_ADMIN_PASS;
 
     if (!adminPass) {
       setError("⚠️ Пароль администратора не задан. Проверьте файл .env.");
@@ -95,9 +96,12 @@ const AdminPanel = ({ enableExport = true }) => {
       return;
     }
 
-    // Если sortConfig не изменился, не нужно переподписываться
-    if (prevSortConfig.current && prevSortConfig.current.key === sortConfig.key && prevSortConfig.current.direction === sortConfig.direction) {
-        return;
+    if (
+      prevSortConfig.current &&
+      prevSortConfig.current.key === sortConfig.key &&
+      prevSortConfig.current.direction === sortConfig.direction
+    ) {
+      return;
     }
 
     setLoading(true);
@@ -222,12 +226,10 @@ const AdminPanel = ({ enableExport = true }) => {
   }, []);
 
   const exportToExcel = useCallback(() => {
-    const dataToExport = submissions.map(
-      ({ id, createdAt, ...rest }) => ({
-        ...rest,
-        createdAt: formatFirestoreTimestamp(createdAt),
-      })
-    );
+    const dataToExport = submissions.map(({ id, createdAt, ...rest }) => ({
+      ...rest,
+      createdAt: formatFirestoreTimestamp(createdAt),
+    }));
     const sheet = XLSX.utils.json_to_sheet(dataToExport);
     const book = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(book, sheet, "Заявки");
