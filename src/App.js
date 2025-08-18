@@ -2,13 +2,13 @@ import React, { Suspense, lazy, useEffect, useCallback, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import ErrorBoundary from "./components/ErrorBoundary"; // Приклад компонента для обробки помилок
+import ErrorBoundary from "./components/ErrorBoundary";
 import logoPng from "./img/logo.png";
 import logoWebp from "./img/logo.webp";
 import "./css/style.css";
 import "./i18n";
 
-// Динамічне імпортування сторінок
+// Динамическая загрузка страниц
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -18,14 +18,14 @@ const AdminPanel = lazy(() => import("./pages/AdminPanel.jsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage.jsx"));
 
-// Конфігурація для навігації та мов
+// Доступные языки
 const languages = ["uk", "en", "ru"];
 
-// Компонент-оболонка для відображення
 function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
 
+  // Смена языка
   const changeLanguage = useCallback(
     (lng) => {
       if (i18n.language !== lng) {
@@ -36,8 +36,8 @@ function AppContent() {
     [i18n]
   );
 
+  // Инициализация AOS только на главной
   useEffect(() => {
-    // Ініціалізація AOS тільки один раз на головній сторінці
     if (location.pathname === "/") {
       import("aos").then((AOS) => {
         AOS.init({ once: true, duration: 700 });
@@ -45,32 +45,42 @@ function AppContent() {
     }
   }, [location.pathname]);
 
-  const navItems = useMemo(() => [
-    { path: "/", label: t("nav.home") },
-    { path: "/portfolio", label: t("nav.portfolio") },
-    { path: "/reviews", label: t("nav.reviews") },
-    { path: "/pricing", label: t("nav.pricing") },
-    { path: "/contacts", label: t("nav.contacts") },
-  ], [t]);
+  // Навигация
+  const navItems = useMemo(
+    () => [
+      { path: "/", label: t("nav.home") },
+      { path: "/portfolio", label: t("nav.portfolio") },
+      { path: "/reviews", label: t("nav.reviews") },
+      { path: "/pricing", label: t("nav.pricing") },
+      { path: "/contacts", label: t("nav.contacts") },
+    ],
+    [t]
+  );
 
-  const getPageMeta = useCallback((pathname) => {
-    const metaKey = pathname.split("/")[1] || "home";
-    const projectMatch = pathname.match(/\/portfolio\/([^/]+)/);
-    if (projectMatch) {
-      // Можна додати логіку для отримання мета-тегів для конкретного проекту
+  // Мета-теги
+  const getPageMeta = useCallback(
+    (pathname) => {
+      const metaKey = pathname.split("/")[1] || "home";
+      const projectMatch = pathname.match(/\/portfolio\/([^/]+)/);
+
+      if (projectMatch) {
+        return {
+          title: t("meta.projectTitle", { projectName: projectMatch[1] }),
+          description: t("meta.projectDescription", { projectName: projectMatch[1] }),
+          url: `https://promelektroservice.vercel.app/${i18n.language}${pathname}`,
+          canonical: `https://promelektroservice.vercel.app${pathname}`,
+        };
+      }
+
       return {
-        title: t("meta.projectTitle", { projectName: projectMatch[1] }),
-        description: t("meta.projectDescription", { projectName: projectMatch[1] }),
+        title: t(`meta.${metaKey}Title`),
+        description: t(`meta.${metaKey}Description`),
+        url: `https://promelektroservice.vercel.app/${i18n.language}${pathname}`,
+        canonical: `https://promelektroservice.vercel.app${pathname}`,
       };
-    }
-
-    return {
-      title: t(`meta.${metaKey}Title`),
-      description: t(`meta.${metaKey}Description`),
-      url: `https://promelektroservice.vercel.app/${i18n.language}/${pathname.substring(1)}`,
-      canonical: `https://promelektroservice.vercel.app/${pathname}`,
-    };
-  }, [t, i18n.language]);
+    },
+    [t, i18n.language]
+  );
 
   const { title, description, url, canonical } = getPageMeta(location.pathname);
 
@@ -84,22 +94,22 @@ function AppContent() {
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
         <link rel="canonical" href={canonical} />
-        {/* Додавання hreflang поточної мови */}
-        {languages.map(lng => (
+        {languages.map((lng) => (
           <link
             key={lng}
             rel="alternate"
             hrefLang={lng}
-            href={`https://promelektroservice.vercel.app/${lng}/${location.pathname.substring(1)}`}
+            href={`https://promelektroservice.vercel.app/${lng}${location.pathname}`}
           />
         ))}
       </Helmet>
-      
+
       <a href="#main-content" className="skip-link">
-        Пропустити навігацію
+        {t("skipNav") || "Пропустити навігацію"}
       </a>
 
       <div className="app-wrapper">
+        {/* Хедер */}
         <header className="site-header" role="banner">
           <div className="header-container">
             <Link to="/" aria-label={t("nav.home")} className="logo-link">
@@ -129,7 +139,6 @@ function AppContent() {
                         className={isActive ? "active" : ""}
                         aria-current={isActive ? "page" : undefined}
                         role="menuitem"
-                        tabIndex={0}
                       >
                         {label}
                       </Link>
@@ -141,12 +150,8 @@ function AppContent() {
           </div>
         </header>
 
-        <main
-          className="main-content"
-          role="main"
-          id="main-content"
-          tabIndex={-1}
-        >
+        {/* Контент */}
+        <main className="main-content" role="main" id="main-content" tabIndex={-1}>
           <ErrorBoundary>
             <Suspense
               fallback={
@@ -170,10 +175,8 @@ function AppContent() {
           </ErrorBoundary>
         </main>
 
-        <footer
-          className="footer minimized-footer sticky-footer"
-          role="contentinfo"
-        >
+        {/* Футер */}
+        <footer className="footer minimized-footer sticky-footer" role="contentinfo">
           <div className="footer-top">
             <a href="tel:+380666229776" className="footer-link" aria-label={t("phoneLabel") || "Телефон"}>
               📞 +380666229776
@@ -187,11 +190,7 @@ function AppContent() {
             </a>
           </div>
 
-          <div
-            className="lang-switcher"
-            role="group"
-            aria-label={t("langSelectorLabel") || "Вибір мови"}
-          >
+          <div className="lang-switcher" role="group" aria-label={t("langSelectorLabel") || "Вибір мови"}>
             {languages.map((lng) => {
               const labels = { uk: "Українська", en: "English", ru: "Русский" };
               const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
@@ -218,7 +217,7 @@ function AppContent() {
   );
 }
 
-// Загальний компонент для Router та HelmetProvider
+// Обертка
 export default function App() {
   return (
     <HelmetProvider>

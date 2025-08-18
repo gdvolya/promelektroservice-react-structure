@@ -1,7 +1,5 @@
-/* Подключение красивого шрифта */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
 
-/* Основные настройки */
 body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -10,7 +8,6 @@ body {
   color: #222;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -18,7 +15,7 @@ a {
   color: inherit;
 }
 
-/* Хедер */
+/* 🔹 Header */
 .header-container {
   display: flex;
   align-items: center;
@@ -30,52 +27,44 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
-  min-height: 75px;
 }
 
 .logo-left {
   height: 60px;
   filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
-  cursor: pointer;
   transition: transform 0.3s ease;
 }
-.logo-left:hover {
-  transform: scale(1.05);
-}
+.logo-left:hover { transform: scale(1.05); }
 
 .nav-menu {
   list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   gap: 25px;
   flex-wrap: wrap;
   justify-content: center;
-  flex-grow: 1;
-  min-height: 40px;
+  margin: 0;
+  padding: 0;
 }
-
 .nav-menu li a {
   color: #e0e7ff;
   font-weight: 600;
   padding: 8px 14px;
   border-radius: 6px;
   transition: background-color 0.3s ease, color 0.3s ease;
-  font-size: 16px;
-  letter-spacing: 0.03em;
 }
-
 .nav-menu li a:hover,
-.nav-menu li a.active {
+.nav-menu li a.active,
+.nav-menu li a:focus {
   background-color: #e0e7ff;
   color: #004080;
   box-shadow: 0 0 10px rgba(224, 231, 255, 0.7);
+  outline: none;
 }
 
-/* Hero section */
+/* 🔹 Hero */
 .hero {
   text-align: center;
-  padding: 20px 20px 60px; /* ещё меньше верхний паддинг */
+  padding: 20px 20px 60px;
   background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
   box-shadow: inset 0 0 50px #81d4fa;
   border-radius: 0 0 50% 50% / 15%;
@@ -83,22 +72,20 @@ a {
   min-height: 350px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* поднял содержимое к самому верху */
+  justify-content: flex-start;
   align-items: center;
 }
-
 .fancy-title {
-  font-size: 3.8rem;
+  font-size: 3.2rem;
   font-weight: 900;
   color: #003366;
-  margin-top: 10px; /* ещё меньше отступ сверху */
+  margin-top: 10px;
   margin-bottom: 15px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   animation: slideUpFade 1.2s ease-out forwards;
 }
-
 .hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: #025b8a;
   max-width: 720px;
@@ -109,34 +96,17 @@ a {
   animation-delay: 0.6s;
 }
 
-/* Анимация */
+/* 🔹 Animations */
 @keyframes slideUpFade {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-/* Описание */
-.description p {
-  font-size: 1rem;
-  margin: 12px 0;
-  color: #444;
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Галерея портфолио */
+/* 🔹 Portfolio */
 .portfolio-gallery {
   display: flex;
   justify-content: center;
@@ -146,7 +116,6 @@ a {
   max-width: 1200px;
   margin: 0 auto;
 }
-
 .portfolio-img {
   width: 320px;
   height: 210px;
@@ -155,16 +124,15 @@ a {
   box-shadow: 0 10px 20px rgba(0, 102, 204, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  aspect-ratio: 16 / 10;
 }
-
-.portfolio-img:hover {
+.portfolio-img:hover,
+.portfolio-img:focus {
   transform: translateY(-8px) scale(1.05);
   box-shadow: 0 20px 30px rgba(0, 102, 204, 0.3);
+  outline: none;
 }
 
-/* Форма */
-.review-textarea,
+/* 🔹 Forms */
 .contact-form input,
 .contact-form textarea {
   width: 100%;
@@ -173,90 +141,42 @@ a {
   font-size: 1rem;
   border-radius: 8px;
   border: 1.8px solid #a6c8ff;
-  box-shadow: inset 0 1px 3px #d6e7ff;
-  transition: border-color 0.3s ease;
-  resize: vertical;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   font-family: inherit;
 }
-
-.review-textarea:focus,
 .contact-form input:focus,
 .contact-form textarea:focus {
   border-color: #005599;
   outline: none;
   box-shadow: 0 0 10px #66a3ffaa;
 }
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin: 0 auto 80px;
-  padding: 0 20px;
-  max-width: 640px;
-}
-
 .btn {
   background: #005599;
   color: white;
-  border: none;
   padding: 14px 28px;
-  cursor: pointer;
   font-weight: 700;
-  font-size: 1.1rem;
   border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0, 85, 153, 0.5);
-  transition: background 0.4s ease, box-shadow 0.4s ease;
-  align-self: center;
-  width: fit-content;
-  min-width: 160px;
+  transition: background 0.4s ease;
+  border: none;
+  cursor: pointer;
 }
-
 .btn:hover,
 .btn:focus {
   background: #003366;
-  box-shadow: 0 8px 20px rgba(0, 51, 102, 0.8);
   outline: none;
 }
 
-/* Футер */
+/* 🔹 Footer */
 .footer {
   text-align: center;
   background: linear-gradient(90deg, #003366, #005599);
   color: #e0e7ff;
   padding: 30px 20px;
   font-size: 0.9rem;
-  box-shadow: inset 0 1px 5px rgba(255, 255, 255, 0.15);
-  user-select: none;
-  min-height: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  margin-top: auto;
 }
 
-.bottom-footer {
-  margin-top: 40px;
-  font-size: 0.8rem;
-  opacity: 0.7;
-}
-
-/* Layout */
-html, body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  scroll-behavior: smooth;
-}
-
-main {
-  flex: 1;
-  min-height: 75vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Кнопки языка */
+/* 🔹 Lang buttons */
 .lang-btn {
   background: transparent;
   border: 2px solid #e0e7ff;
@@ -265,67 +185,19 @@ main {
   font-weight: 600;
   color: #e0e7ff;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin-left: 8px;
+  margin: 5px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-
 .lang-btn.active,
-.lang-btn:hover {
+.lang-btn:hover,
+.lang-btn:focus {
   background-color: #ff9900;
   border-color: #ff9900;
   color: #222;
+  outline: none;
 }
 
-/* Адаптив */
-@media (max-width: 992px) {
-  .header-container {
-    padding: 12px 20px;
-    min-height: 60px;
-  }
-  .logo-left {
-    height: 50px;
-  }
-  .fancy-title {
-    font-size: 3rem;
-  }
-  .hero-subtitle {
-    font-size: 1.15rem;
-  }
-  .portfolio-img {
-    width: 280px;
-    height: 185px;
-  }
-}
-
-@media (max-width: 600px) {
-  .nav-menu {
-    gap: 12px;
-    min-height: 35px;
-  }
-  .fancy-title {
-    font-size: 2.4rem;
-  }
-  .hero-subtitle,
-  .description p,
-  .contact-form input,
-  .contact-form textarea {
-    font-size: 1rem;
-  }
-  .portfolio-img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-  }
-  .btn {
-    width: 100%;
-    min-width: unset;
-  }
-  .contact-form {
-    gap: 12px;
-  }
-}
-
-/* Спиннер */
+/* 🔹 Loading spinner */
 .loading-spinner {
   width: 48px;
   height: 48px;
@@ -335,9 +207,12 @@ main {
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+/* 🔹 Responsive */
+@media (max-width: 768px) {
+  .fancy-title { font-size: 2.2rem; }
+  .hero-subtitle { font-size: 1rem; }
+  .portfolio-img { width: 100%; height: auto; }
+  .nav-menu { gap: 15px; }
 }
