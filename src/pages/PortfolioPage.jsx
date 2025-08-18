@@ -56,27 +56,26 @@ const PortfolioPage = () => {
       <div className="portfolio-grid">
         {projects.map((project, index) => (
           <Link
-            to={`/portfolio/${project.key}`}
-            key={project.key}
+            to={`/portfolio/${index}`}
+            key={index}
             className="portfolio-card"
             data-aos="fade-up"
             data-aos-delay={index * 100}
+            aria-label={`${t(`portfolio.${project.key}.title`)} — ${t(`portfolio.${project.key}.description`)}`}
           >
-            <figure className="portfolio-figure">
-              <img
-                src={project.image}
-                alt={t(`portfolio.${project.key}.title`)}
-                loading="lazy"
-                decoding="async"
-                className="portfolio-img"
-                width="100%"
-                height="auto"
-              />
-              <figcaption className="card-content">
-                <h2>{t(`portfolio.${project.key}.title`)}</h2>
-                <p>{t(`portfolio.${project.key}.description`)}</p>
-              </figcaption>
-            </figure>
+            <img
+              src={project.image}
+              alt={t(`portfolio.${project.key}.title`)}
+              loading="lazy"
+              decoding="async"
+              className="portfolio-img"
+              width="100%"
+              height="auto"
+            />
+            <div className="card-content">
+              <h2>{t(`portfolio.${project.key}.title`)}</h2>
+              <p>{t(`portfolio.${project.key}.description`)}</p>
+            </div>
           </Link>
         ))}
       </div>

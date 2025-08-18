@@ -1,34 +1,17 @@
-/* ========================================================= */
-/* --- Основные настройки и переменные --- */
-/* ========================================================= */
 :root {
   --primary-color: #007bff;
   --text-color: #222;
   --subtext-color: #666;
   --bg-light: #f9f9f9;
   --bg-white: #fff;
-
   --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   --card-hover-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-
   --font-main: "Segoe UI", sans-serif;
-
-  --accent-color: #f1c40f;
-
-  --spacing-xl: 4rem;
-  --spacing-lg: 2rem;
-  --spacing-md: 1.5rem;
-  --spacing-sm: 1rem;
-
-  --card-transition: transform 0.3s ease, box-shadow 0.3s ease;
-  --image-transition: transform 0.3s ease;
+  --accent-color: #f1c40f; /* Accent color for buttons and highlights */
 }
 
-/* ========================================================= */
-/* --- Стили для страницы портфолио --- */
-/* ========================================================= */
 .portfolio-page {
-  padding: var(--spacing-xl) var(--spacing-lg);
+  padding: 4rem 2rem;
   background: var(--bg-light);
   min-height: 100vh;
   font-family: var(--font-main);
@@ -37,9 +20,9 @@
 }
 
 .portfolio-page h1 {
-  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: 2.5rem;
   text-align: center;
   color: var(--primary-color);
   text-transform: uppercase;
@@ -49,25 +32,20 @@
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--spacing-lg);
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: 2rem;
 }
 
-/* ========================================================= */
-/* --- Стили для карточки проекта --- */
-/* ========================================================= */
 .portfolio-card {
   background: var(--bg-white);
   border-radius: 16px;
   box-shadow: var(--card-shadow);
   overflow: hidden;
   cursor: pointer;
-  transition: var(--card-transition);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   text-decoration: none;
-  color: inherit;
+  position: relative;
 }
 
 .portfolio-card:hover {
@@ -75,33 +53,22 @@
   box-shadow: var(--card-hover-shadow);
 }
 
-.portfolio-figure {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.portfolio-img {
+.portfolio-card img {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  height: 220px;
   object-fit: cover;
-  transition: var(--image-transition);
-  border-radius: 16px 16px 0 0;
-  user-select: none;
-  pointer-events: none;
-  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  border-radius: 8px 8px 0 0;
 }
 
-.portfolio-card:hover .portfolio-img {
+.portfolio-card:hover img {
   transform: scale(1.05);
 }
 
 .card-content {
-  padding: var(--spacing-md) var(--spacing-sm);
+  padding: 1.2rem 1rem;
   background: var(--bg-white);
-  flex-grow: 1;
+  border-radius: 0 0 8px 8px;
 }
 
 .card-content h2 {
@@ -115,12 +82,41 @@
   font-size: 0.95rem;
   color: var(--subtext-color);
   line-height: 1.5;
-  margin: 0;
 }
 
-/* ========================================================= */
-/* --- Анимации --- */
-/* ========================================================= */
+.card-content a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .portfolio-card img {
+    height: 180px;
+  }
+
+  .card-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .card-content p {
+    font-size: 0.9rem;
+  }
+
+  .portfolio-page {
+    padding: 2rem 1rem;
+  }
+
+  .portfolio-page h1 {
+    font-size: 2rem;
+  }
+}
+
+/* 🎬 Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -129,26 +125,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* ========================================================= */
-/* --- Адаптивность --- */
-/* ========================================================= */
-@media (max-width: 992px) {
-  .portfolio-page {
-    padding: var(--spacing-xl) var(--spacing-lg);
-  }
-}
-
-@media (max-width: 600px) {
-  .portfolio-page {
-    padding: var(--spacing-lg) var(--spacing-sm);
-  }
-  .portfolio-page h1 {
-    margin-bottom: var(--spacing-lg);
-  }
-  .portfolio-grid {
-    gap: var(--spacing-md);
   }
 }
