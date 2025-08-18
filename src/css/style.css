@@ -33,11 +33,6 @@ a {
   min-height: 75px;
 }
 
-.logo-link {
-  display: flex;
-  align-items: center;
-}
-
 .logo-left {
   height: 60px;
   filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
@@ -243,7 +238,6 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
 }
 
 .bottom-footer {
@@ -271,8 +265,8 @@ main {
 /* Кнопки языка */
 .lang-switcher {
   display: flex;
-  justify-content: center;
-  gap: 8px;
+  justify-content: flex-end; /* Переместил направо для десктопа */
+  align-items: center;
 }
 
 .lang-btn {
@@ -284,6 +278,7 @@ main {
   color: #e0e7ff;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
+  margin-left: 8px;
 }
 
 .lang-btn.active,
@@ -311,22 +306,26 @@ main {
 }
 
 /* ================================== */
-/* Мобильная оптимизация */
+/* Мобильная оптимизация с гамбургер-меню */
 /* ================================== */
 
-/* Скрываем навигационное меню на мобильных */
+/* Скрываем гамбургер-кнопку и мобильное меню на десктопе */
+.menu-toggle,
 .nav-menu-container {
   display: none;
 }
 
-/* Показываем гамбургер-кнопку на мобильных */
-.menu-toggle {
+/* Скрываем десктопные элементы на мобильных */
+.desktop-lang-switcher {
+  display: flex;
+}
+.mobile-lang-switcher {
   display: none;
 }
 
 /* Медиазапросы для экранов меньше 768px */
 @media (max-width: 768px) {
-  /* Показываем гамбургер-кнопку */
+  /* Показываем гамбургер-кнопку и скрываем десктопное меню */
   .menu-toggle {
     display: block;
     position: relative;
@@ -336,6 +335,34 @@ main {
     cursor: pointer;
   }
   
+  .nav-menu-container {
+    display: block; /* Показываем контейнер на мобильных */
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    background-color: #004080;
+    padding-top: 80px;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+    transition: right 0.4s ease-in-out;
+    z-index: 100;
+  }
+
+  .nav-menu-open {
+    right: 0;
+  }
+  
+  .desktop-lang-switcher {
+    display: none;
+  }
+  .mobile-lang-switcher {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
   /* Стили для гамбургер-иконки */
   .hamburger-icon,
   .hamburger-icon::before,
@@ -374,25 +401,6 @@ main {
   }
 
   /* Мобильное меню */
-  .nav-menu-container {
-    display: block; /* Показываем контейнер на мобильных */
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    max-width: 300px;
-    height: 100%;
-    background-color: #004080;
-    padding-top: 80px;
-    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
-    transition: right 0.4s ease-in-out;
-    z-index: 100;
-  }
-
-  .nav-menu-open {
-    right: 0;
-  }
-
   .nav-menu {
     flex-direction: column;
     width: 100%;
