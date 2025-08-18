@@ -1,7 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, isSupported as isAnalyticsSupported } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
-import { getMessaging } from "firebase/messaging";
+import { getMessaging, isSupported as isMessagingSupported } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,9 +13,30 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
-const messaging = getMessaging(app);
+// Инициализация (только один раз)
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-export { db, messaging, analytics };
+// Firestore — база данных
+const db = getFirestore(app);
+
+// Analytics — только в браузере (иначе упадет на сервере)
+let analytics = null;
+if (typeof window !== "undefined") {
+  isAnalyticsSupported().then((ok) => {
+    if (ok) {
+      analytics = getAnalytics(app);
+    }
+  });
+}
+
+// Messaging — проверяем поддержку (например, не везде есть Service Workers)
+let messaging = null;
+if (typeof window !== "undefined") {
+  isMessagingSupported().then((ok) => {
+    if (ok) {
+      messaging = getMessaging(app);
+    }
+  });
+}
+
+export { db, analytics, messaging };

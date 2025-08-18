@@ -20,11 +20,15 @@ const ContactsPage = () => {
 
   useEffect(() => {
     AOS.init({ once: true, duration: 600 });
-    import("../firebaseLazy").then(({ db }) => {
-      dbRef.current = db;
-    }).catch((error) => {
-      console.error("Ошибка загрузки Firebase:", error);
-    });
+
+    // Ленивая загрузка Firebase
+    import("../firebaseLazy")
+      .then(({ db }) => {
+        dbRef.current = db;
+      })
+      .catch((error) => {
+        console.error("❌ Ошибка загрузки Firebase:", error);
+      });
   }, []);
 
   const handleChange = (e) => {
@@ -39,10 +43,10 @@ const ContactsPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmissionStatus(null);
-    
+
     const db = dbRef.current;
     if (!db) {
-      console.error("Firebase database is not initialized.");
+      console.error("❌ Firebase database не инициализирована");
       setSubmissionStatus("error");
       setIsSubmitting(false);
       return;
@@ -57,14 +61,9 @@ const ContactsPage = () => {
       });
 
       setSubmissionStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
+      setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
-      console.error("Ошибка при отправке заявки в Firebase:", error);
+      console.error("❌ Ошибка при отправке заявки:", error);
       setSubmissionStatus("error");
     } finally {
       setIsSubmitting(false);
@@ -75,18 +74,17 @@ const ContactsPage = () => {
     <main className="contacts-page">
       <Helmet>
         <title>{t("meta.contactsTitle")}</title>
-        <meta
-          name="description"
-          content={t("meta.contactsDescription")}
-        />
+        <meta name="description" content={t("meta.contactsDescription")} />
       </Helmet>
-      
+
       <div className="container">
         <h1 data-aos="fade-up">{t("contacts.heading")}</h1>
         <p data-aos="fade-up" data-aos-delay="100">
           {t("contacts.description")}
         </p>
+
         <div className="contacts-content">
+          {/* 🔹 Контактные данные */}
           <section className="contact-info" data-aos="fade-right" data-aos-delay="200">
             <h2 className="section-title">{t("contacts.detailsTitle")}</h2>
             <div className="info-item">
@@ -107,6 +105,8 @@ const ContactsPage = () => {
               <p>{t("contacts.address")}</p>
             </div>
           </section>
+
+          {/* 🔹 Форма */}
           <section className="contact-form-section" data-aos="fade-left" data-aos-delay="200">
             <h2 className="section-title">{t("contacts.formTitle")}</h2>
             <form className="contact-form" onSubmit={handleSubmit}>
@@ -157,13 +157,15 @@ const ContactsPage = () => {
             </form>
           </section>
         </div>
+
+        {/* 🔹 Карта */}
         <section className="map-section" data-aos="fade-up" data-aos-delay="300">
           <h2 className="section-title">{t("contacts.mapTitle")}</h2>
           <div className="map-container">
             <iframe
               title="Google Map Location"
-              src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Radekhiv"
-              allowFullScreen=""
+              src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}&q=Radekhiv`}
+              allowFullScreen
               loading="lazy"
             ></iframe>
           </div>
