@@ -1,107 +1,140 @@
-/* Общие стили для админ-панели */
-.admin-panel {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: Arial, sans-serif;
-  color: #333;
+/* src/styles/AdminPanel.css */
+
+/* 🎨 Дизайн-токены */
+:root {
+  --color-primary: #007bff;
+  --color-primary-dark: #0056b3;
+  --color-danger: #dc3545;
+  --color-danger-dark: #c82333;
+  --color-success: #28a745;
+  --color-success-dark: #218838;
+  --color-warning: #ffc107;
+  --color-info: #17a2b8;
+  --color-text: #343a40;
+  --color-subtext: #6c757d;
+  --color-bg-light: #f8f9fa;
+  --color-bg-white: #ffffff;
+  --color-border: #e9ecef;
+  --font-family-base: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --border-radius-base: 8px;
+  --transition-base: all 0.3s ease;
 }
 
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-bg-light);
+  color: var(--color-text);
+}
+
+/* 📋 Секция Админ-панели */
+.admin-panel {
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Заголовок --- */
 .admin-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .admin-header h1 {
-  color: #003366;
+  font-size: 2.25rem;
   margin: 0;
+  color: var(--color-primary);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.75rem;
 }
 
 .header-stats {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .header-stats p {
   margin: 0;
-  font-size: 1.1em;
-  color: #555;
+  font-size: 1rem;
+  color: var(--color-subtext);
 }
 
 .logout-btn {
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--color-danger);
+  color: var(--color-bg-white);
   border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
+  padding: 0.6rem 1rem;
+  border-radius: var(--border-radius-base);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: var(--transition-base);
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 0.5rem;
 }
 
 .logout-btn:hover {
-  background-color: #c82333;
+  background-color: var(--color-danger-dark);
 }
 
-/* Стили для формы входа */
+/* --- Форма входа --- */
 .admin-login {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 80vh;
-  gap: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 30px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  gap: 1.5rem;
+  background-color: var(--color-bg-white);
+  border-radius: var(--border-radius-base);
+  padding: 2rem;
+  box-shadow: var(--shadow-base);
   max-width: 400px;
-  margin: 50px auto;
+  margin: 3rem auto;
 }
 
 .admin-login h2 {
-  color: #003366;
-  margin-bottom: 20px;
+  font-size: 1.75rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.5rem;
 }
 
 .admin-login input[type="password"] {
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
   width: 100%;
   max-width: 300px;
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 .admin-login button {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-bg-white);
   border: none;
-  padding: 12px 25px;
-  border-radius: 5px;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-base);
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1.1em;
+  transition: var(--transition-base);
+  font-size: 1rem;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .admin-login button:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--color-primary-dark);
 }
 
 .admin-login button:disabled {
@@ -110,20 +143,20 @@
 }
 
 .error-text {
-  color: #dc3545;
-  margin-top: 10px;
+  color: var(--color-danger);
+  margin-top: 1rem;
   font-weight: bold;
   text-align: center;
 }
 
-/* Стили для элементов управления (поиск, экспорт, пагинация) */
+/* --- Элементы управления --- */
 .admin-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap; /* Для адаптивности */
-  gap: 15px;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .search-container {
@@ -132,164 +165,163 @@
 }
 
 .search-input {
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
   width: 100%;
   box-sizing: border-box;
 }
 
 .export-btn {
-  background-color: #28a745;
-  color: white;
+  background-color: var(--color-success);
+  color: var(--color-bg-white);
   border: none;
-  padding: 10px 18px;
-  border-radius: 5px;
+  padding: 0.6rem 1rem;
+  border-radius: var(--border-radius-base);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: var(--transition-base);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .export-btn:hover {
-  background-color: #218838;
+  background-color: var(--color-success-dark);
 }
 
 .pagination-controls {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.95em;
-  color: #555;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--color-subtext);
 }
 
 .pagination-controls select {
-  padding: 6px 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: white;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-base);
+  background-color: var(--color-bg-white);
 }
 
-/* Стили для таблицы */
+/* --- Таблица --- */
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-base);
+  background-color: var(--color-bg-white);
+  border-radius: var(--border-radius-base);
+  overflow: hidden;
 }
 
 .admin-table th,
 .admin-table td {
-  border: 1px solid #eee;
-  padding: 12px 15px;
+  border: 1px solid var(--color-border);
+  padding: 0.75rem 1rem;
   text-align: left;
 }
 
 .admin-table th {
-  background-color: #f2f2f2;
+  background-color: var(--color-bg-light);
   font-weight: bold;
   cursor: pointer;
-  white-space: nowrap; /* Предотвращает перенос текста в заголовках */
-  display: table-cell; /* Важно для работы display flex с иконками */
-  align-items: center;
-  gap: 5px;
+  white-space: nowrap;
 }
 
 .admin-table th:hover {
-  background-color: #e9e9e9;
+  background-color: #e9ecef;
 }
 
 .admin-table th svg {
   vertical-align: middle;
-  margin-left: 5px;
+  margin-left: 0.25rem;
 }
 
 .admin-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: #f7f7f7;
 }
 
 .admin-table tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: #f1f3f5;
 }
 
 .message-cell {
-  max-width: 250px; /* Ограничиваем ширину ячейки с сообщением */
+  max-width: 250px;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Добавляем троеточие */
-  cursor: pointer; /* Указываем, что ячейка кликабельна */
+  text-overflow: ellipsis;
+  cursor: pointer;
 }
 
-/* Стили для селектора статуса */
+/* --- Статусы --- */
 .status-select {
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: white;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid;
+  border-radius: var(--border-radius-base);
+  background-color: var(--color-bg-white);
   cursor: pointer;
   font-weight: bold;
   min-width: 120px;
   text-align: center;
+  transition: var(--transition-base);
 }
 
-/* Цветовые стили для статусов */
-.status-select.status-new {
-  color: #007bff; /* Синий */
-  border-color: #007bff;
+.status-new {
+  color: var(--color-warning);
+  border-color: var(--color-warning);
 }
 
-.status-select.status-in-progress {
-  color: #ffc107; /* Желтый */
-  border-color: #ffc107;
+.status-in-progress {
+  color: var(--color-info);
+  border-color: var(--color-info);
 }
 
-.status-select.status-done {
-  color: #28a745; /* Зеленый */
-  border-color: #28a745;
+.status-done {
+  color: var(--color-success);
+  border-color: var(--color-success);
 }
 
-/* Кнопка удаления */
+/* --- Кнопка удаления --- */
 .delete-btn {
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--color-danger);
+  color: var(--color-bg-white);
   border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
+  padding: 0.6rem;
+  border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: var(--transition-base);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
 }
 
 .delete-btn:hover {
-  background-color: #c82333;
+  background-color: var(--color-danger-dark);
+  transform: scale(1.1);
 }
 
-/* Пагинация */
+/* --- Пагинация --- */
 .pagination {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .pagination button {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-bg-white);
   border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-base);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: var(--transition-base);
 }
 
 .pagination button:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--color-primary-dark);
 }
 
 .pagination button:disabled {
@@ -299,167 +331,157 @@
 
 .pagination span {
   font-weight: bold;
-  color: #555;
+  color: var(--color-subtext);
 }
 
-/* Состояния загрузки и отсутствия данных */
+/* --- Состояния --- */
 .loading-spinner,
-.no-data {
+.no-data,
+.error-text {
   text-align: center;
-  padding: 20px;
-  font-size: 1.2em;
-  color: #666;
+  padding: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--color-subtext);
 }
 
 .no-data {
   font-style: italic;
 }
 
-/* Стили для модального окна (из вашего компонента Modal.jsx) */
-/* Убедитесь, что стили для Modal.jsx присутствуют и работают */
-/* Пример базовых стилей для Modal (если их нет) */
-/* .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+.error-text {
+  color: var(--color-danger);
+  font-weight: bold;
 }
 
-.modal-content {
-  background-color: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  max-width: 500px;
-  width: 90%;
-  text-align: center;
-  position: relative;
-}
-
-.modal-content h3 {
-  margin-top: 0;
-  color: #003366;
-}
-
-.modal-content p {
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.modal-buttons button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background-color 0.3s ease;
-}
-
-.modal-buttons .confirm-btn {
-  background-color: #dc3545;
-  color: white;
-}
-
-.modal-buttons .confirm-btn:hover {
-  background-color: #c82333;
-}
-
-.modal-buttons .cancel-btn {
-  background-color: #6c757d;
-  color: white;
-}
-
-.modal-buttons .cancel-btn:hover {
-  background-color: #5a6268;
-} */
-
-
-/* Стили для деталей заявки в модальном окне */
+/* --- Модальные окна --- */
 .submission-details {
   text-align: left;
   line-height: 1.6;
 }
 
 .submission-details p {
-  margin-bottom: 8px;
-  word-wrap: break-word; /* Перенос длинных слов */
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
 }
 
 .submission-details strong {
-  color: #003366;
+  color: var(--color-primary);
 }
 
 .submission-message {
-  margin-top: 15px;
+  margin-top: 1.5rem;
   font-weight: bold;
 }
 
 .extra-links {
-  margin-top: 30px;
+  margin-top: 2rem;
   text-align: center;
 }
 
 .report-link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
   background-color: #6f42c1;
-  color: white;
+  color: var(--color-bg-white);
   text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  border-radius: var(--border-radius-base);
+  transition: var(--transition-base);
 }
 
 .report-link:hover {
   background-color: #5f35af;
 }
 
-/* Адаптивность */
+/* 📱 Адаптивность */
 @media (max-width: 768px) {
-  .admin-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-
+  .admin-header,
   .admin-controls {
     flex-direction: column;
     align-items: stretch;
-    gap: 15px;
+    gap: 1rem;
   }
-
   .header-stats {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .search-container {
     width: 100%;
-    justify-content: space-between;
   }
-
-  .admin-table th, .admin-table td {
-    padding: 10px;
-    font-size: 0.9em;
+  .admin-table {
+    font-size: 0.9rem;
   }
-
-  .admin-table th {
-    white-space: normal; /* Разрешаем перенос текста в заголовках на маленьких экранах */
+  .admin-table th,
+  .admin-table td {
+    padding: 0.75rem;
   }
-
   .message-cell {
-    max-width: 150px; /* Уменьшаем ширину на мобильных */
+    max-width: 100%;
+    white-space: normal;
   }
-
   .pagination {
-    justify-content: space-around;
+    justify-content: center;
+  }
+}
+
+/* Улучшение читабельности таблицы на мобильных устройствах */
+@media (max-width: 600px) {
+  .admin-table thead {
+    display: none;
+  }
+  .admin-table,
+  .admin-table tbody,
+  .admin-table tr,
+  .admin-table td {
+    display: block;
+    width: 100%;
+  }
+  .admin-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--shadow-base);
+  }
+  .admin-table td {
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+  }
+  .admin-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0.75rem;
+    width: 45%;
+    padding-right: 1rem;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: var(--color-primary);
+  }
+  .admin-table td:nth-child(1)::before {
+    content: "Имя";
+  }
+  .admin-table td:nth-child(2)::before {
+    content: "Email";
+  }
+  .admin-table td:nth-child(3)::before {
+    content: "Телефон";
+  }
+  .admin-table td:nth-child(4)::before {
+    content: "Сообщение";
+  }
+  .admin-table td:nth-child(5)::before {
+    content: "Статус";
+  }
+  .admin-table td:nth-child(6)::before {
+    content: "Дата";
+  }
+  .admin-table td:nth-child(7)::before {
+    content: "Действия";
+  }
+  .admin-table .message-cell {
+    white-space: normal;
   }
 }

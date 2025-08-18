@@ -4,11 +4,10 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDoc,
   updateDoc,
   query,
   orderBy,
-  onSnapshot, // Импорт onSnapshot для реального времени
+  onSnapshot,
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
 import {
@@ -21,7 +20,7 @@ import {
   FaSortDown,
 } from "react-icons/fa";
 import "../styles/AdminPanel.css";
-import Modal from "./Modal"; // Предполагается, что у вас есть компонент Modal.jsx
+import Modal from "./Modal";
 
 // Определение опций статусов с классами для стилизации
 const statusOptions = {
@@ -43,38 +42,75 @@ const AdminPanel = ({ enableExport = true }) => {
     direction: "descending",
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10); // По умолчанию 10 элементов на страницу
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [submissionToDelete, setSubmissionToDelete] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [submissionDetails, setSubmissionDetails] = useState(null);
 
-  const dbRef = useRef(null); // Используем useRef для хранения ссылки на базу данных
+  const dbRef = useRef(null);
+  const prevSortConfig = useRef(null);
 
-  // Функция для форматирования даты
-  const formatFirestoreTimestamp = (timestamp) => {
+  const formatFirestoreTimestamp = useCallback((timestamp) => {
     if (!timestamp || !timestamp.seconds) return "—";
-    return new Date(timestamp.seconds * 1000).toLocaleString("uk-UA");
-  };
+    const date = new Date(timestamp.seconds * 1000);
+    return date.toLocaleString("uk-UA");
+  }, []);
 
-  // Инициализация Firebase и подписка на данные
-  useEffect(() => {
-    if (!authenticated) {
-      setLoading(false); // Остановить загрузку, если не аутентифицирован
+  const handleLogin = useCallback(() => {
+    const adminPass = import.meta.env.VITE_ADMIN_PASS; // Используем VITE_ для Vite
+
+    if (!adminPass) {
+      setError("⚠️ Пароль администратора не задан. Проверьте файл .env.");
       return;
     }
 
+    if (password.trim() !== adminPass.trim()) {
+      setError("Неверный пароль.");
+      return;
+    }
+
+    setAuthenticated(true);
+    setPassword("");
+    setError("");
+  }, [password]);
+
+  const handleLogout = useCallback(() => {
+    setAuthenticated(false);
+    setViews(null);
+    setSubmissions([]);
+    dbRef.current = null;
+  }, []);
+
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Enter") handleLogin();
+    },
+    [handleLogin]
+  );
+
+  useEffect(() => {
+    if (!authenticated) {
+      setLoading(false);
+      return;
+    }
+
+    // Если sortConfig не изменился, не нужно переподписываться
+    if (prevSortConfig.current && prevSortConfig.current.key === sortConfig.key && prevSortConfig.current.direction === sortConfig.direction) {
+        return;
+    }
+
     setLoading(true);
+    prevSortConfig.current = sortConfig;
+
     let unsubscribeSubmissions;
     let unsubscribeViews;
 
-    // Динамический импорт Firebase
     import("../firebaseLazy")
       .then(({ db: loadedDb }) => {
         dbRef.current = loadedDb;
         const db = dbRef.current;
 
-        // Подписка на заявки (submissions)
         const submissionsQuery = query(
           collection(db, "submissions"),
           orderBy(
@@ -82,6 +118,7 @@ const AdminPanel = ({ enableExport = true }) => {
             sortConfig.direction === "ascending" ? "asc" : "desc"
           )
         );
+
         unsubscribeSubmissions = onSnapshot(
           submissionsQuery,
           (snapshot) => {
@@ -92,7 +129,7 @@ const AdminPanel = ({ enableExport = true }) => {
             }));
             setSubmissions(fetchedSubmissions);
             setLoading(false);
-            setError(""); // Очистить ошибку после успешной загрузки
+            setError("");
           },
           (err) => {
             console.error("Ошибка при получении заявок:", err);
@@ -101,7 +138,6 @@ const AdminPanel = ({ enableExport = true }) => {
           }
         );
 
-        // Подписка на просмотры (views)
         const viewsDocRef = doc(db, "views", "home");
         unsubscribeViews = onSnapshot(
           viewsDocRef,
@@ -110,7 +146,6 @@ const AdminPanel = ({ enableExport = true }) => {
           },
           (err) => {
             console.error("Ошибка при получении просмотров:", err);
-            // setError("Ошибка загрузки просмотров."); // Можно добавить отдельную ошибку, но обычно не критично
           }
         );
       })
@@ -120,116 +155,84 @@ const AdminPanel = ({ enableExport = true }) => {
         setLoading(false);
       });
 
-    // Функция очистки подписок при размонтировании компонента или изменении authenticated
     return () => {
       if (unsubscribeSubmissions) unsubscribeSubmissions();
       if (unsubscribeViews) unsubscribeViews();
     };
-  }, [authenticated, sortConfig]); // Перезапускать эффект при изменении authenticated или sortConfig
+  }, [authenticated, sortConfig]);
 
-  const handleDelete = (id) => {
+  const handleDelete = useCallback((id) => {
     setSubmissionToDelete(id);
     setShowDeleteModal(true);
-  };
+  }, []);
 
-  const confirmDelete = async () => {
+  const confirmDelete = useCallback(async () => {
     const db = dbRef.current;
     if (!db || !submissionToDelete) return;
     try {
       await deleteDoc(doc(db, "submissions", submissionToDelete));
-      // setSubmissions((prev) => prev.filter((s) => s.id !== submissionToDelete)); // onSnapshot обновит сам
       setShowDeleteModal(false);
       setSubmissionToDelete(null);
     } catch (err) {
       alert("Не удалось удалить.");
       console.error(err);
     }
-  };
+  }, [submissionToDelete]);
 
-  const handleUpdateStatus = async (id, newStatus) => {
+  const handleUpdateStatus = useCallback(async (id, newStatus) => {
     const db = dbRef.current;
     if (!db) return;
     try {
       await updateDoc(doc(db, "submissions", id), {
         status: newStatus,
       });
-      // setSubmissions((prev) =>
-      //   prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s))
-      // ); // onSnapshot обновит сам
     } catch (err) {
       alert("Не удалось обновить статус.");
       console.error(err);
     }
-  };
+  }, []);
 
-  const exportToExcel = () => {
+  const handleSort = useCallback((key) => {
+    setSortConfig((prevConfig) => ({
+      key,
+      direction:
+        prevConfig.key === key && prevConfig.direction === "ascending"
+          ? "descending"
+          : "ascending",
+    }));
+    setCurrentPage(1);
+  }, []);
+
+  const getSortIcon = useCallback(
+    (key) => {
+      if (sortConfig.key !== key) {
+        return <FaSort />;
+      }
+      if (sortConfig.direction === "ascending") {
+        return <FaSortUp />;
+      }
+      return <FaSortDown />;
+    },
+    [sortConfig]
+  );
+
+  const handleRowClick = useCallback((submission) => {
+    setSubmissionDetails(submission);
+    setShowDetailsModal(true);
+  }, []);
+
+  const exportToExcel = useCallback(() => {
     const dataToExport = submissions.map(
       ({ id, createdAt, ...rest }) => ({
         ...rest,
-        createdAt: formatFirestoreTimestamp(createdAt), // Форматируем дату для Excel
+        createdAt: formatFirestoreTimestamp(createdAt),
       })
     );
     const sheet = XLSX.utils.json_to_sheet(dataToExport);
     const book = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(book, sheet, "Заявки");
     XLSX.writeFile(book, "submissions.xlsx");
-  };
-
-  const handleLogin = () => {
-    const adminPass = process.env.REACT_APP_ADMIN_PASS;
-
-    if (!adminPass) {
-      setError("⚠️ Пароль администратора не задан в .env.local или среде.");
-      return;
-    }
-
-    if (password.trim() !== adminPass.trim()) {
-      setError("Неверный пароль.");
-      return;
-    }
-
-    setTimeout(() => {
-      setAuthenticated(true);
-      setPassword("");
-      setError("");
-    }, 300);
-  };
-
-  const handleLogout = () => {
-    setAuthenticated(false);
-    setViews(null);
-    setSubmissions([]);
-    // Дополнительная логика очистки, если требуется (например, сброс dbRef.current = null)
-    dbRef.current = null;
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleLogin();
-  };
-
-  const handleSort = (key) => {
-    let direction = "ascending";
-    if (sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
-    setCurrentPage(1); // Сбросить страницу при сортировке
-  };
-
-  const getSortIcon = (key) => {
-    if (sortConfig.key !== key) {
-      return <FaSort />;
-    }
-    if (sortConfig.direction === "ascending") {
-      return <FaSortUp />;
-    }
-    return <FaSortDown />;
-  };
-
-  const handleRowClick = (submission) => {
-    setSubmissionDetails(submission);
-    setShowDetailsModal(true);
-  };
+  }, [submissions, formatFirestoreTimestamp]);
 
   const filteredSubmissions = submissions.filter(
     ({ name, email, phone, message }) =>
@@ -294,7 +297,7 @@ const AdminPanel = ({ enableExport = true }) => {
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
-              setCurrentPage(1); // Сбросить страницу при поиске
+              setCurrentPage(1);
             }}
             className="search-input"
           />
@@ -306,12 +309,13 @@ const AdminPanel = ({ enableExport = true }) => {
             value={itemsPerPage}
             onChange={(e) => {
               setItemsPerPage(Number(e.target.value));
-              setCurrentPage(1); // Сбросить на первую страницу при изменении кол-ва элементов
+              setCurrentPage(1);
             }}
           >
             <option value={10}>10</option>
             <option value={20}>20</option>
             <option value={50}>50</option>
+            <option value={100}>100</option>
           </select>
         </div>
         {enableExport && submissions.length > 0 && (
@@ -364,9 +368,7 @@ const AdminPanel = ({ enableExport = true }) => {
                       onClick={() => handleRowClick({ name, email, phone, message, createdAt })}
                       title="Нажмите, чтобы прочитать полностью"
                     >
-                      {message?.length > 50
-                        ? `${message.substring(0, 50)}...`
-                        : message}
+                      {message?.length > 50 ? `${message.substring(0, 50)}...` : message}
                     </td>
                     <td>
                       <select
@@ -397,7 +399,7 @@ const AdminPanel = ({ enableExport = true }) => {
           </table>
           <div className="pagination">
             <button
-              onClick={() => setCurrentPage(currentPage - 1)}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
               disabled={currentPage === 1}
             >
               Предыдущая
@@ -406,8 +408,8 @@ const AdminPanel = ({ enableExport = true }) => {
               Страница {currentPage} из {totalPages}
             </span>
             <button
-              onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              disabled={currentPage === totalPages || totalPages === 0}
             >
               Следующая
             </button>
@@ -430,11 +432,22 @@ const AdminPanel = ({ enableExport = true }) => {
           onCancel={() => setShowDetailsModal(false)}
         >
           <div className="submission-details">
-            <p><strong>Имя:</strong> {submissionDetails.name}</p>
-            <p><strong>Email:</strong> {submissionDetails.email}</p>
-            <p><strong>Телефон:</strong> {submissionDetails.phone}</p>
-            <p><strong>Дата:</strong> {formatFirestoreTimestamp(submissionDetails.createdAt)}</p>
-            <p className="submission-message"><strong>Сообщение:</strong></p>
+            <p>
+              <strong>Имя:</strong> {submissionDetails.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {submissionDetails.email}
+            </p>
+            <p>
+              <strong>Телефон:</strong> {submissionDetails.phone}
+            </p>
+            <p>
+              <strong>Дата:</strong>{" "}
+              {formatFirestoreTimestamp(submissionDetails.createdAt)}
+            </p>
+            <p className="submission-message">
+              <strong>Сообщение:</strong>
+            </p>
             <p>{submissionDetails.message}</p>
           </div>
         </Modal>
