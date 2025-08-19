@@ -8,47 +8,32 @@ import "../styles/PortfolioPage.css";
 
 const projects = [
   {
-    image: "/img/portfolio/project14",
+    image: "/img/portfolio/project14.webp",
     key: "project1",
-    width: 1280,
-    height: 720,
-    priority: true, // 🚀 LCP элемент
   },
   {
-    image: "/img/portfolio/project10",
+    image: "/img/portfolio/project10.webp",
     key: "project2",
-    width: 1280,
-    height: 720,
   },
   {
-    image: "/img/portfolio/project12",
+    image: "/img/portfolio/project12.webp",
     key: "project3",
-    width: 1280,
-    height: 720,
   },
   {
-    image: "/img/portfolio/project7",
+    image: "/img/portfolio/project7.webp",
     key: "project4",
-    width: 1280,
-    height: 720,
   },
   {
-    image: "/img/portfolio/project13",
+    image: "/img/portfolio/project13.webp",
     key: "project5",
-    width: 1280,
-    height: 720,
   },
   {
-    image: "/img/portfolio/project2",
+    image: "/img/portfolio/project2.webp",
     key: "project6",
-    width: 1280,
-    height: 720,
   },
   {
-    image: "/img/portfolio/project1",
+    image: "/img/portfolio/project1.webp",
     key: "project7",
-    width: 1280,
-    height: 720,
   },
 ];
 
@@ -76,24 +61,17 @@ const PortfolioPage = () => {
             className="portfolio-card"
             data-aos="fade-up"
             data-aos-delay={index * 100}
-            aria-label={`${t(`portfolio.${project.key}.title`)} — ${t(
-              `portfolio.${project.key}.description`
-            )}`}
+            aria-label={`${t(`portfolio.${project.key}.title`)} — ${t(`portfolio.${project.key}.description`)}`}
           >
-            <picture>
-              <source srcSet={`${project.image}.avif`} type="image/avif" />
-              <source srcSet={`${project.image}.webp`} type="image/webp" />
-              <img
-                src={`${project.image}.jpg`}
-                alt={t(`portfolio.${project.key}.title`)}
-                width={project.width}
-                height={project.height}
-                className="portfolio-img"
-                loading={project.priority ? "eager" : "lazy"}
-                fetchpriority={project.priority ? "high" : undefined}
-                decoding="async"
-              />
-            </picture>
+            <img
+              src={project.image}
+              alt={t(`portfolio.${project.key}.title`)}
+              loading="lazy"
+              decoding="async"
+              className="portfolio-img"
+              width="100%"
+              height="auto"
+            />
             <div className="card-content">
               <h2>{t(`portfolio.${project.key}.title`)}</h2>
               <p>{t(`portfolio.${project.key}.description`)}</p>

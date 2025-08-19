@@ -13,8 +13,8 @@
 }
 
 body, main {
-  margin: 0;
-  padding: 0;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 .home-page {
@@ -33,12 +33,15 @@ body, main {
   min-height: 100dvh;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column; /* Изменено: Используем Flexbox */
+  justify-content: flex-start; /* Изменено: Выравниваем к верху */
+  align-items: center; /* Центрируем по горизонтали */
   text-align: center;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
   color: #fff;
-  animation: fadeIn 0.8s ease-in-out;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .hero-background-img {
@@ -48,6 +51,8 @@ body, main {
   height: 100%;
   object-fit: cover;
   z-index: 0;
+  user-select: none;
+  pointer-events: none;
 }
 
 .hero-overlay {
@@ -59,24 +64,29 @@ body, main {
 
 .hero-content {
   position: relative;
+  top: auto;
+  width: 100%;
   max-width: 1200px;
-  margin-top: 80px;
+  margin: 80px auto 0 auto; /* Увеличили верхний отступ, чтобы опустить контент под шапку */
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   text-wrap: balance;
-  animation: fadeUp 0.8s ease-out forwards;
+  animation: fadeUp 1s ease-out forwards;
   z-index: 2;
 }
 
 .hero-title, .fancy-title {
   font-size: clamp(2.4rem, 6vw, 4rem);
   font-weight: 900;
-  margin-bottom: 0.5rem;
-  color: #fff;
+  margin: 0 0 0.5rem 0 !important;
+  color: #fff !important;
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  font-family: var(--font-main);
   text-align: center;
   width: 100%;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -85,18 +95,23 @@ body, main {
 .hero-subtitle {
   font-size: clamp(1rem, 2.5vw, 1.6rem);
   font-weight: 500;
-  margin-bottom: 0.8rem;
-  color: #f1f1f1;
+  margin: 0 0 0.8rem 0 !important;
+  color: #f1f1f1 !important;
   text-align: center;
   max-width: 800px;
+  width: 100%;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .hero-buttons {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   gap: 1rem;
   justify-content: center;
+  align-items: center;
   width: 100%;
+  margin: 0 !important;
 }
 
 /* 🔘 Buttons */
@@ -104,11 +119,12 @@ body, main {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
+  font-family: var(--font-main);
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
 }
 
 .btn:hover {
@@ -160,8 +176,9 @@ body, main {
 .feature-card {
   background: var(--accent-bg);
   padding: 2rem 1rem;
-  border-radius: 12px;
+  border-radius: 10px;
   transition: box-shadow 0.3s, transform 0.3s;
+  animation: fadeUp 0.6s ease-in-out;
 }
 
 .feature-card:hover {
@@ -171,7 +188,7 @@ body, main {
 
 .feature-icon {
   width: 64px;
-  height: 64px;
+  height: auto;
   margin-bottom: 1rem;
 }
 
@@ -188,26 +205,84 @@ body, main {
 
 /* 🌀 Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🔕 Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* 📱 Responsive */
 @media (max-width: 992px) {
-  .hero-content { margin-top: 60px; }
-  .hero-title { font-size: 3rem; }
-  .hero-subtitle { font-size: 1.15rem; }
-  .hero-buttons { gap: 0.5rem; }
+  .hero {
+    align-items: flex-start;
+    margin-top: 0 !important;
+    padding: 0 !important;
+  }
+  .hero-content {
+    top: auto;
+    margin-top: 60px;
+  }
+  .hero-title, .fancy-title {
+    font-size: 3rem;
+    letter-spacing: 1px;
+    margin: 0 0 0.3rem 0 !important;
+  }
+  .hero-subtitle {
+    font-size: 1.15rem;
+    margin: 0 0 0.5rem 0 !important;
+  }
+  .hero-buttons {
+    gap: 0.5rem;
+  }
+  .hero-buttons .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 600px) {
-  .hero-content { margin-top: 50px; }
-  .hero-title { font-size: 2.2rem; }
-  .hero-subtitle { font-size: 1rem; }
-  .features-grid { grid-template-columns: 1fr; }
+  .hero {
+    align-items: flex-start;
+    margin-top: 0 !important;
+    padding: 0 !important;
+  }
+  .hero-content {
+    top: auto;
+    margin-top: 60px;
+  }
+  .hero-title, .fancy-title {
+    font-size: 2.4rem;
+    margin: 0 0 0.3rem 0 !important;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+    margin: 0 0 0.5rem 0 !important;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
 }
