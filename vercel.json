@@ -1,45 +1,46 @@
 {
+  "version": 2,
+  "trailingSlash": false,
+  "cleanUrls": true,
+
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/service-worker.js", "destination": "/service-worker.js" },
+    { "source": "/manifest.json", "destination": "/manifest.json" },
+    { "source": "/icons/:path*", "destination": "/icons/:path*" },
+    { "source": "/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/:path*", "destination": "/index.html" }
   ],
+
   "headers": [
     {
-      "source": "/assets/(.*)",
+      "source": "/assets/:path*",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {
-      "source": "/(.*)\\.(ico|png|svg|json|js|css|woff2)",
+      "source": "/icons/:path*",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {
-      "source": "/index.html",
+      "source": "/manifest.json",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
+        { "key": "Content-Type", "value": "application/manifest+json" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
     },
     {
       "source": "/service-worker.js",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
     }
   ]
