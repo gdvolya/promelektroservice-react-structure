@@ -1,25 +1,21 @@
 {
-  "short_name": "ПЕС",
-  "name": "ПромЕлектроСервіс",
+  "short_name": "ПромЕлектроСервіс",
+  "name": "ПромЕлектроСервіс — Професійні електромонтажні послуги",
   "icons": [
     {
       "src": "/icons/icon-192.png",
-      "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
       "src": "/icons/icon-512.png",
-      "type": "image/png",
       "sizes": "512x512",
-      "purpose": "maskable any"
+      "type": "image/png"
     }
   ],
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "orientation": "portrait",
   "theme_color": "#003366",
-  "background_color": "#ffffff",
-  "lang": "uk-UA",
-  "dir": "ltr"
+  "background_color": "#ffffff"
 }

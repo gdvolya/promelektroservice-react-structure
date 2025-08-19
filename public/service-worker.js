@@ -1,6 +1,5 @@
 // service-worker.js
 
-// Версия кеша (увеличили до v4)
 const CACHE_VERSION = 'v4';
 const CACHE_NAME = `promelektroservice-cache-${CACHE_VERSION}`;
 const OFFLINE_URL = '/index.html';
@@ -14,7 +13,7 @@ const urlsToCache = [
   '/icons/icon-512.png'
 ];
 
-// Установка SW
+// Установка
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
@@ -24,12 +23,12 @@ self.addEventListener('install', event => {
   );
 });
 
-// Стратегия кеширования
+// Фетч
 self.addEventListener('fetch', event => {
   const { request } = event;
   if (request.method !== 'GET' || !request.url.startsWith('http')) return;
 
-  // Внешние ресурсы (Google Fonts, API)
+  // Внешние (Google Fonts, API)
   if (/\.(api|googleapis|gstatic)\.com/.test(request.url)) {
     event.respondWith(
       caches.match(request).then(cached => {
@@ -50,11 +49,11 @@ self.addEventListener('fetch', event => {
     caches.match(request).then(cached => {
       if (cached) return cached;
       return fetch(request).then(resp => {
-        if (!resp || resp.status !== 200 || resp.type !== 'basic' || resp.url.includes('google')) {
+        if (!resp || resp.status !== 200 || resp.type !== 'basic') {
           return resp;
         }
-        const respClone = resp.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(request, respClone));
+        const clone = resp.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
         return resp;
       }).catch(() => {
         if (request.mode === 'navigate') {
@@ -66,7 +65,7 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Очистка старых кешей
+// Очистка старого кеша
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(names =>
