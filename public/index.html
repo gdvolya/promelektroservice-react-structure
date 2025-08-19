@@ -9,32 +9,70 @@
     />
 
     <title>
-      ПромЕлектроСервіс — Профессиональные электромонтажные услуги для дома и
-      бизнеса
+      ПромЕлектроСервіс — Профессиональные электромонтажные услуги для дома и бизнеса
     </title>
     <meta
       name="description"
       content="ПромЕлектроСервіс — надёжные электромонтажные услуги для дома и бизнеса. Проектирование, монтаж, обслуживание, безопасность и энергоэффективность."
     />
 
+    <!-- 🔹 Progressive Web App -->
     <meta name="theme-color" content="#003366" />
-
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="192x192" href="%PUBLIC_URL%/icons/icon-192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link
+      rel="apple-touch-icon"
+      sizes="192x192"
+      href="%PUBLIC_URL%/icons/icon-192.png"
+    />
+    <link
+      rel="manifest"
+      href="%PUBLIC_URL%/manifest.json"
+      crossorigin="use-credentials"
+    />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- 🔹 Preload hero image (для ускорения LCP) -->
+    <link
+      rel="preload"
+      as="image"
+      href="%PUBLIC_URL%/img/hero.webp"
+      type="image/webp"
+      fetchpriority="high"
+    />
+
+    <!-- 🔹 Preload critical CSS -->
+    <link rel="preload" href="%PUBLIC_URL%/css/style.css" as="style" />
+    <link rel="stylesheet" href="%PUBLIC_URL%/css/style.css" />
+
+    <!-- 🔹 Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
+
+    <!-- 🔹 Open Graph / SEO -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ПромЕлектроСервіс — электромонтажные услуги" />
+    <meta
+      property="og:description"
+      content="Надёжные электромонтажные услуги для дома и бизнеса: проектирование, монтаж, обслуживание."
+    />
+    <meta property="og:image" content="%PUBLIC_URL%/img/hero.webp" />
+    <meta property="og:url" content="https://promelektroservice-react-structure.vercel.app/" />
+
+    <!-- 🔹 Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ПромЕлектроСервіс — электромонтажные услуги" />
+    <meta
+      name="twitter:description"
+      content="Профессиональные электромонтажные работы: от проектирования до обслуживания."
+    />
+    <meta name="twitter:image" content="%PUBLIC_URL%/img/hero.webp" />
   </head>
   <body>
     <noscript>
-      <strong
-        style="display: block; text-align: center; margin: 2rem;"
-      >
+      <strong style="display: block; text-align: center; margin: 2rem;">
         Будь ласка, увімкніть JavaScript для повної функціональності сайту.
       </strong>
     </noscript>

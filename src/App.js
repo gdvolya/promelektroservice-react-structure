@@ -94,6 +94,8 @@ function AppContent() {
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
         <link rel="canonical" href={canonical} />
+        <link rel="preload" as="image" href={logoWebp} type="image/webp" />
+        <link rel="preload" as="image" href={logoPng} type="image/png" />
         {languages.map((lng) => (
           <link
             key={lng}
@@ -156,7 +158,7 @@ function AppContent() {
             <Suspense
               fallback={
                 <div className="loading-spinner" role="status" aria-live="polite">
-                  <div className="spinner" />
+                  <div className="spinner" aria-hidden="true" />
                   <p>{t("loading") || "Завантаження..."}</p>
                 </div>
               }
@@ -176,17 +178,17 @@ function AppContent() {
         </main>
 
         {/* Футер */}
-        <footer className="footer minimized-footer sticky-footer" role="contentinfo">
+        <footer className="footer sticky-footer" role="contentinfo">
           <div className="footer-top">
             <a href="tel:+380666229776" className="footer-link" aria-label={t("phoneLabel") || "Телефон"}>
-              📞 +380666229776
+              <span aria-hidden="true">📞</span> +380666229776
             </a>
             <a
               href="mailto:info@promelektroservice.com"
               className="footer-link"
               aria-label={t("emailLabel") || "Email"}
             >
-              ✉️ info@promelektroservice.com
+              <span aria-hidden="true">✉️</span> info@promelektroservice.com
             </a>
           </div>
 
@@ -204,7 +206,7 @@ function AppContent() {
                   className={`lang-btn${isActive ? " active" : ""}`}
                   type="button"
                 >
-                  {flags[lng]}
+                  <span aria-hidden="true">{flags[lng]}</span>
                 </button>
               );
             })}
@@ -221,12 +223,7 @@ function AppContent() {
 export default function App() {
   return (
     <HelmetProvider>
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
+      <BrowserRouter>
         <AppContent />
       </BrowserRouter>
     </HelmetProvider>

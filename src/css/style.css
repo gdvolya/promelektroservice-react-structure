@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
 
+/* 🔹 Base */
+html {
+  scroll-behavior: smooth;
+}
 body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -8,11 +12,24 @@ body {
   color: #222;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+/* Контейнер для sticky footer */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.main-content {
+  flex: 1;
 }
 
 /* 🔹 Header */
@@ -30,7 +47,9 @@ a {
 }
 
 .logo-left {
+  width: 60px;
   height: 60px;
+  object-fit: contain;
   filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
   transition: transform 0.3s ease;
 }
@@ -46,7 +65,7 @@ a {
   padding: 0;
 }
 .nav-menu li a {
-  color: #e0e7ff;
+  color: #f0f5ff;
   font-weight: 600;
   padding: 8px 14px;
   border-radius: 6px;
@@ -56,7 +75,7 @@ a {
 .nav-menu li a.active,
 .nav-menu li a:focus {
   background-color: #e0e7ff;
-  color: #004080;
+  color: #003366;
   box-shadow: 0 0 10px rgba(224, 231, 255, 0.7);
   outline: none;
 }
@@ -69,7 +88,7 @@ a {
   box-shadow: inset 0 0 50px #81d4fa;
   border-radius: 0 0 50% 50% / 15%;
   margin-bottom: 60px;
-  min-height: 350px;
+  min-height: 350px; /* резерв для снижения CLS */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -104,6 +123,12 @@ a {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* 🔹 Portfolio */
@@ -199,13 +224,26 @@ a {
 
 /* 🔹 Loading spinner */
 .loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 80px auto;
+}
+.loading-spinner .spinner {
   width: 48px;
   height: 48px;
-  margin: 80px auto;
   border: 6px solid #cbd5e1;
   border-top-color: #005599;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+.loading-spinner p {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #333;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
