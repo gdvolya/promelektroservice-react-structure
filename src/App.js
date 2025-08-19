@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect, useCallback, useMemo } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -221,9 +221,14 @@ function AppContent() {
 export default function App() {
   return (
     <HelmetProvider>
-      <Router>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <AppContent />
-      </Router>
+      </BrowserRouter>
     </HelmetProvider>
   );
 }
