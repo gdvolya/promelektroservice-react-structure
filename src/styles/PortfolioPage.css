@@ -6,8 +6,8 @@
   --bg-white: #fff;
   --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   --card-hover-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-  --font-main: "Segoe UI", sans-serif;
-  --accent-color: #f1c40f; /* Accent color for buttons and highlights */
+  --font-main: "Montserrat", "Segoe UI", sans-serif;
+  --accent-color: #f1c40f;
 }
 
 .portfolio-page {
@@ -40,22 +40,28 @@
   border-radius: 16px;
   box-shadow: var(--card-shadow);
   overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   text-decoration: none;
   position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .portfolio-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   box-shadow: var(--card-hover-shadow);
+}
+
+.portfolio-card picture {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* 📌 фиксируем пропорции для устранения CLS */
+  overflow: hidden;
 }
 
 .portfolio-card img {
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
   border-radius: 8px 8px 0 0;
@@ -84,46 +90,20 @@
   line-height: 1.5;
 }
 
-.card-content a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
 /* 📱 Responsive */
 @media (max-width: 600px) {
-  .portfolio-card img {
-    height: 180px;
+  .portfolio-card picture {
+    aspect-ratio: 4 / 3;
   }
 
-  .card-content h2 {
-    font-size: 1.2rem;
-  }
-
-  .card-content p {
-    font-size: 0.9rem;
-  }
-
-  .portfolio-page {
-    padding: 2rem 1rem;
-  }
-
-  .portfolio-page h1 {
-    font-size: 2rem;
-  }
+  .card-content h2 { font-size: 1.2rem; }
+  .card-content p { font-size: 0.9rem; }
+  .portfolio-page { padding: 2rem 1rem; }
+  .portfolio-page h1 { font-size: 2rem; }
 }
 
 /* 🎬 Animation */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }

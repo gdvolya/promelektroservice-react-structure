@@ -30,7 +30,7 @@
       crossorigin="use-credentials"
     />
 
-    <!-- 🔹 Preload hero image (для ускорения LCP) -->
+    <!-- 🔹 Preload hero image -->
     <link
       rel="preload"
       as="image"
@@ -39,9 +39,15 @@
       fetchpriority="high"
     />
 
-    <!-- 🔹 Preload critical CSS -->
+    <!-- 🔹 Critical CSS -->
     <link rel="preload" href="%PUBLIC_URL%/css/style.css" as="style" />
-    <link rel="stylesheet" href="%PUBLIC_URL%/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="%PUBLIC_URL%/css/style.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript><link rel="stylesheet" href="%PUBLIC_URL%/css/style.css" /></noscript>
 
     <!-- 🔹 Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
@@ -51,7 +57,7 @@
       rel="stylesheet"
     />
 
-    <!-- 🔹 Open Graph / SEO -->
+    <!-- 🔹 Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="ПромЕлектроСервіс — электромонтажные услуги" />
     <meta

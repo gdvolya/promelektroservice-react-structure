@@ -25,27 +25,29 @@ export default function HomePage() {
           type="image/webp"
           fetchpriority="high"
         />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;800;900&display=swap"
-        />
       </Helmet>
 
       <main className="home-page">
+        {/* 🔹 Hero */}
         <section
           className="hero"
           role="banner"
           aria-label={t("home.bannerAlt")}
         >
-          <img
-            src="/assets/background@2x.webp"
-            alt=""
-            aria-hidden="true"
-            className="hero-background-img"
-            width={1920}
-            height={1080}
-            loading="eager"
-          />
+          <picture>
+            <source srcSet="/assets/background@2x.avif" type="image/avif" />
+            <source srcSet="/assets/background@2x.webp" type="image/webp" />
+            <img
+              src="/assets/background@2x.jpg"
+              alt={t("home.bannerAlt")}
+              className="hero-background-img"
+              width={1920}
+              height={1080}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
           <div className="hero-overlay"></div>
           <div className="hero-content" data-aos="fade-up">
             <h1 className="hero-title">ПромЕлектроСервіс</h1>
@@ -61,6 +63,7 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* 🔹 Features */}
         <section
           className="features"
           data-aos="fade-up"
