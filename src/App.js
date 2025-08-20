@@ -34,7 +34,7 @@ function AppContent() {
     AOS.init({ once: true, duration: 700 });
   }, []);
 
-  // Получаем текущий язык из URL
+  // Получаем текущий язык из URL, если его нет — из localStorage, а затем по умолчанию
   const currentLang = useMemo(() => {
     const pathParts = location.pathname.split("/");
     const langFromPath = pathParts[1];
@@ -44,18 +44,19 @@ function AppContent() {
   // Смена языка и обновление URL
   const changeLanguage = useCallback(
     (lng) => {
+      // Исключаем лишние слэши, чтобы путь всегда был корректным
       const pathWithoutLang = location.pathname.startsWith(`/${currentLang}`)
         ? location.pathname.substring(3)
         : location.pathname;
-      const newPath = `/${lng}${pathWithoutLang}`;
-      
+      const newPath = `/${lng}${pathWithoutLang === "/" ? "" : pathWithoutLang}`;
+
       i18n.changeLanguage(lng);
       localStorage.setItem("i18nextLng", lng);
       navigate(newPath);
     },
     [currentLang, i18n, location.pathname, navigate]
   );
-  
+
   // Обновление языка, если пользователь изменил его в адресной строке
   useEffect(() => {
     if (i18n.language !== currentLang) {
@@ -78,6 +79,7 @@ function AppContent() {
   // Мета-теги
   const getPageMeta = useCallback(
     (pathname) => {
+      // Убираем языковой префикс для корректной генерации мета-тегов
       const pathParts = pathname.split("/");
       const cleanPathname = pathParts[1] && languages.includes(pathParts[1])
         ? `/${pathParts.slice(2).join('/')}`
@@ -135,7 +137,6 @@ function AppContent() {
       </a>
 
       <div className="app-wrapper">
-        {/* Хедер */}
         <header className="site-header" role="banner">
           <div className="header-container">
             <Link to={`/${currentLang}/`} aria-label={t("nav.home")} className="logo-link">
@@ -176,7 +177,6 @@ function AppContent() {
           </div>
         </header>
 
-        {/* Контент */}
         <main className="main-content" role="main" id="main-content" tabIndex={-1}>
           <ErrorBoundary>
             <Suspense
@@ -188,6 +188,7 @@ function AppContent() {
               }
             >
               <Routes>
+                <Route path="/" element={<HomePage />} />
                 <Route path="/:lang" element={<HomePage />} />
                 <Route path="/:lang/portfolio" element={<PortfolioPage />} />
                 <Route path="/:lang/portfolio/:projectId" element={<ProjectDetailPage />} />
@@ -201,7 +202,6 @@ function AppContent() {
           </ErrorBoundary>
         </main>
 
-        {/* Футер */}
         <footer className="footer sticky-footer" role="contentinfo">
           <div className="footer-top">
             <a href="tel:+380666229776" className="footer-link" aria-label={t("phoneLabel") || "Телефон"}>
