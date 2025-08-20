@@ -1,19 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import { Helmet } from "react-helmet-async";
 import "../styles/HomePage.css";
 
 export default function HomePage() {
   const { t } = useTranslation();
-
-  // Инициализация AOS теперь выполняется в App.js,
-  // поэтому этот useEffect можно удалить, чтобы избежать дублирования
-  // useEffect(() => {
-  //   AOS.init({ once: true, duration: 700, easing: "ease-out-cubic" });
-  // }, []);
 
   return (
     <>
@@ -26,10 +18,6 @@ export default function HomePage() {
           href="/assets/background@2x.webp"
           type="image/webp"
           fetchpriority="high"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;800;900&display=swap"
         />
       </Helmet>
 
