@@ -4,7 +4,6 @@
   ==============================================================
 */
 
-/* 🎨 Переменные CSS */
 :root {
   --primary-color: #007bff;
   --primary-hover: #0056b3;
@@ -120,11 +119,11 @@ main {
 /* 📝 Блок с описаниями */
 .hero-descriptions {
   margin: 1rem 0 1.5rem;
-  text-align: left;
+  text-align: justify; /* ✅ растянутый текст */
   color: #f1f1f1;
   max-width: 900px;
   font-size: 1rem;
-  line-height: 1.5;
+  line-height: 2;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -132,18 +131,25 @@ main {
 
 .hero-descriptions p {
   margin: 0.3rem 0;
-  font-size: 2rem; /* ✅ увеличено в 2 раза */
-  font-weight: 700; /* ✅ жирный */
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  font-size: 1.5rem; /* ✅ увеличено */
+  font-weight: 400;
+  display: block;
 }
 
-/* Иконки для описаний */
+/* ✅ Меняем порядок пунктов */
+.hero-descriptions p:nth-child(1) {
+  order: 3; /* первый идёт последним */
+}
+.hero-descriptions p:nth-child(3) {
+  order: 1; /* третий идёт первым */
+}
+.hero-descriptions p:nth-child(2) {
+  order: 2;
+}
+
+/* ❌ Убрали иконки */
 .hero-descriptions p::before {
-  content: "⚡"; /* Можно заменить на ✅, 🔌, 💡 и т.д. */
-  font-size: 1.8rem;
-  color: var(--primary-color);
+  content: none;
 }
 
 /* Кнопки */
@@ -235,9 +241,7 @@ main {
 }
 
 .feature-icon {
-  width: 64px;
-  height: auto;
-  margin-bottom: 1rem;
+  display: none; /* ❌ скрыли иконки */
 }
 
 .feature-card h3 {
