@@ -9,9 +9,11 @@ import "../styles/HomePage.css";
 export default function HomePage() {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    AOS.init({ once: true, duration: 700, easing: "ease-out-cubic" });
-  }, []);
+  // Инициализация AOS теперь выполняется в App.js,
+  // поэтому этот useEffect можно удалить, чтобы избежать дублирования
+  // useEffect(() => {
+  //   AOS.init({ once: true, duration: 700, easing: "ease-out-cubic" });
+  // }, []);
 
   return (
     <>

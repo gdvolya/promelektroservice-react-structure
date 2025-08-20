@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect, useCallback, useMemo } from "react";
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -24,26 +24,39 @@ const languages = ["uk", "en", "ru"];
 function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // Смена языка
+  // Получаем текущий язык из URL или используем язык по умолчанию
+  const currentLang = useMemo(() => {
+    const pathParts = location.pathname.split('/');
+    const langFromPath = pathParts[1];
+    return languages.includes(langFromPath) ? langFromPath : i18n.language;
+  }, [location.pathname, i18n.language]);
+
+  // Смена языка и обновление URL
   const changeLanguage = useCallback(
     (lng) => {
-      if (i18n.language !== lng) {
+      if (currentLang !== lng) {
+        // Убираем старый префикс языка из URL
+        const pathWithoutLang = location.pathname.startsWith(`/${currentLang}`)
+          ? location.pathname.substring(3)
+          : location.pathname;
+        const newPath = `/${lng}${pathWithoutLang}`;
+        
         i18n.changeLanguage(lng);
         localStorage.setItem("i18nextLng", lng);
+        navigate(newPath); // Переходим на новый URL с новым языком
       }
     },
-    [i18n]
+    [currentLang, i18n, location.pathname, navigate]
   );
-
-  // Инициализация AOS только на главной
+  
+  // Обновление языка, если пользователь изменил его в адресной строке
   useEffect(() => {
-    if (location.pathname === "/") {
-      import("aos").then((AOS) => {
-        AOS.init({ once: true, duration: 700 });
-      });
+    if (i18n.language !== currentLang) {
+      i18n.changeLanguage(currentLang);
     }
-  }, [location.pathname]);
+  }, [currentLang, i18n]);
 
   // Навигация
   const navItems = useMemo(
@@ -60,26 +73,34 @@ function AppContent() {
   // Мета-теги
   const getPageMeta = useCallback(
     (pathname) => {
-      const metaKey = pathname.split("/")[1] || "home";
-      const projectMatch = pathname.match(/\/portfolio\/([^/]+)/);
+      // Убираем языковой префикс, если он есть
+      const pathParts = pathname.split('/');
+      const cleanPathname = pathParts[1] && languages.includes(pathParts[1])
+        ? `/${pathParts.slice(2).join('/')}`
+        : pathname;
+
+      const metaKey = cleanPathname.split("/")[1] || "home";
+      const projectMatch = cleanPathname.match(/\/portfolio\/([^/]+)/);
+
+      const basePath = "https://promelektroservice.vercel.app";
 
       if (projectMatch) {
         return {
           title: t("meta.projectTitle", { projectName: projectMatch[1] }),
           description: t("meta.projectDescription", { projectName: projectMatch[1] }),
-          url: `https://promelektroservice.vercel.app/${i18n.language}${pathname}`,
-          canonical: `https://promelektroservice.vercel.app${pathname}`,
+          url: `${basePath}${pathname}`,
+          canonical: `${basePath}${cleanPathname}`,
         };
       }
 
       return {
         title: t(`meta.${metaKey}Title`),
         description: t(`meta.${metaKey}Description`),
-        url: `https://promelektroservice.vercel.app/${i18n.language}${pathname}`,
-        canonical: `https://promelektroservice.vercel.app${pathname}`,
+        url: `${basePath}${pathname}`,
+        canonical: `${basePath}${cleanPathname}`,
       };
     },
-    [t, i18n.language]
+    [t]
   );
 
   const { title, description, url, canonical } = getPageMeta(location.pathname);
@@ -87,23 +108,26 @@ function AppContent() {
   return (
     <>
       <Helmet>
-        <html lang={i18n.language} />
+        <html lang={currentLang} />
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
         <link rel="canonical" href={canonical} />
-        <link rel="preload" as="image" href={logoWebp} type="image/webp" />
-        <link rel="preload" as="image" href={logoPng} type="image/png" />
         {languages.map((lng) => (
           <link
             key={lng}
             rel="alternate"
             hrefLang={lng}
-            href={`https://promelektroservice.vercel.app/${lng}${location.pathname}`}
+            href={`https://promelektroservice.vercel.app/${lng}${canonical}`}
           />
         ))}
+        <link
+          rel="alternate"
+          hrefLang="x-default"
+          href="https://promelektroservice.vercel.app/"
+        />
       </Helmet>
 
       <a href="#main-content" className="skip-link">
@@ -114,7 +138,7 @@ function AppContent() {
         {/* Хедер */}
         <header className="site-header" role="banner">
           <div className="header-container">
-            <Link to="/" aria-label={t("nav.home")} className="logo-link">
+            <Link to={`/${currentLang}/`} aria-label={t("nav.home")} className="logo-link">
               <picture>
                 <source srcSet={logoWebp} type="image/webp" />
                 <img
@@ -133,11 +157,11 @@ function AppContent() {
             <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
               <ul className="nav-menu centered" role="menubar">
                 {navItems.map(({ path, label }) => {
-                  const isActive = location.pathname === path;
+                  const isActive = location.pathname === `/${currentLang}${path}` || (path === "/" && location.pathname === `/${currentLang}`);
                   return (
                     <li key={path} role="none">
                       <Link
-                        to={path}
+                        to={`/${currentLang}${path}`}
                         className={isActive ? "active" : ""}
                         aria-current={isActive ? "page" : undefined}
                         role="menuitem"
@@ -164,12 +188,12 @@ function AppContent() {
               }
             >
               <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/portfolio" element={<PortfolioPage />} />
-                <Route path="/portfolio/:projectId" element={<ProjectDetailPage />} />
-                <Route path="/reviews" element={<ReviewsPage />} />
-                <Route path="/pricing" element={<PricingPage />} />
-                <Route path="/contacts" element={<ContactsPage />} />
+                <Route path="/:lang" element={<HomePage />} />
+                <Route path="/:lang/portfolio" element={<PortfolioPage />} />
+                <Route path="/:lang/portfolio/:projectId" element={<ProjectDetailPage />} />
+                <Route path="/:lang/reviews" element={<ReviewsPage />} />
+                <Route path="/:lang/pricing" element={<PricingPage />} />
+                <Route path="/:lang/contacts" element={<ContactsPage />} />
                 <Route path="/admin" element={<AdminPanel enableExport />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
@@ -196,7 +220,7 @@ function AppContent() {
             {languages.map((lng) => {
               const labels = { uk: "Українська", en: "English", ru: "Русский" };
               const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
-              const isActive = i18n.language === lng;
+              const isActive = currentLang === lng;
               return (
                 <button
                   key={lng}

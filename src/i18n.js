@@ -6,26 +6,37 @@ import LanguageDetector from "i18next-browser-languagedetector";
 // 📦 Инициализация i18next
 i18n
   .use(HttpBackend) // Загрузка переводов по HTTP
-  .use(LanguageDetector) // Автоопределение языка
+  .use(LanguageDetector) // Автоматическое определение языка
   .use(initReactI18next) // Подключение к react-i18next
   .init({
-    fallbackLng: "uk", // Язык по умолчанию
-    supportedLngs: ["uk", "en", "ru"],
+    fallbackLng: "uk", // Язык по умолчанию, если не удалось определить
+    supportedLngs: ["uk", "en", "ru"], // Поддерживаемые языки
 
-    debug: process.env.NODE_ENV === "development",
+    debug: process.env.NODE_ENV === "development", // Отладка только в режиме разработки
 
     detection: {
-      order: ["localStorage", "navigator", "htmlTag", "cookie"],
+      // 🕵️ Порядок определения языка
+      // 1. Поиск языка в URL (самый высокий приоритет для SEO)
+      // 2. Поиск в localStorage
+      // 3. Определение по настройкам браузера
+      // 4. Определение по тегу <html>
+      order: ["path", "localStorage", "navigator", "htmlTag", "cookie"],
+      
+      // 📍 Настройка для поиска языка в URL (в первом сегменте, например, /uk/about)
+      lookupFromPathIndex: 0,
+      
+      // 💾 Кэширование определённого языка в localStorage
       caches: ["localStorage"],
     },
 
     backend: {
-      // 🔽 Убедись, что файлы translation.json лежат в /public/locales/{{lng}}/
+      // 🔽 Путь для загрузки JSON-файлов с переводами.
+      // Файлы должны быть в public/locales/{{lng}}/translation.json
       loadPath: "/locales/{{lng}}/translation.json",
     },
 
     interpolation: {
-      escapeValue: false, // React уже экранирует
+      escapeValue: false, // React уже экранирует данные
     },
 
     react: {
@@ -33,7 +44,7 @@ i18n
     },
   });
 
-// ✅ Автоматическое обновление <html lang="...">
+// ✅ Автоматическое обновление атрибута lang в теге <html>
 i18n.on("languageChanged", (lng) => {
   if (typeof document !== "undefined") {
     document.documentElement.setAttribute("lang", lng);
