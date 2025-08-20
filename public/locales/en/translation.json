@@ -42,7 +42,10 @@
     "qualityDesc": "We guarantee high-quality results and adherence to standards.",
     "safety": "Safety",
     "safetyDesc": "We follow all safety standards in every project.",
-    "bannerAlt": "Hero section with service description of Promelektroservice in front of a power station."
+    "bannerAlt": "Hero section with service description of Promelektroservice in front of a power station.",
+    "workDesc1": "Installation of industrial wiring and lighting.",
+    "workDesc2": "Assembly and installation of electrical panels.",
+    "workDesc3": "Comprehensive automation of production processes."
   },
   "portfolio": {
     "heading": "Our Projects",
