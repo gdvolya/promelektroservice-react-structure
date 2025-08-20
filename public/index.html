@@ -16,6 +16,7 @@
       content="ПромЕлектроСервіс — надёжные электромонтажные услуги для дома и бизнеса. Проектирование, монтаж, обслуживание, безопасность и энергоэффективность."
     />
 
+    <!-- 🔹 Progressive Web App -->
     <meta name="theme-color" content="#003366" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link
@@ -29,6 +30,7 @@
       crossorigin="use-credentials"
     />
 
+    <!-- 🔹 Preload hero image -->
     <link
       rel="preload"
       as="image"
@@ -37,6 +39,25 @@
       fetchpriority="high"
     />
 
+    <!-- 🔹 Critical CSS -->
+    <link rel="preload" href="%PUBLIC_URL%/css/style.css" as="style" />
+    <link
+      rel="stylesheet"
+      href="%PUBLIC_URL%/css/style.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript><link rel="stylesheet" href="%PUBLIC_URL%/css/style.css" /></noscript>
+
+    <!-- 🔹 Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 🔹 Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="ПромЕлектроСервіс — электромонтажные услуги" />
     <meta
@@ -46,6 +67,7 @@
     <meta property="og:image" content="%PUBLIC_URL%/img/hero.webp" />
     <meta property="og:url" content="https://promelektroservice-react-structure.vercel.app/" />
 
+    <!-- 🔹 Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ПромЕлектроСервіс — электромонтажные услуги" />
     <meta
