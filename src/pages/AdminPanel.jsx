@@ -1,161 +1,274 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   collection,
   deleteDoc,
   doc,
   updateDoc,
-  addDoc,
+  query,
+  orderBy,
   onSnapshot,
 } from "firebase/firestore";
+import * as XLSX from "xlsx";
 import {
   FaTrash,
+  FaDownload,
   FaSignInAlt,
   FaSignOutAlt,
-  FaPlus,
-  FaEdit,
-  FaSave,
-  FaTimes,
+  FaSort,
+  FaSortUp,
+  FaSortDown,
 } from "react-icons/fa";
 import "../styles/AdminPanel.css";
+import Modal from "./Modal";
 
-const AdminPanel = () => {
-  const [portfolio, setPortfolio] = useState([]);
+// Определение опций статусов с классами для стилизации
+const statusOptions = {
+  new: { label: "Новая", className: "status-new" },
+  "in-progress": { label: "В обработке", className: "status-in-progress" },
+  done: { label: "Выполнена", className: "status-done" },
+};
+
+const AdminPanel = ({ enableExport = true }) => {
+  const [submissions, setSubmissions] = useState([]);
+  const [views, setViews] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
-
-  // форма добавления
-  const [newPortfolio, setNewPortfolio] = useState({
-    title: "",
-    description: "",
-    imageUrl: "",
-    extraImages: [],
+  const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortConfig, setSortConfig] = useState({
+    key: "createdAt",
+    direction: "descending",
   });
-
-  // редактирование
-  const [editMode, setEditMode] = useState(null);
-  const [editPortfolio, setEditPortfolio] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [submissionToDelete, setSubmissionToDelete] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [submissionDetails, setSubmissionDetails] = useState(null);
 
   const dbRef = useRef(null);
+  const prevSortConfig = useRef(null);
 
-  const handleLogin = () => {
+  const formatFirestoreTimestamp = useCallback((timestamp) => {
+    if (!timestamp || !timestamp.seconds) return "—";
+    const date = new Date(timestamp.seconds * 1000);
+    return date.toLocaleString("uk-UA");
+  }, []);
+
+  // Восстановлена оригинальная логика авторизации
+  const handleLogin = useCallback(() => {
     const adminPass = process.env.REACT_APP_ADMIN_PASS;
+
     if (!adminPass) {
-      alert("Пароль администратора не задан в .env");
+      setError("⚠️ Пароль администратора не задан. Проверьте файл .env.");
       return;
     }
-    if (password.trim() === adminPass.trim()) {
-      setAuthenticated(true);
-    } else {
-      alert("Неверный пароль");
+
+    if (password.trim() !== adminPass.trim()) {
+      setError("Неверный пароль.");
+      return;
     }
-  };
+
+    setAuthenticated(true);
+    setPassword("");
+    setError("");
+  }, [password]);
+
+  const handleLogout = useCallback(() => {
+    setAuthenticated(false);
+    setViews(null);
+    setSubmissions([]);
+    dbRef.current = null;
+  }, []);
+
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === "Enter") handleLogin();
+    },
+    [handleLogin]
+  );
 
   useEffect(() => {
-    if (!authenticated) return;
-    let unsubPortfolio;
-
-    import("../firebaseLazy").then(({ db }) => {
-      dbRef.current = db;
-      unsubPortfolio = onSnapshot(collection(db, "portfolio"), (snap) => {
-        setPortfolio(
-          snap.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }))
-        );
-      });
-    });
-
-    return () => unsubPortfolio && unsubPortfolio();
-  }, [authenticated]);
-
-  const handleAddPortfolio = async () => {
-    if (!dbRef.current) return;
-    if (!newPortfolio.title || !newPortfolio.imageUrl) {
-      alert("Заполните название и главное фото!");
+    if (!authenticated) {
+      setLoading(false);
       return;
     }
-    await addDoc(collection(dbRef.current, "portfolio"), {
-      ...newPortfolio,
-      createdAt: new Date(),
-    });
-    setNewPortfolio({ title: "", description: "", imageUrl: "", extraImages: [] });
-  };
 
-  const handleDeletePortfolio = async (id) => {
-    if (!dbRef.current) return;
-    if (window.confirm("Удалить проект?")) {
-      await deleteDoc(doc(dbRef.current, "portfolio", id));
+    if (
+      prevSortConfig.current &&
+      prevSortConfig.current.key === sortConfig.key &&
+      prevSortConfig.current.direction === sortConfig.direction
+    ) {
+      return;
     }
-  };
 
-  const handleEditPortfolio = (work) => {
-    setEditMode(work.id);
-    setEditPortfolio({ ...work });
-  };
+    setLoading(true);
+    prevSortConfig.current = sortConfig;
 
-  const handleSaveEdit = async () => {
-    if (!dbRef.current || !editPortfolio) return;
-    await updateDoc(doc(dbRef.current, "portfolio", editMode), {
-      ...editPortfolio,
-    });
-    setEditMode(null);
-    setEditPortfolio(null);
-  };
+    let unsubscribeSubmissions;
+    let unsubscribeViews;
 
-  const handleCancelEdit = () => {
-    setEditMode(null);
-    setEditPortfolio(null);
-  };
+    import("../firebaseLazy")
+      .then(({ db: loadedDb }) => {
+        dbRef.current = loadedDb;
+        const db = dbRef.current;
 
-  const handleAddExtraImage = (isEdit = false) => {
-    if (isEdit) {
-      setEditPortfolio((prev) => ({
-        ...prev,
-        extraImages: [...(prev.extraImages || []), ""],
-      }));
-    } else {
-      setNewPortfolio((prev) => ({
-        ...prev,
-        extraImages: [...prev.extraImages, ""],
-      }));
-    }
-  };
+        const submissionsQuery = query(
+          collection(db, "submissions"),
+          orderBy(
+            sortConfig.key,
+            sortConfig.direction === "ascending" ? "asc" : "desc"
+          )
+        );
 
-  const handleExtraImageChange = (index, value, isEdit = false) => {
-    if (isEdit) {
-      setEditPortfolio((prev) => {
-        const updated = [...(prev.extraImages || [])];
-        updated[index] = value;
-        return { ...prev, extraImages: updated };
+        unsubscribeSubmissions = onSnapshot(
+          submissionsQuery,
+          (snapshot) => {
+            const fetchedSubmissions = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+              createdAt: doc.data().createdAt || null,
+            }));
+            setSubmissions(fetchedSubmissions);
+            setLoading(false);
+            setError("");
+          },
+          (err) => {
+            console.error("Ошибка при получении заявок:", err);
+            setError("Ошибка загрузки заявок.");
+            setLoading(false);
+          }
+        );
+
+        const viewsDocRef = doc(db, "views", "home");
+        unsubscribeViews = onSnapshot(
+          viewsDocRef,
+          (docSnapshot) => {
+            setViews(docSnapshot.exists() ? docSnapshot.data().count : 0);
+          },
+          (err) => {
+            console.error("Ошибка при получении просмотров:", err);
+          }
+        );
+      })
+      .catch((err) => {
+        console.error("Ошибка загрузки Firebase:", err);
+        setError("Ошибка инициализации базы данных.");
+        setLoading(false);
       });
-    } else {
-      setNewPortfolio((prev) => {
-        const updated = [...prev.extraImages];
-        updated[index] = value;
-        return { ...prev, extraImages: updated };
-      });
+
+    return () => {
+      if (unsubscribeSubmissions) unsubscribeSubmissions();
+      if (unsubscribeViews) unsubscribeViews();
+    };
+  }, [authenticated, sortConfig]);
+
+  const handleDelete = useCallback((id) => {
+    setSubmissionToDelete(id);
+    setShowDeleteModal(true);
+  }, []);
+
+  const confirmDelete = useCallback(async () => {
+    const db = dbRef.current;
+    if (!db || !submissionToDelete) return;
+    try {
+      await deleteDoc(doc(db, "submissions", submissionToDelete));
+      setShowDeleteModal(false);
+      setSubmissionToDelete(null);
+    } catch (err) {
+      alert("Не удалось удалить.");
+      console.error(err);
     }
-  };
+  }, [submissionToDelete]);
+
+  const handleUpdateStatus = useCallback(async (id, newStatus) => {
+    const db = dbRef.current;
+    if (!db) return;
+    try {
+      await updateDoc(doc(db, "submissions", id), {
+        status: newStatus,
+      });
+    } catch (err) {
+      alert("Не удалось обновить статус.");
+      console.error(err);
+    }
+  }, []);
+
+  const handleSort = useCallback((key) => {
+    setSortConfig((prevConfig) => ({
+      key,
+      direction:
+        prevConfig.key === key && prevConfig.direction === "ascending"
+          ? "descending"
+          : "ascending",
+    }));
+    setCurrentPage(1);
+  }, []);
+
+  const getSortIcon = useCallback(
+    (key) => {
+      if (sortConfig.key !== key) {
+        return <FaSort />;
+      }
+      if (sortConfig.direction === "ascending") {
+        return <FaSortUp />;
+      }
+      return <FaSortDown />;
+    },
+    [sortConfig]
+  );
+
+  const handleRowClick = useCallback((submission) => {
+    setSubmissionDetails(submission);
+    setShowDetailsModal(true);
+  }, []);
+
+  const exportToExcel = useCallback(() => {
+    const dataToExport = submissions.map(({ id, createdAt, ...rest }) => ({
+      ...rest,
+      createdAt: formatFirestoreTimestamp(createdAt),
+    }));
+    const sheet = XLSX.utils.json_to_sheet(dataToExport);
+    const book = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(book, sheet, "Заявки");
+    XLSX.writeFile(book, "submissions.xlsx");
+  }, [submissions, formatFirestoreTimestamp]);
+
+  const filteredSubmissions = submissions.filter(
+    ({ name, email, phone, message }) =>
+      name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      message?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredSubmissions.length / itemsPerPage);
+  const currentSubmissions = filteredSubmissions.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   if (!authenticated) {
     return (
       <main className="admin-login">
         <Helmet>
-          <title>Вход в админ-панель</title>
+          <title>Вход в админ-панель — ПромЕлектроСервіс</title>
         </Helmet>
-        <h2>🔐 Вход</h2>
+        <h2>🔐 Вход в админ-панель</h2>
         <input
           type="password"
-          placeholder="Пароль администратора"
+          placeholder="Введите пароль администратора"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
           autoFocus
         />
-        <button onClick={handleLogin}>
+        <button onClick={handleLogin} disabled={!password.trim()}>
           <FaSignInAlt /> Войти
         </button>
+        {error && <p className="error-text">{error}</p>}
       </main>
     );
   }
@@ -163,137 +276,195 @@ const AdminPanel = () => {
   return (
     <main className="admin-panel">
       <Helmet>
-        <title>Админ-панель — Портфолио</title>
+        <title>Админ-панель — ПромЕлектроСервіс</title>
       </Helmet>
-
       <header className="admin-header">
-        <h1>🖼 Управление портфолио</h1>
-        <button onClick={() => setAuthenticated(false)}>
-          <FaSignOutAlt /> Выйти
-        </button>
+        <h1>📋 Админ-панель</h1>
+        <div className="header-stats">
+          {views !== null && (
+            <p>
+              👁 Просмотров на главной: <strong>{views}</strong>
+            </p>
+          )}
+          <button onClick={handleLogout} className="logout-btn">
+            <FaSignOutAlt /> Выйти
+          </button>
+        </div>
       </header>
-
-      {/* Добавление проекта */}
-      <section className="portfolio-form">
-        <h2>➕ Добавить проект</h2>
-        <input
-          type="text"
-          placeholder="Название проекта"
-          value={newPortfolio.title}
-          onChange={(e) =>
-            setNewPortfolio((prev) => ({ ...prev, title: e.target.value }))
-          }
-        />
-        <textarea
-          placeholder="Описание"
-          value={newPortfolio.description}
-          onChange={(e) =>
-            setNewPortfolio((prev) => ({ ...prev, description: e.target.value }))
-          }
-        />
-        <input
-          type="text"
-          placeholder="Главное фото (URL)"
-          value={newPortfolio.imageUrl}
-          onChange={(e) =>
-            setNewPortfolio((prev) => ({ ...prev, imageUrl: e.target.value }))
-          }
-        />
-        {newPortfolio.extraImages.map((img, i) => (
+      <div className="admin-controls">
+        <div className="search-container">
           <input
-            key={i}
             type="text"
-            placeholder={`Доп. фото ${i + 1}`}
-            value={img}
-            onChange={(e) => handleExtraImageChange(i, e.target.value)}
+            placeholder="🔎 Поиск по заявкам..."
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="search-input"
           />
-        ))}
-        <button onClick={() => handleAddExtraImage(false)}>
-          <FaPlus /> Доп. фото
-        </button>
-        <button className="add-btn" onClick={handleAddPortfolio}>
-          ➕ Сохранить проект
-        </button>
-      </section>
-
-      {/* Список проектов */}
-      <section className="portfolio-list">
-        <h2>📋 Список проектов</h2>
-        {portfolio.length === 0 ? (
-          <p>Нет добавленных проектов</p>
-        ) : (
-          portfolio.map((work) =>
-            editMode === work.id ? (
-              <div key={work.id} className="portfolio-item editing">
-                <input
-                  type="text"
-                  value={editPortfolio.title}
-                  onChange={(e) =>
-                    setEditPortfolio((prev) => ({ ...prev, title: e.target.value }))
-                  }
-                />
-                <textarea
-                  value={editPortfolio.description}
-                  onChange={(e) =>
-                    setEditPortfolio((prev) => ({
-                      ...prev,
-                      description: e.target.value,
-                    }))
-                  }
-                />
-                <input
-                  type="text"
-                  value={editPortfolio.imageUrl}
-                  onChange={(e) =>
-                    setEditPortfolio((prev) => ({
-                      ...prev,
-                      imageUrl: e.target.value,
-                    }))
-                  }
-                />
-                {editPortfolio.extraImages?.map((img, i) => (
-                  <input
-                    key={i}
-                    type="text"
-                    value={img}
-                    onChange={(e) =>
-                      handleExtraImageChange(i, e.target.value, true)
-                    }
-                  />
-                ))}
-                <button onClick={() => handleAddExtraImage(true)}>
-                  <FaPlus /> Фото
-                </button>
-                <button onClick={handleSaveEdit}>
-                  <FaSave /> Сохранить
-                </button>
-                <button onClick={handleCancelEdit}>
-                  <FaTimes /> Отмена
-                </button>
-              </div>
-            ) : (
-              <div key={work.id} className="portfolio-item">
-                <h3>{work.title}</h3>
-                <img src={work.imageUrl} alt={work.title} />
-                <p>{work.description}</p>
-                {work.extraImages?.length > 0 && (
-                  <div className="extra-imgs">
-                    {work.extraImages.map((img, i) => (
-                      <img key={i} src={img} alt={`extra-${i}`} />
-                    ))}
-                  </div>
-                )}
-                <button onClick={() => handleEditPortfolio(work)}>
-                  <FaEdit /> Редактировать
-                </button>
-                <button onClick={() => handleDeletePortfolio(work.id)}>
-                  <FaTrash /> Удалить
-                </button>
-              </div>
-            )
-          )
+        </div>
+        <div className="pagination-controls">
+          <label htmlFor="itemsPerPage">Заявок на странице:</label>
+          <select
+            id="itemsPerPage"
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
+        {enableExport && submissions.length > 0 && (
+          <button onClick={exportToExcel} className="export-btn">
+            <FaDownload /> Экспортировать в Excel
+          </button>
         )}
-      </section>
+      </div>
+
+      {loading && <p className="loading-spinner">⏳ Загрузка данных...</p>}
+      {error && <p className="error-text">{error}</p>}
+
+      {!loading && filteredSubmissions.length === 0 ? (
+        <p className="no-data">
+          {searchTerm ? "Ничего не найдено по вашему запросу." : "Нет заявок."}
+        </p>
+      ) : (
+        <>
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th onClick={() => handleSort("name")}>
+                  Имя {getSortIcon("name")}
+                </th>
+                <th onClick={() => handleSort("email")}>
+                  Email {getSortIcon("email")}
+                </th>
+                <th onClick={() => handleSort("phone")}>
+                  Телефон {getSortIcon("phone")}
+                </th>
+                <th>Сообщение</th>
+                <th onClick={() => handleSort("status")}>
+                  Статус {getSortIcon("status")}
+                </th>
+                <th onClick={() => handleSort("createdAt")}>
+                  Дата {getSortIcon("createdAt")}
+                </th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentSubmissions.map(
+                ({ id, name, email, phone, message, status = "new", createdAt }) => (
+                  <tr key={id}>
+                    <td>{name}</td>
+                    <td>{email}</td>
+                    <td>{phone}</td>
+                    <td
+                      className="message-cell"
+                      onClick={() => handleRowClick({ name, email, phone, message, createdAt })}
+                      title="Нажмите, чтобы прочитать полностью"
+                    >
+                      {message?.length > 50 ? `${message.substring(0, 50)}...` : message}
+                    </td>
+                    <td>
+                      <select
+                        value={status}
+                        onChange={(e) => handleUpdateStatus(id, e.target.value)}
+                        className={`status-select ${statusOptions[status]?.className}`}
+                      >
+                        {Object.entries(statusOptions).map(([key, value]) => (
+                          <option key={key} value={key}>
+                            {value.label}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>{formatFirestoreTimestamp(createdAt)}</td>
+                    <td>
+                      <button
+                        onClick={() => handleDelete(id)}
+                        className="delete-btn"
+                      >
+                        <FaTrash />
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+          <div className="pagination">
+            <button
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+              disabled={currentPage === 1}
+            >
+              Предыдущая
+            </button>
+            <span>
+              Страница {currentPage} из {totalPages}
+            </span>
+            <button
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              disabled={currentPage === totalPages || totalPages === 0}
+            >
+              Следующая
+            </button>
+          </div>
+        </>
+      )}
+
+      {showDeleteModal && (
+        <Modal
+          title="Подтверждение удаления"
+          message="Вы действительно хотите удалить эту заявку? Это действие необратимо."
+          onConfirm={confirmDelete}
+          onCancel={() => setShowDeleteModal(false)}
+        />
+      )}
+
+      {showDetailsModal && submissionDetails && (
+        <Modal
+          title="Детали заявки"
+          onCancel={() => setShowDetailsModal(false)}
+        >
+          <div className="submission-details">
+            <p>
+              <strong>Имя:</strong> {submissionDetails.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {submissionDetails.email}
+            </p>
+            <p>
+              <strong>Телефон:</strong> {submissionDetails.phone}
+            </p>
+            <p>
+              <strong>Дата:</strong>{" "}
+              {formatFirestoreTimestamp(submissionDetails.createdAt)}
+            </p>
+            <p className="submission-message">
+              <strong>Сообщение:</strong>
+            </p>
+            <p>{submissionDetails.message}</p>
+          </div>
+        </Modal>
+      )}
+
+      <div className="extra-links">
+        <a
+          href="/report/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="report-link"
+        >
+          📊 Просмотреть Lighthouse отчеты
+        </a>
+      </div>
     </main>
   );
 };

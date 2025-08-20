@@ -5,6 +5,7 @@
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "@react-google-maps/api": "^2.20.7",
+    "@vercel/analytics": "^1.5.0",
     "aos": "^2.3.4",
     "craco-plugin-scoped-css": "^1.1.1",
     "firebase": "^11.10.0",
