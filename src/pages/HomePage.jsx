@@ -32,6 +32,7 @@ export default function HomePage() {
       </Helmet>
 
       <main className="home-page">
+        {/* Hero */}
         <section
           className="hero"
           role="banner"
@@ -61,6 +62,7 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Features */}
         <section
           className="features"
           data-aos="fade-up"
@@ -106,6 +108,35 @@ export default function HomePage() {
               <h3>{t("home.safety")}</h3>
               <p>{t("home.safetyDesc")}</p>
             </div>
+          </div>
+        </section>
+
+        {/* Our Works */}
+        <section
+          className="our-works"
+          data-aos="fade-up"
+          aria-labelledby="our-works-title"
+        >
+          <h2 id="our-works-title" className="our-works-title">
+            {t("home.ourWorksTitle")}
+          </h2>
+          <p className="our-works-subtitle">{t("home.ourWorksSubtitle")}</p>
+
+          <div className="our-works-grid">
+            <div className="work-card" data-aos="fade-up" data-aos-delay="100">
+              <h3>{t("home.project1Title")}</h3>
+              <p>{t("home.project1Desc")}</p>
+            </div>
+            <div className="work-card" data-aos="fade-up" data-aos-delay="200">
+              <h3>{t("home.project2Title")}</h3>
+              <p>{t("home.project2Desc")}</p>
+            </div>
+          </div>
+
+          <div className="our-works-btn">
+            <Link to="/portfolio" className="btn primary">
+              {t("home.viewAllProjectsBtn")}
+            </Link>
           </div>
         </section>
       </main>

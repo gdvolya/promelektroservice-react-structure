@@ -33,9 +33,9 @@ body, main {
   min-height: 100dvh;
   overflow: hidden;
   display: flex;
-  flex-direction: column; /* Изменено: Используем Flexbox */
-  justify-content: flex-start; /* Изменено: Выравниваем к верху */
-  align-items: center; /* Центрируем по горизонтали */
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   text-align: center;
   padding: 0 !important;
   margin-top: 0 !important;
@@ -64,10 +64,9 @@ body, main {
 
 .hero-content {
   position: relative;
-  top: auto;
   width: 100%;
   max-width: 1200px;
-  margin: 80px auto 0 auto; /* Увеличили верхний отступ, чтобы опустить контент под шапку */
+  margin: 80px auto 0 auto;
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
@@ -106,7 +105,6 @@ body, main {
 .hero-buttons {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
   gap: 1rem;
   justify-content: center;
   align-items: center;
@@ -172,7 +170,6 @@ body, main {
   gap: 2rem;
 }
 
-/* 🔸 Feature Card */
 .feature-card {
   background: var(--accent-bg);
   padding: 2rem 1rem;
@@ -203,27 +200,72 @@ body, main {
   color: var(--subtext-color);
 }
 
+/* 🟦 Our Works Section */
+.our-works {
+  padding: 4rem 2rem;
+  background-color: var(--bg-light);
+  text-align: center;
+}
+
+.our-works-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--heading-color);
+}
+
+.our-works-subtitle {
+  font-size: 1.1rem;
+  color: var(--subtext-color);
+  margin-bottom: 2rem;
+}
+
+.our-works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.work-card {
+  background: var(--bg-white);
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: left;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.work-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.work-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--heading-color);
+}
+
+.work-card p {
+  font-size: 0.95rem;
+  color: var(--subtext-color);
+  line-height: 1.5;
+}
+
+.our-works-btn {
+  margin-top: 1rem;
+}
+
 /* 🌀 Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* 🔕 Respect user motion preferences */
@@ -237,52 +279,16 @@ body, main {
 
 /* 📱 Responsive */
 @media (max-width: 992px) {
-  .hero {
-    align-items: flex-start;
-    margin-top: 0 !important;
-    padding: 0 !important;
-  }
-  .hero-content {
-    top: auto;
-    margin-top: 60px;
-  }
-  .hero-title, .fancy-title {
-    font-size: 3rem;
-    letter-spacing: 1px;
-    margin: 0 0 0.3rem 0 !important;
-  }
-  .hero-subtitle {
-    font-size: 1.15rem;
-    margin: 0 0 0.5rem 0 !important;
-  }
-  .hero-buttons {
-    gap: 0.5rem;
-  }
-  .hero-buttons .btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-  }
+  .hero-content { margin-top: 60px; }
+  .hero-title { font-size: 3rem; }
+  .hero-subtitle { font-size: 1.15rem; }
+  .hero-buttons { gap: 0.5rem; }
+  .btn { padding: 0.5rem 1rem; font-size: 0.9rem; }
 }
 
 @media (max-width: 600px) {
-  .hero {
-    align-items: flex-start;
-    margin-top: 0 !important;
-    padding: 0 !important;
-  }
-  .hero-content {
-    top: auto;
-    margin-top: 60px;
-  }
-  .hero-title, .fancy-title {
-    font-size: 2.4rem;
-    margin: 0 0 0.3rem 0 !important;
-  }
-  .hero-subtitle {
-    font-size: 1rem;
-    margin: 0 0 0.5rem 0 !important;
-  }
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
+  .hero-content { margin-top: 60px; }
+  .hero-title { font-size: 2.4rem; }
+  .hero-subtitle { font-size: 1rem; }
+  .features-grid, .our-works-grid { grid-template-columns: 1fr; }
 }
