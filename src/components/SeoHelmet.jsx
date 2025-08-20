@@ -4,30 +4,37 @@ import { Helmet } from "react-helmet-async";
 const SeoHelmet = ({
   title = "ПромЕлектроСервіс",
   description = "Професійні електромонтажні роботи будь-якої складності.",
-  image = "/img/logo.png",
-  url = "https://promelektroservice.vercel.app",
+  image = "/img/logo.webp",
+  url = "https://promelektroservice-react-structure.vercel.app/",
   type = "website",
   twitterCard = "summary_large_image",
   locale = "uk_UA",
   siteName = "ПромЕлектроСервіс",
+  keywords = "електромонтаж, Київ, ПромЕлектроСервіс, електрика, освітлення, щити",
   jsonLd = null,
   preloadImage = false,
 }) => {
   const structuredData = jsonLd || {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": siteName,
-    "url": url,
-    "image": image,
-    "description": description,
-    "address": {
+    name: siteName,
+    url: url,
+    image: image,
+    description: description,
+    address: {
       "@type": "PostalAddress",
-      "addressLocality": "Київ",
-      "addressRegion": "Київська область",
-      "postalCode": "01001",
-      "streetAddress": "вул. Прикладна, 1"
+      addressLocality: "Київ",
+      addressRegion: "Київська область",
+      postalCode: "01001",
+      streetAddress: "вул. Прикладна, 1",
     },
-    "telephone": "+380666229776"
+    telephone: "+380666229776",
+    priceRange: "$$",
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "50.4501",
+      longitude: "30.5234",
+    },
   };
 
   const image2x = image.endsWith(".webp")
@@ -39,6 +46,9 @@ const SeoHelmet = ({
       {/* SEO basics */}
       <title>{title}</title>
       <meta name="description" content={description} />
+      {keywords && <meta name="keywords" content={keywords} />}
+      <link rel="canonical" href={url} />
+      <meta name="theme-color" content="#007bff" />
 
       {/* Open Graph */}
       <meta property="og:title" content={title} />
@@ -66,7 +76,7 @@ const SeoHelmet = ({
           href={image}
           imagesrcset={`${image} 1x, ${image2x} 2x`}
           imagesizes="100vw"
-          type="image/webp"
+          {...(image.endsWith(".webp") ? { type: "image/webp" } : {})}
         />
       )}
 
