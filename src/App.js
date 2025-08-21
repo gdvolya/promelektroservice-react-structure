@@ -28,7 +28,6 @@ function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const projects = t("portfolio.projects", { returnObjects: true });
 
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
@@ -73,37 +72,42 @@ function AppContent() {
 
   const getPageMeta = useCallback(
     (pathname) => {
-      const pathParts = pathname.split("/").filter(Boolean);
-      const cleanPathname = languages.includes(pathParts[0]) ? `/${pathParts.slice(1).join('/')}` : pathname;
-      const metaKey = cleanPathname.split("/")[1] || "home";
-      const projectMatch = cleanPathname.match(/\/portfolio\/(\d+)/);
-
+      const projectsData = t("portfolio.projects", { returnObjects: true });
       const basePath = "https://promelektroservice.vercel.app";
-      let title, description;
+      const pathParts = pathname.split("/").filter(Boolean);
+      
+      let title, description, canonicalPath;
+      const lang = languages.includes(pathParts[0]) ? pathParts[0] : i18n.language;
+      const cleanPath = pathParts.slice(languages.includes(pathParts[0]) ? 1 : 0).join('/');
+
+      const projectMatch = cleanPath.match(/^portfolio\/(\d+)/);
 
       if (projectMatch) {
         const projectIndex = parseInt(projectMatch[1], 10);
-        const project = projects[projectIndex];
+        const project = projectsData[projectIndex];
         if (project) {
-          title = t("meta.projectTitle", { projectName: project.title });
-          description = t("meta.projectDescription", { projectName: project.title });
+          title = project.title;
+          description = project.description;
         } else {
           title = t("projectNotFound.title");
           description = t("projectNotFound.description");
         }
       } else {
-        title = t(`meta.${metaKey}Title`);
-        description = t(`meta.${metaKey}Description`);
+        const key = cleanPath || "home";
+        title = t(`meta.${key}Title`);
+        description = t(`meta.${key}Description`);
       }
+
+      canonicalPath = cleanPath ? `/${cleanPath}` : '/';
 
       return {
         title,
         description,
         url: `${basePath}${pathname}`,
-        canonical: `${basePath}${cleanPathname}`,
+        canonical: `${basePath}${canonicalPath}`,
       };
     },
-    [t, projects]
+    [t, i18n.language]
   );
 
   const { title, description, url, canonical } = getPageMeta(location.pathname);
@@ -123,7 +127,7 @@ function AppContent() {
             key={lng}
             rel="alternate"
             hrefLang={lng}
-            href={`https://promelektroservice.vercel.app/${lng}${canonical}`}
+            href={`https://promelektroservice.vercel.app/${lng}${canonical === "/" ? "" : canonical}`}
           />
         ))}
         <link rel="alternate" hrefLang="x-default" href="https://promelektroservice.vercel.app/" />
@@ -155,11 +159,12 @@ function AppContent() {
             <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
               <ul className="nav-menu centered" role="menubar">
                 {navItems.map(({ path, label }) => {
-                  const isActive = location.pathname.startsWith(`/${currentLang}${path}`) && (location.pathname.length === `/${currentLang}${path}`.length || path === "/");
+                  const toPath = path === "/" ? `/${currentLang}` : `/${currentLang}${path}`;
+                  const isActive = location.pathname.startsWith(toPath);
                   return (
                     <li key={path} role="none">
                       <Link
-                        to={`/${currentLang}${path}`}
+                        to={toPath}
                         className={isActive ? "active" : ""}
                         aria-current={isActive ? "page" : undefined}
                         role="menuitem"

@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, Navigate, Link } from "react-router-dom";
+import { useParams, Navigate, Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import "../styles/ProjectDetailPage.css";
@@ -19,8 +19,10 @@ const projects = [
 ];
 
 const ProjectDetailPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { id } = useParams();
+  const location = useLocation();
+  const currentLang = location.pathname.split("/")[1] || i18n.language;
 
   const project = projects[id];
 
@@ -36,7 +38,7 @@ const ProjectDetailPage = () => {
       </Helmet>
 
       <div className="project-details-container">
-        <Link to="/portfolio" className="back-button">
+        <Link to={`/${currentLang}/portfolio`} className="back-button">
           {t("project.backButton")}
         </Link>
         <h1 data-aos="fade-up">{t(`${project.key}.title`)}</h1>

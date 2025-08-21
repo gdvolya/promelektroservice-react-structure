@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -54,7 +54,9 @@ const projects = [
 ];
 
 const PortfolioPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const location = useLocation();
+  const currentLang = location.pathname.split("/")[1] || i18n.language;
 
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
@@ -72,7 +74,7 @@ const PortfolioPage = () => {
       <div className="portfolio-grid">
         {projects.map((project, index) => (
           <Link
-            to={`/portfolio/${index}`}
+            to={`/${currentLang}/portfolio/${index}`}
             key={index}
             className="portfolio-card"
             data-aos="fade-up"
