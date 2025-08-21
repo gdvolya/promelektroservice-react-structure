@@ -1,129 +1,112 @@
-:root {
-  --primary-color: #007bff;
-  --text-color: #222;
-  --subtext-color: #666;
-  --bg-light: #f9f9f9;
-  --bg-white: #fff;
-  --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  --card-hover-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-  --font-main: "Segoe UI", sans-serif;
-  --accent-color: #f1c40f; /* Accent color for buttons and highlights */
-}
-
-.portfolio-page {
+.project-page {
   padding: 4rem 2rem;
+  font-family: var(--font-main);
   background: var(--bg-light);
   min-height: 100vh;
-  font-family: var(--font-main);
   animation: fadeIn 0.6s ease-in-out;
   color: var(--text-color);
 }
 
-.portfolio-page h1 {
+.project-page h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 2.5rem;
-  text-align: center;
+  margin-bottom: 1.5rem;
   color: var(--primary-color);
+  text-align: center;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+.project-page h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
 }
 
-.portfolio-card {
-  background: var(--bg-white);
-  border-radius: 16px;
-  box-shadow: var(--card-shadow);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.project-details-container {
   display: flex;
   flex-direction: column;
-  text-decoration: none;
-  position: relative;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-.portfolio-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--card-hover-shadow);
-}
-
-.portfolio-card img {
+.project-image {
   width: 100%;
-  height: 220px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-  border-radius: 8px 8px 0 0;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  max-width: 800px;
+  margin: 0 auto;
+  display: block;
 }
 
-.portfolio-card:hover img {
-  transform: scale(1.05);
-}
-
-.card-content {
-  padding: 1.2rem 1rem;
-  background: var(--bg-white);
-  border-radius: 0 0 8px 8px;
-}
-
-.card-content h2 {
-  font-size: 1.35rem;
-  margin: 0 0 0.5rem;
-  color: var(--text-color);
-  font-weight: 600;
-}
-
-.card-content p {
-  font-size: 0.95rem;
+.project-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
   color: var(--subtext-color);
-  line-height: 1.5;
+  max-width: 800px;
+  margin: 0 auto 2rem;
 }
 
-.card-content a {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+.info-box {
+  background: var(--bg-white);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.info-item span {
+  font-weight: 600;
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.back-button-container {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  background: var(--primary-color);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.back-button:hover {
+  transform: translateY(-3px);
+  background-color: #0056b3;
 }
 
 /* 📱 Responsive */
-@media (max-width: 600px) {
-  .portfolio-card img {
-    height: 180px;
-  }
-
-  .card-content h2 {
-    font-size: 1.2rem;
-  }
-
-  .card-content p {
-    font-size: 0.9rem;
-  }
-
-  .portfolio-page {
+@media (max-width: 768px) {
+  .project-page {
     padding: 2rem 1rem;
   }
 
-  .portfolio-page h1 {
+  .project-page h1 {
     font-size: 2rem;
   }
-}
 
-/* 🎬 Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .project-details-container {
+    flex-direction: column;
   }
 }

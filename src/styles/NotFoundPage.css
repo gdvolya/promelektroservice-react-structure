@@ -1,44 +1,66 @@
 .not-found-page {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 80vh;
-  background-color: #fefefe;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.notfound-section {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  background: var(--bg-light);
+  font-family: var(--font-main);
   text-align: center;
-  padding: 2rem;
+  color: var(--text-color);
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-.notfound-section h1 {
-  font-size: 5rem;
-  margin-bottom: 0.5rem;
-  color: #ff6b6b;
-}
-
-.notfound-section h2 {
-  font-size: 2rem;
+.not-found-page h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
   margin-bottom: 1rem;
 }
 
-.notfound-section p {
+.not-found-page p {
   font-size: 1.2rem;
+  color: var(--subtext-color);
   margin-bottom: 2rem;
-  color: #555;
 }
 
-.back-home {
+.not-found-link {
   display: inline-block;
-  padding: 0.6rem 1.2rem;
-  background-color: #0070f3;
+  background: var(--primary-color);
   color: white;
-  border-radius: 6px;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
   text-decoration: none;
-  transition: background-color 0.2s ease;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.back-home:hover {
-  background-color: #0059c1;
+.not-found-link:hover {
+  transform: translateY(-3px);
+  background-color: #0056b3;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .not-found-page h1 {
+    font-size: 2.5rem;
+  }
+
+  .not-found-page p {
+    font-size: 1rem;
+  }
+}
+
+/* 🎬 Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

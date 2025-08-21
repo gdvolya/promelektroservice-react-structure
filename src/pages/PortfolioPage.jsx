@@ -6,10 +6,55 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "../styles/PortfolioPage.css";
 
+const projects = [
+  {
+    image: "/img/portfolio/project1.webp",
+    key: "portfolio.projects.0",
+  },
+  {
+    image: "/img/portfolio/project2.webp",
+    key: "portfolio.projects.1",
+  },
+  {
+    image: "/img/portfolio/smart_home.webp",
+    key: "portfolio.projects.2",
+  },
+  {
+    image: "/img/portfolio/industrial_installation.webp",
+    key: "portfolio.projects.3",
+  },
+  {
+    image: "/img/portfolio/project5.webp",
+    key: "portfolio.projects.4",
+  },
+  {
+    image: "/img/portfolio/project6.webp",
+    key: "portfolio.projects.5",
+  },
+  {
+    image: "/img/portfolio/project7.webp",
+    key: "portfolio.projects.6",
+  },
+  {
+    image: "/img/portfolio/project10.webp",
+    key: "portfolio.projects.7",
+  },
+  {
+    image: "/img/portfolio/project12.webp",
+    key: "portfolio.projects.8",
+  },
+  {
+    image: "/img/portfolio/project13.webp",
+    key: "portfolio.projects.9",
+  },
+  {
+    image: "/img/portfolio/project14.webp",
+    key: "portfolio.projects.10",
+  },
+];
+
 const PortfolioPage = () => {
   const { t } = useTranslation();
-
-  const projects = t("portfolio.projects", { returnObjects: true });
 
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
@@ -32,11 +77,13 @@ const PortfolioPage = () => {
             className="portfolio-card"
             data-aos="fade-up"
             data-aos-delay={index * 100}
-            aria-label={`${project.title} — ${project.description}`}
+            aria-label={`${t(`${project.key}.title`)} — ${t(
+              `${project.key}.description`
+            )}`}
           >
             <img
               src={project.image}
-              alt={project.title}
+              alt={t(`${project.key}.title`)}
               loading="lazy"
               decoding="async"
               className="portfolio-img"
@@ -44,8 +91,8 @@ const PortfolioPage = () => {
               height="auto"
             />
             <div className="card-content">
-              <h2>{project.title}</h2>
-              <p>{project.description}</p>
+              <h2>{t(`${project.key}.title`)}</h2>
+              <p>{t(`${project.key}.description`)}</p>
             </div>
           </Link>
         ))}
