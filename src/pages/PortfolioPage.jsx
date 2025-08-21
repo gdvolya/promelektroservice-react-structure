@@ -47,10 +47,6 @@ const projects = [
     image: "/img/portfolio/project10.webp",
     key: "portfolio.projects.9",
   },
-  {
-    image: "/img/portfolio/project11.webp",
-    key: "portfolio.projects.10",
-  },
 ];
 
 const PortfolioPage = () => {

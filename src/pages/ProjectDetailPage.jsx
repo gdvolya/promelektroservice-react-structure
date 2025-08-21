@@ -15,7 +15,6 @@ const projects = [
   { key: "portfolio.projects.7", image: "/img/portfolio/project8.webp" },
   { key: "portfolio.projects.8", image: "/img/portfolio/project9.webp" },
   { key: "portfolio.projects.9", image: "/img/portfolio/project10.webp" },
-  { key: "portfolio.projects.10", image: "/img/portfolio/project11.webp" },
 ];
 
 const ProjectDetailPage = () => {
