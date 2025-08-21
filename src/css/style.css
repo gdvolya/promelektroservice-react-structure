@@ -149,21 +149,18 @@ a {
 }
 .logo-left:hover { transform: scale(1.05); }
 
-/* Выравнивание навигации по центру */
+/* Выравнивание навигации по правой стороне */
 .header-container {
   display: flex;
   align-items: center;
-  width: 100%; /* Убедимся, что контейнер занимает всю доступную ширину */
+  justify-content: space-between; /* Распределяем элементы по краям */
+  width: 100%;
 }
-
-/* Это позволит навигационному меню занимать всю ширину между логотипом и кнопкой */
 .header-container nav {
-  flex: 1;
+  /* Убираем Flexbox-свойства, которые центрировали меню */
   display: flex;
-  justify-content: center;
   align-items: center;
 }
-
 .nav-menu {
   list-style: none;
   display: flex;
@@ -470,7 +467,7 @@ a {
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
-  margin-left: 1rem;
+  margin-left: auto; /* Сдвигаем кнопку вправо */
   transition: transform 0.2s ease;
 }
 .theme-toggle-btn:hover {
