@@ -1,11 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom'; // Додайте useLocation
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import '../styles/HomePage.css';
 
+const languages = ["uk", "en", "ru"];
+
 export default function HomePage() {
   const { t } = useTranslation();
+  const location = useLocation();
+
+  const currentLang = languages.includes(location.pathname.split("/")[1])
+    ? location.pathname.split("/")[1]
+    : "uk";
 
   return (
     <>
@@ -38,7 +45,7 @@ export default function HomePage() {
           />
           <div className="hero-overlay"></div>
           <div className="hero-content" data-aos="fade-up">
-            <h1 className="hero-title">{t('home.mainTitle')}</h1>
+            <h1 className="hero-title">ПромЕлектроСервіс</h1>
             <p className="hero-subtitle">{t('home.subtitle')}</p>
 
             <div className="hero-descriptions">
@@ -48,10 +55,10 @@ export default function HomePage() {
             </div>
 
             <div className="hero-buttons">
-              <Link to="/portfolio" className="btn primary">
+              <Link to={`/${currentLang}/portfolio`} className="btn primary">
                 {t('home.projectsBtn')}
               </Link>
-              <Link to="/contacts" className="btn secondary">
+              <Link to={`/${currentLang}/contacts`} className="btn secondary">
                 {t('home.contactBtn')}
               </Link>
             </div>
