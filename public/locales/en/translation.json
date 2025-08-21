@@ -1,4 +1,5 @@
 {
+  "skipNav": "Skip navigation",
   "nav": {
     "mainMenu": "Main menu",
     "home": "Home",
@@ -8,7 +9,7 @@
     "contacts": "Contacts"
   },
   "footer": {
-    "rights": "© 2025 Promelektroservice. All rights reserved."
+    "rights": "All rights reserved."
   },
   "meta": {
     "homeTitle": "Home — Promelektroservice",
@@ -20,17 +21,15 @@
     "reviewsTitle": "Reviews — Promelektroservice",
     "reviewsDescription": "Client reviews about our electrical installation services.",
     "contactsTitle": "Contacts — Promelektroservice",
-    "contactsDescription": "Contact us to order services or get a consultation."
+    "contactsDescription": "Contact us to order services or get a consultation.",
+    "projectTitle": "{{projectName}} — Promelektroservice",
+    "projectDescription": "Detailed information about the project {{projectName}}."
   },
   "home": {
     "mainTitle": "Professional Electrical Installation in Kyiv",
     "companyDesc": "We perform wiring installation, lighting, switchboards, automation, smart home systems, industrial electrical works, and much more.",
     "ourWorksTitle": "Examples of Our Work",
     "ourWorksSubtitle": "Our best projects from the last year",
-    "project1Title": "Electrical Wiring Installation",
-    "project1Desc": "Comprehensive electrical wiring installation considering office specifics and safety.",
-    "project2Title": "Smart Home",
-    "project2Desc": "Integration of smart home systems with power grid automation for convenience.",
     "viewAllProjectsBtn": "View All Projects",
     "subtitle": "Professional electrical installation services for home and business.",
     "projectsBtn": "Our Projects",
@@ -49,50 +48,60 @@
   },
   "portfolio": {
     "heading": "Our Projects",
-    "project1": {
-      "title": "Office Electrical Wiring",
-      "description": "Complete electrical wiring installation tailored to office needs and safety. We use modern materials that meet all quality standards."
-    },
-    "project2": {
-      "title": "Shopping Mall Lighting",
-      "description": "Design and installation of modern lighting in a large shopping mall using energy-saving technologies. Increases lighting efficiency and reduces energy costs."
-    },
-    "project3": {
-      "title": "Smart Home",
-      "description": "Integration of smart home systems with power automation to provide convenience and energy efficiency. Controlled via mobile app or voice commands."
-    },
-    "project4": {
-      "title": "Industrial Installation",
-      "description": "Electrical installation solution for manufacturing facilities, considering high load and safety requirements."
-    },
-    "project5": {
-      "title": "Facade Lighting",
-      "description": "Aesthetic and functional facade lighting for a business center that enhances security and the attractiveness of the building while creating a pleasant atmosphere."
-    },
-    "project6": {
-      "title": "Switchboards",
-      "description": "Assembly, installation, and connection of distribution switchboards for commercial objects, ensuring reliable power supply according to the facility's specifications."
-    },
-    "project7": {
-      "title": "Solar Panels",
-      "description": "Installation and connection of solar panels for autonomous energy supply to reduce electricity costs and increase energy efficiency."
-    },
-    "project10": {
-      "title": "Electrical Switchgear Installation",
-      "description": "Professional installation and connection of electrical switchgear to ensure an uninterrupted power supply."
-    },
-    "project12": {
-      "title": "House Wiring Upgrade",
-      "description": "A full range of work to replace old electrical wiring with a new, safe, and efficient network."
-    },
-    "project13": {
-      "title": "CCTV System Installation",
-      "description": "Integration and connection of CCTV systems for security and access control."
-    },
-    "project14": {
-      "title": "New Construction Electrical Work",
-      "description": "A complete cycle of electrical work in a new building, from design to project handover."
-    }
+    "projects": [
+      {
+        "key": 1,
+        "title": "Office Electrical Wiring",
+        "description": "Complete electrical wiring installation tailored to office needs and safety. We use modern materials that meet all quality standards.",
+        "image": "/img/portfolio/office_wiring.webp",
+        "type": "Electrical Installation",
+        "duration": "2 weeks",
+        "address": "Kyiv, Prykladna St, 1"
+      },
+      {
+        "key": 2,
+        "title": "Shopping Mall Lighting",
+        "description": "Design and installation of modern lighting in a large shopping mall using energy-saving technologies. Increases lighting efficiency and reduces energy costs.",
+        "image": "/img/portfolio/mall_lighting.webp",
+        "type": "Lighting",
+        "duration": "1 month",
+        "address": "Kyiv, Svobody Ave, 5"
+      },
+      {
+        "key": 3,
+        "title": "Smart Home",
+        "description": "Integration of smart home systems with power automation to provide convenience and energy efficiency. Controlled via mobile app or voice commands.",
+        "image": "/img/portfolio/smart_home.webp",
+        "type": "Automation",
+        "duration": "4 weeks",
+        "address": "Kyiv, Zruchna St, 7"
+      },
+      {
+        "key": 4,
+        "title": "Industrial Installation",
+        "description": "Electrical installation solution for manufacturing facilities, considering high load and safety requirements.",
+        "image": "/img/portfolio/industrial_installation.webp",
+        "type": "Industrial Installation",
+        "duration": "6 weeks",
+        "address": "Brovari, Zavodska St, 2"
+      }
+    ]
+  },
+  "project": {
+    "descriptionTitle": "Project Description",
+    "type": "Type of work",
+    "duration": "Duration",
+    "address": "Address",
+    "backButton": "← Back to Portfolio",
+    "backLink": "/portfolio"
+  },
+  "projectNotFound": {
+    "title": "Project not found",
+    "description": "Sorry, the project you requested does not exist or has been deleted.",
+    "heading": "Project not found",
+    "message": "We cannot find the project you are looking for. Please check the URL or return to the portfolio page.",
+    "backButton": "← Return to Portfolio",
+    "backLink": "/portfolio"
   },
   "contacts": {
     "heading": "Contacts",
