@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useCallback, useMemo } from "react";
+import React, { Suspense, lazy, useEffect, useCallback, useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
@@ -28,6 +28,23 @@ function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Логика для дневного/ночного режима
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme === 'dark';
+  });
+
+  useEffect(() => {
+    const body = document.body;
+    body.classList.remove('light-mode', 'dark-mode');
+    body.classList.add(isDarkMode ? 'dark-mode' : 'light-mode');
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
+
+  const toggleTheme = useCallback(() => {
+    setIsDarkMode(prevMode => !prevMode);
+  }, []);
 
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
@@ -181,6 +198,10 @@ function AppContent() {
                 })}
               </ul>
             </nav>
+
+            <button onClick={toggleTheme} className="theme-toggle-btn" aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
+              {isDarkMode ? '☀️' : '🌙'}
+            </button>
           </div>
         </header>
 
@@ -254,7 +275,7 @@ function AppContent() {
               aria-label="Перейти на сторінку Instagram"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2.16c3.2 0 3.6 0 4.8.06 1.1.06 1.7.2 2.2.4.6.2 1.1.5 1.6 1s.8 1 1 1.6c.2.5.3 1.1.4 2.2.06 1.2.06 1.6.06 4.8s0 3.6-.06 4.8c-.06 1.1-.2 1.7-.4 2.2-.2.6-.5 1.1-1 1.6s-1 .8-1.6 1c-.5.2-1.1.3-2.2.4-1.2.06-1.6.06-4.8.06s-3.6 0-4.8-.06c-1.1-.06-1.7-.2-2.2-.4-.6-.2-1.1-.5-1.6-1s-.8-1-1-1.6c-.2-.5-.3-1.1-.4-2.2-.06-1.2-.06-1.6-.06-4.8s0-3.6.06-4.8c.06-1.1.2-1.7.4-2.2.2-.6.5-1.1 1-1.6s1-.8 1.6-1c.5-.2 1.1-.3 2.2-.4 1.2-.06 1.6-.06 4.8-.06zm0-1.92c-3.2 0-3.6 0-4.8.06-1.1.06-2.1.26-2.8.56-.7.3-1.3.8-1.9 1.4s-1.1 1.2-1.4 1.9c-.3.7-.5 1.7-.6 2.8-.06 1.2-.06 1.6-.06 4.8s0 3.6.06 4.8c.06 1.1.26 2.1.56 2.8.3.7.8 1.3 1.4 1.9s1.2 1.1 1.9 1.4c.7.3 1.7.5 2.8.6 1.2.06 1.6.06 4.8.06s3.6 0 4.8-.06c1.1-.06 2.1-.26 2.8-.56.7-.3 1.3-.8 1.9-1.4s1.1-1.2 1.4-1.9c.3-.7.5-1.7.6-2.8.06-1.2.06-1.6.06-4.8s0-3.6-.06-4.8c-.06-1.1-.26-2.1-.56-2.8-.3-.7-.8-1.3-1.4-1.9s-1.2-1.1-1.9-1.4c-.7-.3-1.7-.5-2.8-.6-1.2-.06-1.6-.06-4.8-.06z" />
+                <path d="M12 2.16c3.2 0 3.6 0 4.8.06 1.1.06 1.7.2 2.2.4.6.2 1.1.5 1.6 1s.8 1 1 1.6c.2.5.3 1.1.4 2.2.06 1.2.06 1.6.06 4.8s0 3.6-.06 4.8c-.06 1.1-.2 1.7-.4 2.2-.2.6-.5 1.1-1 1.6s-1 .8-1.6 1c-.5.2-1.1.3-2.2.4-1.2.06-1.6.06-4.8.06s-3.6 0-4.8-.06c-1.1-.06-1.7-.2-2.2-.4-.6-.2-1.1-.5-1.6-1s-.8-1-1-1.6c-.2-.5-.3-1.1-.4-2.2-.06-1.2-.06-1.6-.06-4.8s0-3.6.06-4.8c.06-1.1.2-1.7.4-2.2.2-.6.5-1.1 1-1.6s1-.8 1.6-1c.5-.2 1.1-.3 2.2-.4 1.2-.06 1.6-.06 4.8-.06z" />
                 <path d="M12 5.8a6.2 6.2 0 100 12.4A6.2 6.2 0 0012 5.8zm0 10.4a4.2 4.2 0 110-8.4 4.2 4.2 0 010 8.4z" />
                 <path d="M17.4 5.2a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
               </svg>
