@@ -16,11 +16,11 @@ const projects = [
     key: "portfolio.projects.1",
   },
   {
-    image: "/img/portfolio/smart_home.webp",
+    image: "/img/portfolio/project3.webp",
     key: "portfolio.projects.2",
   },
   {
-    image: "/img/portfolio/industrial_installation.webp",
+    image: "/img/portfolio/project4.webp",
     key: "portfolio.projects.3",
   },
   {
@@ -36,19 +36,19 @@ const projects = [
     key: "portfolio.projects.6",
   },
   {
-    image: "/img/portfolio/project10.webp",
+    image: "/img/portfolio/project8.webp",
     key: "portfolio.projects.7",
   },
   {
-    image: "/img/portfolio/project12.webp",
+    image: "/img/portfolio/project9.webp",
     key: "portfolio.projects.8",
   },
   {
-    image: "/img/portfolio/project13.webp",
+    image: "/img/portfolio/project10.webp",
     key: "portfolio.projects.9",
   },
   {
-    image: "/img/portfolio/project14.webp",
+    image: "/img/portfolio/project11.webp",
     key: "portfolio.projects.10",
   },
 ];

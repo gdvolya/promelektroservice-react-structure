@@ -7,15 +7,15 @@ import "../styles/ProjectDetailPage.css";
 const projects = [
   { key: "portfolio.projects.0", image: "/img/portfolio/project1.webp" },
   { key: "portfolio.projects.1", image: "/img/portfolio/project2.webp" },
-  { key: "portfolio.projects.2", image: "/img/portfolio/smart_home.webp" },
-  { key: "portfolio.projects.3", image: "/img/portfolio/industrial_installation.webp" },
+  { key: "portfolio.projects.2", image: "/img/portfolio/project3.webp" },
+  { key: "portfolio.projects.3", image: "/img/portfolio/project4.webp" },
   { key: "portfolio.projects.4", image: "/img/portfolio/project5.webp" },
   { key: "portfolio.projects.5", image: "/img/portfolio/project6.webp" },
   { key: "portfolio.projects.6", image: "/img/portfolio/project7.webp" },
-  { key: "portfolio.projects.7", image: "/img/portfolio/project10.webp" },
-  { key: "portfolio.projects.8", image: "/img/portfolio/project12.webp" },
-  { key: "portfolio.projects.9", image: "/img/portfolio/project13.webp" },
-  { key: "portfolio.projects.10", image: "/img/portfolio/project14.webp" },
+  { key: "portfolio.projects.7", image: "/img/portfolio/project8.webp" },
+  { key: "portfolio.projects.8", image: "/img/portfolio/project9.webp" },
+  { key: "portfolio.projects.9", image: "/img/portfolio/project10.webp" },
+  { key: "portfolio.projects.10", image: "/img/portfolio/project11.webp" },
 ];
 
 const ProjectDetailPage = () => {
