@@ -149,6 +149,21 @@ a {
 }
 .logo-left:hover { transform: scale(1.05); }
 
+/* Выравнивание навигации по центру */
+.header-container {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Убедимся, что контейнер занимает всю доступную ширину */
+}
+
+/* Это позволит навигационному меню занимать всю ширину между логотипом и кнопкой */
+.header-container nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .nav-menu {
   list-style: none;
   display: flex;
