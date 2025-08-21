@@ -6,6 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "../styles/PortfolioPage.css";
 
+// Важно: Этот массив должен соответствовать данным в файле translation.json
 const projects = [
   {
     image: "/img/portfolio/project1.webp",
