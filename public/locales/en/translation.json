@@ -50,25 +50,25 @@
     "heading": "Our Projects",
     "projects": [
       {
-        "key": 1,
+        "key": 0,
         "title": "Office Electrical Wiring",
         "description": "Complete electrical wiring installation tailored to office needs and safety. We use modern materials that meet all quality standards.",
-        "image": "/img/portfolio/office_wiring.webp",
+        "image": "/img/portfolio/project1.webp",
         "type": "Electrical Installation",
         "duration": "2 weeks",
         "address": "Kyiv, Prykladna St, 1"
       },
       {
-        "key": 2,
+        "key": 1,
         "title": "Shopping Mall Lighting",
         "description": "Design and installation of modern lighting in a large shopping mall using energy-saving technologies. Increases lighting efficiency and reduces energy costs.",
-        "image": "/img/portfolio/mall_lighting.webp",
+        "image": "/img/portfolio/project2.webp",
         "type": "Lighting",
         "duration": "1 month",
         "address": "Kyiv, Svobody Ave, 5"
       },
       {
-        "key": 3,
+        "key": 2,
         "title": "Smart Home",
         "description": "Integration of smart home systems with power automation to provide convenience and energy efficiency. Controlled via mobile app or voice commands.",
         "image": "/img/portfolio/smart_home.webp",
@@ -77,13 +77,76 @@
         "address": "Kyiv, Zruchna St, 7"
       },
       {
-        "key": 4,
+        "key": 3,
         "title": "Industrial Installation",
         "description": "Electrical installation solution for manufacturing facilities, considering high load and safety requirements.",
         "image": "/img/portfolio/industrial_installation.webp",
         "type": "Industrial Installation",
         "duration": "6 weeks",
         "address": "Brovari, Zavodska St, 2"
+      },
+      {
+        "key": 4,
+        "title": "Facade Lighting",
+        "description": "Aesthetic and functional facade lighting for a business center that enhances security and the attractiveness of the building while creating a pleasant atmosphere.",
+        "image": "/img/portfolio/project5.webp",
+        "type": "Lighting",
+        "duration": "3 weeks",
+        "address": "Kyiv, Nauki Ave, 10"
+      },
+      {
+        "key": 5,
+        "title": "Switchboards",
+        "description": "Assembly, installation, and connection of distribution switchboards for commercial objects, ensuring reliable power supply according to the facility's specifications.",
+        "image": "/img/portfolio/project6.webp",
+        "type": "Switchboards",
+        "duration": "2 weeks",
+        "address": "Kyiv, Budivelna St, 3"
+      },
+      {
+        "key": 6,
+        "title": "Solar Panels",
+        "description": "Installation and connection of solar panels for autonomous energy supply to reduce electricity costs and increase energy efficiency.",
+        "image": "/img/portfolio/project7.webp",
+        "type": "Energy Saving",
+        "duration": "5 weeks",
+        "address": "Kyiv region, Kozin village"
+      },
+      {
+        "key": 7,
+        "title": "Electrical Switchgear Installation",
+        "description": "Professional installation and connection of electrical switchgear to ensure an uninterrupted power supply.",
+        "image": "/img/portfolio/project10.webp",
+        "type": "Electrical Installation",
+        "duration": "2 weeks",
+        "address": "Vyshneve, Kyivska St, 22"
+      },
+      {
+        "key": 8,
+        "title": "House Wiring Upgrade",
+        "description": "A full range of work to replace old electrical wiring with a new, safe, and efficient network.",
+        "image": "/img/portfolio/project12.webp",
+        "type": "Electrical Installation",
+        "duration": "10 days",
+        "address": "Irpin, Lisova St, 5"
+      },
+      {
+        "key": 9,
+        "title": "CCTV System Installation",
+        "description": "Integration and connection of CCTV systems for security and access control.",
+        "image": "/img/portfolio/project13.webp",
+        "type": "CCTV",
+        "duration": "1 week",
+        "address": "Kyiv, Peremohy Ave, 15"
+      },
+      {
+        "key": 10,
+        "title": "New Construction Electrical Work",
+        "description": "A complete cycle of electrical work in a new building, from design to project handover.",
+        "image": "/img/portfolio/project14.webp",
+        "type": "Electrical Installation",
+        "duration": "8 weeks",
+        "address": "Kyiv, Lobanovskyi Ave, 11"
       }
     ]
   },

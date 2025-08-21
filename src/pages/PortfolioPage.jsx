@@ -6,39 +6,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "../styles/PortfolioPage.css";
 
-const projects = [
-  {
-    image: "/img/portfolio/project14.webp",
-    key: "project1",
-  },
-  {
-    image: "/img/portfolio/project10.webp",
-    key: "project2",
-  },
-  {
-    image: "/img/portfolio/project12.webp",
-    key: "project3",
-  },
-  {
-    image: "/img/portfolio/project7.webp",
-    key: "project4",
-  },
-  {
-    image: "/img/portfolio/project13.webp",
-    key: "project5",
-  },
-  {
-    image: "/img/portfolio/project2.webp",
-    key: "project6",
-  },
-  {
-    image: "/img/portfolio/project1.webp",
-    key: "project7",
-  },
-];
-
 const PortfolioPage = () => {
   const { t } = useTranslation();
+
+  // Получаем список проектов из файла переводов
+  const projects = t("portfolio.projects", { returnObjects: true });
 
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
@@ -61,11 +33,11 @@ const PortfolioPage = () => {
             className="portfolio-card"
             data-aos="fade-up"
             data-aos-delay={index * 100}
-            aria-label={`${t(`portfolio.${project.key}.title`)} — ${t(`portfolio.${project.key}.description`)}`}
+            aria-label={`${project.title} — ${project.description}`}
           >
             <img
               src={project.image}
-              alt={t(`portfolio.${project.key}.title`)}
+              alt={project.title}
               loading="lazy"
               decoding="async"
               className="portfolio-img"
@@ -73,8 +45,8 @@ const PortfolioPage = () => {
               height="auto"
             />
             <div className="card-content">
-              <h2>{t(`portfolio.${project.key}.title`)}</h2>
-              <p>{t(`portfolio.${project.key}.description`)}</p>
+              <h2>{project.title}</h2>
+              <p>{project.description}</p>
             </div>
           </Link>
         ))}
