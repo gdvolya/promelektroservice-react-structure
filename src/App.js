@@ -28,25 +28,22 @@ function AppContent() {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const projects = t("portfolio.projects", { returnObjects: true });
 
-  // ✨ Единая инициализация AOS для всего приложения
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
   }, []);
 
-  // Получаем текущий язык из URL, если его нет — из localStorage, а затем по умолчанию
   const currentLang = useMemo(() => {
-    const pathParts = location.pathname.split("/");
-    const langFromPath = pathParts[1];
+    const pathParts = location.pathname.split("/").filter(Boolean);
+    const langFromPath = pathParts[0];
     return languages.includes(langFromPath) ? langFromPath : i18n.language;
   }, [location.pathname, i18n.language]);
 
-  // Смена языка и обновление URL
   const changeLanguage = useCallback(
     (lng) => {
-      // Исключаем лишние слэши, чтобы путь всегда был корректным
       const pathWithoutLang = location.pathname.startsWith(`/${currentLang}`)
-        ? location.pathname.substring(3)
+        ? location.pathname.substring(currentLang.length + 1)
         : location.pathname;
       const newPath = `/${lng}${pathWithoutLang === "/" ? "" : pathWithoutLang}`;
 
@@ -57,14 +54,12 @@ function AppContent() {
     [currentLang, i18n, location.pathname, navigate]
   );
 
-  // Обновление языка, если пользователь изменил его в адресной строке
   useEffect(() => {
     if (i18n.language !== currentLang) {
       i18n.changeLanguage(currentLang);
     }
   }, [currentLang, i18n]);
 
-  // Навигация
   const navItems = useMemo(
     () => [
       { path: "/", label: t("nav.home") },
@@ -76,37 +71,39 @@ function AppContent() {
     [t]
   );
 
-  // Мета-теги
   const getPageMeta = useCallback(
     (pathname) => {
-      // Убираем языковой префикс для корректной генерации мета-тегов
-      const pathParts = pathname.split("/");
-      const cleanPathname = pathParts[1] && languages.includes(pathParts[1])
-        ? `/${pathParts.slice(2).join('/')}`
-        : pathname;
-
+      const pathParts = pathname.split("/").filter(Boolean);
+      const cleanPathname = languages.includes(pathParts[0]) ? `/${pathParts.slice(1).join('/')}` : pathname;
       const metaKey = cleanPathname.split("/")[1] || "home";
-      const projectMatch = cleanPathname.match(/\/portfolio\/([^/]+)/);
+      const projectMatch = cleanPathname.match(/\/portfolio\/(\d+)/);
 
       const basePath = "https://promelektroservice.vercel.app";
+      let title, description;
 
       if (projectMatch) {
-        return {
-          title: t("meta.projectTitle", { projectName: projectMatch[1] }),
-          description: t("meta.projectDescription", { projectName: projectMatch[1] }),
-          url: `${basePath}${pathname}`,
-          canonical: `${basePath}${cleanPathname}`,
-        };
+        const projectIndex = parseInt(projectMatch[1], 10);
+        const project = projects[projectIndex];
+        if (project) {
+          title = t("meta.projectTitle", { projectName: project.title });
+          description = t("meta.projectDescription", { projectName: project.title });
+        } else {
+          title = t("projectNotFound.title");
+          description = t("projectNotFound.description");
+        }
+      } else {
+        title = t(`meta.${metaKey}Title`);
+        description = t(`meta.${metaKey}Description`);
       }
 
       return {
-        title: t(`meta.${metaKey}Title`),
-        description: t(`meta.${metaKey}Description`),
+        title,
+        description,
         url: `${basePath}${pathname}`,
         canonical: `${basePath}${cleanPathname}`,
       };
     },
-    [t]
+    [t, projects]
   );
 
   const { title, description, url, canonical } = getPageMeta(location.pathname);
@@ -158,7 +155,7 @@ function AppContent() {
             <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
               <ul className="nav-menu centered" role="menubar">
                 {navItems.map(({ path, label }) => {
-                  const isActive = location.pathname === `/${currentLang}${path}` || (path === "/" && location.pathname === `/${currentLang}`);
+                  const isActive = location.pathname.startsWith(`/${currentLang}${path}`) && (location.pathname.length === `/${currentLang}${path}`.length || path === "/");
                   return (
                     <li key={path} role="none">
                       <Link
@@ -191,7 +188,7 @@ function AppContent() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/:lang" element={<HomePage />} />
                 <Route path="/:lang/portfolio" element={<PortfolioPage />} />
-                <Route path="/:lang/portfolio/:projectId" element={<ProjectDetailPage />} />
+                <Route path="/:lang/portfolio/:id" element={<ProjectDetailPage />} />
                 <Route path="/:lang/reviews" element={<ReviewsPage />} />
                 <Route path="/:lang/pricing" element={<PricingPage />} />
                 <Route path="/:lang/contacts" element={<ContactsPage />} />
@@ -243,7 +240,6 @@ function AppContent() {
   );
 }
 
-// Обертка
 export default function App() {
   return (
     <HelmetProvider>

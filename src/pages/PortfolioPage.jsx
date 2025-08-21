@@ -9,7 +9,6 @@ import "../styles/PortfolioPage.css";
 const PortfolioPage = () => {
   const { t } = useTranslation();
 
-  // Получаем список проектов из файла переводов
   const projects = t("portfolio.projects", { returnObjects: true });
 
   useEffect(() => {
