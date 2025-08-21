@@ -149,18 +149,20 @@ a {
 }
 .logo-left:hover { transform: scale(1.05); }
 
-/* Выравнивание навигации по правой стороне */
+/* Выравнивание навигации и кнопки переключения темы */
 .header-container {
   display: flex;
   align-items: center;
   justify-content: space-between; /* Распределяем элементы по краям */
   width: 100%;
 }
-.header-container nav {
-  /* Убираем Flexbox-свойства, которые центрировали меню */
+
+.right-controls {
   display: flex;
   align-items: center;
+  gap: 20px; /* Отступ между навигацией и кнопкой */
 }
+
 .nav-menu {
   list-style: none;
   display: flex;
@@ -467,7 +469,6 @@ a {
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0;
-  margin-left: auto; /* Сдвигаем кнопку вправо */
   transition: transform 0.2s ease;
 }
 .theme-toggle-btn:hover {

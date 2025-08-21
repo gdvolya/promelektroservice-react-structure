@@ -178,30 +178,32 @@ function AppContent() {
               </picture>
             </Link>
 
-            <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
-              <ul className="nav-menu centered" role="menubar">
-                {navItems.map(({ path, label }) => {
-                  const toPath = path === "/" ? `/${currentLang}` : `/${currentLang}${path}`;
-                  const isActive = location.pathname === toPath || (toPath === `/${currentLang}` && location.pathname === `/${currentLang}/`);
-                  return (
-                    <li key={path} role="none">
-                      <Link
-                        to={toPath}
-                        className={isActive ? "active" : ""}
-                        aria-current={isActive ? "page" : undefined}
-                        role="menuitem"
-                      >
-                        {label}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
+            <div className="right-controls">
+              <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
+                <ul className="nav-menu centered" role="menubar">
+                  {navItems.map(({ path, label }) => {
+                    const toPath = path === "/" ? `/${currentLang}` : `/${currentLang}${path}`;
+                    const isActive = location.pathname === toPath || (toPath === `/${currentLang}` && location.pathname === `/${currentLang}/`);
+                    return (
+                      <li key={path} role="none">
+                        <Link
+                          to={toPath}
+                          className={isActive ? "active" : ""}
+                          aria-current={isActive ? "page" : undefined}
+                          role="menuitem"
+                        >
+                          {label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
 
-            <button onClick={toggleTheme} className="theme-toggle-btn" aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
-              {isDarkMode ? '☀️' : '🌙'}
-            </button>
+              <button onClick={toggleTheme} className="theme-toggle-btn" aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
+                {isDarkMode ? '☀️' : '🌙'}
+              </button>
+            </div>
           </div>
         </header>
 
