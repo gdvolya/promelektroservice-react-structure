@@ -12,6 +12,19 @@
   --placeholder-color: #aaa;
 }
 
+/* 🌑 Тёмная тема */
+.dark-mode {
+  --primary-color: #66aaff;
+  --primary-hover: #3388dd;
+  --text-color: #e2e8f0;
+  --subtext-color: #a0aec0;
+  --bg-light: #1a202c;
+  --bg-white: #2d3748;
+  --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --card-hover-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+  --placeholder-color: #718096;
+}
+
 .reviews-page {
   padding: 4rem 2rem;
   background-color: var(--bg-light);
@@ -56,7 +69,7 @@
 
 .review-author {
   font-weight: bold;
-  color: #2d3748;
+  color: var(--text-color);
   font-size: 0.95rem;
 }
 
@@ -89,6 +102,8 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   font-family: var(--font-main);
+  background: var(--bg-light);
+  color: var(--text-color);
   transition: border-color 0.3s ease;
 }
 
@@ -161,10 +176,6 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

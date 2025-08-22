@@ -10,6 +10,18 @@
   --font-main: "Segoe UI", sans-serif;
 }
 
+/* 🌑 Тёмная тема */
+.dark-mode {
+  --primary-color: #66aaff;
+  --primary-hover: #3388dd;
+  --text-color: #e2e8f0;
+  --subtext-color: #a0aec0;
+  --bg-light: #1a202c;
+  --bg-white: #2d3748;
+  --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --card-hover-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+}
+
 .pricing-page {
   padding: 4rem 2rem;
   background: var(--bg-light);
@@ -114,12 +126,6 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }

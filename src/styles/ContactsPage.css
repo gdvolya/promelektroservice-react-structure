@@ -4,10 +4,22 @@
   --text-color: #212121;
   --subtext-color: #555;
   --bg-light: #f7f9fc;
+  --bg-white: #fff;
   --font-main: "Segoe UI", sans-serif;
   --error-color: #dc3545;
   --success-color: #28a745;
   --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* 🌑 Тёмная тема */
+.dark-mode {
+  --primary-color: #66aaff;
+  --primary-hover: #3388dd;
+  --text-color: #e2e8f0;
+  --subtext-color: #a0aec0;
+  --bg-light: #1a202c;
+  --bg-white: #2d3748;
+  --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .contacts-page {
@@ -111,6 +123,13 @@
   border-radius: 8px;
   resize: vertical;
   width: 100%;
+  background: var(--bg-light);
+  color: var(--text-color);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--subtext-color);
 }
 
 .contact-form button {
