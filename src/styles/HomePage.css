@@ -4,27 +4,39 @@
   ==============================================================
 */
 
-/* 🎨 Переменные CSS (Custom Properties) для легкой настройки */
+/* 🎨 Переменные CSS (Custom Properties) */
 :root {
-  --primary-color: #007bff; /* Основной синий цвет */
-  --primary-hover: #0056b3; /* Темнее синий для эффекта при наведении */
-  --text-color: #222; /* Основной цвет текста */
-  --bg-light: #f9f9f9; /* Светло-серый фон */
-  --bg-white: #fff; /* Белый фон */
-  --accent-bg: #f5f5f5; /* Акцентный фон */
-  --font-main: "Montserrat", "Segoe UI", sans-serif; /* Основной шрифт */
-  --heading-color: #111; /* Цвет заголовков */
-  --subtext-color: #555; /* Цвет дополнительного текста */
+  --primary-color: #007bff;
+  --primary-hover: #0056b3;
+  --text-color: #222;
+  --bg-light: #f9f9f9;
+  --bg-white: #fff;
+  --accent-bg: #f5f5f5;
+  --font-main: "Montserrat", "Segoe UI", sans-serif;
+  --heading-color: #111;
+  --subtext-color: #555;
 }
 
-/* 🧹 Обнуление отступов */
+/* 🌑 Тёмная тема */
+.dark-mode {
+  --primary-color: #66aaff;
+  --primary-hover: #3388dd;
+  --text-color: #e2e8f0;
+  --bg-light: #1a202c;
+  --bg-white: #2d3748;
+  --accent-bg: #2a2f3a;
+  --heading-color: #f1f5f9;
+  --subtext-color: #a0aec0;
+}
+
+/* 🧹 Сброс отступов */
 body,
 main {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
 
-/* 🖼️ Общие стили для всей страницы */
+/* 🖼️ Базовые стили */
 .home-page {
   font-family: var(--font-main);
   background-color: var(--bg-light);
@@ -32,11 +44,11 @@ main {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  position: relative; /* нужно для overlay */
+  position: relative;
   z-index: 0;
 }
 
-/* 🌑 Глобальное затемнение всей страницы */
+/* 🌑 Затемнение всей страницы */
 .page-overlay {
   position: fixed;
   inset: 0;
@@ -53,7 +65,7 @@ main {
 
 /*
   ==============================================================
-  Раздел "Hero" (Главный экран)
+  Hero (Главный экран)
   ==============================================================
 */
 
@@ -68,12 +80,10 @@ main {
   align-items: center;
   text-align: center;
   padding: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+  margin: 0 !important;
   color: #fff;
 }
 
-/* 🏞️ Фоновое изображение */
 .hero-background-img {
   position: absolute;
   inset: 0;
@@ -85,7 +95,6 @@ main {
   pointer-events: none;
 }
 
-/* 🌑 Полупрозрачное затемнение Hero */
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -93,7 +102,6 @@ main {
   z-index: 1;
 }
 
-/* 📜 Контент Hero */
 .hero-content {
   position: relative;
   width: 100%;
@@ -105,11 +113,9 @@ main {
   align-items: center;
   justify-content: center;
   text-align: center;
-  text-wrap: balance;
   z-index: 2;
 }
 
-/* 📢 Заголовки */
 .hero-title,
 .fancy-title {
   font-size: clamp(2.4rem, 6vw, 4rem);
@@ -118,9 +124,6 @@ main {
   color: #fff !important;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  font-family: var(--font-main);
-  text-align: center;
-  width: 100%;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -129,13 +132,10 @@ main {
   font-weight: 500;
   margin: 0 0 0.8rem 0 !important;
   color: #f1f1f1 !important;
-  text-align: center;
   max-width: 800px;
-  width: 100%;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* 📝 Блок описаний */
 .hero-descriptions {
   margin: 0.8rem 0 1.5rem;
   text-align: center;
@@ -151,12 +151,11 @@ main {
   display: block;
 }
 
-/* ✅ Меняем порядок */
+/* Меняем порядок */
 .hero-descriptions p:nth-child(1) { order: 3; }
 .hero-descriptions p:nth-child(3) { order: 1; }
 .hero-descriptions p:nth-child(2) { order: 2; }
 
-/* 🎯 Кнопки */
 .hero-buttons {
   display: flex;
   flex-direction: row;
@@ -169,7 +168,7 @@ main {
 
 /*
   ==============================================================
-  Стили кнопок
+  Кнопки
   ==============================================================
 */
 
@@ -180,7 +179,6 @@ main {
   font-family: var(--font-main);
   border: none;
   border-radius: 6px;
-  text-decoration: none;
   cursor: pointer;
   transition: background 0.3s, color 0.3s, transform 0.2s;
 }
@@ -199,7 +197,7 @@ main {
 }
 
 .btn.secondary {
-  background-color: #fff;
+  background-color: var(--bg-white);
   color: var(--primary-color);
   border: 2px solid var(--primary-color);
 }
@@ -242,7 +240,7 @@ main {
 }
 
 .feature-card:hover {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
   transform: translateY(-4px);
 }
 
@@ -304,7 +302,7 @@ main {
 }
 
 .work-card:hover {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   transform: translateY(-3px);
 }
 

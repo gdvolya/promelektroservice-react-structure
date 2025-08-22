@@ -10,8 +10,19 @@
   --accent-color: #f1c40f;
 }
 
+/* 🌑 Тёмная тема */
+.dark-mode {
+  --primary-color: #66aaff;
+  --text-color: #e2e8f0;
+  --subtext-color: #a0aec0;
+  --bg-light: #1a202c;
+  --bg-white: #2d3748;
+  --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  --card-hover-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
+}
+
 .portfolio-page {
-  position: relative; /* для overlay */
+  position: relative;
   padding: 4rem 2rem;
   background: var(--bg-light);
   min-height: 100vh;
@@ -21,7 +32,6 @@
   z-index: 0;
 }
 
-/* 🌑 Затемнение всей страницы */
 .page-overlay {
   position: fixed;
   inset: 0;
@@ -51,7 +61,7 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   position: relative;
-  z-index: 2; /* контент выше overlay */
+  z-index: 2;
 }
 
 .portfolio-card {
