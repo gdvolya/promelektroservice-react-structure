@@ -1,7 +1,7 @@
 /*
-  ==============================================================
-  Общие стили для страницы "Главная"
-  ==============================================================
+  ==============================================================
+  Общие стили для страницы "Главная"
+  ==============================================================
 */
 
 /* 🎨 Переменные CSS (Custom Properties) для легкой настройки */
@@ -17,7 +17,7 @@
   --subtext-color: #555; /* Цвет дополнительного текста */
 }
 
-/* 🧹 Обнуление отступов для основных элементов (использование !important может быть избыточным) */
+/* 🧹 Обнуление отступов */
 body,
 main {
   margin-top: 0 !important;
@@ -32,12 +32,29 @@ main {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative; /* нужно для overlay */
+  z-index: 0;
+}
+
+/* 🌑 Глобальное затемнение всей страницы */
+.page-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.home-page.dark-mode .page-overlay {
+  opacity: 1;
 }
 
 /*
-  ==============================================================
-  Раздел "Hero" (Главный экран)
-  ==============================================================
+  ==============================================================
+  Раздел "Hero" (Главный экран)
+  ==============================================================
 */
 
 .hero {
@@ -62,13 +79,13 @@ main {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Растягивает изображение без искажений */
+  object-fit: cover;
   z-index: 0;
   user-select: none;
   pointer-events: none;
 }
 
-/* 🌑 Полупрозрачное затемнение */
+/* 🌑 Полупрозрачное затемнение Hero */
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -76,7 +93,7 @@ main {
   z-index: 1;
 }
 
-/* 📜 Контейнер с основным контентом */
+/* 📜 Контент Hero */
 .hero-content {
   position: relative;
   width: 100%;
@@ -88,7 +105,7 @@ main {
   align-items: center;
   justify-content: center;
   text-align: center;
-  text-wrap: balance; /* Улучшает перенос текста */
+  text-wrap: balance;
   z-index: 2;
 }
 
@@ -104,7 +121,7 @@ main {
   font-family: var(--font-main);
   text-align: center;
   width: 100%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Легкая тень для читаемости */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero-subtitle {
@@ -118,7 +135,7 @@ main {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* 📝 Новый блок с описаниями */
+/* 📝 Блок описаний */
 .hero-descriptions {
   margin: 0.8rem 0 1.5rem;
   text-align: center;
@@ -129,23 +146,17 @@ main {
 }
 .hero-descriptions p {
   margin: 0.3rem 0;
-  font-size: 1.5rem; /* ✅ увеличено */
+  font-size: 1.5rem;
   font-weight: 800;
   display: block;
 }
 
-/* ✅ Меняем порядок пунктов */
-.hero-descriptions p:nth-child(1) {
-  order: 3; /* первый идёт последним */
-}
-.hero-descriptions p:nth-child(3) {
-  order: 1; /* третий идёт первым */
-}
-.hero-descriptions p:nth-child(2) {
-  order: 2;
-}
+/* ✅ Меняем порядок */
+.hero-descriptions p:nth-child(1) { order: 3; }
+.hero-descriptions p:nth-child(3) { order: 1; }
+.hero-descriptions p:nth-child(2) { order: 2; }
 
-/* 🎯 Кнопки в Hero-секции */
+/* 🎯 Кнопки */
 .hero-buttons {
   display: flex;
   flex-direction: row;
@@ -157,9 +168,9 @@ main {
 }
 
 /*
-  ==============================================================
-  Стили для кнопок
-  ==============================================================
+  ==============================================================
+  Стили кнопок
+  ==============================================================
 */
 
 .btn {
@@ -175,10 +186,9 @@ main {
 }
 
 .btn:hover {
-  transform: translateY(-2px); /* Небольшой подъем при наведении */
+  transform: translateY(-2px);
 }
 
-/* 🔵 Основная кнопка */
 .btn.primary {
   background-color: var(--primary-color);
   color: #fff;
@@ -188,7 +198,6 @@ main {
   background-color: var(--primary-hover);
 }
 
-/* ⚪ Дополнительная кнопка */
 .btn.secondary {
   background-color: #fff;
   color: var(--primary-color);
@@ -201,9 +210,9 @@ main {
 }
 
 /*
-  ==============================================================
-  Раздел "Преимущества"
-  ==============================================================
+  ==============================================================
+  Преимущества
+  ==============================================================
 */
 
 .features {
@@ -255,9 +264,9 @@ main {
 }
 
 /*
-  ==============================================================
-  Раздел "Наши работы" (стили не были использованы в компоненте, но могут быть полезны)
-  ==============================================================
+  ==============================================================
+  Наши работы
+  ==============================================================
 */
 
 .our-works {
@@ -317,78 +326,41 @@ main {
 }
 
 /*
-  ==============================================================
-  Анимации и адаптивность
-  ==============================================================
+  ==============================================================
+  Анимации и адаптивность
+  ==============================================================
 */
 
-/* ⚡ Анимации */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* 🚫 Убираем анимации, если пользователь их не любит */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-/* 📱 Адаптивный дизайн для разных экранов */
+/* 📱 Адаптив */
 @media (max-width: 992px) {
-  .hero-content {
-    margin-top: 60px;
-  }
-  .hero-title {
-    font-size: 3rem;
-  }
-  .hero-subtitle {
-    font-size: 1.15rem;
-  }
-  .hero-buttons {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .btn {
-    width: 100%;
-    max-width: 250px;
-  }
+  .hero-content { margin-top: 60px; }
+  .hero-title { font-size: 3rem; }
+  .hero-subtitle { font-size: 1.15rem; }
+  .hero-buttons { flex-direction: column; gap: 1rem; }
+  .btn { width: 100%; max-width: 250px; }
 }
 
 @media (max-width: 600px) {
-  .hero-content {
-    margin-top: 60px;
-  }
-  .hero-title {
-    font-size: 2.4rem;
-  }
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-  .features-grid,
-  .our-works-grid {
-    grid-template-columns: 1fr;
-  }
+  .hero-content { margin-top: 60px; }
+  .hero-title { font-size: 2.4rem; }
+  .hero-subtitle { font-size: 1rem; }
+  .features-grid, .our-works-grid { grid-template-columns: 1fr; }
 }

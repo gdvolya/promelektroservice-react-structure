@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Додайте useLocation
+import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import '../styles/HomePage.css';
@@ -13,6 +13,21 @@ export default function HomePage() {
   const currentLang = languages.includes(location.pathname.split("/")[1])
     ? location.pathname.split("/")[1]
     : "uk";
+
+  // Подстраиваем тему страницы под body
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      if (document.body.classList.contains("dark-mode")) {
+        document.querySelector(".home-page")?.classList.add("dark-mode");
+      } else {
+        document.querySelector(".home-page")?.classList.remove("dark-mode");
+      }
+    });
+
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -29,11 +44,9 @@ export default function HomePage() {
       </Helmet>
 
       <main className="home-page">
-        <section
-          className="hero"
-          role="banner"
-          aria-label={t('home.bannerAlt')}
-        >
+        <div className="page-overlay"></div> {/* 🔹 Глобальное затемнение страницы */}
+        
+        <section className="hero" role="banner" aria-label={t('home.bannerAlt')}>
           <img
             src="/assets/background@2x.webp"
             alt=""
@@ -65,11 +78,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section
-          className="features"
-          data-aos="fade-up"
-          aria-labelledby="features-title"
-        >
+        <section className="features" data-aos="fade-up" aria-labelledby="features-title">
           <h2 id="features-title" className="features-title">
             {t('home.whyChooseUs')}
           </h2>
