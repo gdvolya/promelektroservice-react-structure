@@ -1,102 +1,94 @@
 <!DOCTYPE html>
 <html lang="uk">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-    <title>ПромЕлектроСервіс — Надійні електромонтажні послуги</title>
-    <meta
-      name="description"
-      content="Професійні електромонтажні послуги для вашого дому та бізнесу. Проектування, монтаж та обслуговування електромереж."
-    />
-    <meta
-      name="keywords"
-      content="електромонтажні послуги, електромонтаж, електромонтажні роботи, проектування електромереж, промисловий електромонтаж, встановлення електроустаткування, електросервіс, Київ, Україна"
-    />
-    
-    <meta name="theme-color" content="#003366" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="192x192" href="%PUBLIC_URL%/icons/icon-192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" crossorigin="use-credentials" />
+    <title>ПромЕлектроСервіс — Надійні електромонтажні послуги</title>
+    <meta
+      name="description"
+      content="Професійні електромонтажні послуги для вашого дому та бізнесу. Проектування, монтаж та обслуговування електромереж."
+    />
+    <meta
+      name="keywords"
+      content="електромонтажні послуги, електромонтаж, електромонтажні роботи, проектування електромереж, промисловий електромонтаж, встановлення електроустаткування, електросервіс, Київ, Україна"
+    />
+    
+    <meta name="theme-color" content="#003366" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="192x192" href="%PUBLIC_URL%/icons/icon-192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" crossorigin="use-credentials" />
 
-    <link
-      rel="preload"
-      as="image"
-      href="%PUBLIC_URL%/img/hero.webp"
-      type="image/webp"
-      fetchpriority="high"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://promelektroservice-react-structure.vercel.app/" crossorigin />
+    <link
+      rel="preload"
+      as="image"
+      href="%PUBLIC_URL%/img/hero.webp"
+      type="image/webp"
+      fetchpriority="high"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://promelektroservice-react-structure.vercel.app/" crossorigin />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
-      rel="stylesheet"
-    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-4Yh7H+YexmByzR4RMuCj2qHkVY8mJ8L+OB3WnM2q+RkhVY4Y3nHlF0g0HyFz0QHXE9V1v8kR1JY3Qyl8jB31jw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ПромЕлектроСервіс — Надійні електромонтажні послуги" />
+    <meta
+      property="og:description"
+      content="Професійні електромонтажні послуги для вашого дому та бізнесу: проектування, монтаж, обслуговування."
+    />
+    <meta property="og:image" content="%PUBLIC_URL%/img/hero.webp" />
+    <meta property="og:url" content="https://promelektroservice.vercel.app/" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="ПромЕлектроСервіс — Надійні електромонтажні послуги" />
-    <meta
-      property="og:description"
-      content="Професійні електромонтажні послуги для вашого дому та бізнесу: проектування, монтаж, обслуговування."
-    />
-    <meta property="og:image" content="%PUBLIC_URL%/img/hero.webp" />
-    <meta property="og:url" content="https://promelektroservice.vercel.app/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
+    <meta
+      name="twitter:description"
+      content="Професійні електромонтажні роботи: від проектування до обслуговування."
+    />
+    <meta name="twitter:image" content="%PUBLIC_URL%/img/hero.webp" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
-    <meta
-      name="twitter:description"
-      content="Професійні електромонтажні роботи: від проектування до обслуговування."
-    />
-    <meta name="twitter:image" content="%PUBLIC_URL%/img/hero.webp" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "ПромЕлектроСервіс",
+        "url": "https://promelektroservice.vercel.app/",
+        "logo": "%PUBLIC_URL%/icons/icon-192.png",
+        "image": "%PUBLIC_URL%/img/hero.webp",
+        "description": "Професійні електромонтажні послуги для вашого дому та бізнесу. Проектування, монтаж та обслуговування електромереж.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Пример улицы, 1",
+          "addressLocality": "Киев",
+          "addressRegion": "Киевская область",
+          "postalCode": "01001",
+          "addressCountry": "UA"
+        },
+        "telephone": "+380-44-123-4567",
+        "sameAs": [
+          "https://www.linkedin.com/company/prom-elektroservice",
+          "https://www.facebook.com/prom.elektroservice"
+        ]
+      }
+    </script>
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "ПромЕлектроСервіс",
-        "url": "https://promelektroservice.vercel.app/",
-        "logo": "%PUBLIC_URL%/icons/icon-192.png",
-        "image": "%PUBLIC_URL%/img/hero.webp",
-        "description": "Професійні електромонтажні послуги для вашого дому та бізнесу. Проектування, монтаж та обслуговування електромереж.",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Пример улицы, 1",
-          "addressLocality": "Киев",
-          "addressRegion": "Киевская область",
-          "postalCode": "01001",
-          "addressCountry": "UA"
-        },
-        "telephone": "+380-44-123-4567",
-        "sameAs": [
-          "https://www.linkedin.com/company/prom-elektroservice",
-          "https://www.facebook.com/prom.elektroservice"
-        ]
-      }
-    </script>
+  </head>
+  <body>
+    <noscript>
+      <strong style="display: block; text-align: center; margin: 2rem;">
+        Будь ласка, увімкніть JavaScript для повної функціональності сайту.
+      </strong>
+    </noscript>
 
-  </head>
-  <body>
-    <noscript>
-      <strong style="display: block; text-align: center; margin: 2rem;">
-        Будь ласка, увімкніть JavaScript для повної функціональності сайту.
-      </strong>
-    </noscript>
-
-    <div id="root"></div>
-  </body>
+    <div id="root"></div>
+  </body>
 </html>
