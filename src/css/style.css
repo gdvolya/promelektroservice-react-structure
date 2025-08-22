@@ -363,20 +363,32 @@ a {
   gap: 20px;
   margin-top: 15px;
 }
+
 .social-link {
-  transition: color 0.3s ease, transform 0.3s ease;
+  font-size: 1.5rem; /* размеры иконок */
   color: var(--social-link-color);
+  transition: color 0.3s ease, transform 0.3s ease;
 }
+
 .social-link:hover,
 .social-link:focus {
-  transform: scale(1.1);
-  outline: none;
+  transform: scale(1.2);
   color: var(--social-link-hover-color);
+  outline: none;
 }
-.social-link svg {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
+
+/* 🔹 Тёмная тема — перекрытие ВСЕГО */
+.dark-mode,
+.dark-mode .app-wrapper,
+.dark-mode .main-content,
+.dark-mode .hero,
+.dark-mode .features,
+.dark-mode .portfolio-gallery,
+.dark-mode .contact-form,
+.dark-mode .footer,
+.dark-mode .admin-panel {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
 }
 
 /* 🔹 Admin panel buttons */
