@@ -29,12 +29,11 @@ function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Логика для дневного/ночного режима
+  // 🔹 Логика для дневного/ночного режима
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) return savedTheme === "dark";
 
-    // Автоматическая подстройка под системную тему
     return window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
@@ -291,14 +290,56 @@ function AppContent() {
             </a>
           </div>
 
-          <div
-            className="social-links"
-            role="group"
-            aria-label="Соціальні мережі"
-          >
-            {/* соцсети ... (без изменений) */}
+          {/* 🔹 Соцсети */}
+          <div className="social-links" role="group" aria-label="Соціальні мережі">
+            <a
+              href="https://facebook.com/promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="social-link"
+            >
+              <i className="fab fa-facebook"></i>
+            </a>
+            <a
+              href="https://instagram.com/promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="social-link"
+            >
+              <i className="fab fa-instagram"></i>
+            </a>
+            <a
+              href="https://twitter.com/promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="social-link"
+            >
+              <i className="fab fa-twitter"></i>
+            </a>
+            <a
+              href="https://linkedin.com/company/promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="social-link"
+            >
+              <i className="fab fa-linkedin"></i>
+            </a>
+            <a
+              href="https://youtube.com/@promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="social-link"
+            >
+              <i className="fab fa-youtube"></i>
+            </a>
           </div>
 
+          {/* 🔹 Переключатель языка */}
           <div
             className="lang-switcher"
             role="group"
@@ -314,20 +355,16 @@ function AppContent() {
                   onClick={() => changeLanguage(lng)}
                   title={labels[lng]}
                   aria-label={labels[lng]}
-                  className={`lang-btn${isActive ? " active" : ""}`}
-                  type="button"
+                  className={`lang-btn ${isActive ? "active" : ""}`}
                 >
-                  <span aria-hidden="true">{flags[lng]}</span>
+                  <span role="img" aria-hidden="true">{flags[lng]}</span> {labels[lng]}
                 </button>
               );
             })}
           </div>
-
-          <p>
-            © {new Date().getFullYear()} Promelektroservice. {t("footer.rights")}
-          </p>
         </footer>
       </div>
+      <Analytics />
     </>
   );
 }
@@ -338,7 +375,6 @@ export default function App() {
       <BrowserRouter>
         <AppContent />
       </BrowserRouter>
-      <Analytics />
     </HelmetProvider>
   );
 }
