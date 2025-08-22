@@ -103,7 +103,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* Применяем переменные темы */
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -114,14 +113,15 @@ a {
   color: inherit;
 }
 
-/* Контейнер для sticky footer */
-.app-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-.main-content {
-  flex: 1;
+/* Все секции подчиняются теме */
+.app-wrapper,
+.main-content,
+.hero,
+.features,
+.portfolio-gallery,
+.contact-form,
+.footer,
+.admin-panel {
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -137,10 +137,9 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
-  /* Применяем переменные темы */
   background: var(--header-background);
   box-shadow: var(--header-shadow);
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .logo-left {
@@ -152,18 +151,17 @@ a {
 }
 .logo-left:hover { transform: scale(1.05); }
 
-/* Выравнивание навигации и кнопки переключения темы */
 .header-container {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Распределяем элементы по краям */
+  justify-content: space-between;
   width: 100%;
 }
 
 .right-controls {
   display: flex;
   align-items: center;
-  gap: 20px; /* Отступ между навигацией и кнопкой */
+  gap: 20px;
 }
 
 .nav-menu {
@@ -176,7 +174,6 @@ a {
   padding: 0;
 }
 .nav-menu li a {
-  /* Применяем переменные темы */
   color: var(--header-text-color);
   font-weight: 600;
   padding: 8px 14px;
@@ -186,7 +183,6 @@ a {
 .nav-menu li a:hover,
 .nav-menu li a.active,
 .nav-menu li a:focus {
-  /* Применяем переменные темы */
   background-color: var(--nav-link-hover-bg);
   color: var(--nav-link-hover-color);
   box-shadow: var(--nav-link-hover-shadow);
@@ -204,7 +200,6 @@ a {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  /* Применяем переменные темы */
   background: var(--hero-background);
   box-shadow: var(--hero-shadow);
   transition: background 0.3s ease;
@@ -216,7 +211,6 @@ a {
   margin-bottom: 15px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   animation: slideUpFade 1.2s ease-out forwards;
-  /* Применяем переменные темы */
   color: var(--fancy-title-color);
 }
 .hero-subtitle {
@@ -228,7 +222,6 @@ a {
   opacity: 0;
   animation: fadeIn 1.6s ease-out forwards;
   animation-delay: 0.6s;
-  /* Применяем переменные темы */
   color: var(--hero-subtitle-color);
 }
 
@@ -242,10 +235,7 @@ a {
   to { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
+  * { animation: none !important; transition: none !important; }
 }
 
 /* 🔹 Portfolio */
@@ -265,14 +255,12 @@ a {
   border-radius: 16px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  /* Применяем переменные темы */
   box-shadow: var(--portfolio-shadow);
 }
 .portfolio-img:hover,
 .portfolio-img:focus {
   transform: translateY(-8px) scale(1.05);
   outline: none;
-  /* Применяем переменные темы */
   box-shadow: var(--portfolio-hover-shadow);
 }
 
@@ -286,7 +274,6 @@ a {
   border-radius: 8px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   font-family: inherit;
-  /* Применяем переменные темы */
   border: 1.8px solid var(--border-color);
   background: var(--card-background);
   color: var(--text-color);
@@ -294,7 +281,6 @@ a {
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  /* Применяем переменные темы */
   border-color: var(--focus-border-color);
   box-shadow: var(--focus-shadow);
 }
@@ -306,13 +292,11 @@ a {
   transition: background 0.4s ease;
   border: none;
   cursor: pointer;
-  /* Применяем переменные темы */
   background: var(--primary-color);
 }
 .btn:hover,
 .btn:focus {
   outline: none;
-  /* Применяем переменные темы */
   background: var(--primary-color);
 }
 
@@ -322,7 +306,6 @@ a {
   padding: 30px 20px;
   font-size: 0.9rem;
   margin-top: auto;
-  /* Применяем переменные темы */
   background: var(--footer-background);
   color: var(--footer-text-color);
 }
@@ -335,8 +318,7 @@ a {
   font-weight: 600;
   cursor: pointer;
   margin: 5px;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  /* Применяем переменные темы */
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   border: var(--lang-btn-border);
   color: var(--lang-btn-text-color);
 }
@@ -344,7 +326,6 @@ a {
 .lang-btn:hover,
 .lang-btn:focus {
   outline: none;
-  /* Применяем переменные темы */
   background-color: var(--lang-btn-hover-bg);
   border-color: var(--lang-btn-hover-border);
   color: var(--lang-btn-hover-text);
@@ -365,14 +346,12 @@ a {
   height: 48px;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  /* Применяем переменные темы */
   border: 6px solid var(--spinner-border-color);
   border-top-color: var(--spinner-top-color);
 }
 .loading-spinner p {
   margin-top: 10px;
   font-size: 0.9rem;
-  /* Применяем переменные темы */
   color: var(--spinner-text-color);
 }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -386,14 +365,12 @@ a {
 }
 .social-link {
   transition: color 0.3s ease, transform 0.3s ease;
-  /* Применяем переменные темы */
   color: var(--social-link-color);
 }
 .social-link:hover,
 .social-link:focus {
   transform: scale(1.1);
   outline: none;
-  /* Применяем переменные темы */
   color: var(--social-link-hover-color);
 }
 .social-link svg {
@@ -465,7 +442,7 @@ a {
   color: var(--sort-btn-active-color);
 }
 
-/* Новая кнопка-переключатель темы */
+/* 🔹 Theme toggle */
 .theme-toggle-btn {
   background: none;
   border: none;
