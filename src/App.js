@@ -11,7 +11,7 @@ import "./i18n";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-// Динамическая загрузка страниц
+// 🔹 Динамическая загрузка страниц
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -21,7 +21,7 @@ const AdminPanel = lazy(() => import("./pages/AdminPanel.jsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage.jsx"));
 
-// Доступные языки
+// 🔹 Доступные языки
 const languages = ["uk", "en", "ru"];
 
 function AppContent() {
@@ -29,34 +29,32 @@ function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 🔹 Логика для дневного/ночного режима
+  // 🔹 Темная/светлая тема
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) return savedTheme === "dark";
-
-    return window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
 
   useEffect(() => {
-    const body = document.body;
-    body.classList.remove("light-mode", "dark-mode");
-    body.classList.add(isDarkMode ? "dark-mode" : "light-mode");
+    document.body.classList.remove("light-mode", "dark-mode");
+    document.body.classList.add(isDarkMode ? "dark-mode" : "light-mode");
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
   const toggleTheme = useCallback(() => {
-    setIsDarkMode((prevMode) => !prevMode);
+    setIsDarkMode((prev) => !prev);
   }, []);
 
+  // 🔹 Анимации
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
   }, []);
 
+  // 🔹 Язык из URL
   const currentLang = useMemo(() => {
-    const pathParts = location.pathname.split("/").filter(Boolean);
-    const langFromPath = pathParts[0];
-    return languages.includes(langFromPath) ? langFromPath : i18n.language;
+    const parts = location.pathname.split("/").filter(Boolean);
+    return languages.includes(parts[0]) ? parts[0] : i18n.language;
   }, [location.pathname, i18n.language]);
 
   const changeLanguage = useCallback(
@@ -79,6 +77,7 @@ function AppContent() {
     }
   }, [currentLang, i18n]);
 
+  // 🔹 Навигация
   const navItems = useMemo(
     () => [
       { path: "/", label: t("nav.home") },
@@ -90,6 +89,7 @@ function AppContent() {
     [t]
   );
 
+  // 🔹 Метаданные для SEO
   const getPageMeta = useCallback(
     (pathname) => {
       const projectsData = t("portfolio.projects", { returnObjects: true });
@@ -97,7 +97,6 @@ function AppContent() {
       const pathParts = pathname.split("/").filter(Boolean);
 
       let title, description, keywords, canonicalPath;
-      const lang = languages.includes(pathParts[0]) ? pathParts[0] : i18n.language;
       const cleanPath = pathParts.slice(languages.includes(pathParts[0]) ? 1 : 0).join("/");
 
       const projectMatch = cleanPath.match(/^portfolio\/(\d+)/);
@@ -131,7 +130,7 @@ function AppContent() {
         canonical: `${basePath}${canonicalPath}`,
       };
     },
-    [t, i18n.language]
+    [t]
   );
 
   const { title, description, keywords, url, canonical } =
@@ -139,6 +138,7 @@ function AppContent() {
 
   return (
     <>
+      {/* 🔹 МЕТА */}
       <Helmet>
         <html lang={currentLang} />
         <title>{title}</title>
@@ -165,18 +165,16 @@ function AppContent() {
         />
       </Helmet>
 
+      {/* 🔹 СКИП-ЛИНК */}
       <a href="#main-content" className="skip-link">
         {t("skipNav") || "Пропустити навігацію"}
       </a>
 
       <div className="app-wrapper">
+        {/* 🔹 HEADER */}
         <header className="site-header" role="banner">
           <div className="header-container">
-            <Link
-              to={`/${currentLang}/`}
-              aria-label={t("nav.home")}
-              className="logo-link"
-            >
+            <Link to={`/${currentLang}/`} aria-label={t("nav.home")} className="logo-link">
               <picture>
                 <source srcSet={logoWebp} type="image/webp" />
                 <img
@@ -196,14 +194,10 @@ function AppContent() {
               <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
                 <ul className="nav-menu centered" role="menubar">
                   {navItems.map(({ path, label }) => {
-                    const toPath =
-                      path === "/"
-                        ? `/${currentLang}`
-                        : `/${currentLang}${path}`;
+                    const toPath = path === "/" ? `/${currentLang}` : `/${currentLang}${path}`;
                     const isActive =
                       location.pathname === toPath ||
-                      (toPath === `/${currentLang}` &&
-                        location.pathname === `/${currentLang}/`);
+                      (toPath === `/${currentLang}` && location.pathname === `/${currentLang}/`);
                     return (
                       <li key={path} role="none">
                         <Link
@@ -220,14 +214,11 @@ function AppContent() {
                 </ul>
               </nav>
 
+              {/* 🔹 ТЕМНАЯ/СВЕТЛАЯ ТЕМА */}
               <button
                 onClick={toggleTheme}
                 className="theme-toggle-btn"
-                aria-label={
-                  isDarkMode
-                    ? "Switch to light mode"
-                    : "Switch to dark mode"
-                }
+                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
               >
                 {isDarkMode ? "☀️" : "🌙"}
               </button>
@@ -235,20 +226,12 @@ function AppContent() {
           </div>
         </header>
 
-        <main
-          className="main-content"
-          role="main"
-          id="main-content"
-          tabIndex={-1}
-        >
+        {/* 🔹 MAIN */}
+        <main className="main-content" role="main" id="main-content" tabIndex={-1}>
           <ErrorBoundary>
             <Suspense
               fallback={
-                <div
-                  className="loading-spinner"
-                  role="status"
-                  aria-live="polite"
-                >
+                <div className="loading-spinner" role="status" aria-live="polite">
                   <div className="spinner" aria-hidden="true" />
                   <p>{t("loading") || "Завантаження..."}</p>
                 </div>
@@ -258,10 +241,7 @@ function AppContent() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/:lang" element={<HomePage />} />
                 <Route path="/:lang/portfolio" element={<PortfolioPage />} />
-                <Route
-                  path="/:lang/portfolio/:id"
-                  element={<ProjectDetailPage />}
-                />
+                <Route path="/:lang/portfolio/:id" element={<ProjectDetailPage />} />
                 <Route path="/:lang/reviews" element={<ReviewsPage />} />
                 <Route path="/:lang/pricing" element={<PricingPage />} />
                 <Route path="/:lang/contacts" element={<ContactsPage />} />
@@ -272,90 +252,48 @@ function AppContent() {
           </ErrorBoundary>
         </main>
 
+        {/* 🔹 FOOTER */}
         <footer className="footer sticky-footer" role="contentinfo">
           <div className="footer-top">
-            <a
-              href="tel:+380666229776"
-              className="footer-link"
-              aria-label={t("phoneLabel") || "Телефон"}
-            >
+            <a href="tel:+380666229776" className="footer-link" aria-label={t("phoneLabel") || "Телефон"}>
               <span aria-hidden="true">📞</span> +380666229776
             </a>
-            <a
-              href="mailto:info@promelektroservice.com"
-              className="footer-link"
-              aria-label={t("emailLabel") || "Email"}
-            >
+            <a href="mailto:info@promelektroservice.com" className="footer-link" aria-label={t("emailLabel") || "Email"}>
               <span aria-hidden="true">✉️</span> info@promelektroservice.com
             </a>
           </div>
 
           {/* 🔹 Соцсети */}
           <div className="social-links" role="group" aria-label="Соціальні мережі">
-            <a
-              href="https://facebook.com/promelektroservice"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="social-link"
-            >
+            <a href="https://facebook.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link">
               <i className="fab fa-facebook"></i>
             </a>
-            <a
-              href="https://instagram.com/promelektroservice"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="social-link"
-            >
+            <a href="https://instagram.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-link">
               <i className="fab fa-instagram"></i>
             </a>
-            <a
-              href="https://twitter.com/promelektroservice"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-              className="social-link"
-            >
+            <a href="https://twitter.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link">
               <i className="fab fa-twitter"></i>
             </a>
-            <a
-              href="https://linkedin.com/company/promelektroservice"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="social-link"
-            >
+            <a href="https://linkedin.com/company/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link">
               <i className="fab fa-linkedin"></i>
             </a>
-            <a
-              href="https://youtube.com/@promelektroservice"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="YouTube"
-              className="social-link"
-            >
+            <a href="https://youtube.com/@promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-link">
               <i className="fab fa-youtube"></i>
             </a>
           </div>
 
           {/* 🔹 Переключатель языка */}
-          <div
-            className="lang-switcher"
-            role="group"
-            aria-label={t("langSelectorLabel") || "Вибір мови"}
-          >
+          <div className="lang-switcher" role="group" aria-label={t("langSelectorLabel") || "Вибір мови"}>
             {languages.map((lng) => {
               const labels = { uk: "Українська", en: "English", ru: "Русский" };
               const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
-              const isActive = currentLang === lng;
               return (
                 <button
                   key={lng}
                   onClick={() => changeLanguage(lng)}
                   title={labels[lng]}
                   aria-label={labels[lng]}
-                  className={`lang-btn ${isActive ? "active" : ""}`}
+                  className={`lang-btn ${currentLang === lng ? "active" : ""}`}
                 >
                   <span role="img" aria-hidden="true">{flags[lng]}</span> {labels[lng]}
                 </button>

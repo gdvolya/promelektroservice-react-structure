@@ -31,7 +31,7 @@
       crossorigin="use-credentials"
     />
 
-    <!-- 🔹 Preload главного LCP-изображения -->
+    <!-- 🔹 Preload LCP-изображения -->
     <link
       rel="preload"
       as="image"
@@ -40,20 +40,32 @@
       fetchpriority="high"
     />
 
-    <!-- 🔹 Fonts -->
+    <!-- 🔹 Fonts (с preload и swap) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
+      as="style"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
       rel="stylesheet"
+      media="all"
     />
+    <style>
+      html {
+        font-family: "Montserrat", sans-serif;
+      }
+    </style>
 
-    <!-- 🔹 Font Awesome без integrity (чтобы не блокировалось) -->
+    <!-- 🔹 Font Awesome (фикс CLS — иконки заранее зарезервированы) -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
+      media="all"
     />
 
     <meta property="og:type" content="website" />
