@@ -222,7 +222,7 @@ a {
   opacity: 0;
   animation: fadeIn 1.6s ease-out forwards;
   animation-delay: 0.6s;
-  color: var(--hero-subtitle-color);
+  color: var(--hero-subtitle-color) !important;
 }
 
 /* 🔹 Animations */
@@ -340,6 +340,7 @@ a {
   width: 80px;
   height: 80px;
   margin: 80px auto;
+  min-height: 200px; /* Добавлено для фикса CLS */
 }
 .loading-spinner .spinner {
   width: 48px;
@@ -465,4 +466,50 @@ a {
 }
 .theme-toggle-btn:hover {
   transform: scale(1.1);
+}
+
+/* 🔹 Плавные переходы для текста и картинок */
+body,
+.app-wrapper,
+.main-content,
+.hero,
+.features,
+.portfolio-gallery,
+.contact-form,
+.footer,
+.admin-panel,
+.site-header,
+h1, h2, h3, h4, h5, h6,
+p, span, a,
+img, .portfolio-img, .logo-left {
+  transition: background-color 0.4s ease,
+              color 0.4s ease,
+              filter 0.4s ease,
+              opacity 0.4s ease,
+              transform 0.3s ease;
+}
+
+/* 🔹 Картинки в тёмной теме слегка затемняются */
+.dark-mode img,
+.dark-mode .portfolio-img,
+.dark-mode .logo-left {
+  filter: brightness(0.85) contrast(1.05);
+}
+
+/* 🔹 Текст плавно затемняется */
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6,
+.dark-mode p,
+.dark-mode span,
+.dark-mode a {
+  opacity: 0.95;
+}
+
+/* Добавлено для фикса CLS */
+.main-content {
+  min-height: 50vh; 
 }
