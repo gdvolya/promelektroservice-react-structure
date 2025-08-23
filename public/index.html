@@ -57,14 +57,16 @@
       }
     </style>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-      media="all"
-    />
-
+    <script>
+      (function(d) {
+        var fa = d.createElement('link');
+        fa.rel = 'stylesheet';
+        fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
+        fa.media = 'all';
+        d.head.appendChild(fa);
+      })(document);
+    </script>
+    
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
