@@ -195,7 +195,7 @@ a {
   padding: 20px 20px 60px;
   border-radius: 0 0 50% 50% / 15%;
   margin-bottom: 60px;
-  min-height: 350px;
+  min-height: 400px; /* Збільшено для запобігання зсувів */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
