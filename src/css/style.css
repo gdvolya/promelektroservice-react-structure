@@ -106,6 +106,13 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+  opacity: 0;
+  animation: fadeInPage 1s ease forwards;
+}
+
+@keyframes fadeInPage {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 a {
@@ -365,7 +372,7 @@ a {
 }
 
 .social-link {
-  font-size: 1.5rem; /* размеры иконок */
+  font-size: 1.5rem;
   color: var(--social-link-color);
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -465,4 +472,45 @@ a {
 }
 .theme-toggle-btn:hover {
   transform: scale(1.1);
+}
+
+/* 🔹 Плавные переходы для текста и картинок */
+body,
+.app-wrapper,
+.main-content,
+.hero,
+.features,
+.portfolio-gallery,
+.contact-form,
+.footer,
+.admin-panel,
+.site-header,
+h1, h2, h3, h4, h5, h6,
+p, span, a,
+img, .portfolio-img, .logo-left {
+  transition: background-color 0.4s ease,
+              color 0.4s ease,
+              filter 0.4s ease,
+              opacity 0.4s ease,
+              transform 0.3s ease;
+}
+
+/* 🔹 Картинки в тёмной теме слегка затемняются */
+.dark-mode img,
+.dark-mode .portfolio-img,
+.dark-mode .logo-left {
+  filter: brightness(0.85) contrast(1.05);
+}
+
+/* 🔹 Текст плавно затемняется */
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6,
+.dark-mode p,
+.dark-mode span,
+.dark-mode a {
+  opacity: 0.95;
 }
