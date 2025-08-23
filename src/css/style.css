@@ -106,13 +106,6 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
-  opacity: 0;
-  animation: fadeInPage 1s ease forwards;
-}
-
-@keyframes fadeInPage {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 a {
@@ -372,7 +365,7 @@ a {
 }
 
 .social-link {
-  font-size: 1.5rem;
+  font-size: 1.5rem; /* размеры иконок */
   color: var(--social-link-color);
   transition: color 0.3s ease, transform 0.3s ease;
 }
