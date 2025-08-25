@@ -117,7 +117,8 @@ const AdminPanel = ({ enableExport = true }) => {
         const db = dbRef.current;
 
         const submissionsQuery = query(
-          collection(db, "submissions"),
+          // ✅ ОБНОВЛЕНО: Используем коллекцию "requests"
+          collection(db, "requests"),
           orderBy(
             sortConfig.key,
             sortConfig.direction === "ascending" ? "asc" : "desc"
@@ -176,7 +177,8 @@ const AdminPanel = ({ enableExport = true }) => {
     const db = dbRef.current;
     if (!db || !submissionToDelete) return;
     try {
-      await deleteDoc(doc(db, "submissions", submissionToDelete));
+      // ✅ ОБНОВЛЕНО: Удаляем из коллекции "requests"
+      await deleteDoc(doc(db, "requests", submissionToDelete));
       setShowDeleteModal(false);
       setSubmissionToDelete(null);
     } catch (err) {
@@ -190,7 +192,8 @@ const AdminPanel = ({ enableExport = true }) => {
     const db = dbRef.current;
     if (!db) return;
     try {
-      await updateDoc(doc(db, "submissions", id), {
+      // ✅ ОБНОВЛЕНО: Обновляем в коллекции "requests"
+      await updateDoc(doc(db, "requests", id), {
         status: newStatus,
       });
     } catch (err) {
