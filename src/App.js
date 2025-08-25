@@ -21,7 +21,7 @@ const AdminPanel = lazy(() => import("./pages/AdminPanel.jsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage.jsx"));
 
-// 🔹 Доступные языки
+// 🔹 Доступні мови
 const languages = ["uk", "en", "ru"];
 
 function AppContent() {
@@ -29,7 +29,7 @@ function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 🔹 Темная/светлая тема
+  // 🔹 Темна/світла тема
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) return savedTheme === "dark";
@@ -46,12 +46,12 @@ function AppContent() {
     setIsDarkMode((prev) => !prev);
   }, []);
 
-  // 🔹 Анимации
+  // 🔹 Анімації
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
   }, []);
 
-  // 🔹 Язык из URL
+  // 🔹 Мова з URL
   const currentLang = useMemo(() => {
     const parts = location.pathname.split("/").filter(Boolean);
     return languages.includes(parts[0]) ? parts[0] : i18n.language;
@@ -77,7 +77,7 @@ function AppContent() {
     }
   }, [currentLang, i18n]);
 
-  // 🔹 Навигация
+  // 🔹 Навігація
   const navItems = useMemo(
     () => [
       { path: "/", label: t("nav.home") },
@@ -89,7 +89,7 @@ function AppContent() {
     [t]
   );
 
-  // 🔹 Метаданные для SEO
+  // 🔹 Метадані для SEO
   const getPageMeta = useCallback(
     (pathname) => {
       const projectsData = t("portfolio.projects", { returnObjects: true });
@@ -165,7 +165,7 @@ function AppContent() {
         />
       </Helmet>
 
-      {/* 🔹 СКИП-ЛИНК */}
+      {/* 🔹 СКИП-ЛІНК */}
       <a href="#main-content" className="skip-link">
         {t("skipNav") || "Пропустити навігацію"}
       </a>
@@ -263,7 +263,7 @@ function AppContent() {
             </a>
           </div>
 
-          {/* 🔹 Соцсети */}
+          {/* 🔹 Соцмережі */}
           <div className="social-links" role="group" aria-label="Соціальні мережі">
             <a href="https://facebook.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link">
               <i className="fab fa-facebook"></i>
@@ -282,7 +282,7 @@ function AppContent() {
             </a>
           </div>
 
-          {/* 🔹 Переключатель языка */}
+          {/* 🔹 Переключатель мови */}
           <div className="lang-switcher" role="group" aria-label={t("langSelectorLabel") || "Вибір мови"}>
             {languages.map((lng) => {
               const labels = { uk: "Українська", en: "English", ru: "Русский" };

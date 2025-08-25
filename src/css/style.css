@@ -61,7 +61,7 @@
   --hero-background: #1a202c;
   --hero-shadow: inset 0 0 50px #111;
   --fancy-title-color: #e2e8f0;
-  --hero-subtitle-color: #cbd5e1;
+  --hero-subtitle-color: #e2e8f0;
   --portfolio-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   --portfolio-hover-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
   --border-color: #4a5568;
@@ -195,7 +195,7 @@ a {
   padding: 20px 20px 60px;
   border-radius: 0 0 50% 50% / 15%;
   margin-bottom: 60px;
-  min-height: 400px; /* Збільшено для запобігання зсувів */
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -340,7 +340,7 @@ a {
   width: 80px;
   height: 80px;
   margin: 80px auto;
-  min-height: 50vh; /* Збільшено для кращого запобігання зсувів */
+  min-height: 50vh;
 }
 .loading-spinner .spinner {
   width: 48px;
@@ -366,7 +366,7 @@ a {
 }
 
 .social-link {
-  font-size: 1.5rem; /* размеры иконок */
+  font-size: 1.5rem;
   color: var(--social-link-color);
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -492,7 +492,8 @@ img, .portfolio-img, .logo-left {
 /* 🔹 Картинки в тёмной теме слегка затемняются */
 .dark-mode img,
 .dark-mode .portfolio-img,
-.dark-mode .logo-left {
+.dark-mode .logo-left,
+.dark-mode .feature-icon {
   filter: brightness(0.85) contrast(1.05);
 }
 
@@ -511,5 +512,5 @@ img, .portfolio-img, .logo-left {
 
 /* Добавлено для фикса CLS */
 .main-content {
-  min-height: 50vh; 
+  min-height: 50vh;
 }
