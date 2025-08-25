@@ -1,3 +1,5 @@
+/* УДАЛЕНА СТРОКА: @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'); */
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
 
 /* Цветовые переменные для светлой темы по умолчанию */
@@ -513,5 +515,5 @@ img, .portfolio-img, .logo-left {
 
 /* Добавлено для фикса CLS */
 .main-content {
-  min-height: 50vh;
+  min-height: calc(100vh - 120px);
 }

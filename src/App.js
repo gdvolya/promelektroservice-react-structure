@@ -11,6 +11,9 @@ import "./i18n";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+// 🔹 Импорт иконок из react-icons
+import { FaLinkedin, FaYoutube, FaFacebook, FaInstagram, FaTwitter, FaSun, FaMoon } from "react-icons/fa";
+
 // 🔹 Динамическая загрузка страниц
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
@@ -220,7 +223,7 @@ function AppContent() {
                 className="theme-toggle-btn"
                 aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
               >
-                {isDarkMode ? "☀️" : "🌙"}
+                {isDarkMode ? <FaSun /> : <FaMoon />}
               </button>
             </div>
           </div>
@@ -266,19 +269,19 @@ function AppContent() {
           {/* 🔹 Соцмережі */}
           <div className="social-links" role="group" aria-label="Соціальні мережі">
             <a href="https://facebook.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link">
-              <i className="fab fa-facebook"></i>
+              <FaFacebook />
             </a>
             <a href="https://instagram.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-link">
-              <i className="fab fa-instagram"></i>
+              <FaInstagram />
             </a>
             <a href="https://twitter.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link">
-              <i className="fab fa-twitter"></i>
+              <FaTwitter />
             </a>
             <a href="https://linkedin.com/company/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link">
-              <i className="fab fa-linkedin"></i>
+              <FaLinkedin />
             </a>
             <a href="https://youtube.com/@promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-link">
-              <i className="fab fa-youtube"></i>
+              <FaYoutube />
             </a>
           </div>
 
