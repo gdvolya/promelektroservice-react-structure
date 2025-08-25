@@ -22,11 +22,11 @@ import {
 import "../styles/AdminPanel.css";
 import Modal from "./Modal";
 
-// Определение опций статусов с классами для стилизации
+// ✅ Опции статусов с иконками и классами
 const statusOptions = {
-  new: { label: "Новая", className: "status-new" },
-  "in-progress": { label: "В обработке", className: "status-in-progress" },
-  done: { label: "Выполнена", className: "status-done" },
+  new: { label: "🟡 Новая", className: "status-new" },
+  "in-progress": { label: "🔵 В обработке", className: "status-in-progress" },
+  done: { label: "✅ Выполнена", className: "status-done" },
 };
 
 const AdminPanel = ({ enableExport = true }) => {
@@ -57,12 +57,12 @@ const AdminPanel = ({ enableExport = true }) => {
     return date.toLocaleString("uk-UA");
   }, []);
 
-  // Восстановлена оригинальная логика авторизации
+  // 🔐 Авторизация по паролю
   const handleLogin = useCallback(() => {
     const adminPass = process.env.REACT_APP_ADMIN_PASS;
 
     if (!adminPass) {
-      setError("⚠️ Пароль администратора не задан. Проверьте файл .env.");
+      setError("⚠️ Пароль администратора не задан. Проверьте .env файл.");
       return;
     }
 
@@ -90,6 +90,7 @@ const AdminPanel = ({ enableExport = true }) => {
     [handleLogin]
   );
 
+  // 🔄 Загрузка данных
   useEffect(() => {
     if (!authenticated) {
       setLoading(false);
@@ -165,6 +166,7 @@ const AdminPanel = ({ enableExport = true }) => {
     };
   }, [authenticated, sortConfig]);
 
+  // 🗑 Удаление
   const handleDelete = useCallback((id) => {
     setSubmissionToDelete(id);
     setShowDeleteModal(true);
@@ -183,6 +185,7 @@ const AdminPanel = ({ enableExport = true }) => {
     }
   }, [submissionToDelete]);
 
+  // ✏️ Обновление статуса
   const handleUpdateStatus = useCallback(async (id, newStatus) => {
     const db = dbRef.current;
     if (!db) return;
@@ -196,6 +199,7 @@ const AdminPanel = ({ enableExport = true }) => {
     }
   }, []);
 
+  // 🔽 Сортировка
   const handleSort = useCallback((key) => {
     setSortConfig((prevConfig) => ({
       key,
@@ -220,11 +224,13 @@ const AdminPanel = ({ enableExport = true }) => {
     [sortConfig]
   );
 
+  // 📄 Модалка с деталями
   const handleRowClick = useCallback((submission) => {
     setSubmissionDetails(submission);
     setShowDetailsModal(true);
   }, []);
 
+  // 📤 Экспорт в Excel
   const exportToExcel = useCallback(() => {
     const dataToExport = submissions.map(({ id, createdAt, ...rest }) => ({
       ...rest,
@@ -236,6 +242,7 @@ const AdminPanel = ({ enableExport = true }) => {
     XLSX.writeFile(book, "submissions.xlsx");
   }, [submissions, formatFirestoreTimestamp]);
 
+  // 🔍 Поиск
   const filteredSubmissions = submissions.filter(
     ({ name, email, phone, message }) =>
       name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -244,12 +251,14 @@ const AdminPanel = ({ enableExport = true }) => {
       message?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // 📑 Пагинация
   const totalPages = Math.ceil(filteredSubmissions.length / itemsPerPage);
   const currentSubmissions = filteredSubmissions.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
+  // --- Экран входа ---
   if (!authenticated) {
     return (
       <main className="admin-login">
@@ -273,6 +282,7 @@ const AdminPanel = ({ enableExport = true }) => {
     );
   }
 
+  // --- Основная панель ---
   return (
     <main className="admin-panel">
       <Helmet>
@@ -291,6 +301,8 @@ const AdminPanel = ({ enableExport = true }) => {
           </button>
         </div>
       </header>
+
+      {/* Панель управления */}
       <div className="admin-controls">
         <div className="search-container">
           <input
@@ -327,6 +339,7 @@ const AdminPanel = ({ enableExport = true }) => {
         )}
       </div>
 
+      {/* Таблица */}
       {loading && <p className="loading-spinner">⏳ Загрузка данных...</p>}
       {error && <p className="error-text">{error}</p>}
 
@@ -367,7 +380,9 @@ const AdminPanel = ({ enableExport = true }) => {
                     <td>{phone}</td>
                     <td
                       className="message-cell"
-                      onClick={() => handleRowClick({ name, email, phone, message, createdAt })}
+                      onClick={() =>
+                        handleRowClick({ id, name, email, phone, message, status, createdAt })
+                      }
                       title="Нажмите, чтобы прочитать полностью"
                     >
                       {message?.length > 50 ? `${message.substring(0, 50)}...` : message}
@@ -399,6 +414,8 @@ const AdminPanel = ({ enableExport = true }) => {
               )}
             </tbody>
           </table>
+
+          {/* Пагинация */}
           <div className="pagination">
             <button
               onClick={() => setCurrentPage((prev) => prev - 1)}
@@ -419,6 +436,7 @@ const AdminPanel = ({ enableExport = true }) => {
         </>
       )}
 
+      {/* Модалки */}
       {showDeleteModal && (
         <Modal
           title="Подтверждение удаления"
@@ -434,27 +452,23 @@ const AdminPanel = ({ enableExport = true }) => {
           onCancel={() => setShowDetailsModal(false)}
         >
           <div className="submission-details">
+            <p><strong>Имя:</strong> {submissionDetails.name}</p>
+            <p><strong>Email:</strong> {submissionDetails.email}</p>
+            <p><strong>Телефон:</strong> {submissionDetails.phone}</p>
             <p>
-              <strong>Имя:</strong> {submissionDetails.name}
+              <strong>Статус:</strong>{" "}
+              <span className={`submission-status ${statusOptions[submissionDetails.status]?.className}`}>
+                {statusOptions[submissionDetails.status]?.label || "—"}
+              </span>
             </p>
-            <p>
-              <strong>Email:</strong> {submissionDetails.email}
-            </p>
-            <p>
-              <strong>Телефон:</strong> {submissionDetails.phone}
-            </p>
-            <p>
-              <strong>Дата:</strong>{" "}
-              {formatFirestoreTimestamp(submissionDetails.createdAt)}
-            </p>
-            <p className="submission-message">
-              <strong>Сообщение:</strong>
-            </p>
+            <p><strong>Дата:</strong> {formatFirestoreTimestamp(submissionDetails.createdAt)}</p>
+            <p className="submission-message"><strong>Сообщение:</strong></p>
             <p>{submissionDetails.message}</p>
           </div>
         </Modal>
       )}
 
+      {/* Ссылка на Lighthouse */}
       <div className="extra-links">
         <a
           href="/report/index.html"
