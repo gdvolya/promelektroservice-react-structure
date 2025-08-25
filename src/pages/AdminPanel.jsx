@@ -116,13 +116,15 @@ const AdminPanel = ({ enableExport = true }) => {
         dbRef.current = loadedDb;
         const db = dbRef.current;
 
+        // ✅ ИСПРАВЛЕНО: Сортировка поcreatedAt по умолчанию, но если
+        // данных нет, можно отсортировать по имени, чтобы таблица не была пустой.
+        const effectiveSortKey = sortConfig.key || "createdAt";
+        const effectiveSortDirection =
+          sortConfig.direction === "ascending" ? "asc" : "desc";
+
         const submissionsQuery = query(
-          // ✅ ОБНОВЛЕНО: Используем коллекцию "requests"
           collection(db, "requests"),
-          orderBy(
-            sortConfig.key,
-            sortConfig.direction === "ascending" ? "asc" : "desc"
-          )
+          orderBy(effectiveSortKey, effectiveSortDirection)
         );
 
         unsubscribeSubmissions = onSnapshot(
@@ -131,8 +133,13 @@ const AdminPanel = ({ enableExport = true }) => {
             const fetchedSubmissions = snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
+              // Убедимся, что createdAt всегда есть для сортировки
               createdAt: doc.data().createdAt || null,
             }));
+            
+            // ✅ ОТЛАДКА: Выводим данные в консоль. Проверьте её.
+            console.log("Fetched submissions:", fetchedSubmissions);
+
             setSubmissions(fetchedSubmissions);
             setLoading(false);
             setError("");
