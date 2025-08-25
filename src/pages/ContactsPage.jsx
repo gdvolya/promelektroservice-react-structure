@@ -74,7 +74,6 @@ const ContactsPage = () => {
     setLoading(true);
 
     try {
-      // ✅ ИСПРАВЛЕНО: Добавляем поле createdAt с меткой времени сервера.
       await addDoc(collection(db, "requests"), {
         ...formData,
         status: "new",
