@@ -5,6 +5,8 @@ import { doc, getDoc, updateDoc, addDoc, collection, serverTimestamp } from "fir
 import { db } from "../firebaseLazy";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaSpinner } from "react-icons/fa";
 import "../styles/ContactsPage.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ContactsPage = () => {
   const { t } = useTranslation();
@@ -21,20 +23,20 @@ const ContactsPage = () => {
   const contacts = [
     {
       icon: <FaPhone className="icon" />,
-      title: t("contact.phoneTitle"),
+      title: t("contacts.phoneLabel"),
       details: ["+38 (097) 203 16 03", "+38 (095) 759 40 46"],
       link: "tel:+380972031603",
     },
     {
       icon: <FaEnvelope className="icon" />,
-      title: t("contact.emailTitle"),
+      title: "Email",
       details: ["info@promelektroservice.com"],
       link: "mailto:info@promelektroservice.com",
     },
     {
       icon: <FaMapMarkerAlt className="icon" />,
-      title: t("contact.addressTitle"),
-      details: ["Україна, м. Київ"],
+      title: t("contacts.addressLabel"),
+      details: [t("contacts.address")],
     },
   ];
 
@@ -58,6 +60,7 @@ const ContactsPage = () => {
   };
 
   useEffect(() => {
+    AOS.init({ once: true, duration: 600 });
     incrementViewCount();
   }, []);
 
@@ -98,10 +101,10 @@ const ContactsPage = () => {
   return (
     <>
       <Helmet>
-        <title>{t("contactsPage.metaTitle")}</title>
+        <title>{t("meta.contactsTitle")}</title>
         <meta
           name="description"
-          content={t("contactsPage.metaDescription")}
+          content={t("meta.contactsDescription")}
         />
         <meta
           name="keywords"
@@ -110,15 +113,15 @@ const ContactsPage = () => {
       </Helmet>
 
       <div className="contacts-page">
-        <h1>{t("contactsPage.title")}</h1>
-        <p>{t("contactsPage.subtitle")}</p>
+        <h1 data-aos="fade-up">{t("contacts.heading")}</h1>
+        <p data-aos="fade-up" data-aos-delay="100">{t("contacts.description")}</p>
 
         <div className="contacts-content">
-          <section className="contact-info">
-            <h2 className="section-title">{t("contact.infoTitle")}</h2>
+          <section className="contact-info" data-aos="fade-right" data-aos-delay="200">
+            <h2 className="section-title">{t("contacts.detailsTitle")}</h2>
             {contacts.map((item, index) => (
               <div key={index} className="info-item">
-                {item.icon}
+                <span className="icon">{item.icon}</span>
                 <h3>{item.title}</h3>
                 {item.details.map((detail, i) =>
                   item.link ? (
@@ -133,13 +136,13 @@ const ContactsPage = () => {
             ))}
           </section>
 
-          <section className="contact-form-section">
-            <h2 className="section-title">{t("contact.formTitle")}</h2>
+          <section className="contact-form-section" data-aos="fade-left" data-aos-delay="200">
+            <h2 className="section-title">{t("contacts.formTitle")}</h2>
             <form className="contact-form" onSubmit={handleSubmit} ref={formRef}>
               <input
                 type="text"
                 name="name"
-                placeholder={t("form.namePlaceholder")}
+                placeholder={t("contacts.namePlaceholder")}
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -147,7 +150,7 @@ const ContactsPage = () => {
               <input
                 type="email"
                 name="email"
-                placeholder={t("form.emailPlaceholder")}
+                placeholder={t("contacts.emailPlaceholder")}
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -155,38 +158,38 @@ const ContactsPage = () => {
               <input
                 type="tel"
                 name="phone"
-                placeholder={t("form.phonePlaceholder")}
+                placeholder={t("contacts.phonePlaceholder")}
                 value={formData.phone}
                 onChange={handleChange}
                 required
               />
               <textarea
                 name="message"
-                placeholder={t("form.messagePlaceholder")}
+                placeholder={t("contacts.messagePlaceholder")}
                 value={formData.message}
                 onChange={handleChange}
                 rows="5"
                 required
               ></textarea>
               <button type="submit" disabled={loading}>
-                {loading ? <FaSpinner className="spinner" /> : t("form.sendButton")}
+                {loading ? <FaSpinner className="spinner" /> : t("contacts.sendBtn")}
               </button>
             </form>
             {status === "success" && (
               <p className="status-message success-message">
-                {t("form.successMessage")}
+                {t("contacts.successMsg")}
               </p>
             )}
             {status === "error" && (
               <p className="status-message error-message">
-                {t("form.errorMessage")}
+                {t("contacts.errorMsg")}
               </p>
             )}
           </section>
         </div>
 
-        <section className="map-section">
-          <h2 className="section-title">{t("contact.locationTitle")}</h2>
+        <section className="map-section" data-aos="fade-up" data-aos-delay="300">
+          <h2 className="section-title">{t("contacts.mapTitle")}</h2>
           <div className="map-container">
             <iframe
               title="Google Maps Location"
