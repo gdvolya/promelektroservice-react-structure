@@ -106,6 +106,31 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden; /* ✅ Добавлено для предотвращения горизонтальной прокрутки */
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKeSiL-SCflPKe3gS-z_T.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* ✅ Добавлено для улучшения FCP */
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKeSiL-SCflPKe3gS-z_T.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap; /* ✅ Добавлено для улучшения FCP */
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('https://fonts.gstatic.com/s/montserrat/v25/JTUSjIg1_i6t8kCHKeSiL-SCflPKe3gS-z_T.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap; /* ✅ Добавлено для улучшения FCP */
 }
 
 a {
