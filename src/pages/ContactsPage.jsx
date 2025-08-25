@@ -1,168 +1,205 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebaseLazy";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaSpinner } from "react-icons/fa";
 import "../styles/ContactsPage.css";
 
 const ContactsPage = () => {
-  const { t } = useTranslation();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionStatus, setSubmissionStatus] = useState(null);
+  const { t } = useTranslation();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+  const formRef = useRef(null);
 
-  useEffect(() => {
-    AOS.init({ once: true, duration: 600 });
-  }, []);
+  const contacts = [
+    {
+      icon: <FaPhone className="icon" />,
+      title: t("contact.phoneTitle"),
+      details: ["+38 (097) 203 16 03", "+38 (095) 759 40 46"],
+      link: "tel:+380972031603",
+    },
+    {
+      icon: <FaEnvelope className="icon" />,
+      title: t("contact.emailTitle"),
+      details: ["info@promelektroservice.com"],
+      link: "mailto:info@promelektroservice.com",
+    },
+    {
+      icon: <FaMapMarkerAlt className="icon" />,
+      title: t("contact.addressTitle"),
+      details: ["Україна, м. Київ"],
+    },
+  ];
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const incrementViewCount = async () => {
+    try {
+      const docRef = doc(db, "views", "home");
+      const docSnap = await getDoc(docRef);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmissionStatus(null);
+      if (docSnap.exists()) {
+        await updateDoc(docRef, {
+          count: docSnap.data().count + 1,
+        });
+      } else {
+        await updateDoc(docRef, {
+          count: 1,
+        });
+      }
+    } catch (e) {
+      console.error("Error updating view count: ", e);
+    }
+  };
 
-    try {
-      // Створення посилання на колекцію 'requests'
-      const requestsCollectionRef = collection(db, "requests");
+  useEffect(() => {
+    incrementViewCount();
+  }, []);
 
-      // Додавання нового документа з даними форми та часовою міткою
-      await addDoc(requestsCollectionRef, {
-        ...formData,
-        timestamp: new Date(),
-      });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-      setSubmissionStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
-    } catch (error) {
-      console.error("Error writing document: ", error);
-      setSubmissionStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  return (
-    <main className="contacts-page">
-      <Helmet>
-        <title>{t("meta.contactsTitle")}</title>
-        <meta
-          name="description"
-          content={t("meta.contactsDescription")}
-        />
-      </Helmet>
+    try {
+      // ✅ ИСПРАВЛЕНО: Добавляем поле createdAt с меткой времени сервера.
+      await addDoc(collection(db, "requests"), {
+        ...formData,
+        status: "new",
+        createdAt: serverTimestamp(),
+      });
 
-      <div className="container">
-        <h1 data-aos="fade-up">{t("contacts.heading")}</h1>
-        <p data-aos="fade-up" data-aos-delay="100">
-          {t("contacts.description")}
-        </p>
+      setStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      setStatus("error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        <div className="contacts-content">
-          <section className="contact-info" data-aos="fade-right" data-aos-delay="200">
-            <h2 className="section-title">{t("contacts.detailsTitle")}</h2>
-            <div className="info-item">
-              <span className="icon">📞</span>
-              <h3>{t("contacts.phoneLabel")}</h3>
-              <a href="tel:+380666229776">+38 (066) 622-97-76</a>
-            </div>
-            <div className="info-item">
-              <span className="icon">📧</span>
-              <h3>Email</h3>
-              <a href="mailto:info@promelektroservice.com">
-                info@promelektroservice.com
-              </a>
-            </div>
-            <div className="info-item">
-              <span className="icon">📍</span>
-              <h3>{t("contacts.addressLabel")}</h3>
-              <p>{t("contacts.address")}</p>
-            </div>
-          </section>
+  return (
+    <>
+      <Helmet>
+        <title>{t("contactsPage.metaTitle")}</title>
+        <meta
+          name="description"
+          content={t("contactsPage.metaDescription")}
+        />
+        <meta
+          name="keywords"
+          content={t("contactsPage.metaKeywords")}
+        />
+      </Helmet>
 
-          <section className="contact-form-section" data-aos="fade-left" data-aos-delay="200">
-            <h2 className="section-title">{t("contacts.formTitle")}</h2>
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                name="name"
-                placeholder={t("contacts.namePlaceholder")}
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder={t("contacts.emailPlaceholder")}
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder={t("contacts.phonePlaceholder")}
-                value={formData.phone}
-                onChange={handleChange}
-              />
-              <textarea
-                name="message"
-                placeholder={t("contacts.messagePlaceholder")}
-                rows={5}
-                value={formData.message}
-                onChange={handleChange}
-                required
-              />
-              <button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? t("contacts.sendingBtn") : t("contacts.sendBtn")}
-              </button>
-              {submissionStatus === "success" && (
-                <p className="status-message success-message">
-                  {t("contacts.successMsg")}
-                </p>
-              )}
-              {submissionStatus === "error" && (
-                <p className="status-message error-message">
-                  {t("contacts.errorMsg")}
-                </p>
-              )}
-            </form>
-          </section>
-        </div>
+      <div className="contacts-page">
+        <h1>{t("contactsPage.title")}</h1>
+        <p>{t("contactsPage.subtitle")}</p>
 
-        <section className="map-section" data-aos="fade-up" data-aos-delay="300">
-          <h2 className="section-title">{t("contacts.mapTitle")}</h2>
-          <div className="map-container">
-            <iframe
-              title="Google Map Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.098877665268!2d30.49089021573022!3d50.4578137794715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce56c701777d%3A0x7d6a54124e4d588a!2z0L_QtdGA0LXRgNGB0Lg!5e0!3m2!1suk!2sua!4v1628178864789!5m2!1suk!2sua"
-              allowFullScreen=""
-              loading="lazy"
-            ></iframe>
-          </div>
-        </section>
-      </div>
-    </main>
-  );
+        <div className="contacts-content">
+          <section className="contact-info">
+            <h2 className="section-title">{t("contact.infoTitle")}</h2>
+            {contacts.map((item, index) => (
+              <div key={index} className="info-item">
+                {item.icon}
+                <h3>{item.title}</h3>
+                {item.details.map((detail, i) =>
+                  item.link ? (
+                    <a key={i} href={item.link}>
+                      {detail}
+                    </a>
+                  ) : (
+                    <p key={i}>{detail}</p>
+                  )
+                )}
+              </div>
+            ))}
+          </section>
+
+          <section className="contact-form-section">
+            <h2 className="section-title">{t("contact.formTitle")}</h2>
+            <form className="contact-form" onSubmit={handleSubmit} ref={formRef}>
+              <input
+                type="text"
+                name="name"
+                placeholder={t("form.namePlaceholder")}
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder={t("form.emailPlaceholder")}
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder={t("form.phonePlaceholder")}
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+              <textarea
+                name="message"
+                placeholder={t("form.messagePlaceholder")}
+                value={formData.message}
+                onChange={handleChange}
+                rows="5"
+                required
+              ></textarea>
+              <button type="submit" disabled={loading}>
+                {loading ? <FaSpinner className="spinner" /> : t("form.sendButton")}
+              </button>
+            </form>
+            {status === "success" && (
+              <p className="status-message success-message">
+                {t("form.successMessage")}
+              </p>
+            )}
+            {status === "error" && (
+              <p className="status-message error-message">
+                {t("form.errorMessage")}
+              </p>
+            )}
+          </section>
+        </div>
+
+        <section className="map-section">
+          <h2 className="section-title">{t("contact.locationTitle")}</h2>
+          <div className="map-container">
+            <iframe
+              title="Google Maps Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20309.845422830846!2d30.51866384288005!3d50.45012351239859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce256e297123%3A0xed4d59a59c727a8d!2z0LzQtdGA0YPRgdC60LDRjyDRg9C70L7QstC-0YDQvdC-0Lkg0L_QviDQmtGA0L7Qv9C-0YDQsCDQmtGA0L7RgdC60Lgg0JzQtdGA0L7QvNC10YI!5e0!3m2!1sru!2sua!4v1628178129590!5m2!1sru!2sua"
+              allowFullScreen=""
+              loading="lazy"
+            ></iframe>
+          </div>
+        </section>
+      </div>
+    </>
+  );
 };
 
 export default ContactsPage;
