@@ -172,7 +172,8 @@ img { max-width: 100%; display: block; }
 .portfolio-gallery,
 .contact-form,
 .footer,
-.admin-panel {
+.admin-panel,
+.contacts-page { /* Добавлен contacts-page для правильного наследования темы */
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color var(--transition), color var(--transition);
@@ -464,87 +465,4 @@ code, pre { background: var(--surface-2); border-radius: 8px; padding: 2px 6px; 
 .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: center; justify-content: center; z-index: 999; }
 .modal { width: min(560px, calc(100% - 40px)); background: var(--surface); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-lg); }
 .modal-backdrop[aria-hidden="false"] { display: flex; }
-.tooltip { position: absolute; background: var(--surface); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); padding: 6px 10px; border-radius: 8px; font-size: .9rem; }
-.toast { position: fixed; right: 16px; bottom: 16px; background: var(--surface); border: 1px solid var(--border-color); box-shadow: var(--shadow-md); padding: 12px 14px; border-radius: var(--radius); }
-
-/********************
- * Skeletons
- ********************/
-.skeleton { position: relative; overflow: hidden; background: var(--surface-2); border-radius: 8px; }
-.skeleton::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
-  animation: shimmer 1.5s infinite;
-}
-@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-
-/********************
- * Utilities
- ********************/
-.hidden { display: none !important; }
-.center { text-align: center; }
-.grid { display: grid; gap: 16px; }
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-4 { grid-template-columns: repeat(4, 1fr); }
-.stack { display: flex; flex-direction: column; gap: 12px; }
-.row { display: flex; gap: 12px; align-items: center; }
-.gap-8 { gap: 8px; } .gap-12 { gap: 12px; } .gap-16 { gap: 16px; }
-.mt-16 { margin-top: 16px; } .mb-16 { margin-bottom: 16px; } .py-20 { padding-block: 20px; }
-
-/********************
- * CLS fix for main content
- ********************/
-.main-content { min-height: calc(100vh - 120px); }
-
-/********************
- * Responsive
- ********************/
-@media (max-width: 1200px) {
-  .nav-menu { gap: 18px; }
-  .portfolio-img { height: 200px; }
-}
-@media (max-width: 992px) {
-  .site-header { padding: 12px 18px; }
-  .right-controls { gap: 12px; }
-  .features-grid { grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); }
-}
-@media (max-width: 768px) {
-  .site-header { flex-direction: column; align-items: stretch; gap: 10px; }
-  .nav-menu { flex-wrap: wrap; justify-content: center; }
-  .hero { border-radius: 0; padding-bottom: 44px; }
-  .portfolio-gallery { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
-  .pricing-card { padding: 20px 14px; }
-  .grid-3 { grid-template-columns: 1fr; }
-}
-@media (max-width: 520px) {
-  .fancy-title { font-size: 1.75rem; }
-  .hero-subtitle { font-size: .95rem; }
-  .footer-top { flex-direction: column; }
-  .lang-btn { padding: 6px 10px; }
-}
-@media (min-width: 1400px) {
-  .container { width: min(100% - 120px, 1280px); }
-}
-
-/********************
- * Print styles
- ********************/
-@media print {
-  .site-header, .footer, .theme-toggle-btn, .social-links, .lang-switcher { display: none !important; }
-  body { color: #000; background: #fff; }
-  a { color: #000; text-decoration: underline; }
-}
-
-/********************
- * High-contrast helper (opt-in with .hc class on body)
- ********************/
-body.hc {
-  --background-color: #000;
-  --surface: #000;
-  --surface-2: #000;
-  --text-color: #fff;
-  --muted-text: #ddd;
-  --primary-color: #0ff;
-  --border-color: #fff;
-}
+.tooltip { position: absolute; background: var(--surface); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); border-radius: var(--radius-sm); padding: 8px 12px; }
