@@ -107,7 +107,7 @@ main {
   position: relative;
   width: 100%;
   max-width: 1200px;
-  margin: 80px auto 0 auto;
+  margin: 0 auto; /* Змінено: прибрано верхній відступ */
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
