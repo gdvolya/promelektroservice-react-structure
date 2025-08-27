@@ -1,3 +1,8 @@
+/*
+  ==============================================================
+  Оновлений файл: style.css
+  ==============================================================
+*/
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
 
 /* Цветовые переменные для светлой темы по умолчанию */
@@ -115,7 +120,6 @@ a {
 
 /* Все секции подчиняются теме */
 .app-wrapper,
-.main-content,
 .hero,
 .features,
 .portfolio-gallery,
@@ -125,6 +129,12 @@ a {
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main-content {
+  /* 🔹 Отступ, чтобы контент начинался ниже шапки */
+  padding-top: 90px;
+  flex: 1; /* Зберігаємо старе правило для "липкого" футера */
 }
 
 /* 🔹 Header */
@@ -316,7 +326,7 @@ a {
   width: 80px;
   height: 80px;
   margin: 80px auto;
-  min-height: 50vh; /* Збільшено для кращого запобігання зсувів */
+  min-height: 50vh;
 }
 .loading-spinner .spinner {
   width: 48px;
@@ -342,7 +352,7 @@ a {
 }
 
 .social-link {
-  font-size: 1.5rem; /* размеры иконок */
+  font-size: 1.5rem;
   color: var(--social-link-color);
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -483,9 +493,4 @@ img, .portfolio-img, .logo-left {
 .dark-mode span,
 .dark-mode a {
   opacity: 0.95;
-}
-
-/* Добавлено для фикса CLS */
-.main-content {
-  min-height: 50vh; 
 }
