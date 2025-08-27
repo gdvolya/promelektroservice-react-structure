@@ -18,17 +18,6 @@
       content="електромонтажні послуги, електромонтаж, електромонтажні роботи, проектування електромереж, промисловий електромонтаж, встановлення електроустаткування, електросервіс, Київ, Україна"
     />
 
-    <meta property="og:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
-    <meta property="og:description" content="Професійні електромонтажні роботи: від проектування до обслуговування." />
-    <meta property="og:url" content="https://promelektroservice.vercel.app/" />
-    <meta property="og:type" content="website" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@yourtwitterhandle" />
-    <meta name="twitter:creator" content="@yourtwitterhandle" />
-    <meta name="twitter:title" content="ПромЕлектроСервіс — електромонтажні послуги" />
-    <meta name="twitter:description" content="Професійні електромонтажні роботи: від проектування до обслуговування." />
-
     <meta name="theme-color" content="#003366" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link
@@ -49,12 +38,57 @@
       type="image/webp"
       fetchpriority="high"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
+      as="style"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap"
       rel="stylesheet"
+      media="all"
     />
+    <style>
+      html {
+        font-family: "Montserrat", sans-serif;
+      }
+    </style>
+
+    <script>
+      (function(d) {
+        var fa = d.createElement('link');
+        fa.rel = 'stylesheet';
+        fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
+        fa.media = 'all';
+        d.head.appendChild(fa);
+      })(document);
+    </script>
+    
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="ПромЕлектроСервіс — Надійні електромонтажні послуги"
+    />
+    <meta
+      property="og:description"
+      content="Професійні електромонтажні послуги для вашого дому та бізнесу: проектування, монтаж, обслуговування."
+    />
+    <meta property="og:image" content="%PUBLIC_URL%/img/hero.webp" />
+    <meta property="og:url" content="https://promelektroservice.vercel.app/" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="ПромЕлектроСервіс — електромонтажні послуги"
+    />
+    <meta
+      name="twitter:description"
+      content="Професійні електромонтажні роботи: від проектування до обслуговування."
+    />
+    <meta name="twitter:image" content="%PUBLIC_URL%/img/hero.webp" />
 
     <script type="application/ld+json">
       {
@@ -63,6 +97,7 @@
         "name": "ПромЕлектроСервіс",
         "url": "https://promelektroservice.vercel.app/",
         "logo": "%PUBLIC_URL%/icons/icon-192.png",
+        "image": "%PUBLIC_URL%/img/hero.webp",
         "description": "Професійні електромонтажні послуги для вашого дому та бізнесу. Проектування, монтаж та обслуговування електромереж.",
         "address": {
           "@type": "PostalAddress",
@@ -75,13 +110,18 @@
         "telephone": "+380-44-123-4567",
         "sameAs": [
           "https://www.linkedin.com/company/prom-elektroservice",
-          "https://www.youtube.com/@promelektroservice"
+          "https://www.facebook.com/prom.elektroservice"
         ]
       }
     </script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <strong style="display: block; text-align: center; margin: 2rem;">
+        Будь ласка, увімкніть JavaScript для повної функціональності сайту.
+      </strong>
+    </noscript>
+
     <div id="root"></div>
   </body>
 </html>

@@ -50,48 +50,34 @@
   margin-top: 20px;
 }
 
-.modal-btn {
-  padding: 10px 20px;
+.modal-buttons button {
+  padding: 12px 25px;
   border: none;
   border-radius: 6px;
-  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  font-size: 1em;
+  font-weight: bold;
+  transition: all 0.2s ease;
 }
 
-.modal-confirm-btn {
+/* Кнопка "Подтвердить" */
+.confirm-btn {
   background-color: #dc3545;
   color: white;
 }
 
-.modal-confirm-btn:hover {
+.confirm-btn:hover {
   background-color: #c82333;
 }
 
-.modal-cancel-btn {
+/* Кнопка "Отмена/Закрыть" */
+.cancel-btn {
   background-color: #6c757d;
   color: white;
 }
 
-.modal-cancel-btn:hover {
+.cancel-btn:hover {
   background-color: #5a6268;
-}
-
-/* Кнопка закрытия */
-.modal-close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #888;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.modal-close-btn:hover {
-  color: #333;
 }
 
 /* Анимации */
@@ -101,6 +87,6 @@
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.7); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from { transform: scale(0.8); }
+  to { transform: scale(1); }
 }

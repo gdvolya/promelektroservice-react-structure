@@ -44,10 +44,15 @@ const ContactsPage = () => {
     try {
       const docRef = doc(db, "views", "home");
       const docSnap = await getDoc(docRef);
+
       if (docSnap.exists()) {
-        await updateDoc(docRef, { count: docSnap.data().count + 1, });
+        await updateDoc(docRef, {
+          count: docSnap.data().count + 1,
+        });
       } else {
-        await updateDoc(docRef, { count: 1, });
+        await updateDoc(docRef, {
+          count: 1,
+        });
       }
     } catch (e) {
       console.error("Error updating view count: ", e);
@@ -61,25 +66,32 @@ const ContactsPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setStatus("");
 
     try {
       await addDoc(collection(db, "requests"), {
         ...formData,
-        createdAt: serverTimestamp(),
         status: "new",
+        createdAt: serverTimestamp(),
       });
+
       setStatus("success");
-      setFormData({ name: "", email: "", phone: "", message: "" });
-      formRef.current.reset();
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
     } catch (error) {
-      console.error("Error sending message: ", error);
+      console.error("Error adding document: ", error);
       setStatus("error");
     } finally {
       setLoading(false);
@@ -87,106 +99,108 @@ const ContactsPage = () => {
   };
 
   return (
-    <main className="contacts-page">
+    <>
       <Helmet>
-        <title>{t('meta.contactsTitle')}</title>
-        <meta name="description" content={t('meta.contactsDescription')} />
+        <title>{t("meta.contactsTitle")}</title>
+        <meta
+          name="description"
+          content={t("meta.contactsDescription")}
+        />
+        <meta
+          name="keywords"
+          content={t("contactsPage.metaKeywords")}
+        />
       </Helmet>
 
-      <h1 data-aos="fade-up">{t("contacts.title")}</h1>
+      <div className="contacts-page">
+        <h1 data-aos="fade-up">{t("contacts.heading")}</h1>
+        <p data-aos="fade-up" data-aos-delay="100">{t("contacts.description")}</p>
 
-      <div className="contacts-content">
-        <section className="contact-info" data-aos="fade-up">
-          <h2 className="section-title">{t("contacts.infoTitle")}</h2>
-          <div className="contact-details">
-            {contacts.map((contact, index) => (
-              <div key={index} className="contact-item">
-                <div className="contact-icon">{contact.icon}</div>
-                <div className="contact-text">
-                  <h3>{contact.title}</h3>
-                  {contact.details.map((detail, detailIndex) => (
-                    <p key={detailIndex}>
-                      {contact.link ? (
-                        <a href={contact.link}>{detail}</a>
-                      ) : (
-                        detail
-                      )}
-                    </p>
-                  ))}
-                </div>
+        <div className="contacts-content">
+          <section className="contact-info" data-aos="fade-right" data-aos-delay="200">
+            <h2 className="section-title">{t("contacts.detailsTitle")}</h2>
+            {contacts.map((item, index) => (
+              <div key={index} className="info-item">
+                <span className="icon">{item.icon}</span>
+                <h3>{item.title}</h3>
+                {item.details.map((detail, i) =>
+                  item.link ? (
+                    <a key={i} href={item.link}>
+                      {detail}
+                    </a>
+                  ) : (
+                    <p key={i}>{detail}</p>
+                  )
+                )}
               </div>
             ))}
+          </section>
+
+          <section className="contact-form-section" data-aos="fade-left" data-aos-delay="200">
+            <h2 className="section-title">{t("contacts.formTitle")}</h2>
+            <form className="contact-form" onSubmit={handleSubmit} ref={formRef}>
+              <input
+                type="text"
+                name="name"
+                placeholder={t("contacts.namePlaceholder")}
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder={t("contacts.emailPlaceholder")}
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder={t("contacts.phonePlaceholder")}
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+              <textarea
+                name="message"
+                placeholder={t("contacts.messagePlaceholder")}
+                value={formData.message}
+                onChange={handleChange}
+                rows="5"
+                required
+              ></textarea>
+              <button type="submit" disabled={loading}>
+                {loading ? <FaSpinner className="spinner" /> : t("contacts.sendBtn")}
+              </button>
+            </form>
+            {status === "success" && (
+              <p className="status-message success-message">
+                {t("contacts.successMsg")}
+              </p>
+            )}
+            {status === "error" && (
+              <p className="status-message error-message">
+                {t("contacts.errorMsg")}
+              </p>
+            )}
+          </section>
+        </div>
+
+        <section className="map-section" data-aos="fade-up" data-aos-delay="300">
+          <h2 className="section-title">{t("contacts.mapTitle")}</h2>
+          <div className="map-container">
+            <iframe
+              title="Google Maps Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20309.845422830846!2d30.51866384288005!3d50.45012351239859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce256e297123%3A0xed4d59a59c727a8d!2z0LzQtdGA0YPRgdC60LDRjyDRg9C70L7QstC-0YDQvdC-0Lkg0L_QviDQmtGA0L7Qv9C-0YDQsCDQmtGA0L7RgdC60Lgg0JzQtdGA0L7QvNC10YI!5e0!3m2!1sru!2sua!4v1628178129590!5m2!1sru!2sua"
+              allowFullScreen=""
+              loading="lazy"
+            ></iframe>
           </div>
         </section>
-
-        <section className="contact-form" data-aos="fade-up" data-aos-delay="200">
-          <h2 className="section-title">{t("contacts.formTitle")}</h2>
-          <form onSubmit={handleSubmit} ref={formRef}>
-            <input
-              type="text"
-              name="name"
-              placeholder={t("contacts.namePlaceholder")}
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder={t("contacts.emailPlaceholder")}
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder={t("contacts.phonePlaceholder")}
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-            <textarea
-              name="message"
-              placeholder={t("contacts.messagePlaceholder")}
-              value={formData.message}
-              onChange={handleChange}
-              rows="5"
-              required
-            ></textarea>
-            <button type="submit" disabled={loading}>
-              {loading ? <FaSpinner className="spinner" /> : t("contacts.sendBtn")}
-            </button>
-          </form>
-          {status === "success" && (
-            <p className="status-message success-message">
-              {t("contacts.successMsg")}
-            </p>
-          )}
-          {status === "error" && (
-            <p className="status-message error-message">
-              {t("contacts.errorMsg")}
-            </p>
-          )}
-        </section>
       </div>
-
-      <section className="map-section" data-aos="fade-up" data-aos-delay="300">
-        <h2 className="section-title">{t("contacts.mapTitle")}</h2>
-        <div className="map-container">
-          <iframe
-            title="Google Maps Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d203031.9790616149!2d30.41907937400595!3d50.48512391054366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ceb8b9816e8b%3A0xed499ed4747738f7!2sL'viv%2C%20L'viv%20Oblast%2C%20Ukraine!5e0!3m2!1sen!2sua!4v1678225586617!5m2!1sen!2sua"
-            width="100%"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-      </section>
-    </main>
+    </>
   );
 };
 

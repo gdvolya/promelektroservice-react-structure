@@ -4,9 +4,9 @@ import '../styles/Modal.css';
 
 const Modal = ({ title, onClose, children }) => {
   return (
-    <div className="modal-overlay" onClick={onClose} role="dialog" aria-modal="true">
+    <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-btn" onClick={onClose} aria-label="Закрыть">
+        <button className="modal-close-btn" onClick={onClose}>
           <FaTimes />
         </button>
         <h3 className="modal-title">{title}</h3>

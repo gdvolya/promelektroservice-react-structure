@@ -59,13 +59,6 @@ const AdminPanel = ({ enableExport = true }) => {
 
   // 🔐 Авторизация по паролю
   const handleLogin = useCallback(() => {
-    // ⚠️ ВАЖНО: Хранение пароля в .env-файле и доступ к нему
-    // через process.env.REACT_APP_ADMIN_PASS не безопасно.
-    // Этот метод не подходит для публичных сайтов, так как
-    // переменные окружения, начинающиеся с REACT_APP_,
-    // встраиваются в скомпилированный код. Рекомендуется
-    // использовать более безопасный метод, например, аутентификацию
-    // через Firebase Authentication.
     const adminPass = process.env.REACT_APP_ADMIN_PASS;
 
     if (!adminPass) {
@@ -122,14 +115,18 @@ const AdminPanel = ({ enableExport = true }) => {
       .then(({ db: loadedDb }) => {
         dbRef.current = loadedDb;
         const db = dbRef.current;
+
         // ✅ ИСПРАВЛЕНО: Сортировка поcreatedAt по умолчанию, но если
         // данных нет, можно отсортировать по имени, чтобы таблица не была пустой.
         const effectiveSortKey = sortConfig.key || "createdAt";
-        const effectiveSortDirection = sortConfig.direction === "ascending" ? "asc" : "desc";
+        const effectiveSortDirection =
+          sortConfig.direction === "ascending" ? "asc" : "desc";
+
         const submissionsQuery = query(
           collection(db, "requests"),
           orderBy(effectiveSortKey, effectiveSortDirection)
         );
+
         unsubscribeSubmissions = onSnapshot(
           submissionsQuery,
           (snapshot) => {
@@ -139,8 +136,10 @@ const AdminPanel = ({ enableExport = true }) => {
               // Убедимся, что createdAt всегда есть для сортировки
               createdAt: doc.data().createdAt || null,
             }));
+            
             // ✅ ОТЛАДКА: Выводим данные в консоль. Проверьте её.
             console.log("Fetched submissions:", fetchedSubmissions);
+
             setSubmissions(fetchedSubmissions);
             setLoading(false);
             setError("");
@@ -151,6 +150,7 @@ const AdminPanel = ({ enableExport = true }) => {
             setLoading(false);
           }
         );
+
         const viewsDocRef = doc(db, "views", "home");
         unsubscribeViews = onSnapshot(
           viewsDocRef,
@@ -164,7 +164,7 @@ const AdminPanel = ({ enableExport = true }) => {
       })
       .catch((err) => {
         console.error("Ошибка загрузки Firebase:", err);
-        setError("Ошибка загрузки Firebase. Убедитесь, что конфигурация верна.");
+        setError("Ошибка инициализации базы данных.");
         setLoading(false);
       });
 
@@ -174,246 +174,283 @@ const AdminPanel = ({ enableExport = true }) => {
     };
   }, [authenticated, sortConfig]);
 
-  // 🗑️ Удаление заявки
-  const handleDelete = (submission) => {
-    setSubmissionToDelete(submission);
+  // 🗑 Удаление
+  const handleDelete = useCallback((id) => {
+    setSubmissionToDelete(id);
     setShowDeleteModal(true);
-  };
+  }, []);
 
-  const confirmDelete = async () => {
-    if (!submissionToDelete) return;
+  const confirmDelete = useCallback(async () => {
+    const db = dbRef.current;
+    if (!db || !submissionToDelete) return;
     try {
-      await deleteDoc(doc(dbRef.current, "requests", submissionToDelete.id));
-    } catch (e) {
-      console.error("Ошибка при удалении заявки:", e);
-      setError("Ошибка при удалении заявки.");
-    } finally {
+      // ✅ ОБНОВЛЕНО: Удаляем из коллекции "requests"
+      await deleteDoc(doc(db, "requests", submissionToDelete));
       setShowDeleteModal(false);
       setSubmissionToDelete(null);
+    } catch (err) {
+      alert("Не удалось удалить.");
+      console.error(err);
     }
-  };
+  }, [submissionToDelete]);
 
-  // ✍️ Обновление статуса
-  const handleStatusChange = useCallback(async (id, newStatus) => {
+  // ✏️ Обновление статуса
+  const handleUpdateStatus = useCallback(async (id, newStatus) => {
+    const db = dbRef.current;
+    if (!db) return;
     try {
-      const docRef = doc(dbRef.current, "requests", id);
-      await updateDoc(docRef, { status: newStatus });
-    } catch (e) {
-      console.error("Ошибка при обновлении статуса:", e);
-      setError("Ошибка при обновлении статуса.");
+      // ✅ ОБНОВЛЕНО: Обновляем в коллекции "requests"
+      await updateDoc(doc(db, "requests", id), {
+        status: newStatus,
+      });
+    } catch (err) {
+      alert("Не удалось обновить статус.");
+      console.error(err);
     }
   }, []);
 
-  // 📊 Экспорт данных
-  const handleExport = useCallback(() => {
-    const data = submissions.map((sub) => ({
-      Имя: sub.name,
-      Email: sub.email,
-      Телефон: sub.phone,
-      Сообщение: sub.message,
-      Статус: statusOptions[sub.status]?.label,
-      Дата: formatFirestoreTimestamp(sub.createdAt),
+  // 🔽 Сортировка
+  const handleSort = useCallback((key) => {
+    setSortConfig((prevConfig) => ({
+      key,
+      direction:
+        prevConfig.key === key && prevConfig.direction === "ascending"
+          ? "descending"
+          : "ascending",
     }));
+    setCurrentPage(1);
+  }, []);
 
-    const ws = XLSX.utils.json_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Заявки");
-    XLSX.writeFile(wb, "заявки.xlsx");
+  const getSortIcon = useCallback(
+    (key) => {
+      if (sortConfig.key !== key) {
+        return <FaSort />;
+      }
+      if (sortConfig.direction === "ascending") {
+        return <FaSortUp />;
+      }
+      return <FaSortDown />;
+    },
+    [sortConfig]
+  );
+
+  // 📄 Модалка с деталями
+  const handleRowClick = useCallback((submission) => {
+    setSubmissionDetails(submission);
+    setShowDetailsModal(true);
+  }, []);
+
+  // 📤 Экспорт в Excel
+  const exportToExcel = useCallback(() => {
+    const dataToExport = submissions.map(({ id, createdAt, ...rest }) => ({
+      ...rest,
+      createdAt: formatFirestoreTimestamp(createdAt),
+    }));
+    const sheet = XLSX.utils.json_to_sheet(dataToExport);
+    const book = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(book, sheet, "Заявки");
+    XLSX.writeFile(book, "submissions.xlsx");
   }, [submissions, formatFirestoreTimestamp]);
 
   // 🔍 Поиск
-  const filteredSubmissions = useMemo(() => {
-    if (!searchTerm) {
-      return submissions;
-    }
-    return submissions.filter(
-      (sub) =>
-        sub.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        sub.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        sub.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        sub.phone.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [submissions, searchTerm]);
+  const filteredSubmissions = submissions.filter(
+    ({ name, email, phone, message }) =>
+      name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      message?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  // 🗂️ Сортировка
-  const requestSort = (key) => {
-    let direction = "ascending";
-    if (sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
-  };
-
-  // 📄 Пагинация
+  // 📑 Пагинация
   const totalPages = Math.ceil(filteredSubmissions.length / itemsPerPage);
-  const paginatedSubmissions = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredSubmissions.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredSubmissions, currentPage, itemsPerPage]);
+  const currentSubmissions = filteredSubmissions.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-  const goToNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const goToPrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const renderSortIcon = (key) => {
-    if (sortConfig.key !== key) {
-      return <FaSort />;
-    }
-    return sortConfig.direction === "ascending" ? <FaSortUp /> : <FaSortDown />;
-  };
-
+  // --- Экран входа ---
   if (!authenticated) {
     return (
-      <main className="admin-panel login-form-container">
+      <main className="admin-login">
         <Helmet>
-          <title>Admin Panel - Login</title>
+          <title>Вход в админ-панель — ПромЕлектроСервіс</title>
         </Helmet>
-        <h2>Admin Panel Login</h2>
-        <div className="login-form">
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Enter password"
-          />
-          <button onClick={handleLogin}>
-            <FaSignInAlt /> Войти
-          </button>
-          {error && <p className="error-message">{error}</p>}
-        </div>
+        <h2>🔐 Вход в админ-панель</h2>
+        <input
+          type="password"
+          placeholder="Введите пароль администратора"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
+          autoFocus
+        />
+        <button onClick={handleLogin} disabled={!password.trim()}>
+          <FaSignInAlt /> Войти
+        </button>
+        {error && <p className="error-text">{error}</p>}
       </main>
     );
   }
 
+  // --- Основная панель ---
   return (
     <main className="admin-panel">
       <Helmet>
-        <title>Admin Panel</title>
+        <title>Админ-панель — ПромЕлектроСервіс</title>
       </Helmet>
-      <div className="admin-header">
-        <h1>Панель администратора</h1>
-        <div className="header-controls">
-          <div className="views-counter">
-            <p>Просмотров сайта: {views}</p>
-          </div>
+      <header className="admin-header">
+        <h1>📋 Админ-панель</h1>
+        <div className="header-stats">
+          {views !== null && (
+            <p>
+              👁 Просмотров на главной: <strong>{views}</strong>
+            </p>
+          )}
           <button onClick={handleLogout} className="logout-btn">
             <FaSignOutAlt /> Выйти
           </button>
         </div>
-      </div>
-      {error && <p className="error-message">{error}</p>}
-      {loading && <div className="loading-spinner">Загрузка данных...</div>}
+      </header>
 
-      {!loading && (
-        <div className="admin-controls">
+      {/* Панель управления */}
+      <div className="admin-controls">
+        <div className="search-container">
           <input
             type="text"
-            placeholder="Поиск по заявкам..."
+            placeholder="🔎 Поиск по заявкам..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="search-input"
           />
-          {enableExport && (
-            <button onClick={handleExport} className="export-btn">
-              <FaDownload /> Экспорт в Excel
-            </button>
-          )}
         </div>
-      )}
+        <div className="pagination-controls">
+          <label htmlFor="itemsPerPage">Заявок на странице:</label>
+          <select
+            id="itemsPerPage"
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(Number(e.target.value));
+              setCurrentPage(1);
+            }}
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
+        {enableExport && submissions.length > 0 && (
+          <button onClick={exportToExcel} className="export-btn">
+            <FaDownload /> Экспортировать в Excel
+          </button>
+        )}
+      </div>
 
-      {!loading && filteredSubmissions.length > 0 && (
+      {/* Таблица */}
+      {loading && <p className="loading-spinner">⏳ Загрузка данных...</p>}
+      {error && <p className="error-text">{error}</p>}
+
+      {!loading && filteredSubmissions.length === 0 ? (
+        <p className="no-data">
+          {searchTerm ? "Ничего не найдено по вашему запросу." : "Нет заявок."}
+        </p>
+      ) : (
         <>
-          <table className="submissions-table">
+          <table className="admin-table">
             <thead>
               <tr>
-                <th onClick={() => requestSort("name")}>
-                  Имя <button className="sort-btn">{renderSortIcon("name")}</button>
+                <th onClick={() => handleSort("name")}>
+                  Имя {getSortIcon("name")}
                 </th>
-                <th onClick={() => requestSort("email")}>
-                  Email <button className="sort-btn">{renderSortIcon("email")}</button>
+                <th onClick={() => handleSort("email")}>
+                  Email {getSortIcon("email")}
                 </th>
-                <th onClick={() => requestSort("phone")}>
-                  Телефон <button className="sort-btn">{renderSortIcon("phone")}</button>
-                </th>
-                <th onClick={() => requestSort("status")}>
-                  Статус <button className="sort-btn">{renderSortIcon("status")}</button>
-                </th>
-                <th onClick={() => requestSort("createdAt")}>
-                  Дата <button className="sort-btn">{renderSortIcon("createdAt")}</button>
+                <th onClick={() => handleSort("phone")}>
+                  Телефон {getSortIcon("phone")}
                 </th>
                 <th>Сообщение</th>
+                <th onClick={() => handleSort("status")}>
+                  Статус {getSortIcon("status")}
+                </th>
+                <th onClick={() => handleSort("createdAt")}>
+                  Дата {getSortIcon("createdAt")}
+                </th>
                 <th>Действия</th>
               </tr>
             </thead>
             <tbody>
-              {paginatedSubmissions.map((submission) => (
-                <tr key={submission.id} className="submission-row">
-                  <td>{submission.name || "—"}</td>
-                  <td>{submission.email || "—"}</td>
-                  <td>{submission.phone || "—"}</td>
-                  <td>
-                    <select
-                      value={submission.status}
-                      onChange={(e) => handleStatusChange(submission.id, e.target.value)}
-                      className={`status-select ${statusOptions[submission.status]?.className}`}
+              {currentSubmissions.map(
+                ({ id, name, email, phone, message, status = "new", createdAt }) => (
+                  <tr key={id}>
+                    <td>{name}</td>
+                    <td>{email}</td>
+                    <td>{phone}</td>
+                    <td
+                      className="message-cell"
+                      onClick={() =>
+                        handleRowClick({ id, name, email, phone, message, status, createdAt })
+                      }
+                      title="Нажмите, чтобы прочитать полностью"
                     >
-                      {Object.keys(statusOptions).map((statusKey) => (
-                        <option key={statusKey} value={statusKey}>
-                          {statusOptions[statusKey].label}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td>{formatFirestoreTimestamp(submission.createdAt)}</td>
-                  <td>
-                    <button
-                      className="view-btn"
-                      onClick={() => {
-                        setSubmissionDetails(submission);
-                        setShowDetailsModal(true);
-                      }}
-                    >
-                      Посмотреть
-                    </button>
-                  </td>
-                  <td>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(submission)}
-                    >
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                      {message?.length > 50 ? `${message.substring(0, 50)}...` : message}
+                    </td>
+                    <td>
+                      <select
+                        value={status}
+                        onChange={(e) => handleUpdateStatus(id, e.target.value)}
+                        className={`status-select ${statusOptions[status]?.className}`}
+                      >
+                        {Object.entries(statusOptions).map(([key, value]) => (
+                          <option key={key} value={key}>
+                            {value.label}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>{formatFirestoreTimestamp(createdAt)}</td>
+                    <td>
+                      <button
+                        onClick={() => handleDelete(id)}
+                        className="delete-btn"
+                      >
+                        <FaTrash />
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
+
+          {/* Пагинация */}
           <div className="pagination">
-            <button onClick={goToPrevPage} disabled={currentPage === 1}>
-              Назад
+            <button
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+              disabled={currentPage === 1}
+            >
+              Предыдущая
             </button>
             <span>
               Страница {currentPage} из {totalPages}
             </span>
-            <button onClick={goToNextPage} disabled={currentPage === totalPages}>
-              Вперед
+            <button
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              disabled={currentPage === totalPages || totalPages === 0}
+            >
+              Следующая
             </button>
           </div>
         </>
       )}
 
+      {/* Модалки */}
       {showDeleteModal && (
         <Modal
           title="Подтверждение удаления"
-          message="Вы уверены, что хотите удалить эту заявку? Это действие необратимо."
+          message="Вы действительно хотите удалить эту заявку? Это действие необратимо."
           onConfirm={confirmDelete}
           onCancel={() => setShowDeleteModal(false)}
         />
@@ -422,7 +459,7 @@ const AdminPanel = ({ enableExport = true }) => {
       {showDetailsModal && submissionDetails && (
         <Modal
           title="Детали заявки"
-          onClose={() => setShowDetailsModal(false)}
+          onCancel={() => setShowDetailsModal(false)}
         >
           <div className="submission-details">
             <p><strong>Имя:</strong> {submissionDetails.name}</p>

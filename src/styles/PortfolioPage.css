@@ -1,49 +1,65 @@
-@import url('./variables.css');
+:root {
+  --primary-color: #007bff;
+  --text-color: #222;
+  --subtext-color: #666;
+  --bg-light: #f9f9f9;
+  --bg-white: #fff;
+  --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --card-hover-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+  --font-main: "Segoe UI", sans-serif;
+  --accent-color: #f1c40f;
+}
+
+/* 🌑 Тёмная тема */
+.dark-mode {
+  --primary-color: #66aaff;
+  --text-color: #e2e8f0;
+  --subtext-color: #a0aec0;
+  --bg-light: #1a202c;
+  --bg-white: #2d3748;
+  --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  --card-hover-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
+}
 
 .portfolio-page {
   position: relative;
   padding: 4rem 2rem;
   background: var(--bg-light);
   min-height: 100vh;
-  transition: var(--transition-base);
+  font-family: var(--font-main);
+  animation: fadeIn 0.6s ease-in-out;
+  color: var(--text-color);
+  z-index: 0;
 }
 
 .page-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
   z-index: 1;
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
 }
 
-.dark-mode .page-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.portfolio-page.dark-mode {
-  background: var(--bg-light);
-  color: var(--text-color);
+.portfolio-page.dark-mode .page-overlay {
+  opacity: 1;
 }
 
 .portfolio-page h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--primary-color);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   text-align: center;
-  position: relative;
-  z-index: 2;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
   position: relative;
   z-index: 2;
 }
@@ -87,17 +103,48 @@
 
 .card-content h2 {
   font-size: 1.35rem;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.5rem;
   color: var(--text-color);
+  font-weight: 600;
 }
 
 .card-content p {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--subtext-color);
+  line-height: 1.5;
 }
 
-@media (max-width: 768px) {
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .portfolio-card img {
+    height: 180px;
+  }
+
+  .card-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .card-content p {
+    font-size: 0.9rem;
+  }
+
   .portfolio-page {
     padding: 2rem 1rem;
+  }
+
+  .portfolio-page h1 {
+    font-size: 2rem;
+  }
+}
+
+/* 🎬 Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
