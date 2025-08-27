@@ -190,39 +190,26 @@ a {
 }
 
 /* 🔹 Hero */
+/* Все стили для .hero перенесены в HomePage.css, чтобы избежать конфликтов */
 .hero {
-  text-align: center;
-  padding: 20px 20px 60px;
-  border-radius: 0 0 50% 50% / 15%;
-  margin-bottom: 60px;
-  min-height: 400px; /* Збільшено для запобігання зсувів */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  background: var(--hero-background);
-  box-shadow: var(--hero-shadow);
-  transition: background 0.3s ease;
+  /* Удалил все стили для hero, чтобы они не конфликтовали с HomePage.css */
+  /* padding: 20px 20px 60px; */
+  /* border-radius: 0 0 50% 50% / 15%; */
+  /* margin-bottom: 60px; */
+  /* min-height: 400px; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: flex-start; */
+  /* align-items: center; */
+  /* background: var(--hero-background); */
+  /* box-shadow: var(--hero-shadow); */
+  /* transition: background 0.3s ease; */
 }
 .fancy-title {
-  font-size: 3.2rem;
-  font-weight: 900;
-  margin-top: 10px;
-  margin-bottom: 15px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  animation: slideUpFade 1.2s ease-out forwards;
-  color: var(--fancy-title-color);
+  /* Удалены стили, которые уже есть в HomePage.css */
 }
 .hero-subtitle {
-  font-size: 1.2rem;
-  font-weight: 500;
-  max-width: 720px;
-  margin: 0 auto;
-  line-height: 1.4;
-  opacity: 0;
-  animation: fadeIn 1.6s ease-out forwards;
-  animation-delay: 0.6s;
-  color: var(--hero-subtitle-color);
+  /* Удалены стили, которые уже есть в HomePage.css */
 }
 
 /* 🔹 Animations */
