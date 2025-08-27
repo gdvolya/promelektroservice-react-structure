@@ -62,8 +62,10 @@ function AppContent() {
   });
 
   useEffect(() => {
-    document.body.classList.remove("light-mode", "dark-mode");
-    document.body.classList.add(isDarkMode ? "dark-mode" : "light-mode");
+    document.documentElement.classList.remove("light-mode", "dark-mode");
+    document.documentElement.classList.add(
+      isDarkMode ? "dark-mode" : "light-mode"
+    );
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
@@ -122,9 +124,9 @@ function AppContent() {
       const pathParts = pathname.split("/").filter(Boolean);
 
       let title, description, keywords, canonicalPath;
-      const cleanPath = pathParts.slice(
-        languages.includes(pathParts[0]) ? 1 : 0
-      ).join("/");
+      const cleanPath = pathParts
+        .slice(languages.includes(pathParts[0]) ? 1 : 0)
+        .join("/");
 
       const projectMatch = cleanPath.match(/^portfolio\/(\d+)/);
 
@@ -226,9 +228,7 @@ function AppContent() {
             <button
               onClick={toggleTheme}
               className="theme-toggle-btn"
-              aria-label={
-                isDarkMode ? "Светлая тема" : "Тёмная тема"
-              }
+              aria-label={isDarkMode ? "Светлая тема" : "Тёмная тема"}
             >
               {isDarkMode ? <FaSun /> : <FaMoon />}
             </button>
@@ -277,22 +277,49 @@ function AppContent() {
         </div>
 
         <div className="social-links">
-          <a href="https://facebook.com/promelektroservice" target="_blank">
+          <a
+            href="https://facebook.com/promelektroservice"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            className="social-link"
+          >
             <FaFacebook />
           </a>
-          <a href="https://instagram.com/promelektroservice" target="_blank">
+          <a
+            href="https://instagram.com/promelektroservice"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="social-link"
+          >
             <FaInstagram />
           </a>
-          <a href="https://twitter.com/promelektroservice" target="_blank">
+          <a
+            href="https://twitter.com/promelektroservice"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Twitter"
+            className="social-link"
+          >
             <FaTwitter />
           </a>
           <a
             href="https://linkedin.com/company/promelektroservice"
             target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="social-link"
           >
             <FaLinkedin />
           </a>
-          <a href="https://youtube.com/@promelektroservice" target="_blank">
+          <a
+            href="https://youtube.com/@promelektroservice"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube"
+            className="social-link"
+          >
             <FaYoutube />
           </a>
         </div>
