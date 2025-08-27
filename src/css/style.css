@@ -193,17 +193,6 @@ a {
 /* Все стили для .hero перенесены в HomePage.css, чтобы избежать конфликтов */
 .hero {
   /* Удалил все стили для hero, чтобы они не конфликтовали с HomePage.css */
-  /* padding: 20px 20px 60px; */
-  /* border-radius: 0 0 50% 50% / 15%; */
-  /* margin-bottom: 60px; */
-  /* min-height: 400px; */
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: flex-start; */
-  /* align-items: center; */
-  /* background: var(--hero-background); */
-  /* box-shadow: var(--hero-shadow); */
-  /* transition: background 0.3s ease; */
 }
 .fancy-title {
   /* Удалены стили, которые уже есть в HomePage.css */
