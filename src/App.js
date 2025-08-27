@@ -1,5 +1,19 @@
-import React, { Suspense, lazy, useEffect, useCallback, useMemo, useState } from "react";
-import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
+import React, {
+  Suspense,
+  lazy,
+  useEffect,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { Analytics } from "@vercel/analytics/react";
@@ -11,10 +25,18 @@ import "./i18n";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-// 🔹 Импорт иконок из react-icons
-import { FaLinkedin, FaYoutube, FaFacebook, FaInstagram, FaTwitter, FaSun, FaMoon } from "react-icons/fa";
+// react-icons
+import {
+  FaLinkedin,
+  FaYoutube,
+  FaFacebook,
+  FaInstagram,
+  FaTwitter,
+  FaSun,
+  FaMoon,
+} from "react-icons/fa";
 
-// 🔹 Динамическая загрузка страниц
+// ленивые страницы
 const HomePage = lazy(() => import("./pages/HomePage.jsx"));
 const PortfolioPage = lazy(() => import("./pages/PortfolioPage.jsx"));
 const ContactsPage = lazy(() => import("./pages/ContactsPage.jsx"));
@@ -24,7 +46,7 @@ const AdminPanel = lazy(() => import("./pages/AdminPanel.jsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.jsx"));
 const ProjectDetailPage = lazy(() => import("./pages/ProjectDetailPage.jsx"));
 
-// 🔹 Доступні мови
+// доступные языки
 const languages = ["uk", "en", "ru"];
 
 function AppContent() {
@@ -32,7 +54,7 @@ function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 🔹 Темна/світла тема
+  // 🔹 Тема (светлая/тёмная)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) return savedTheme === "dark";
@@ -49,12 +71,12 @@ function AppContent() {
     setIsDarkMode((prev) => !prev);
   }, []);
 
-  // 🔹 Анімації
+  // AOS анимации
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
   }, []);
 
-  // 🔹 Мова з URL
+  // текущий язык из URL
   const currentLang = useMemo(() => {
     const parts = location.pathname.split("/").filter(Boolean);
     return languages.includes(parts[0]) ? parts[0] : i18n.language;
@@ -80,7 +102,7 @@ function AppContent() {
     }
   }, [currentLang, i18n]);
 
-  // 🔹 Навігація
+  // навигация
   const navItems = useMemo(
     () => [
       { path: "/", label: t("nav.home") },
@@ -92,7 +114,7 @@ function AppContent() {
     [t]
   );
 
-  // 🔹 Метадані для SEO
+  // SEO мета
   const getPageMeta = useCallback(
     (pathname) => {
       const projectsData = t("portfolio.projects", { returnObjects: true });
@@ -100,7 +122,9 @@ function AppContent() {
       const pathParts = pathname.split("/").filter(Boolean);
 
       let title, description, keywords, canonicalPath;
-      const cleanPath = pathParts.slice(languages.includes(pathParts[0]) ? 1 : 0).join("/");
+      const cleanPath = pathParts.slice(
+        languages.includes(pathParts[0]) ? 1 : 0
+      ).join("/");
 
       const projectMatch = cleanPath.match(/^portfolio\/(\d+)/);
 
@@ -141,7 +165,6 @@ function AppContent() {
 
   return (
     <>
-      {/* 🔹 МЕТА */}
       <Helmet>
         <html lang={currentLang} />
         <title>{title}</title>
@@ -151,160 +174,146 @@ function AppContent() {
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
         <link rel="canonical" href={canonical} />
-        {languages.map((lng) => (
-          <link
-            key={lng}
-            rel="alternate"
-            hrefLang={lng}
-            href={`https://promelektroservice.vercel.app/${lng}${
-              canonical === "/" ? "" : canonical
-            }`}
-          />
-        ))}
-        <link
-          rel="alternate"
-          hrefLang="x-default"
-          href="https://promelektroservice.vercel.app/"
-        />
       </Helmet>
 
-      {/* 🔹 СКИП-ЛІНК */}
-      <a href="#main-content" className="skip-link">
-        {t("skipNav") || "Пропустити навігацію"}
-      </a>
+      {/* 🔹 Header */}
+      <header className="site-header" role="banner">
+        <div className="header-container">
+          <Link
+            to={`/${currentLang}/`}
+            aria-label={t("nav.home")}
+            className="logo-link"
+          >
+            <picture>
+              <source srcSet={logoWebp} type="image/webp" />
+              <img
+                src={logoPng}
+                alt="Логотип ПромЕлектроСервіс"
+                className="logo-left"
+                width={60}
+                height={60}
+              />
+            </picture>
+          </Link>
 
-      <div className="app-wrapper">
-        {/* 🔹 HEADER */}
-        <header className="site-header" role="banner">
-          <div className="header-container">
-            <Link to={`/${currentLang}/`} aria-label={t("nav.home")} className="logo-link">
-              <picture>
-                <source srcSet={logoWebp} type="image/webp" />
-                <img
-                  src={logoPng}
-                  alt="Логотип ПромЕлектроСервіс"
-                  className="logo-left"
-                  width={60}
-                  height={60}
-                  loading="eager"
-                  fetchpriority="high"
-                  decoding="async"
-                />
-              </picture>
-            </Link>
+          <div className="right-controls">
+            <nav aria-label="Main menu">
+              <ul className="nav-menu centered" role="menubar">
+                {navItems.map(({ path, label }) => {
+                  const toPath =
+                    path === "/" ? `/${currentLang}` : `/${currentLang}${path}`;
+                  const isActive =
+                    location.pathname === toPath ||
+                    (toPath === `/${currentLang}` &&
+                      location.pathname === `/${currentLang}/`);
+                  return (
+                    <li key={path} role="none">
+                      <Link
+                        to={toPath}
+                        className={isActive ? "active" : ""}
+                        aria-current={isActive ? "page" : undefined}
+                        role="menuitem"
+                      >
+                        {label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
 
-            <div className="right-controls">
-              <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
-                <ul className="nav-menu centered" role="menubar">
-                  {navItems.map(({ path, label }) => {
-                    const toPath = path === "/" ? `/${currentLang}` : `/${currentLang}${path}`;
-                    const isActive =
-                      location.pathname === toPath ||
-                      (toPath === `/${currentLang}` && location.pathname === `/${currentLang}/`);
-                    return (
-                      <li key={path} role="none">
-                        <Link
-                          to={toPath}
-                          className={isActive ? "active" : ""}
-                          aria-current={isActive ? "page" : undefined}
-                          role="menuitem"
-                        >
-                          {label}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
-
-              {/* 🔹 ТЕМНАЯ/СВЕТЛАЯ ТЕМА */}
-              <button
-                onClick={toggleTheme}
-                className="theme-toggle-btn"
-                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-              >
-                {isDarkMode ? <FaSun /> : <FaMoon />}
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {/* 🔹 MAIN */}
-        <main className="main-content" role="main" id="main-content" tabIndex={-1}>
-          <ErrorBoundary>
-            <Suspense
-              fallback={
-                <div className="loading-spinner" role="status" aria-live="polite">
-                  <div className="spinner" aria-hidden="true" />
-                  <p>{t("loading") || "Завантаження..."}</p>
-                </div>
+            {/* переключатель темы */}
+            <button
+              onClick={toggleTheme}
+              className="theme-toggle-btn"
+              aria-label={
+                isDarkMode ? "Светлая тема" : "Тёмная тема"
               }
             >
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/:lang" element={<HomePage />} />
-                <Route path="/:lang/portfolio" element={<PortfolioPage />} />
-                <Route path="/:lang/portfolio/:id" element={<ProjectDetailPage />} />
-                <Route path="/:lang/reviews" element={<ReviewsPage />} />
-                <Route path="/:lang/pricing" element={<PricingPage />} />
-                <Route path="/:lang/contacts" element={<ContactsPage />} />
-                <Route path="/admin" element={<AdminPanel enableExport />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </Suspense>
-          </ErrorBoundary>
-        </main>
-
-        {/* 🔹 FOOTER */}
-        <footer className="footer sticky-footer" role="contentinfo">
-          <div className="footer-top">
-            <a href="tel:+380666229776" className="footer-link" aria-label={t("phoneLabel") || "Телефон"}>
-              <span aria-hidden="true">📞</span> +380666229776
-            </a>
-            <a href="mailto:info@promelektroservice.com" className="footer-link" aria-label={t("emailLabel") || "Email"}>
-              <span aria-hidden="true">✉️</span> info@promelektroservice.com
-            </a>
+              {isDarkMode ? <FaSun /> : <FaMoon />}
+            </button>
           </div>
+        </div>
+      </header>
 
-          {/* 🔹 Соцмережі */}
-          <div className="social-links" role="group" aria-label="Соціальні мережі">
-            <a href="https://facebook.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link">
-              <FaFacebook />
-            </a>
-            <a href="https://instagram.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-link">
-              <FaInstagram />
-            </a>
-            <a href="https://twitter.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link">
-              <FaTwitter />
-            </a>
-            <a href="https://linkedin.com/company/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link">
-              <FaLinkedin />
-            </a>
-            <a href="https://youtube.com/@promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-link">
-              <FaYoutube />
-            </a>
-          </div>
+      {/* Main */}
+      <main className="main-content" id="main-content" tabIndex={-1}>
+        <ErrorBoundary>
+          <Suspense
+            fallback={
+              <div className="loading-spinner">
+                <div className="spinner" />
+                <p>{t("loading") || "Завантаження..."}</p>
+              </div>
+            }
+          >
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/:lang" element={<HomePage />} />
+              <Route path="/:lang/portfolio" element={<PortfolioPage />} />
+              <Route
+                path="/:lang/portfolio/:id"
+                element={<ProjectDetailPage />}
+              />
+              <Route path="/:lang/reviews" element={<ReviewsPage />} />
+              <Route path="/:lang/pricing" element={<PricingPage />} />
+              <Route path="/:lang/contacts" element={<ContactsPage />} />
+              <Route path="/admin" element={<AdminPanel enableExport />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
+      </main>
 
-          {/* 🔹 Переключатель мови */}
-          <div className="lang-switcher" role="group" aria-label={t("langSelectorLabel") || "Вибір мови"}>
-            {languages.map((lng) => {
-              const labels = { uk: "Українська", en: "English", ru: "Русский" };
-              const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
-              return (
-                <button
-                  key={lng}
-                  onClick={() => changeLanguage(lng)}
-                  title={labels[lng]}
-                  aria-label={labels[lng]}
-                  className={`lang-btn ${currentLang === lng ? "active" : ""}`}
-                >
-                  <span role="img" aria-hidden="true">{flags[lng]}</span> {labels[lng]}
-                </button>
-              );
-            })}
-          </div>
-        </footer>
-      </div>
+      {/* Footer */}
+      <footer className="footer" role="contentinfo">
+        <div className="footer-top">
+          <a href="tel:+380666229776" className="footer-link">
+            📞 +380666229776
+          </a>
+          <a href="mailto:info@promelektroservice.com" className="footer-link">
+            ✉️ info@promelektroservice.com
+          </a>
+        </div>
+
+        <div className="social-links">
+          <a href="https://facebook.com/promelektroservice" target="_blank">
+            <FaFacebook />
+          </a>
+          <a href="https://instagram.com/promelektroservice" target="_blank">
+            <FaInstagram />
+          </a>
+          <a href="https://twitter.com/promelektroservice" target="_blank">
+            <FaTwitter />
+          </a>
+          <a
+            href="https://linkedin.com/company/promelektroservice"
+            target="_blank"
+          >
+            <FaLinkedin />
+          </a>
+          <a href="https://youtube.com/@promelektroservice" target="_blank">
+            <FaYoutube />
+          </a>
+        </div>
+
+        {/* языки */}
+        <div className="lang-switcher">
+          {languages.map((lng) => {
+            const labels = { uk: "Українська", en: "English", ru: "Русский" };
+            const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
+            return (
+              <button
+                key={lng}
+                onClick={() => changeLanguage(lng)}
+                className={`lang-btn ${currentLang === lng ? "active" : ""}`}
+              >
+                {flags[lng]} {labels[lng]}
+              </button>
+            );
+          })}
+        </div>
+      </footer>
       <Analytics />
     </>
   );
