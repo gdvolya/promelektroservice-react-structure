@@ -82,6 +82,9 @@ main {
   padding: 0 !important;
   margin: 0 !important;
   color: #fff;
+
+  /* 🔹 Исправление белой полосы под шапкой */
+  margin-top: -90px;
 }
 
 .hero-background-img {
@@ -114,6 +117,9 @@ main {
   justify-content: center;
   text-align: center;
   z-index: 2;
+
+  /* 🔹 Исправление белой полосы под шапкой */
+  padding-top: 90px;
 }
 
 .hero-title,

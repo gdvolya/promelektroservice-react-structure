@@ -14,7 +14,7 @@ export default function HomePage() {
     ? location.pathname.split("/")[1]
     : "uk";
 
-  // Подстраиваем тему страницы под body
+  // Підлаштовуємо тему сторінки під body
   useEffect(() => {
     const observer = new MutationObserver(() => {
       if (document.body.classList.contains("dark-mode")) {
@@ -44,9 +44,9 @@ export default function HomePage() {
       </Helmet>
 
       <main className="home-page">
-        <div className="page-overlay"></div> {/* 🔹 Глобальное затемнение страницы */}
         
         <section className="hero" role="banner" aria-label={t('home.bannerAlt')}>
+          <div className="page-overlay"></div> {/* 🔹 Глобальное затемнение страницы */}
           <img
             src="/assets/background@2x.webp"
             alt=""

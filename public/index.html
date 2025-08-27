@@ -62,21 +62,26 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
-
+    
     <style>
       html {
         font-family: "Montserrat", sans-serif;
       }
-      /* Нові стилі для вирівнювання значків */
-      .icon-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap; /* Дозволяє значкам переноситися на новий рядок на маленьких екранах */
-        gap: 20px; /* Додає відстань між значками */
+      /* Стилі для розділу "Чому обирають нас" */
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        justify-items: center;
+        align-items: start;
       }
-      .icon-wrapper i {
-        font-size: 2.5rem; /* Встановлює фіксований розмір значків */
+      .benefits-grid-item {
+        text-align: center;
+        padding: 20px;
+      }
+      .benefits-grid-item i {
+        font-size: 3rem;
+        margin-bottom: 15px;
       }
     </style>
 
