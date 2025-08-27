@@ -1,30 +1,11 @@
+@import url('./variables.css');
+
 /* src/styles/AdminPanel.css */
-
-/* 🎨 Дизайн-токены */
-:root {
-  --color-primary: #007bff;
-  --color-primary-dark: #0056b3;
-  --color-danger: #dc3545;
-  --color-danger-dark: #c82333;
-  --color-success: #28a745;
-  --color-success-dark: #218838;
-  --color-warning: #ffc107;
-  --color-info: #17a2b8;
-  --color-text: #343a40;
-  --color-subtext: #6c757d;
-  --color-bg-light: #f8f9fa;
-  --color-bg-white: #ffffff;
-  --color-border: #e9ecef;
-  --font-family-base: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --border-radius-base: 8px;
-  --transition-base: all 0.3s ease;
-}
-
 body {
   font-family: var(--font-family-base);
   background-color: var(--color-bg-light);
   color: var(--color-text);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* 📋 Секция Админ-панели */
@@ -32,433 +13,226 @@ body {
   padding: 2rem 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-/* --- Заголовок --- */
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.admin-header h1 {
-  font-size: 2.25rem;
-  margin: 0;
-  color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.header-stats {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.header-stats p {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--color-subtext);
-}
-
-.logout-btn {
-  background-color: var(--color-danger);
-  color: var(--color-bg-white);
-  border: none;
-  padding: 0.6rem 1rem;
-  border-radius: var(--border-radius-base);
-  cursor: pointer;
   transition: var(--transition-base);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
-.logout-btn:hover {
-  background-color: var(--color-danger-dark);
+.admin-panel.dark-mode {
+  color: var(--color-text);
 }
 
-/* --- Форма входа --- */
-.admin-login {
+.admin-panel h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 2rem;
+  text-align: center;
+  transition: color 0.3s;
+}
+
+.admin-panel h1.dark-mode {
+  color: var(--color-primary);
+}
+
+/* 🔑 Секция аутентификации */
+.auth-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 80vh;
-  gap: 1.5rem;
-  background-color: var(--color-bg-white);
-  border-radius: var(--border-radius-base);
-  padding: 2rem;
-  box-shadow: var(--shadow-base);
-  max-width: 400px;
-  margin: 3rem auto;
+  height: 70vh;
 }
 
-.admin-login h2 {
-  font-size: 1.75rem;
+.auth-section h2 {
   color: var(--color-primary);
   margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
-.admin-login input[type="password"] {
-  padding: 0.75rem 1rem;
+.auth-section input {
+  padding: 0.75rem;
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-base);
+  font-size: 1rem;
   width: 100%;
   max-width: 300px;
-  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s;
+  background-color: var(--color-bg-white);
+  color: var(--color-text);
 }
 
-.admin-login button {
+.auth-section input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.auth-section button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius-base);
   background-color: var(--color-primary);
+  color: var(--color-bg-white);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.auth-section button:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+.error-message {
+  color: var(--color-danger);
+  margin-top: 1rem;
+}
+
+/* 📊 Статистика */
+.stats-card {
+  background-color: var(--color-bg-white);
+  padding: 2rem;
+  border-radius: var(--border-radius-base);
+  box-shadow: var(--shadow-base);
+  margin-bottom: 2rem;
+  text-align: center;
+  transition: var(--transition-base);
+}
+
+.stats-card p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--color-subtext);
+}
+
+.stats-card span {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.logout-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background-color: var(--color-danger);
   color: var(--color-bg-white);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: var(--border-radius-base);
   cursor: pointer;
   transition: var(--transition-base);
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
-.admin-login button:hover:not(:disabled) {
-  background-color: var(--color-primary-dark);
+.logout-btn:hover {
+  background-color: var(--color-danger-dark);
+  transform: translateY(-2px);
 }
 
-.admin-login button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.error-text {
-  color: var(--color-danger);
-  margin-top: 1rem;
-  font-weight: bold;
-  text-align: center;
-}
-
-/* --- Элементы управления --- */
-.admin-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.search-container {
-  flex-grow: 1;
-  min-width: 250px;
-}
-
-.search-input {
-  padding: 0.6rem 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-base);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.export-btn {
-  background-color: var(--color-success);
-  color: var(--color-bg-white);
-  border: none;
-  padding: 0.6rem 1rem;
-  border-radius: var(--border-radius-base);
-  cursor: pointer;
-  transition: var(--transition-base);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.export-btn:hover {
-  background-color: var(--color-success-dark);
-}
-
-.pagination-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.95rem;
-  color: var(--color-subtext);
-}
-
-.pagination-controls select {
-  padding: 0.3rem 0.5rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-base);
-  background-color: var(--color-bg-white);
-}
-
-/* --- Таблица --- */
+/* 📈 Таблица заявок */
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1.5rem;
-  box-shadow: var(--shadow-base);
+  margin-top: 2rem;
   background-color: var(--color-bg-white);
+  box-shadow: var(--shadow-base);
   border-radius: var(--border-radius-base);
   overflow: hidden;
+  transition: var(--transition-base);
+}
+
+.admin-table thead {
+  background-color: var(--color-primary);
+  color: var(--color-bg-white);
 }
 
 .admin-table th,
 .admin-table td {
-  border: 1px solid var(--color-border);
-  padding: 0.75rem 1rem;
+  padding: 1rem;
   text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
 }
 
 .admin-table th {
-  background-color: var(--color-bg-light);
   font-weight: bold;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.admin-table th:hover {
-  background-color: #e9ecef;
-}
-
-.admin-table th svg {
-  vertical-align: middle;
-  margin-left: 0.25rem;
-}
-
-.admin-table tbody tr:nth-child(even) {
-  background-color: #f7f7f7;
 }
 
 .admin-table tbody tr:hover {
-  background-color: #f1f3f5;
+  background-color: var(--color-bg-light);
 }
 
-.message-cell {
-  max-width: 250px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-}
+.status-new { color: #f0ad4e; }
+.status-in-progress { color: #5bc0de; }
+.status-done { color: #5cb85c; }
 
-/* --- Статусы --- */
 .status-select {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid;
+  border: 1px solid var(--color-border);
   border-radius: var(--border-radius-base);
+  padding: 0.3rem;
+  font-size: 0.9rem;
+  cursor: pointer;
   background-color: var(--color-bg-white);
+  color: var(--color-text);
+}
+
+/* 🗑️ Кнопки действий */
+.action-btn {
+  background: none;
+  border: none;
   cursor: pointer;
-  font-weight: bold;
-  min-width: 120px;
-  text-align: center;
-  transition: var(--transition-base);
-}
-
-.status-new {
-  color: var(--color-warning);
-  border-color: var(--color-warning);
-}
-
-.status-in-progress {
-  color: var(--color-info);
-  border-color: var(--color-info);
-}
-
-.status-done {
-  color: var(--color-success);
-  border-color: var(--color-success);
-}
-
-/* --- Статус в модалке --- */
-.submission-status {
-  display: inline-block;
-  padding: 0.4rem 0.75rem;
-  border-radius: var(--border-radius-base);
-  font-weight: bold;
+  font-size: 1rem;
   margin-left: 0.5rem;
-}
-
-.submission-status.status-new {
-  color: var(--color-warning);
-  border: 1px solid var(--color-warning);
-}
-
-.submission-status.status-in-progress {
-  color: var(--color-info);
-  border: 1px solid var(--color-info);
-}
-
-.submission-status.status-done {
-  color: var(--color-success);
-  border: 1px solid var(--color-success);
-}
-
-/* --- Кнопка удаления --- */
-.delete-btn {
-  background-color: var(--color-danger);
-  color: var(--color-bg-white);
-  border: none;
-  padding: 0.6rem;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: var(--transition-base);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.delete-btn:hover {
-  background-color: var(--color-danger-dark);
-  transform: scale(1.1);
-}
-
-/* --- Пагинация --- */
-.pagination {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.pagination button {
-  background-color: var(--color-primary);
-  color: var(--color-bg-white);
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius-base);
-  cursor: pointer;
-  transition: var(--transition-base);
-}
-
-.pagination button:hover:not(:disabled) {
-  background-color: var(--color-primary-dark);
-}
-
-.pagination button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.pagination span {
-  font-weight: bold;
+  transition: color 0.3s ease;
   color: var(--color-subtext);
 }
 
-/* --- Состояния --- */
-.loading-spinner,
-.no-data,
-.error-text {
-  text-align: center;
-  padding: 1.5rem;
-  font-size: 1.1rem;
-  color: var(--color-subtext);
+.action-btn:hover {
+  color: var(--color-text);
 }
 
-.no-data {
-  font-style: italic;
-}
+.admin-view-btn { color: var(--color-info); }
+.admin-delete-btn { color: var(--color-danger); }
 
-.error-text {
-  color: var(--color-danger);
-  font-weight: bold;
-}
-
-/* --- Модальные окна --- */
-.submission-details {
-  text-align: left;
-  line-height: 1.6;
-}
-
-.submission-details p {
-  margin-bottom: 0.5rem;
-  word-wrap: break-word;
-}
-
-.submission-details strong {
-  color: var(--color-primary);
-}
-
-.submission-message {
-  margin-top: 1.5rem;
-  font-weight: bold;
-}
-
-.extra-links {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.report-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.25rem;
-  background-color: #6f42c1;
+/* Кнопки сортировки (иконки) */
+.sort-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 5px;
+  transition: color 0.3s ease;
   color: var(--color-bg-white);
-  text-decoration: none;
-  border-radius: var(--border-radius-base);
-  transition: var(--transition-base);
 }
 
-.report-link:hover {
-  background-color: #5f35af;
+.sort-btn:hover {
+  color: #e0e0e0;
 }
 
-/* 📱 Адаптивность */
+.sort-btn.active {
+  color: #fff;
+}
+
+/* Мобильная адаптация */
 @media (max-width: 768px) {
-  .admin-header,
-  .admin-controls {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-  }
-  .header-stats {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
-  }
-  .search-container {
-    width: 100%;
+  .admin-panel {
+    padding: 1rem;
   }
   .admin-table {
-    font-size: 0.9rem;
+    font-size: 0.9em;
   }
-  .admin-table th,
-  .admin-table td {
+
+  .admin-table th, .admin-table td {
     padding: 0.75rem;
   }
-  .message-cell {
-    max-width: 100%;
-    white-space: normal;
-  }
-  .pagination {
-    justify-content: center;
+  .logout-btn {
+    position: static;
+    margin-top: 1rem;
   }
 }
 
-/* Улучшение читабельности таблицы на мобильных устройствах */
 @media (max-width: 600px) {
-  .admin-table thead {
-    display: none;
-  }
-  .admin-table,
-  .admin-table tbody,
-  .admin-table tr,
-  .admin-table td {
+  .admin-table thead { display: none; }
+  .admin-table, .admin-table tbody, .admin-table tr, .admin-table td {
     display: block;
     width: 100%;
   }
@@ -484,28 +258,55 @@ body {
     font-weight: bold;
     color: var(--color-primary);
   }
-  .admin-table td:nth-child(1)::before {
-    content: "Имя";
-  }
-  .admin-table td:nth-child(2)::before {
-    content: "Email";
-  }
-  .admin-table td:nth-child(3)::before {
-    content: "Телефон";
-  }
-  .admin-table td:nth-child(4)::before {
-    content: "Сообщение";
-  }
-  .admin-table td:nth-child(5)::before {
-    content: "Статус";
-  }
-  .admin-table td:nth-child(6)::before {
-    content: "Дата";
-  }
-  .admin-table td:nth-child(7)::before {
-    content: "Действия";
-  }
-  .admin-table .message-cell {
-    white-space: normal;
-  }
+  .action-btn { margin-left: 0; }
+}
+
+/* Стили для модальных окон в админке */
+.submission-details {
+  text-align: left;
+  line-height: 1.6;
+}
+
+.submission-details p {
+  margin: 0.5rem 0;
+  color: var(--color-text);
+}
+
+.submission-details p strong {
+  color: var(--color-primary);
+}
+
+.submission-message {
+  margin-top: 1.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+.submission-status {
+  font-weight: bold;
+}
+
+.submission-status.status-new { color: #f0ad4e; }
+.submission-status.status-in-progress { color: #5bc0de; }
+.submission-status.status-done { color: #5cb85c; }
+
+.extra-links {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.report-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.report-link:hover {
+  background-color: #555;
 }

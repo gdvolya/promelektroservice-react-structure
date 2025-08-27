@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import AOS from "aos";
@@ -16,59 +16,58 @@ const ReviewsPage = () => {
   const [feedback, setFeedback] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [submitError, setSubmitError] = useState(null);
+
+  const fetchReviews = useCallback(async () => {
+    setLoading(true);
+    const reviewsCollectionRef = collection(db, "reviews");
+    const q = query(reviewsCollectionRef, orderBy("createdAt", "desc"));
+    
+    try {
+      const querySnapshot = await getDocs(q);
+      const fetchedReviews = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setReviews(fetchedReviews);
+    } catch (error) {
+      console.error("Ошибка при получении отзывов:", error);
+      setSubmitError("Не удалось загрузить отзывы. Попробуйте обновить страницу.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     AOS.init({ once: true, duration: 600 });
-    
-    const fetchReviews = async () => {
-      setLoading(true);
-      const reviewsCollectionRef = collection(db, "reviews");
-      const q = query(reviewsCollectionRef, orderBy("createdAt", "desc"));
-      
-      try {
-        const querySnapshot = await getDocs(q);
-        const fetchedReviews = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setReviews(fetchedReviews);
-      } catch (error) {
-        console.error("Ошибка при получении отзывов: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchReviews();
-  }, []);
+  }, [fetchReviews]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (feedback.trim()) {
-      try {
-        const reviewsCollectionRef = collection(db, "reviews");
-        const docRef = await addDoc(reviewsCollectionRef, {
-          name: userName || t("reviews.anonymous"),
-          content: feedback.trim(),
-          createdAt: serverTimestamp(),
-        });
+    setSubmitted(false);
+    setSubmitError(null);
 
-        const newReview = {
-          id: docRef.id,
-          name: userName || t("reviews.anonymous"),
-          content: feedback.trim(),
-          createdAt: new Date(),
-        };
-        setReviews(prev => [newReview, ...prev]);
+    if (!feedback.trim()) {
+      setSubmitError("Пожалуйста, напишите что-нибудь, чтобы отправить отзыв.");
+      return;
+    }
 
-        setSubmitted(true);
-        setUserName("");
-        setUserEmail("");
-        setFeedback("");
-        setTimeout(() => setSubmitted(false), 3000);
-      } catch (error) {
-        console.error("Ошибка при добавлении отзыва: ", error);
-      }
+    try {
+      await addDoc(collection(db, "reviews"), {
+        name: userName || "Аноним",
+        email: userEmail,
+        content: feedback,
+        createdAt: serverTimestamp(),
+      });
+      setSubmitted(true);
+      setUserName("");
+      setUserEmail("");
+      setFeedback("");
+      fetchReviews();
+    } catch (error) {
+      console.error("Ошибка при отправке отзыва:", error);
+      setSubmitError("Не удалось отправить отзыв. Попробуйте еще раз.");
     }
   };
 
@@ -79,24 +78,22 @@ const ReviewsPage = () => {
         <meta name="description" content={t("meta.reviewsDescription")} />
       </Helmet>
 
-      <h1 data-aos="fade-up">{t("reviews.heading")}</h1>
-      
+      <h1 data-aos="fade-up">{t("reviews.title")}</h1>
+
       {loading ? (
-        <p className="loading-message">Завантаження відгуків...</p>
+        <div className="loading-spinner">{t("loading")}</div>
       ) : (
-        <section className="reviews-grid">
+        <section className="reviews-list" data-aos="fade-up">
+          <h2>{t("reviews.listTitle")}</h2>
           {reviews.length > 0 ? reviews.map((review) => (
-            <div
-              className="review-card"
-              key={review.id}
-              data-aos="fade-up"
-            >
+            <div key={review.id} className="review-item">
               <div className="review-content">“{review.content}”</div>
               <div className="review-author">— {review.name}</div>
             </div>
           )) : (
             <p className="no-reviews-message">Наразі відгуків немає. Будьте першим!</p>
           )}
+          {submitError && <p className="error-msg">{submitError}</p>}
         </section>
       )}
 
@@ -109,14 +106,12 @@ const ReviewsPage = () => {
             placeholder={t("reviews.namePlaceholder")}
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            required
           />
           <input
             type="email"
             placeholder={t("reviews.emailPlaceholder")}
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
-            required
           />
           <textarea
             placeholder={t("reviews.messagePlaceholder")}

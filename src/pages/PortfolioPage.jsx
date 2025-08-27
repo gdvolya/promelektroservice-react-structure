@@ -62,7 +62,7 @@ const PortfolioPage = () => {
               height="auto"
             />
             <div className="card-content">
-              <h2>{t(`${project.key}.title`)}</h2>
+              <h3>{t(`${project.key}.title`)}</h3>
               <p>{t(`${project.key}.description`)}</p>
             </div>
           </Link>
