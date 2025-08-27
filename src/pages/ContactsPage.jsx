@@ -139,37 +139,49 @@ const ContactsPage = () => {
           <section className="contact-form-section" data-aos="fade-left" data-aos-delay="200">
             <h2 className="section-title">{t("contacts.formTitle")}</h2>
             <form className="contact-form" onSubmit={handleSubmit} ref={formRef}>
+              <label htmlFor="name" className="visually-hidden">{t("contacts.namePlaceholder")}</label>
               <input
                 type="text"
+                id="name"
                 name="name"
                 placeholder={t("contacts.namePlaceholder")}
                 value={formData.name}
                 onChange={handleChange}
                 required
+                autoComplete="name"
               />
+              <label htmlFor="email" className="visually-hidden">{t("contacts.emailPlaceholder")}</label>
               <input
                 type="email"
+                id="email"
                 name="email"
                 placeholder={t("contacts.emailPlaceholder")}
                 value={formData.email}
                 onChange={handleChange}
                 required
+                autoComplete="email"
               />
+              <label htmlFor="phone" className="visually-hidden">{t("contacts.phonePlaceholder")}</label>
               <input
                 type="tel"
+                id="phone"
                 name="phone"
                 placeholder={t("contacts.phonePlaceholder")}
                 value={formData.phone}
                 onChange={handleChange}
                 required
+                autoComplete="tel"
               />
+              <label htmlFor="message" className="visually-hidden">{t("contacts.messagePlaceholder")}</label>
               <textarea
+                id="message"
                 name="message"
                 placeholder={t("contacts.messagePlaceholder")}
                 value={formData.message}
                 onChange={handleChange}
                 rows="5"
                 required
+                autoComplete="off"
               ></textarea>
               <button type="submit" disabled={loading}>
                 {loading ? <FaSpinner className="spinner" /> : t("contacts.sendBtn")}
