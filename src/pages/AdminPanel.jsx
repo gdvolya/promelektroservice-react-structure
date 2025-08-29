@@ -22,7 +22,6 @@ import {
 import "../styles/AdminPanel.css";
 import Modal from "./Modal";
 
-// ✅ Опции статусов с иконками и классами
 const statusOptions = {
   new: { label: "🟡 Новая", className: "status-new" },
   "in-progress": { label: "🔵 В обработке", className: "status-in-progress" },
@@ -57,7 +56,6 @@ const AdminPanel = ({ enableExport = true }) => {
     return date.toLocaleString("uk-UA");
   }, []);
 
-  // 🔐 Авторизация по паролю
   const handleLogin = useCallback(() => {
     const adminPass = process.env.REACT_APP_ADMIN_PASS;
 
@@ -90,7 +88,6 @@ const AdminPanel = ({ enableExport = true }) => {
     [handleLogin]
   );
 
-  // 🔄 Загрузка данных
   useEffect(() => {
     if (!authenticated) {
       setLoading(false);
@@ -116,8 +113,6 @@ const AdminPanel = ({ enableExport = true }) => {
         dbRef.current = loadedDb;
         const db = dbRef.current;
 
-        // ✅ ИСПРАВЛЕНО: Сортировка поcreatedAt по умолчанию, но если
-        // данных нет, можно отсортировать по имени, чтобы таблица не была пустой.
         const effectiveSortKey = sortConfig.key || "createdAt";
         const effectiveSortDirection =
           sortConfig.direction === "ascending" ? "asc" : "desc";
@@ -133,12 +128,8 @@ const AdminPanel = ({ enableExport = true }) => {
             const fetchedSubmissions = snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
-              // Убедимся, что createdAt всегда есть для сортировки
               createdAt: doc.data().createdAt || null,
             }));
-            
-            // ✅ ОТЛАДКА: Выводим данные в консоль. Проверьте её.
-            console.log("Fetched submissions:", fetchedSubmissions);
 
             setSubmissions(fetchedSubmissions);
             setLoading(false);
@@ -174,7 +165,6 @@ const AdminPanel = ({ enableExport = true }) => {
     };
   }, [authenticated, sortConfig]);
 
-  // 🗑 Удаление
   const handleDelete = useCallback((id) => {
     setSubmissionToDelete(id);
     setShowDeleteModal(true);
@@ -184,7 +174,6 @@ const AdminPanel = ({ enableExport = true }) => {
     const db = dbRef.current;
     if (!db || !submissionToDelete) return;
     try {
-      // ✅ ОБНОВЛЕНО: Удаляем из коллекции "requests"
       await deleteDoc(doc(db, "requests", submissionToDelete));
       setShowDeleteModal(false);
       setSubmissionToDelete(null);
@@ -194,12 +183,10 @@ const AdminPanel = ({ enableExport = true }) => {
     }
   }, [submissionToDelete]);
 
-  // ✏️ Обновление статуса
   const handleUpdateStatus = useCallback(async (id, newStatus) => {
     const db = dbRef.current;
     if (!db) return;
     try {
-      // ✅ ОБНОВЛЕНО: Обновляем в коллекции "requests"
       await updateDoc(doc(db, "requests", id), {
         status: newStatus,
       });
@@ -209,7 +196,6 @@ const AdminPanel = ({ enableExport = true }) => {
     }
   }, []);
 
-  // 🔽 Сортировка
   const handleSort = useCallback((key) => {
     setSortConfig((prevConfig) => ({
       key,
@@ -234,13 +220,11 @@ const AdminPanel = ({ enableExport = true }) => {
     [sortConfig]
   );
 
-  // 📄 Модалка с деталями
   const handleRowClick = useCallback((submission) => {
     setSubmissionDetails(submission);
     setShowDetailsModal(true);
   }, []);
 
-  // 📤 Экспорт в Excel
   const exportToExcel = useCallback(() => {
     const dataToExport = submissions.map(({ id, createdAt, ...rest }) => ({
       ...rest,
@@ -252,7 +236,6 @@ const AdminPanel = ({ enableExport = true }) => {
     XLSX.writeFile(book, "submissions.xlsx");
   }, [submissions, formatFirestoreTimestamp]);
 
-  // 🔍 Поиск
   const filteredSubmissions = submissions.filter(
     ({ name, email, phone, message }) =>
       name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -261,14 +244,12 @@ const AdminPanel = ({ enableExport = true }) => {
       message?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // 📑 Пагинация
   const totalPages = Math.ceil(filteredSubmissions.length / itemsPerPage);
   const currentSubmissions = filteredSubmissions.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // --- Экран входа ---
   if (!authenticated) {
     return (
       <main className="admin-login">
@@ -276,8 +257,13 @@ const AdminPanel = ({ enableExport = true }) => {
           <title>Вход в админ-панель — ПромЕлектроСервіс</title>
         </Helmet>
         <h2>🔐 Вход в админ-панель</h2>
+        <label htmlFor="adminPassword" className="visually-hidden">
+          Пароль администратора
+        </label>
         <input
           type="password"
+          id="adminPassword"
+          name="adminPassword"
           placeholder="Введите пароль администратора"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -292,7 +278,6 @@ const AdminPanel = ({ enableExport = true }) => {
     );
   }
 
-  // --- Основная панель ---
   return (
     <main className="admin-panel">
       <Helmet>
@@ -312,11 +297,15 @@ const AdminPanel = ({ enableExport = true }) => {
         </div>
       </header>
 
-      {/* Панель управления */}
       <div className="admin-controls">
         <div className="search-container">
+          <label htmlFor="searchInput" className="visually-hidden">
+            Поиск по заявкам
+          </label>
           <input
             type="text"
+            id="searchInput"
+            name="searchInput"
             placeholder="🔎 Поиск по заявкам..."
             value={searchTerm}
             onChange={(e) => {
@@ -330,6 +319,7 @@ const AdminPanel = ({ enableExport = true }) => {
           <label htmlFor="itemsPerPage">Заявок на странице:</label>
           <select
             id="itemsPerPage"
+            name="itemsPerPage"
             value={itemsPerPage}
             onChange={(e) => {
               setItemsPerPage(Number(e.target.value));
@@ -349,7 +339,6 @@ const AdminPanel = ({ enableExport = true }) => {
         )}
       </div>
 
-      {/* Таблица */}
       {loading && <p className="loading-spinner">⏳ Загрузка данных...</p>}
       {error && <p className="error-text">{error}</p>}
 
@@ -399,6 +388,7 @@ const AdminPanel = ({ enableExport = true }) => {
                     </td>
                     <td>
                       <select
+                        name="status"
                         value={status}
                         onChange={(e) => handleUpdateStatus(id, e.target.value)}
                         className={`status-select ${statusOptions[status]?.className}`}
@@ -425,7 +415,6 @@ const AdminPanel = ({ enableExport = true }) => {
             </tbody>
           </table>
 
-          {/* Пагинация */}
           <div className="pagination">
             <button
               onClick={() => setCurrentPage((prev) => prev - 1)}
@@ -446,7 +435,6 @@ const AdminPanel = ({ enableExport = true }) => {
         </>
       )}
 
-      {/* Модалки */}
       {showDeleteModal && (
         <Modal
           title="Подтверждение удаления"
@@ -478,7 +466,6 @@ const AdminPanel = ({ enableExport = true }) => {
         </Modal>
       )}
 
-      {/* Ссылка на Lighthouse */}
       <div className="extra-links">
         <a
           href="/report/index.html"
