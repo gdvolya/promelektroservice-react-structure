@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { doc, getDoc, updateDoc, addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  setDoc,
+  addDoc,
+  collection,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../firebaseLazy";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaSpinner } from "react-icons/fa";
 import "../styles/ContactsPage.css";
@@ -47,10 +55,10 @@ const ContactsPage = () => {
 
       if (docSnap.exists()) {
         await updateDoc(docRef, {
-          count: docSnap.data().count + 1,
+          count: (docSnap.data().count || 0) + 1,
         });
       } else {
-        await updateDoc(docRef, {
+        await setDoc(docRef, {
           count: 1,
         });
       }
@@ -102,22 +110,23 @@ const ContactsPage = () => {
     <>
       <Helmet>
         <title>{t("meta.contactsTitle")}</title>
-        <meta
-          name="description"
-          content={t("meta.contactsDescription")}
-        />
-        <meta
-          name="keywords"
-          content={t("contactsPage.metaKeywords")}
-        />
+        <meta name="description" content={t("meta.contactsDescription")} />
+        <meta name="keywords" content={t("contactsPage.metaKeywords")} />
       </Helmet>
 
       <div className="contacts-page">
         <h1 data-aos="fade-up">{t("contacts.heading")}</h1>
-        <p data-aos="fade-up" data-aos-delay="100">{t("contacts.description")}</p>
+        <p data-aos="fade-up" data-aos-delay="100">
+          {t("contacts.description")}
+        </p>
 
         <div className="contacts-content">
-          <section className="contact-info" data-aos="fade-right" data-aos-delay="200">
+          {/* Инфо */}
+          <section
+            className="contact-info"
+            data-aos="fade-right"
+            data-aos-delay="200"
+          >
             <h2 className="section-title">{t("contacts.detailsTitle")}</h2>
             {contacts.map((item, index) => (
               <div key={index} className="info-item">
@@ -136,46 +145,70 @@ const ContactsPage = () => {
             ))}
           </section>
 
-          <section className="contact-form-section" data-aos="fade-left" data-aos-delay="200">
+          {/* Форма */}
+          <section
+            className="contact-form-section"
+            data-aos="fade-left"
+            data-aos-delay="200"
+          >
             <h2 className="section-title">{t("contacts.formTitle")}</h2>
-            <form className="contact-form" onSubmit={handleSubmit} ref={formRef}>
-              <label htmlFor="name" className="visually-hidden">{t("contacts.namePlaceholder")}</label>
+            <form
+              className="contact-form"
+              onSubmit={handleSubmit}
+              ref={formRef}
+            >
+              <label htmlFor="name" className="visually-hidden">
+                {t("contacts.namePlaceholder")}
+              </label>
               <input
                 type="text"
                 id="name"
                 name="name"
+                aria-label={t("contacts.namePlaceholder")}
                 placeholder={t("contacts.namePlaceholder")}
                 value={formData.name}
                 onChange={handleChange}
                 required
                 autoComplete="name"
               />
-              <label htmlFor="email" className="visually-hidden">{t("contacts.emailPlaceholder")}</label>
+
+              <label htmlFor="email" className="visually-hidden">
+                {t("contacts.emailPlaceholder")}
+              </label>
               <input
                 type="email"
                 id="email"
                 name="email"
+                aria-label={t("contacts.emailPlaceholder")}
                 placeholder={t("contacts.emailPlaceholder")}
                 value={formData.email}
                 onChange={handleChange}
                 required
                 autoComplete="email"
               />
-              <label htmlFor="phone" className="visually-hidden">{t("contacts.phonePlaceholder")}</label>
+
+              <label htmlFor="phone" className="visually-hidden">
+                {t("contacts.phonePlaceholder")}
+              </label>
               <input
                 type="tel"
                 id="phone"
                 name="phone"
+                aria-label={t("contacts.phonePlaceholder")}
                 placeholder={t("contacts.phonePlaceholder")}
                 value={formData.phone}
                 onChange={handleChange}
                 required
                 autoComplete="tel"
               />
-              <label htmlFor="message" className="visually-hidden">{t("contacts.messagePlaceholder")}</label>
+
+              <label htmlFor="message" className="visually-hidden">
+                {t("contacts.messagePlaceholder")}
+              </label>
               <textarea
                 id="message"
                 name="message"
+                aria-label={t("contacts.messagePlaceholder")}
                 placeholder={t("contacts.messagePlaceholder")}
                 value={formData.message}
                 onChange={handleChange}
@@ -183,10 +216,16 @@ const ContactsPage = () => {
                 required
                 autoComplete="off"
               ></textarea>
-              <button type="submit" disabled={loading}>
+
+              <button
+                type="submit"
+                disabled={loading}
+                aria-label={t("contacts.sendBtn")}
+              >
                 {loading ? <FaSpinner className="spinner" /> : t("contacts.sendBtn")}
               </button>
             </form>
+
             {status === "success" && (
               <p className="status-message success-message">
                 {t("contacts.successMsg")}
@@ -200,7 +239,12 @@ const ContactsPage = () => {
           </section>
         </div>
 
-        <section className="map-section" data-aos="fade-up" data-aos-delay="300">
+        {/* Карта */}
+        <section
+          className="map-section"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
           <h2 className="section-title">{t("contacts.mapTitle")}</h2>
           <div className="map-container">
             <iframe
