@@ -36,14 +36,32 @@ const ContactsPage = () => {
     {
       icon: <FaMapMarkerAlt className="icon" />,
       title: t("contacts.addressLabel"),
-      details: ["г. Киев"],
-      link: "https://www.google.com/maps/place/Киев/@50.401699,30.252511,10z",
+      details: [t("contacts.address")],
     },
   ];
 
+  const incrementViewCount = async () => {
+    try {
+      const docRef = doc(db, "views", "home");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        await updateDoc(docRef, {
+          count: docSnap.data().count + 1,
+        });
+      } else {
+        await updateDoc(docRef, {
+          count: 1,
+        });
+      }
+    } catch (e) {
+      console.error("Error updating view count: ", e);
+    }
+  };
+
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
-    AOS.refresh();
+    AOS.init({ once: true, duration: 600 });
+    incrementViewCount();
   }, []);
 
   const handleChange = (e) => {
@@ -59,35 +77,21 @@ const ContactsPage = () => {
     setLoading(true);
 
     try {
-      const formSubmissionRef = doc(db, "formSubmissions", "submissionCount");
-      const docSnap = await getDoc(formSubmissionRef);
-
-      let newCount = 1;
-      if (docSnap.exists()) {
-        const currentCount = docSnap.data().count;
-        newCount = currentCount + 1;
-        await updateDoc(formSubmissionRef, { count: newCount });
-      } else {
-        await setDoc(formSubmissionRef, { count: newCount });
-      }
-
-      const submissionData = {
+      await addDoc(collection(db, "requests"), {
         ...formData,
-        timestamp: serverTimestamp(),
-        submissionNumber: newCount,
-      };
+        status: "new",
+        createdAt: serverTimestamp(),
+      });
 
-      await addDoc(collection(db, "submissions"), submissionData);
-
+      setStatus("success");
       setFormData({
         name: "",
         email: "",
         phone: "",
         message: "",
       });
-      setStatus("success");
     } catch (error) {
-      console.error("Error submitting form: ", error);
+      console.error("Error adding document: ", error);
       setStatus("error");
     } finally {
       setLoading(false);
@@ -95,111 +99,120 @@ const ContactsPage = () => {
   };
 
   return (
-    <div className="contacts-page">
+    <>
       <Helmet>
-        <title>{t("seo.contactsTitle")}</title>
-        <meta name="description" content={t("seo.contactsDescription")} />
-        <link rel="canonical" href={window.location.href} />
+        <title>{t("meta.contactsTitle")}</title>
+        <meta
+          name="description"
+          content={t("meta.contactsDescription")}
+        />
+        <meta
+          name="keywords"
+          content={t("contactsPage.metaKeywords")}
+        />
       </Helmet>
 
-      <div className="site-content-wrapper">
-        <main>
-          <section className="contacts-info-section">
-            <h1 className="section-title" data-aos="fade-up">
-              {t("contacts.pageTitle")}
-            </h1>
-            <p className="section-description" data-aos="fade-up" data-aos-delay="100">
-              {t("contacts.pageDescription")}
-            </p>
-            <div className="contacts-list">
-              {contacts.map((contact, index) => (
-                <div
-                  className="contact-card"
-                  key={index}
-                  data-aos="fade-up"
-                  data-aos-delay={150 + index * 100}
-                >
-                  <div className="icon-wrapper">{contact.icon}</div>
-                  <h3>{contact.title}</h3>
-                  {contact.details.map((detail, i) => (
-                    <a href={contact.link} key={i}>
-                      <p>{detail}</p>
+      <div className="contacts-page">
+        <h1 data-aos="fade-up">{t("contacts.heading")}</h1>
+        <p data-aos="fade-up" data-aos-delay="100">{t("contacts.description")}</p>
+
+        <div className="contacts-content">
+          <section className="contact-info" data-aos="fade-right" data-aos-delay="200">
+            <h2 className="section-title">{t("contacts.detailsTitle")}</h2>
+            {contacts.map((item, index) => (
+              <div key={index} className="info-item">
+                <span className="icon">{item.icon}</span>
+                <h3>{item.title}</h3>
+                {item.details.map((detail, i) =>
+                  item.link ? (
+                    <a key={i} href={item.link}>
+                      {detail}
                     </a>
-                  ))}
-                </div>
-              ))}
-            </div>
+                  ) : (
+                    <p key={i}>{detail}</p>
+                  )
+                )}
+              </div>
+            ))}
           </section>
 
-          <section className="contact-form-section" data-aos="fade-up">
+          <section className="contact-form-section" data-aos="fade-left" data-aos-delay="200">
             <h2 className="section-title">{t("contacts.formTitle")}</h2>
-            <p className="section-description">
-              {t("contacts.formDescription")}
-            </p>
-            <div className="contact-form-wrapper">
-              <form ref={formRef} onSubmit={handleSubmit} className="contact-form" name="contactForm">
-                <label htmlFor="name">{t("contacts.nameLabel")}</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder={t("contacts.nameLabel")}
-                  required
-                  autoComplete="name"
-                />
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Email"
-                  required
-                  autoComplete="email"
-                />
-                <label htmlFor="phone">{t("contacts.phoneLabel")}</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder={t("contacts.phoneLabel")}
-                  required
-                  autoComplete="tel"
-                />
-                <label htmlFor="message">{t("contacts.messageLabel")}</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder={t("contacts.messageLabel")}
-                  required
-                  autoComplete="off"
-                ></textarea>
-                <button type="submit" disabled={loading}>
-                  {loading ? <FaSpinner className="spinner" /> : t("contacts.sendBtn")}
-                </button>
-              </form>
-              {status === "success" && (
-                <p className="status-message success-message">
-                  {t("contacts.successMsg")}
-                </p>
-              )}
-              {status === "error" && (
-                <p className="status-message error-message">
-                  {t("contacts.errorMsg")}
-                </p>
-              )}
-            </div>
+            <form className="contact-form" onSubmit={handleSubmit} ref={formRef}>
+              <label htmlFor="name" className="visually-hidden">{t("contacts.namePlaceholder")}</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder={t("contacts.namePlaceholder")}
+                value={formData.name}
+                onChange={handleChange}
+                required
+                autoComplete="name"
+              />
+              <label htmlFor="email" className="visually-hidden">{t("contacts.emailPlaceholder")}</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder={t("contacts.emailPlaceholder")}
+                value={formData.email}
+                onChange={handleChange}
+                required
+                autoComplete="email"
+              />
+              <label htmlFor="phone" className="visually-hidden">{t("contacts.phonePlaceholder")}</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder={t("contacts.phonePlaceholder")}
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                autoComplete="tel"
+              />
+              <label htmlFor="message" className="visually-hidden">{t("contacts.messagePlaceholder")}</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder={t("contacts.messagePlaceholder")}
+                value={formData.message}
+                onChange={handleChange}
+                rows="5"
+                required
+                autoComplete="off"
+              ></textarea>
+              <button type="submit" disabled={loading}>
+                {loading ? <FaSpinner className="spinner" /> : t("contacts.sendBtn")}
+              </button>
+            </form>
+            {status === "success" && (
+              <p className="status-message success-message">
+                {t("contacts.successMsg")}
+              </p>
+            )}
+            {status === "error" && (
+              <p className="status-message error-message">
+                {t("contacts.errorMsg")}
+              </p>
+            )}
           </section>
-        </main>
+        </div>
+
+        <section className="map-section" data-aos="fade-up" data-aos-delay="300">
+          <h2 className="section-title">{t("contacts.mapTitle")}</h2>
+          <div className="map-container">
+            <iframe
+              title="Google Maps Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20309.845422830846!2d30.51866384288005!3d50.45012351239859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4ce256e297123%3A0xed4d59a59c727a8d!2z0LzQtdGA0YPRgdC60LDRjyDRg9C70L7QstC-0YDQvdC-0Lkg0L_QviDQmtGA0L7Qv9C-0YDQsCDQmtGA0L7RgdC60Lgg0JzQtdGA0L7QvNC10YI!5e0!3m2!1sru!2sua!4v1628178129590!5m2!1sru!2sua"
+              allowFullScreen=""
+              loading="lazy"
+            ></iframe>
+          </div>
+        </section>
       </div>
-    </div>
+    </>
   );
 };
 
