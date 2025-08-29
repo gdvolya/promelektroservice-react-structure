@@ -1,11 +1,11 @@
 /* ===============================
-   Hero
-   =============================== */
+  Hero
+  =============================== */
 .hero {
   position: relative;
   width: 100%;
   min-height: 100dvh;
-  aspect-ratio: 16 / 9; /* ✅ фиксируем пропорции */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -29,8 +29,8 @@
 }
 
 /* ===============================
-   Контент Hero
-   =============================== */
+  Контент Hero
+  =============================== */
 .hero-content {
   position: relative;
   max-width: 1200px;
@@ -67,8 +67,8 @@
 }
 
 /* ===============================
-   Кнопки
-   =============================== */
+  Кнопки
+  =============================== */
 .hero-buttons {
   display: flex;
   gap: 1rem;
@@ -105,11 +105,12 @@
 }
 
 /* ===============================
-   Features
-   =============================== */
+  Features
+  =============================== */
 .features {
   padding: 4rem 2rem;
   background-color: var(--bg-white);
+  text-align: center;
 }
 
 .features-title {
@@ -121,6 +122,9 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2rem;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .feature-card {
@@ -128,6 +132,7 @@
   padding: 2rem 1rem;
   border-radius: 10px;
   transition: transform 0.3s;
+  text-align: center;
 }
 
 .feature-card:hover {
