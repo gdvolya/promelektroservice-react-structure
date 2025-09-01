@@ -280,6 +280,12 @@ function AppContent() {
             <a href="https://youtube.com/@promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-link">
               <i className="fab fa-youtube"></i>
             </a>
+            <a href="https://t.me/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Telegram" className="social-link">
+              <i className="fab fa-telegram-plane"></i>
+            </a>
+            <a href="viber://chat?number=%2B380666229776" target="_blank" rel="noopener noreferrer" aria-label="Viber" className="social-link">
+              <i className="fab fa-viber"></i>
+            </a>
           </div>
 
           {/* 🔹 Переключатель языка */}
@@ -299,6 +305,11 @@ function AppContent() {
                 </button>
               );
             })}
+          </div>
+
+          {/* 🔹 Динамический год */}
+          <div className="footer-bottom">
+            <p>© {new Date().getFullYear()} ПромЕлектроСервіс. Всі права захищені.</p>
           </div>
         </footer>
       </div>
