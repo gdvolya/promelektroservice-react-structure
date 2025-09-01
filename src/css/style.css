@@ -138,64 +138,61 @@ a {
 
 /* 🔹 Header */
 .site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 30px;
-  flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--header-background);
-  box-shadow: var(--header-shadow);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.logo-left {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
-  transition: transform 0.3s ease;
-}
-.logo-left:hover { transform: scale(1.05); }
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
+  padding: 1rem 2rem;
+  background-color: var(--header-background-color);
+  box-shadow: var(--header-shadow);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
 }
 
-.right-controls {
+.header-top {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.nav-menu {
-  list-style: none;
+.logo {
+  flex-shrink: 0;
+  height: 60px;
+  width: auto;
+}
+
+/* 🔹 Nav */
+.main-nav {
   display: flex;
-  gap: 25px;
+  gap: 1rem;
   flex-wrap: wrap;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
 }
-.nav-menu li a {
-  color: var(--header-text-color);
+
+.nav-link {
+  color: var(--nav-link-color);
+  text-decoration: none;
   font-weight: 600;
-  padding: 8px 14px;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 6px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: all 0.3s ease;
 }
-.nav-menu li a:hover,
-.nav-menu li a.active,
-.nav-menu li a:focus {
+
+.nav-link:hover {
   background-color: var(--nav-link-hover-bg);
   color: var(--nav-link-hover-color);
   box-shadow: var(--nav-link-hover-shadow);
-  outline: none;
+}
+
+.nav-link.active {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 6px;
 }
 
 /* 🔹 Animations */
