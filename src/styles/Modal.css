@@ -1,21 +1,19 @@
 /* Общий фон модального окна */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-out; /* Анимация появления */
+  z-index: 9999; /* 🔹 всегда поверх всего */
+  animation: fadeIn 0.3s ease-out;
 }
 
 /* Контейнер модального окна */
 .modal-content {
-  background-color: white;
+  background-color: var(--card-background); /* 🔹 тема */
+  color: var(--text-color); /* 🔹 текст тоже зависит от темы */
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
@@ -27,29 +25,28 @@
   animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Заголовок модального окна */
+/* Заголовок */
 .modal-content h3 {
   margin-top: 0;
-  color: #003366;
+  color: var(--primary-color); /* 🔹 вместо хардкода */
   font-size: 1.5em;
   font-weight: bold;
 }
 
-/* Текст сообщения */
+/* Текст */
 .modal-content p {
   margin-bottom: 20px;
   line-height: 1.6;
-  color: #555;
+  color: var(--text-color);
 }
 
-/* Контейнер кнопок */
+/* Кнопки */
 .modal-buttons {
   display: flex;
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
 }
-
 .modal-buttons button {
   padding: 12px 25px;
   border: none;
@@ -60,22 +57,20 @@
   transition: all 0.2s ease;
 }
 
-/* Кнопка "Подтвердить" */
+/* Подтвердить */
 .confirm-btn {
-  background-color: #dc3545;
+  background-color: var(--admin-delete-bg);
   color: white;
 }
-
 .confirm-btn:hover {
-  background-color: #c82333;
+  background-color: var(--admin-delete-hover-bg);
 }
 
-/* Кнопка "Отмена/Закрыть" */
+/* Отмена */
 .cancel-btn {
-  background-color: #6c757d;
+  background-color: var(--secondary-color);
   color: white;
 }
-
 .cancel-btn:hover {
   background-color: #5a6268;
 }
@@ -85,7 +80,6 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 @keyframes scaleIn {
   from { transform: scale(0.8); }
   to { transform: scale(1); }
