@@ -132,9 +132,8 @@ a {
 }
 
 .main-content {
-  /* 🔹 Отступ, чтобы контент начинался ниже шапки */
   padding-top: 90px;
-  flex: 1; /* Зберігаємо старе правило для "липкого" футера */
+  flex: 1;
 }
 
 /* 🔹 Header */
@@ -197,18 +196,6 @@ a {
   color: var(--nav-link-hover-color);
   box-shadow: var(--nav-link-hover-shadow);
   outline: none;
-}
-
-/* 🔹 Hero */
-/* Все стили для .hero были перенесены в HomePage.css, чтобы избежать конфликтов */
-.hero {
-  /* Удалено */
-}
-.fancy-title {
-  /* Удалено */
-}
-.hero-subtitle {
-  /* Удалено */
 }
 
 /* 🔹 Animations */
@@ -353,27 +340,70 @@ a {
 }
 
 .social-link {
-  font-size: 1.5rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.4rem;
   color: var(--social-link-color);
   transition: color 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
 }
 
+/* Иконка внутри */
+.social-link i {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ripple эффект */
+.social-link::after {
+  content: "";
+  position: absolute;
+  width: 220%;
+  height: 220%;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.2);
+  opacity: 0;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  z-index: 1;
+}
+.social-link:active::after {
+  opacity: 0.35;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* 🔹 Hover-анимация */
 .social-link:hover,
 .social-link:focus {
-  transform: scale(1.2);
+  transform: scale(1.15);
   outline: none;
 }
 
 /* 🔹 Фирменные цвета для соцсетей */
-.social-link[aria-label="Facebook"]:hover { color: #1877f2; }   /* Синий FB */
-.social-link[aria-label="Instagram"]:hover { color: #e4405f; } /* Розовый IG */
-.social-link[aria-label="Twitter"]:hover { color: #1da1f2; }   /* Голубой X */
-.social-link[aria-label="LinkedIn"]:hover { color: #0a66c2; }  /* Синий LI */
-.social-link[aria-label="YouTube"]:hover { color: #ff0000; }   /* Красный YT */
-.social-link[aria-label="Telegram"]:hover { color: #0088cc; }  /* Голубой TG */
-.social-link[aria-label="Viber"]:hover { color: #7360f2; }     /* Фиолетовый VB */
+.social-link[aria-label="Facebook"]:hover { color: #1877f2; }
+.social-link[aria-label="Instagram"]:hover { color: #e4405f; }
+.social-link[aria-label="Twitter"]:hover { color: #1da1f2; }
+.social-link[aria-label="LinkedIn"]:hover { color: #0a66c2; }
+.social-link[aria-label="YouTube"]:hover { color: #ff0000; }
+.social-link[aria-label="Telegram"]:hover { color: #0088cc; }
+.social-link[aria-label="Viber"]:hover { color: #7360f2; }
 
-/* 🔹 Тёмная тема — перекрытие ВСЕГО */
+/* Ripple для каждой соцсети */
+.social-link[aria-label="Facebook"]::after { background: #1877f2; }
+.social-link[aria-label="Instagram"]::after { background: #e4405f; }
+.social-link[aria-label="Twitter"]::after { background: #1da1f2; }
+.social-link[aria-label="LinkedIn"]::after { background: #0a66c2; }
+.social-link[aria-label="YouTube"]::after { background: #ff0000; }
+.social-link[aria-label="Telegram"]::after { background: #0088cc; }
+.social-link[aria-label="Viber"]::after { background: #7360f2; }
+
+/* 🔹 Тёмная тема — перекрытие */
 .dark-mode,
 .dark-mode .app-wrapper,
 .dark-mode .main-content,
@@ -433,7 +463,7 @@ a {
   background-color: var(--admin-delete-hover-bg);
 }
 
-/* Кнопки сортировки (иконки) */
+/* Кнопки сортировки */
 .sort-btn {
   background: none;
   border: none;
@@ -463,7 +493,7 @@ a {
   transform: scale(1.1);
 }
 
-/* 🔹 Плавные переходы для текста и картинок */
+/* 🔹 Плавные переходы */
 body,
 .app-wrapper,
 .main-content,
@@ -484,14 +514,14 @@ img, .portfolio-img, .logo-left {
               transform 0.3s ease;
 }
 
-/* 🔹 Картинки в тёмной теме слегка затемняются */
+/* 🔹 Картинки в тёмной теме */
 .dark-mode img,
 .dark-mode .portfolio-img,
 .dark-mode .logo-left {
   filter: brightness(0.85) contrast(1.05);
 }
 
-/* 🔹 Текст плавно затемняется */
+/* 🔹 Текст затемняется */
 .dark-mode h1,
 .dark-mode h2,
 .dark-mode h3,
