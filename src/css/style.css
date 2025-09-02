@@ -58,6 +58,12 @@
   --admin-logout-bg: var(--admin-delete-bg);
   --admin-btn-text: white;
   --sort-btn-color: #a0aec0;
+
+  /* Feature Card Colors (Light Mode) */
+  --feature-card-bg: var(--bg-secondary);
+  --feature-card-text: var(--text-primary);
+  --feature-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --feature-card-border: 1px solid #e0e0e0;
 }
 
 /* 🔹 Dark Mode */
@@ -103,6 +109,12 @@
   --sort-btn-color: #a0aec0;
   --sort-btn-hover-color: #e2e8f0;
   --sort-btn-active-color: #4299e1;
+
+  /* Feature Card Colors (Dark Mode) */
+  --feature-card-bg: var(--bg-secondary); /* Используем bg-secondary из Dark Mode */
+  --feature-card-text: var(--text-primary); /* Используем text-primary из Dark Mode */
+  --feature-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --feature-card-border: 1px solid #4a5568;
 
   /* Image Filter for dark mode */
   img, .portfolio-img, .logo-left {
@@ -223,7 +235,7 @@ p, span, a, img, .portfolio-img, .logo-left {
 }
 
 .nav-menu li a {
-  color: var(--header-text-color); /* Note: This variable isn't defined in the provided code, but is used in the original. It's likely `var(--footer-text-color)`. I'll assume that for now. */
+  color: var(--footer-text-color); /* Note: This variable isn't defined in the provided code, but is used in the original. It's likely `var(--footer-text-color)`. I'll assume that for now. */
   font-weight: 600;
   padding: 8px 14px;
   border-radius: 6px;
@@ -235,9 +247,51 @@ p, span, a, img, .portfolio-img, .logo-left {
 .nav-menu li a:focus {
   background-color: var(--link-header-bg-hover);
   color: var(--link-header-text-hover);
-  box-shadow: var(--nav-link-hover-shadow); /* Note: This variable is defined in the original code, but not in the improved section. It's likely `0 0 10px rgba(224, 231, 255, 0.7)` in light mode and `0 0 10px rgba(74, 85, 104, 0.7)` in dark mode. */
+  box-shadow: 0 0 10px rgba(224, 231, 255, 0.7); /* Note: This variable is defined in the original code, but not in the improved section. It's likely `0 0 10px rgba(224, 231, 255, 0.7)` in light mode and `0 0 10px rgba(74, 85, 104, 0.7)` in dark mode. */
   outline: none;
 }
+
+/* 🔹 Features Section (including feature cards) */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background-color: var(--feature-card-bg); /* Используем переменную */
+  color: var(--feature-card-text); /* Используем переменную */
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: var(--feature-card-shadow); /* Используем переменную */
+  border: var(--feature-card-border); /* Используем переменную */
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card h3 {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary); /* Используем общую переменную для второстепенного текста */
+}
+
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
 
 /* 🔹 Portfolio */
 .portfolio-gallery {
@@ -285,7 +339,7 @@ p, span, a, img, .portfolio-img, .logo-left {
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: var(--focus-border-color); /* Note: This variable is defined in the original code but not the improved section. It's likely `#005599` in light mode and `#4299e1` in dark mode. */
+  border-color: var(--color-accent); /* Note: This variable is defined in the original code but not the improved section. It's likely `#005599` in light mode and `#4299e1` in dark mode. */
   box-shadow: var(--shadow-focus);
 }
 
@@ -383,7 +437,7 @@ p, span, a, img, .portfolio-img, .logo-left {
 .loading-spinner p {
   margin-top: 10px;
   font-size: 0.9rem;
-  color: var(--spinner-text-color);
+  color: var(--text-secondary); /* Используем общую переменную для второстепенного текста */
 }
 
 @keyframes spin {
