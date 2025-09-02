@@ -1,5 +1,19 @@
-import React, { Suspense, lazy, useEffect, useCallback, useMemo, useState } from "react";
-import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
+import React, {
+  Suspense,
+  lazy,
+  useEffect,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { Analytics } from "@vercel/analytics/react";
@@ -37,8 +51,7 @@ function AppContent() {
   });
 
   useEffect(() => {
-    document.body.classList.remove("light-mode", "dark-mode");
-    document.body.classList.add(isDarkMode ? "dark-mode" : "light-mode");
+    document.body.classList.toggle("dark-mode", isDarkMode);
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
@@ -174,7 +187,11 @@ function AppContent() {
         {/* 🔹 HEADER */}
         <header className="site-header" role="banner">
           <div className="header-container">
-            <Link to={`/${currentLang}/`} aria-label={t("nav.home")} className="logo-link">
+            <Link
+              to={`/${currentLang}/`}
+              aria-label={t("nav.home")}
+              className="logo-link"
+            >
               <picture>
                 <source srcSet={logoWebp} type="image/webp" />
                 <img
@@ -184,7 +201,7 @@ function AppContent() {
                   width={60}
                   height={60}
                   loading="eager"
-                  fetchpriority="high"
+                  fetchPriority="high"
                   decoding="async"
                 />
               </picture>
@@ -194,10 +211,12 @@ function AppContent() {
               <nav aria-label={t("nav.mainMenu") || "Головне меню"}>
                 <ul className="nav-menu centered" role="menubar">
                   {navItems.map(({ path, label }) => {
-                    const toPath = path === "/" ? `/${currentLang}` : `/${currentLang}${path}`;
+                    const toPath =
+                      path === "/" ? `/${currentLang}` : `/${currentLang}${path}`;
                     const isActive =
                       location.pathname === toPath ||
-                      (toPath === `/${currentLang}` && location.pathname === `/${currentLang}/`);
+                      (toPath === `/${currentLang}` &&
+                        location.pathname === `/${currentLang}/`);
                     return (
                       <li key={path} role="none">
                         <Link
@@ -218,7 +237,9 @@ function AppContent() {
               <button
                 onClick={toggleTheme}
                 className="theme-toggle-btn"
-                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                aria-label={
+                  isDarkMode ? "Switch to light mode" : "Switch to dark mode"
+                }
               >
                 {isDarkMode ? "☀️" : "🌙"}
               </button>
@@ -255,43 +276,101 @@ function AppContent() {
         {/* 🔹 FOOTER */}
         <footer className="footer sticky-footer" role="contentinfo">
           <div className="footer-top">
-            <a href="tel:+380666229776" className="footer-link" aria-label={t("phoneLabel") || "Телефон"}>
+            <a
+              href="tel:+380666229776"
+              className="footer-link"
+              aria-label={t("phoneLabel") || "Телефон"}
+            >
               <span aria-hidden="true">📞</span> +380666229776
             </a>
-            <a href="mailto:info@promelektroservice.com" className="footer-link" aria-label={t("emailLabel") || "Email"}>
+            <a
+              href="mailto:info@promelektroservice.com"
+              className="footer-link"
+              aria-label={t("emailLabel") || "Email"}
+            >
               <span aria-hidden="true">✉️</span> info@promelektroservice.com
             </a>
           </div>
 
           {/* 🔹 Соцсети */}
           <div className="social-links" role="group" aria-label="Соціальні мережі">
-            <a href="https://facebook.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link">
+            <a
+              href="https://facebook.com/promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="social-link"
+            >
               <i className="fab fa-facebook"></i>
             </a>
-            <a href="https://instagram.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-link">
+            <a
+              href="https://instagram.com/promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="social-link"
+            >
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="https://twitter.com/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link">
+            <a
+              href="https://twitter.com/promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="social-link"
+            >
               <i className="fab fa-twitter"></i>
             </a>
-            <a href="https://linkedin.com/company/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="social-link">
+            <a
+              href="https://linkedin.com/company/promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="social-link"
+            >
               <i className="fab fa-linkedin"></i>
             </a>
-            <a href="https://youtube.com/@promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-link">
+            <a
+              href="https://youtube.com/@promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="social-link"
+            >
               <i className="fab fa-youtube"></i>
             </a>
-            <a href="https://t.me/promelektroservice" target="_blank" rel="noopener noreferrer" aria-label="Telegram" className="social-link">
+            <a
+              href="https://t.me/promelektroservice"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Telegram"
+              className="social-link"
+            >
               <i className="fab fa-telegram-plane"></i>
             </a>
-            <a href="viber://chat?number=%2B380666229776" target="_blank" rel="noopener noreferrer" aria-label="Viber" className="social-link">
+            <a
+              href="viber://chat?number=%2B380666229776"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Viber"
+              className="social-link"
+            >
               <i className="fab fa-viber"></i>
             </a>
           </div>
 
           {/* 🔹 Переключатель языка */}
-          <div className="lang-switcher" role="group" aria-label={t("langSelectorLabel") || "Вибір мови"}>
+          <div
+            className="lang-switcher"
+            role="group"
+            aria-label={t("langSelectorLabel") || "Вибір мови"}
+          >
             {languages.map((lng) => {
-              const labels = { uk: "Українська", en: "English", ru: "Русский" };
+              const labels = {
+                uk: "Українська",
+                en: "English",
+                ru: "Русский",
+              };
               const flags = { uk: "🇺🇦", en: "🇬🇧", ru: "🇷🇺" };
               return (
                 <button
@@ -301,7 +380,10 @@ function AppContent() {
                   aria-label={labels[lng]}
                   className={`lang-btn ${currentLang === lng ? "active" : ""}`}
                 >
-                  <span role="img" aria-hidden="true">{flags[lng]}</span> {labels[lng]}
+                  <span role="img" aria-hidden="true">
+                    {flags[lng]}
+                  </span>{" "}
+                  {labels[lng]}
                 </button>
               );
             })}

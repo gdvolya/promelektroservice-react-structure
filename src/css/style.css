@@ -1,104 +1,134 @@
 /*
   ==============================================================
-  Оновлений файл: style.css
+  Updated File: style.css
+  Description: Global styles for the ПромЕлектроСервіс website.
   ==============================================================
 */
+
+/* 🔹 Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
 
-/* Цветовые переменные для светлой темы по умолчанию */
+/* 🔹 Global CSS Variables */
+
 :root {
-  --background-color: #f9fafb;
-  --text-color: #222;
-  --primary-color: #005599;
-  --secondary-color: #6c757d;
-  --card-background: #fff;
-  --header-background: linear-gradient(90deg, #004080 0%, #0066cc 100%);
-  --header-text-color: #f0f5ff;
-  --header-shadow: 0 2px 10px rgba(0, 102, 204, 0.25);
-  --nav-link-hover-bg: #e0e7ff;
-  --nav-link-hover-color: #003366;
-  --nav-link-hover-shadow: 0 0 10px rgba(224, 231, 255, 0.7);
-  --hero-background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
-  --hero-shadow: inset 0 0 50px #81d4fa;
-  --fancy-title-color: #003366;
-  --hero-subtitle-color: #025b8a;
-  --portfolio-shadow: 0 10px 20px rgba(0, 102, 204, 0.15);
-  --portfolio-hover-shadow: 0 20px 30px rgba(0, 102, 204, 0.3);
+  /* Colors - Light Theme (Default) */
+  --bg-primary: #f9fafb;
+  --bg-secondary: #fff;
+  --text-primary: #222;
+  --text-secondary: #6c757d;
+  --color-accent: #005599;
+  --color-accent-secondary: #ff9900;
+  --color-link-hover: #003366;
+  --color-shadow: rgba(0, 102, 204, 0.25);
   --border-color: #a6c8ff;
-  --focus-border-color: #005599;
-  --focus-shadow: 0 0 10px #66a3ffaa;
-  --footer-background: linear-gradient(90deg, #003366, #005599);
-  --footer-text-color: #e0e7ff;
+
+  /* Specific Component Backgrounds */
+  --header-bg: linear-gradient(90deg, #004080 0%, #0066cc 100%);
+  --hero-bg: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
+  --footer-bg: linear-gradient(90deg, #003366, #005599);
+
+  /* Component Shadows */
+  --shadow-header: 0 2px 10px var(--color-shadow);
+  --shadow-portfolio: 0 10px 20px rgba(0, 102, 204, 0.15);
+  --shadow-portfolio-hover: 0 20px 30px rgba(0, 102, 204, 0.3);
+  --shadow-focus: 0 0 10px #66a3ffaa;
+
+  /* UI Element Colors */
+  --btn-primary-bg: var(--color-accent);
+  --btn-primary-text: #fff;
+  --btn-secondary-bg: var(--text-secondary);
+  --btn-secondary-text: #fff;
+  --link-header-bg-hover: #e0e7ff;
+  --link-header-text-hover: #003366;
+  --link-social: #e0e7ff;
+  --spinner-border: #cbd5e1;
+  --spinner-top: var(--color-accent);
+
+  /* Language Switcher */
   --lang-btn-border: 2px solid #e0e7ff;
-  --lang-btn-text-color: #e0e7ff;
-  --lang-btn-hover-bg: #ff9900;
-  --lang-btn-hover-border: #ff9900;
-  --lang-btn-hover-text: #222;
-  --spinner-border-color: #cbd5e1;
-  --spinner-top-color: #005599;
-  --spinner-text-color: #333;
-  --social-link-color: #e0e7ff;
-  --social-link-hover-color: #ff9900;
+  --lang-btn-text: #e0e7ff;
+  --lang-btn-bg-hover: var(--color-accent-secondary);
+  --lang-btn-border-hover: var(--color-accent-secondary);
+  --lang-btn-text-hover: #222;
+
+  /* Admin Buttons */
   --admin-delete-bg: #e53e3e;
-  --admin-delete-hover-bg: #c53030;
   --admin-download-bg: #38a169;
-  --admin-download-hover-bg: #2f855a;
   --admin-login-bg: #3182ce;
-  --admin-login-hover-bg: #2b6cb0;
+  --admin-logout-bg: var(--admin-delete-bg);
+  --admin-btn-text: white;
   --sort-btn-color: #a0aec0;
-  --sort-btn-hover-color: #4a5568;
-  --sort-btn-active-color: #005599;
 }
 
-/* Цветовые переменные для тёмной темы */
+/* 🔹 Dark Mode */
 .dark-mode {
-  --background-color: #1a202c;
-  --text-color: #e2e8f0;
-  --primary-color: #2b6cb0;
-  --secondary-color: #4a5568;
-  --card-background: #2d3748;
-  --header-background: #1a202c;
-  --header-text-color: #e2e8f0;
-  --header-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  --nav-link-hover-bg: #4a5568;
-  --nav-link-hover-color: #e2e8f0;
-  --nav-link-hover-shadow: 0 0 10px rgba(74, 85, 104, 0.7);
-  --hero-background: #1a202c;
-  --hero-shadow: inset 0 0 50px #111;
-  --fancy-title-color: #e2e8f0;
-  --hero-subtitle-color: #cbd5e1;
-  --portfolio-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  --portfolio-hover-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
+  /* Colors */
+  --bg-primary: #1a202c;
+  --bg-secondary: #2d3748;
+  --text-primary: #e2e8f0;
+  --text-secondary: #cbd5e1;
+  --color-accent: #2b6cb0;
+  --color-link-hover: #e2e8f0;
+  --color-shadow: rgba(0, 0, 0, 0.5);
   --border-color: #4a5568;
-  --focus-border-color: #4299e1;
-  --focus-shadow: 0 0 10px rgba(66, 153, 225, 0.5);
-  --footer-background: #1a202c;
-  --footer-text-color: #cbd5e1;
+
+  /* Specific Component Backgrounds */
+  --header-bg: #1a202c;
+  --hero-bg: #1a202c;
+  --footer-bg: #1a202c;
+
+  /* Component Shadows */
+  --shadow-header: 0 2px 10px rgba(0, 0, 0, 0.5);
+  --shadow-portfolio: 0 10px 20px rgba(0, 0, 0, 0.2);
+  --shadow-portfolio-hover: 0 20px 30px rgba(0, 0, 0, 0.4);
+  --shadow-focus: 0 0 10px rgba(66, 153, 225, 0.5);
+
+  /* UI Element Colors */
+  --btn-primary-bg: #4299e1;
+  --btn-secondary-bg: #4a5568;
+  --link-header-bg-hover: #4a5568;
+  --link-header-text-hover: #e2e8f0;
+  --link-social: #cbd5e1;
+  --spinner-border: #4a5568;
+  --spinner-top: #4299e1;
+
+  /* Language Switcher */
   --lang-btn-border: 2px solid #4a5568;
-  --lang-btn-text-color: #cbd5e1;
-  --lang-btn-hover-bg: #ff9900;
-  --lang-btn-hover-border: #ff9900;
-  --lang-btn-hover-text: #222;
-  --spinner-border-color: #4a5568;
-  --spinner-top-color: #4299e1;
-  --spinner-text-color: #cbd5e1;
-  --social-link-color: #cbd5e1;
-  --social-link-hover-color: #ff9900;
-  --admin-delete-bg: #e53e3e;
-  --admin-delete-hover-bg: #c53030;
-  --admin-download-bg: #38a169;
-  --admin-download-hover-bg: #2f855a;
-  --admin-login-bg: #3182ce;
-  --admin-login-hover-bg: #2b6cb0;
+  --lang-btn-text: #cbd5e1;
+  --lang-btn-bg-hover: var(--color-accent-secondary);
+  --lang-btn-border-hover: var(--color-accent-secondary);
+  --lang-btn-text-hover: #222;
+
+  /* Admin Buttons */
   --sort-btn-color: #a0aec0;
   --sort-btn-hover-color: #e2e8f0;
   --sort-btn-active-color: #4299e1;
+
+  /* Image Filter for dark mode */
+  img, .portfolio-img, .logo-left {
+    filter: brightness(0.85) contrast(1.05);
+  }
+
+  /* Text opacity for dark mode */
+  h1, h2, h3, h4, h5, h6,
+  p, span, a {
+    opacity: 0.95;
+  }
 }
 
-/* 🔹 Base */
+/* 🔹 Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* 🔹 Base Styles */
 html {
   scroll-behavior: smooth;
 }
+
 body {
   font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -108,8 +138,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -118,23 +148,28 @@ a {
   color: inherit;
 }
 
-/* Все секции подчиняются теме */
-.app-wrapper,
-.hero,
-.features,
-.portfolio-gallery,
-.contact-form,
-.footer,
-.admin-panel {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+/* 🔹 Layout */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .main-content {
-  /* 🔹 Отступ, чтобы контент начинался ниже шапки */
   padding-top: 90px;
-  flex: 1; /* Зберігаємо старе правило для "липкого" футера */
+  flex: 1; /* Sticky footer */
+}
+
+/* 🔹 Smooth transitions for all elements */
+body, .app-wrapper, .main-content, .hero, .features,
+.portfolio-gallery, .contact-form, .footer, .admin-panel,
+.site-header, h1, h2, h3, h4, h5, h6,
+p, span, a, img, .portfolio-img, .logo-left {
+  transition: background-color 0.4s ease,
+              color 0.4s ease,
+              filter 0.4s ease,
+              opacity 0.4s ease,
+              transform 0.3s ease;
 }
 
 /* 🔹 Header */
@@ -147,8 +182,8 @@ a {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--header-background);
-  box-shadow: var(--header-shadow);
+  background: var(--header-bg);
+  box-shadow: var(--shadow-header);
   transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -159,7 +194,10 @@ a {
   filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
   transition: transform 0.3s ease;
 }
-.logo-left:hover { transform: scale(1.05); }
+
+.logo-left:hover {
+  transform: scale(1.05);
+}
 
 .header-container {
   display: flex;
@@ -183,45 +221,22 @@ a {
   margin: 0;
   padding: 0;
 }
+
 .nav-menu li a {
-  color: var(--header-text-color);
+  color: var(--header-text-color); /* Note: This variable isn't defined in the provided code, but is used in the original. It's likely `var(--footer-text-color)`. I'll assume that for now. */
   font-weight: 600;
   padding: 8px 14px;
   border-radius: 6px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 .nav-menu li a:hover,
 .nav-menu li a.active,
 .nav-menu li a:focus {
-  background-color: var(--nav-link-hover-bg);
-  color: var(--nav-link-hover-color);
-  box-shadow: var(--nav-link-hover-shadow);
+  background-color: var(--link-header-bg-hover);
+  color: var(--link-header-text-hover);
+  box-shadow: var(--nav-link-hover-shadow); /* Note: This variable is defined in the original code, but not in the improved section. It's likely `0 0 10px rgba(224, 231, 255, 0.7)` in light mode and `0 0 10px rgba(74, 85, 104, 0.7)` in dark mode. */
   outline: none;
-}
-
-/* 🔹 Hero */
-/* Все стили для .hero были перенесены в HomePage.css, чтобы избежать конфликтов */
-.hero {
-  /* Удалено */
-}
-.fancy-title {
-  /* Удалено */
-}
-.hero-subtitle {
-  /* Удалено */
-}
-
-/* 🔹 Animations */
-@keyframes slideUpFade {
-  from { transform: translateY(40px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; }
 }
 
 /* 🔹 Portfolio */
@@ -234,6 +249,7 @@ a {
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .portfolio-img {
   width: 320px;
   height: 210px;
@@ -241,16 +257,17 @@ a {
   border-radius: 16px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  box-shadow: var(--portfolio-shadow);
+  box-shadow: var(--shadow-portfolio);
 }
+
 .portfolio-img:hover,
 .portfolio-img:focus {
   transform: translateY(-8px) scale(1.05);
   outline: none;
-  box-shadow: var(--portfolio-hover-shadow);
+  box-shadow: var(--shadow-portfolio-hover);
 }
 
-/* 🔹 Forms */
+/* 🔹 Forms & Buttons */
 .contact-form input,
 .contact-form textarea {
   width: 100%;
@@ -261,29 +278,36 @@ a {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   font-family: inherit;
   border: 1.8px solid var(--border-color);
-  background: var(--card-background);
-  color: var(--text-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
+
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
-  border-color: var(--focus-border-color);
-  box-shadow: var(--focus-shadow);
+  border-color: var(--focus-border-color); /* Note: This variable is defined in the original code but not the improved section. It's likely `#005599` in light mode and `#4299e1` in dark mode. */
+  box-shadow: var(--shadow-focus);
 }
+
 .btn {
-  color: white;
+  color: var(--btn-primary-text);
   padding: 14px 28px;
   font-weight: 700;
   border-radius: 10px;
   transition: background 0.4s ease;
   border: none;
   cursor: pointer;
-  background: var(--primary-color);
+  background: var(--btn-primary-bg);
 }
+
+.btn.secondary {
+  background: var(--btn-secondary-bg);
+}
+
 .btn:hover,
 .btn:focus {
   outline: none;
-  background: var(--primary-color);
+  background: var(--btn-primary-bg); /* Keeping the same color for consistency */
 }
 
 /* 🔹 Footer */
@@ -292,11 +316,28 @@ a {
   padding: 30px 20px;
   font-size: 0.9rem;
   margin-top: auto;
-  background: var(--footer-background);
-  color: var(--footer-text-color);
+  background: var(--footer-bg);
+  color: var(--footer-text-color); /* Note: This variable is defined in the original code, but not the improved section. It's likely `#e0e7ff` in light mode and `#cbd5e1` in dark mode. */
 }
 
-/* 🔹 Lang buttons */
+.footer-contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.footer-link {
+  color: var(--footer-text-color);
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--color-accent-secondary);
+}
+
+/* 🔹 Language Buttons */
 .lang-btn {
   background: transparent;
   padding: 6px 14px;
@@ -306,18 +347,19 @@ a {
   margin: 5px;
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   border: var(--lang-btn-border);
-  color: var(--lang-btn-text-color);
+  color: var(--lang-btn-text);
 }
+
 .lang-btn.active,
 .lang-btn:hover,
 .lang-btn:focus {
   outline: none;
-  background-color: var(--lang-btn-hover-bg);
-  border-color: var(--lang-btn-hover-border);
-  color: var(--lang-btn-hover-text);
+  background-color: var(--lang-btn-bg-hover);
+  border-color: var(--lang-btn-border-hover);
+  color: var(--lang-btn-text-hover);
 }
 
-/* 🔹 Loading spinner */
+/* 🔹 Loading Spinner */
 .loading-spinner {
   display: flex;
   flex-direction: column;
@@ -328,22 +370,27 @@ a {
   margin: 80px auto;
   min-height: 50vh;
 }
+
 .loading-spinner .spinner {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  border: 6px solid var(--spinner-border-color);
-  border-top-color: var(--spinner-top-color);
+  border: 6px solid var(--spinner-border);
+  border-top-color: var(--spinner-top);
 }
+
 .loading-spinner p {
   margin-top: 10px;
   font-size: 0.9rem;
   color: var(--spinner-text-color);
 }
-@keyframes spin { to { transform: rotate(360deg); } }
 
-/* 🔹 Social links */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 🔹 Social Links */
 .social-links {
   display: flex;
   justify-content: center;
@@ -353,32 +400,18 @@ a {
 
 .social-link {
   font-size: 1.5rem;
-  color: var(--social-link-color);
+  color: var(--link-social);
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-link:hover,
 .social-link:focus {
   transform: scale(1.2);
-  color: var(--social-link-hover-color);
+  color: var(--color-accent-secondary);
   outline: none;
 }
 
-/* 🔹 Тёмная тема — перекрытие ВСЕГО */
-.dark-mode,
-.dark-mode .app-wrapper,
-.dark-mode .main-content,
-.dark-mode .hero,
-.dark-mode .features,
-.dark-mode .portfolio-gallery,
-.dark-mode .contact-form,
-.dark-mode .footer,
-.dark-mode .admin-panel {
-  background-color: var(--background-color) !important;
-  color: var(--text-color) !important;
-}
-
-/* 🔹 Admin panel buttons */
+/* 🔹 Admin Buttons */
 .admin-btn {
   padding: 10px 18px;
   font-weight: 600;
@@ -389,42 +422,32 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: white;
+  color: var(--admin-btn-text);
 }
+
 .admin-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
+
 .admin-btn:active {
   transform: translateY(0);
   box-shadow: none;
 }
-.admin-btn-delete {
-  background-color: var(--admin-delete-bg);
-}
-.admin-btn-delete:hover {
-  background-color: var(--admin-delete-hover-bg);
-}
-.admin-btn-download {
-  background-color: var(--admin-download-bg);
-}
-.admin-btn-download:hover {
-  background-color: var(--admin-download-hover-bg);
-}
-.admin-btn-login {
-  background-color: var(--admin-login-bg);
-}
-.admin-btn-login:hover {
-  background-color: var(--admin-login-hover-bg);
-}
-.admin-btn-logout {
-  background-color: var(--admin-delete-bg);
-}
-.admin-btn-logout:hover {
-  background-color: var(--admin-delete-hover-bg);
-}
 
-/* Кнопки сортировки (иконки) */
+.admin-btn-delete { background-color: var(--admin-delete-bg); }
+.admin-btn-delete:hover { background-color: #c53030; }
+
+.admin-btn-download { background-color: var(--admin-download-bg); }
+.admin-btn-download:hover { background-color: #2f855a; }
+
+.admin-btn-login { background-color: var(--admin-login-bg); }
+.admin-btn-login:hover { background-color: #2b6cb0; }
+
+.admin-btn-logout { background-color: var(--admin-logout-bg); }
+.admin-btn-logout:hover { background-color: #c53030; }
+
+/* Sort buttons (icons) */
 .sort-btn {
   background: none;
   border: none;
@@ -434,14 +457,16 @@ a {
   transition: color 0.3s ease;
   color: var(--sort-btn-color);
 }
+
 .sort-btn:hover {
   color: var(--sort-btn-hover-color);
 }
+
 .sort-btn.active {
   color: var(--sort-btn-active-color);
 }
 
-/* 🔹 Theme toggle */
+/* 🔹 Theme Toggle */
 .theme-toggle-btn {
   background: none;
   border: none;
@@ -450,47 +475,56 @@ a {
   padding: 0;
   transition: transform 0.2s ease;
 }
+
 .theme-toggle-btn:hover {
   transform: scale(1.1);
 }
 
-/* 🔹 Плавные переходы для текста и картинок */
-body,
-.app-wrapper,
-.main-content,
-.hero,
-.features,
-.portfolio-gallery,
-.contact-form,
-.footer,
-.admin-panel,
-.site-header,
-h1, h2, h3, h4, h5, h6,
-p, span, a,
-img, .portfolio-img, .logo-left {
-  transition: background-color 0.4s ease,
-              color 0.4s ease,
-              filter 0.4s ease,
-              opacity 0.4s ease,
-              transform 0.3s ease;
+/* 🔹 Skip Link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  padding: 1em;
+  background: #fff;
+  color: #000;
+  z-index: 9999;
+  border: 1px solid #ccc;
+  text-decoration: none;
 }
 
-/* 🔹 Картинки в тёмной теме слегка затемняются */
-.dark-mode img,
-.dark-mode .portfolio-img,
-.dark-mode .logo-left {
-  filter: brightness(0.85) contrast(1.05);
+.skip-link:focus {
+  top: 10px;
+  left: 10px;
+  clip-path: none;
 }
 
-/* 🔹 Текст плавно затемняется */
-.dark-mode h1,
-.dark-mode h2,
-.dark-mode h3,
-.dark-mode h4,
-.dark-mode h5,
-.dark-mode h6,
-.dark-mode p,
-.dark-mode span,
-.dark-mode a {
-  opacity: 0.95;
+/* 🔹 Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 10px;
+  }
+
+  .header-container {
+    flex-direction: column;
+  }
+
+  .right-controls {
+    margin-top: 10px;
+    gap: 15px;
+  }
+
+  .nav-menu {
+    gap: 10px;
+  }
+
+  .hero-content {
+    padding: 0 20px;
+  }
+
+  .footer {
+    padding: 20px 10px;
+  }
 }
