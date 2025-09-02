@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
@@ -14,6 +14,24 @@ export default function HomePage() {
     ? location.pathname.split("/")[1]
     : "uk";
 
+  // Подстраиваем тему страницы под body
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      if (document.body.classList.contains("dark-mode")) {
+        document.querySelector(".home-page")?.classList.add("dark-mode");
+      } else {
+        document.querySelector(".home-page")?.classList.remove("dark-mode");
+      }
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -24,7 +42,7 @@ export default function HomePage() {
           as="image"
           href="/assets/background@2x.webp"
           type="image/webp"
-          fetchPriority="high"
+          fetchpriority="high"
         />
       </Helmet>
 
